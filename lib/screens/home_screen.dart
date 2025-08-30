@@ -1,4 +1,4 @@
-import 'dart:async'; // Diperlukan untuk Timer (debouncing)
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
@@ -7,7 +7,7 @@ import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
 
-// Diubah menjadi ConsumerStatefulWidget untuk mengelola Timer
+// Diubah menjadi ConsumerStatefulWidget untuk mengelola Timer debouncing
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -24,12 +24,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.dispose();
   }
 
-  // Fungsi untuk menangani logika debouncing
+  // Fungsi untuk menangani pencarian dengan jeda (debouncing)
   void _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       // Aksi ini akan dijalankan 500ms setelah pengguna berhenti mengetik
       if (query.trim().length > 2) {
+        // Menggunakan context dari widget
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -43,11 +44,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final bookmarkAsync = ref.watch(bookmarkProvider);
-    
+    final theme = Theme.of(context); // Mengambil data tema saat ini
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Al-Quran Digital'),
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -55,15 +56,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildHeader(context),
+              _buildHeader(context, theme),
               const SizedBox(height: 24),
-              _buildSearchBar(context),
+              _buildSearchBar(context, theme),
               const SizedBox(height: 24),
               
               bookmarkAsync.when(
                 data: (bookmark) {
                   if (bookmark == null) return const SizedBox.shrink();
-                  return _buildBookmarkCard(context, ref, bookmark);
+                  return _buildBookmarkCard(context, ref, theme, bookmark);
                 },
                 loading: () => const Padding(
                   padding: EdgeInsets.symmetric(vertical: 24.0),
@@ -72,7 +73,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 error: (e, s) => const SizedBox.shrink(),
               ),
 
-              _buildNavigationCard(context,
+              _buildNavigationCard(context, theme,
                 icon: Icons.list_alt_rounded,
                 title: 'Lihat per Surah',
                 onTap: () {
@@ -80,7 +81,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 },
               ),
               const SizedBox(height: 12),
-              _buildNavigationCard(context,
+              _buildNavigationCard(context, theme,
                 icon: Icons.auto_stories_rounded,
                 title: 'Lihat per Halaman',
                 onTap: () {
@@ -94,40 +95,42 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, ThemeData theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Assalamualaikum', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white70)),
+        Text('Assalamualaikum', style: theme.textTheme.bodyMedium?.copyWith(fontSize: 18)),
         const SizedBox(height: 4),
-        Text('Selamat Datang', style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 28)),
+        Text('Selamat Datang', style: theme.textTheme.headlineLarge?.copyWith(fontSize: 28)),
       ],
     );
   }
 
-  // #### WIDGET SEARCH BAR DIPERBARUI DI SINI ####
-  Widget _buildSearchBar(BuildContext context) {
+  Widget _buildSearchBar(BuildContext context, ThemeData theme) {
     return TextField(
       decoration: const InputDecoration(
         hintText: 'Cari surah atau terjemahan...',
-        prefixIcon: Icon(Icons.search, color: Colors.grey),
+        prefixIcon: Icon(Icons.search),
       ),
-      // Menggunakan onChanged dengan debouncing
       onChanged: _onSearchChanged,
     );
   }
 
-  Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, Bookmark bookmark) {
+  Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme, Bookmark bookmark) {
+    // Warna untuk kartu bookmark disesuaikan agar kontras
+    final cardColor = theme.brightness == Brightness.light ? theme.primaryColor : theme.colorScheme.surface;
+    final onCardColor = theme.brightness == Brightness.light ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface;
+
     return Column(
       children: [
         Card(
-          color: Theme.of(context).primaryColor.withOpacity(0.9),
+          color: cardColor,
           child: ListTile(
-            leading: const Icon(Icons.bookmark, color: Colors.white, size: 30),
-            title: const Text('Lanjutkan Membaca', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-            subtitle: Text('QS. ${bookmark.surahName}: ${bookmark.ayahNumber}', style: const TextStyle(color: Colors.white70)),
+            leading: Icon(Icons.bookmark, color: onCardColor, size: 30),
+            title: Text('Lanjutkan Membaca', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onCardColor)),
+            subtitle: Text('QS. ${bookmark.surahName}: ${bookmark.ayahNumber}', style: TextStyle(color: onCardColor.withOpacity(0.8))),
             trailing: IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.white),
+              icon: Icon(Icons.delete_outline, color: onCardColor),
               tooltip: 'Hapus Bookmark',
               onPressed: () async {
                 await ref.read(bookmarkProvider.notifier).removeBookmark();
@@ -157,12 +160,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildNavigationCard(BuildContext context, {required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _buildNavigationCard(BuildContext context, ThemeData theme, {required IconData icon, required String title, required VoidCallback onTap}) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Theme.of(context).primaryColor, width: 0.5),
-      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
@@ -170,11 +169,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Row(
             children: [
-              Icon(icon, color: Theme.of(context).primaryColor, size: 30),
+              Icon(icon, color: theme.primaryColor, size: 30),
               const SizedBox(width: 16),
-              Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+              Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
               const Spacer(),
-              const Icon(Icons.arrow_forward_ios, color: Colors.white30, size: 16),
+              Icon(Icons.arrow_forward_ios, color: Colors.grey.withOpacity(0.7), size: 16),
             ],
           ),
         ),

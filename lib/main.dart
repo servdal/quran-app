@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Al-Quran Digital',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme, // Gunakan tema baru di sini
+      theme: AppTheme.lightTheme, // Gunakan tema baru di sini
       home: const SplashScreen(),
     );
   }

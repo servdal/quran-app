@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
-import 'package:flutter/services.dart';
+import 'package:quran_app/services/quran_data_service.dart';
 
 class AyahWidget extends ConsumerStatefulWidget {
   final Ayah ayah;
@@ -41,8 +42,28 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
 
   Future<void> _playAudio() async {
-    final audioUrl = 'https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/${widget.ayah.ayaId}';
-    await _audioPlayer.play(UrlSource(audioUrl));
+    // Membaca peta audio dari provider
+    final audioMapAsyncValue = ref.read(audioPathsProvider);
+
+    audioMapAsyncValue.when(
+      data: (audioMap) async {
+        // Mencari jalur audio berdasarkan aya_id
+        final audioPath = audioMap[widget.ayah.ayaId];
+        if (audioPath != null) {
+          // Menggunakan AssetSource untuk memutar file dari folder assets
+          // replaceFirst('assets/', '') diperlukan agar AssetSource bisa menemukan file
+          await _audioPlayer.play(AssetSource(audioPath.replaceFirst('assets/', '')));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('File audio untuk ayat ini tidak ditemukan.')),
+          );
+        }
+      },
+      loading: () => print("Memuat data audio..."),
+      error: (e, s) => ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal memuat data audio: $e')),
+      ),
+    );
   }
 
   Future<void> _pauseAudio() async {
@@ -69,23 +90,40 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       ),
     );
   }
+
   Future<void> _copyRawData() async {
-    // Mengambil data tajweedText, atau teks biasa jika tidak ada
-    final rawText = widget.ayah.tajweedText ?? widget.ayah.ayaText;
-    await Clipboard.setData(ClipboardData(text: rawText));
+    // Membuat string multi-baris yang terformat
+    final String fullAyahText = """
+    Surah ${widget.ayah.surah?.englishName ?? widget.ayah.suraId} Ayat ${widget.ayah.ayaNumber}
+
+    Teks Arab:
+    ${widget.ayah.ayaText}
+
+    Transliterasi:
+    ${widget.ayah.transliteration}
+
+    Terjemahan:
+    ${widget.ayah.translationAyaText}
+
+    Tafsir Jalalayn:
+    ${widget.ayah.tafsirJalalayn}
+    """;
+
+    // Menyalin string yang sudah diformat ke clipboard
+    await Clipboard.setData(ClipboardData(text: fullAyahText.trim()));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Data mentah tajwid telah disalin ke clipboard.'),
+        content: Text('Informasi lengkap ayat telah disalin ke clipboard.'),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
     final arabicFontSize = settings.arabicFontSize;
     final bookmarkAsync = ref.watch(bookmarkProvider);
 
-    // Cek apakah ayat ini adalah yang sedang di-bookmark
     final bool isBookmarked = bookmarkAsync.when(
       data: (bookmark) =>
           bookmark != null &&
@@ -112,8 +150,6 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
               title: widget.ayah.sajda
                   ? const Row(children: [Text("Ayat Sajdah ۩")])
                   : null,
-              
-              // #### PERUBAHAN IKON DAN FUNGSI TOMBOL DI SINI ####
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -165,10 +201,18 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
 
   Widget _buildTextTab(double fontSize) {
-    final baseTextStyle = TextStyle(fontFamily: 'LPMQ', fontSize: fontSize, height: 2.0, color: Colors.white);
-    final textToParse = widget.ayah.tajweedText;
+    // #### PERBAIKAN DI SINI ####
+    // Warna teks dasar sekarang diambil dari tema (onSurface color)
+    // yang akan menjadi hitam di tema terang dan putih di tema gelap.
+    final baseTextStyle = TextStyle(
+        fontFamily: 'LPMQ',
+        fontSize: fontSize,
+        height: 2.0,
+        color: Theme.of(context).colorScheme.onSurface);
+        
+    final textToParse = widget.ayah.tajweedText ?? widget.ayah.ayaText;
     final textSpans = TajweedParser.parse(textToParse, baseTextStyle);
-  
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -179,7 +223,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
             textDirection: TextDirection.rtl,
             text: TextSpan(
               style: baseTextStyle,
-              children: textSpans, // Daftar TextSpan berwarna dimasukkan di sini
+              children: textSpans,
             ),
           ),
           const SizedBox(height: 24),
@@ -191,7 +235,8 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
             style: TextStyle(
               fontSize: fontSize * 0.6,
               fontStyle: FontStyle.italic,
-              color: Colors.white.withOpacity(0.7),
+              // Warna teks latin juga mengambil dari tema agar lebih konsisten
+              color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
             ),
           ),
         ],

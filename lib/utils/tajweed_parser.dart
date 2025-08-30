@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:quran_app/theme/app_theme.dart';
 
 class TajweedParser {
-  /// Mem-parsing teks tajwid dengan aman menggunakan pemindai manual (parser)
-  /// untuk menangani semua format, termasuk yang bersarang kompleks,
-  /// tanpa menghilangkan teks atau menampilkan penanda.
+  /// Parser teks tajwid untuk memberi warna sesuai aturan tajwid
+  ///
+  /// Mendukung dua format:
+  /// 1. [rule] ... []   → blok panjang
+  /// 2. [rule[char]]    → inline huruf tunggal
   static List<TextSpan> parse(String text, TextStyle baseStyle) {
     List<TextSpan> spans = [];
-    // Stack untuk melacak warna saat kita masuk/keluar dari blok tajwid bersarang
-    List<Color> colorStack = [baseStyle.color ?? Colors.white];
+    List<Color> colorStack = [baseStyle.color ?? Colors.black];
     StringBuffer currentText = StringBuffer();
 
-    for (int i = 0; i < text.length; i++) {
+    int i = 0;
+    while (i < text.length) {
       if (text[i] == '[') {
-        // Sebuah penanda dimulai. Proses teks biasa yang sudah terkumpul.
+        // Flush teks sebelum marker
         if (currentText.isNotEmpty) {
           spans.add(TextSpan(
             text: currentText.toString(),
@@ -24,51 +26,50 @@ class TajweedParser {
 
         int endMarker = text.indexOf(']', i);
         if (endMarker == -1) {
-          // Kurung buka tanpa penutup, anggap sebagai teks biasa
+          // Tidak ada penutup, treat sebagai teks biasa
           currentText.write(text[i]);
+          i++;
           continue;
         }
 
         String ruleContent = text.substring(i + 1, endMarker);
-        
-        // Cek apakah ini adalah penanda pembuka blok bersarang (diikuti oleh '[')
-        if (endMarker + 1 < text.length && text[endMarker + 1] == '[') {
-          String baseRule = ruleContent.split(':')[0];
-          Color newColor = AppTheme.tajweedColors[baseRule] ?? colorStack.last;
-          colorStack.add(newColor); // Masukkan warna baru ke stack
-          i = endMarker + 1; // Lompat ke setelah '[rule['
-        } 
-        // Cek apakah ini adalah penanda penutup blok bersarang ']]'
-        else if (ruleContent.isEmpty) { 
-            if (colorStack.length > 1) {
-              colorStack.removeLast(); // Keluarkan warna dari stack
-            }
-            i = endMarker; // Lompat ke setelah ']'
-        }
-        // Jika tidak keduanya, ini adalah format yang tidak biasa seperti [p[ِي]
-        // Kita akan menganggap ini sebagai blok mandiri
-        else {
-            int innerBracket = ruleContent.indexOf('[');
-            if (innerBracket != -1) {
-              String rule = ruleContent.substring(0, innerBracket);
-              String content = ruleContent.substring(innerBracket + 1);
-              
-              String baseRule = rule.split(':')[0];
-              // #### PERBAIKAN DI SINI ####
-              // Menggunakan warna terakhir dari stack sebagai default
-              Color color = AppTheme.tajweedColors[baseRule] ?? colorStack.last;
-              spans.add(TextSpan(text: content, style: baseStyle.copyWith(color: color)));
-            }
-            i = endMarker;
+
+        // === CASE 1: Inline format [rule[char]] ===
+        if (ruleContent.contains("[")) {
+          var parts = ruleContent.split("[");
+          if (parts.length >= 2) {
+            var ruleName = parts[0]; // contoh "m"
+            var innerText = parts[1]; // contoh "لٓ"
+            Color color = AppTheme.tajweedColors[ruleName] ?? colorStack.last;
+            spans.add(TextSpan(
+              text: innerText,
+              style: baseStyle.copyWith(color: color),
+            ));
+          }
+          i = endMarker + 1;
+          continue;
         }
 
+        // === CASE 2: Penutup blok [] ===
+        if (ruleContent.isEmpty) {
+          if (colorStack.length > 1) {
+            colorStack.removeLast();
+          }
+          i = endMarker + 1;
+          continue;
+        }
+
+        // === CASE 3: Pembuka blok [rule] ===
+        Color newColor = AppTheme.tajweedColors[ruleContent] ?? colorStack.last;
+        colorStack.add(newColor);
+        i = endMarker + 1;
       } else {
-        // Karakter biasa, tambahkan ke buffer.
         currentText.write(text[i]);
+        i++;
       }
     }
 
-    // Tambahkan sisa teks di akhir.
+    // Flush sisa teks
     if (currentText.isNotEmpty) {
       spans.add(TextSpan(
         text: currentText.toString(),
@@ -76,13 +77,6 @@ class TajweedParser {
       ));
     }
 
-    // Fallback darurat jika seluruh proses gagal
-    if (spans.isEmpty && text.isNotEmpty) {
-       final cleanedText = text.replaceAll(RegExp(r'\[[^\]]*\]'), '');
-       spans.add(TextSpan(text: cleanedText, style: baseStyle));
-    }
-
     return spans;
   }
 }
-

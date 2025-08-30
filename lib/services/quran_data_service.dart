@@ -5,6 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/surah_model.dart';
 import 'package:quran_app/models/ayah_model.dart';
 
+final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
+  final jsonString = await rootBundle.loadString('assets/audio_paths.json');
+  final jsonMap = json.decode(jsonString);
+  final List<dynamic> audioList = jsonMap['audio_mapping'];
+  
+  // Mengubah daftar menjadi peta untuk akses instan: { 1: "path/1.mp3", 2: "path/2.mp3", ... }
+  final Map<int, String> audioPaths = {
+    for (var item in audioList)
+      item['aya_id']: item['path_audio']
+  };
+  
+  return audioPaths;
+});
+
 class QuranDataService {
   List<Surah> _allSurahs = [];
   bool _isLoaded = false;

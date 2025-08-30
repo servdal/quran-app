@@ -31,7 +31,8 @@ class Ayah {
   final bool sajda;
   final SurahInfo? surah;
   final String transliteration;
-  final int pageNumber; // <-- PROPERTI YANG HILANG DITAMBAHKAN
+  final int pageNumber;
+  final String tajweedText;
 
   Ayah({
     required this.ayaId,
@@ -43,7 +44,8 @@ class Ayah {
     required this.sajda,
     this.surah,
     required this.transliteration,
-    required this.pageNumber, // <-- DITAMBAHKAN KE KONSTRUKTOR
+    required this.pageNumber,
+    required this.tajweedText,
   });
 
   factory Ayah.fromJson(Map<String, dynamic> json) {
@@ -57,7 +59,8 @@ class Ayah {
       sajda: json['sajda'] ?? false,
       surah: json['surah'] != null ? SurahInfo.fromJson(json['surah']) : null,
       transliteration: json['transliteration'] ?? '',
-      pageNumber: json['page_number'], // <-- DITAMBAHKAN DARI JSON
+      pageNumber: json['page_number'],
+      tajweedText: json['tajweed_text'],
     );
   }
 }

@@ -79,8 +79,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/splash_logo.png', height: screenSize.height * 0.18),
-                    const SizedBox(height: 30),
                     CircularProgressIndicator(
                       color: Theme.of(context).primaryColor,
                       strokeWidth: 4,
@@ -112,7 +110,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         textDirection: TextDirection.rtl,
                         style: const TextStyle(
                           fontFamily: 'LPMQ',
-                          fontSize: 24,
+                          fontSize: 12,
                           color: Colors.white,
                           height: 1.8,
                         ),
@@ -123,7 +121,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 14,
+                          fontSize: 10,
                           color: Colors.white70,
                         ),
                       ),

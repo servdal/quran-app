@@ -4,6 +4,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
+import 'package:quran_app/utils/tajweed_parser.dart';
+import 'package:flutter/services.dart';
 
 class AyahWidget extends ConsumerStatefulWidget {
   final Ayah ayah;
@@ -67,7 +69,16 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       ),
     );
   }
-
+  Future<void> _copyRawData() async {
+    // Mengambil data tajweedText, atau teks biasa jika tidak ada
+    final rawText = widget.ayah.tajweedText ?? widget.ayah.ayaText;
+    await Clipboard.setData(ClipboardData(text: rawText));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Data mentah tajwid telah disalin ke clipboard.'),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
@@ -101,13 +112,23 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
               title: widget.ayah.sajda
                   ? const Row(children: [Text("Ayat Sajdah ۩")])
                   : null,
+              
               // #### PERUBAHAN IKON DAN FUNGSI TOMBOL DI SINI ####
-              trailing: IconButton(
-                icon: Icon(isBookmarked ? Icons.bookmark : Icons.bookmark_add_outlined),
-                color: isBookmarked ? Theme.of(context).primaryColor : null,
-                tooltip: isBookmarked ? 'Ini adalah bookmark Anda' : 'Simpan Bookmark',
-                // Tombol nonaktif jika sudah di-bookmark
-                onPressed: isBookmarked ? null : _setBookmark,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.content_copy_outlined),
+                    tooltip: 'Salin Data Mentah',
+                    onPressed: _copyRawData,
+                  ),
+                  IconButton(
+                    icon: Icon(isBookmarked ? Icons.bookmark : Icons.bookmark_add_outlined),
+                    color: isBookmarked ? Theme.of(context).primaryColor : null,
+                    tooltip: isBookmarked ? 'Ini adalah bookmark Anda' : 'Simpan Bookmark',
+                    onPressed: isBookmarked ? null : _setBookmark,
+                  ),
+                ],
               ),
             ),
             DefaultTabController(
@@ -144,16 +165,22 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
 
   Widget _buildTextTab(double fontSize) {
+    final baseTextStyle = TextStyle(fontFamily: 'LPMQ', fontSize: fontSize, height: 2.0, color: Colors.white);
+    final textToParse = widget.ayah.tajweedText;
+    final textSpans = TajweedParser.parse(textToParse, baseTextStyle);
+  
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            widget.ayah.ayaText,
+          RichText(
             textAlign: TextAlign.right,
             textDirection: TextDirection.rtl,
-            style: TextStyle(fontFamily: 'LPMQ', fontSize: fontSize, height: 2.0),
+            text: TextSpan(
+              style: baseTextStyle,
+              children: textSpans, // Daftar TextSpan berwarna dimasukkan di sini
+            ),
           ),
           const SizedBox(height: 24),
           const Divider(),

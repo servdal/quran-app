@@ -1,9 +1,9 @@
 // lib/screens/surah_list_screen.dart
 import 'package:flutter/material.dart';
-import 'package.flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/surah_model.dart';
 import 'package:quran_app/services/quran_data_service.dart';
-// import 'package:quran_app/screens/surah_detail_screen.dart'; // Pastikan Anda memiliki file ini
+import 'package:quran_app/screens/surah_detail_screen.dart'; // Import layar baru
 
 class SurahListScreen extends ConsumerWidget {
   const SurahListScreen({super.key});
@@ -58,15 +58,11 @@ class _SurahListItem extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            // TODO: Navigasi ke SurahDetailScreen saat item diklik
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => SurahDetailScreen(surahId: surah.suraId),
-            //   ),
-            // );
-             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Membuka ${surah.englishName}...'))
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SurahDetailScreen(surahId: surah.suraId),
+              ),
             );
           },
           child: Padding(

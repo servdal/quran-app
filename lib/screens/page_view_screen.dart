@@ -1,13 +1,14 @@
-// lib/screens/page_view_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/ayah_model.dart';
+import 'package:quran_app/providers/bookmark_provider.dart'; // Mengimpor enum dari sini
 import 'package:quran_app/services/quran_data_service.dart';
+import 'package:quran_app/widgets/ayah_widget.dart';
 
 class PageViewScreen extends StatefulWidget {
   const PageViewScreen({super.key, this.initialPage = 1});
 
-  final int initialPage; // Halaman awal yang ingin ditampilkan
+  final int initialPage;
 
   @override
   State<PageViewScreen> createState() => _PageViewScreenState();
@@ -35,23 +36,66 @@ class _PageViewScreenState extends State<PageViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Halaman $_currentPage'),
+        title: Text('Halaman $_currentPage dari 604'),
       ),
-      body: PageView.builder(
-        controller: _pageController,
-        // Balik arah geser agar sesuai dengan mushaf (kanan ke kiri)
-        reverse: true, 
-        itemCount: 604, // Total halaman dalam mushaf standar
-        itemBuilder: (context, index) {
-          // index dimulai dari 0, sedangkan nomor halaman dari 1
-          final pageNumber = index + 1;
-          return _QuranPageWidget(pageNumber: pageNumber);
-        },
-        onPageChanged: (index) {
-          setState(() {
-            _currentPage = index + 1;
-          });
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              controller: _pageController,
+              // Balik arah geser agar sesuai dengan mushaf (kanan ke kiri)
+              reverse: true,
+              itemCount: 604, // Total halaman dalam mushaf standar
+              itemBuilder: (context, index) {
+                // index dimulai dari 0, sedangkan nomor halaman dari 1
+                final pageNumber = index + 1;
+                return _QuranPageWidget(pageNumber: pageNumber);
+              },
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index + 1;
+                });
+              },
+            ),
+          ),
+          // Tombol navigasi halaman
+          _buildPageControls(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPageControls() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ElevatedButton.icon(
+            icon: const Icon(Icons.arrow_back),
+            label: const Text('Sebelumnya'),
+            onPressed: _currentPage > 1
+                ? () {
+                    _pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    );
+                  }
+                : null, // Tombol nonaktif jika di halaman pertama
+          ),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.arrow_forward),
+            label: const Text('Berikutnya'),
+            onPressed: _currentPage < 604
+                ? () {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    );
+                  }
+                : null, // Tombol nonaktif jika di halaman terakhir
+          ),
+        ],
       ),
     );
   }
@@ -73,7 +117,7 @@ class _QuranPageWidget extends ConsumerWidget {
       error: (err, stack) => Center(child: Text('Gagal memuat halaman $pageNumber')),
       data: (ayahs) {
         return ListView.builder(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           itemCount: ayahs.length,
           itemBuilder: (context, index) {
             final ayah = ayahs[index];
@@ -85,7 +129,11 @@ class _QuranPageWidget extends ConsumerWidget {
               children: [
                 if (isFirstAyahInSurah)
                   _SurahHeader(surahName: ayah.surah?.name ?? ''),
-                _AyahItem(ayah: ayah),
+                AyahWidget(
+                  ayah: ayah,
+                  // Memberi tahu AyahWidget bahwa bookmark harus disimpan sebagai 'page'
+                  viewType: BookmarkViewType.page,
+                ),
               ],
             );
           },
@@ -105,7 +153,7 @@ class _SurahHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).primaryColor.withOpacity(0.1),
-      margin: const EdgeInsets.only(top: 16, bottom: 16),
+      margin: const EdgeInsets.only(top: 16, bottom: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
         side: BorderSide(color: Theme.of(context).primaryColor),
@@ -126,43 +174,3 @@ class _SurahHeader extends StatelessWidget {
   }
 }
 
-// Widget sederhana untuk menampilkan satu ayat
-class _AyahItem extends StatelessWidget {
-  const _AyahItem({required this.ayah});
-
-  final Ayah ayah;
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: Ganti widget ini dengan AyahWidget lengkap yang sudah memiliki Tab
-    // Untuk saat ini, kita tampilkan teks Arab dan terjemahan saja.
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            '${ayah.ayaText} (${ayah.ayaNumber})',
-            textAlign: TextAlign.right,
-            textDirection: TextDirection.rtl,
-            style: const TextStyle(
-              fontFamily: 'LPMQ',
-              fontSize: 26,
-              height: 2.0, // Memberi jarak antar baris
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            ayah.translationAyaText,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.white.withOpacity(0.7),
-            ),
-          ),
-          const Divider(height: 32),
-        ],
-      ),
-    );
-  }
-}

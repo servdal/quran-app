@@ -1,4 +1,3 @@
-// lib/screens/splash_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/ayah_model.dart';
@@ -14,26 +13,28 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   Ayah? _randomAyah;
+  final String _loadingMessage = 'Mempersiapkan aplikasi...'; // Pesan loading sederhana
 
   @override
   void initState() {
     super.initState();
-    _loadAndNavigate();
+    _loadDataAndNavigate();
   }
 
-  Future<void> _loadAndNavigate() async {
+  Future<void> _loadDataAndNavigate() async {
     final quranService = ref.read(quranDataServiceProvider);
-    
-    // Muat semua data surah (ini akan memakan sedikit waktu)
-    await quranService.loadAllSurahData();
-    
-    // Setelah data dimuat, ambil ayat acak
-    setState(() {
-      _randomAyah = quranService.getRandomAyah();
-    });
 
-    // Tunggu sebentar (opsional, untuk memastikan ayat acak terlihat)
-    await Future.delayed(const Duration(seconds: 3));
+    // PANGGIL FUNGSI BARU YANG CEPAT
+    final ayah = await quranService.loadRandomAyahForSplash();
+    
+    if (mounted) {
+      setState(() {
+        _randomAyah = ayah;
+      });
+    }
+
+    // Tunggu sebentar agar pengguna bisa melihat splash screen
+    await Future.delayed(const Duration(seconds: 5));
 
     // Navigasi ke HomeScreen
     if (mounted) {
@@ -43,72 +44,112 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     }
   }
 
+  // ... (sisa kode build() dan _buildFeatureItem() tetap sama) ...
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor, // Warna primary theme Anda
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo Aplikasi (opsional, dari assets/images/splash_logo.png)
-              Image.asset('assets/images/splash_logo.png', height: 120),
-              const SizedBox(height: 30),
-
-              _randomAyah == null
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : Column(
-                      children: [
-                        Text(
-                          _randomAyah!.ayaText,
-                          textAlign: TextAlign.center,
-                          textDirection: TextDirection.rtl,
-                          style: const TextStyle(
-                            fontFamily: 'LPMQ', // Font Arab
-                            fontSize: 28,
-                            color: Colors.white,
-                            height: 1.5,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          _randomAyah!.translationAyaText,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'Poppins', // Font Latin
-                            fontSize: 16,
-                            color: Colors.white70,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "QS. ${_randomAyah!.surah!.englishName} (${_randomAyah!.suraId}) : ${_randomAyah!.ayaNumber}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            color: Colors.white54,
-                          ),
+              // Bagian Atas: Logo Aplikasi dan Judul
+              Image.asset('assets/images/main_logo.png', height: screenSize.height * 0.15),
+              const SizedBox(height: 16),
+              Text(
+                'Al-Quran Digital',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontSize: 32,
+                      color: Theme.of(context).primaryColor,
+                      letterSpacing: 1.5,
+                      shadows: [
+                        Shadow(
+                          offset: const Offset(0, 0),
+                          blurRadius: 15.0,
+                          color: Theme.of(context).primaryColor.withOpacity(0.7),
                         ),
                       ],
                     ),
+              ),
               const SizedBox(height: 40),
-              const Text(
-                'Membuka Cahaya Al-Quran',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/splash_logo.png', height: screenSize.height * 0.18),
+                    const SizedBox(height: 30),
+                    CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor,
+                      strokeWidth: 4,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      _loadingMessage,
+                      style: TextStyle(fontSize: 16, color: Colors.white70),
+                    ),
+                    const SizedBox(height: 40),
+                    _buildFeatureItem(context, 'Baca Al-Quran per Surah & Halaman'),
+                    _buildFeatureItem(context, 'Terjemahan & Tafsir Jalalayn'),
+                    _buildFeatureItem(context, 'Penanda Ayat Sajdah'),
+                  ],
                 ),
               ),
-              const SizedBox(height: 10),
-              const CircularProgressIndicator(color: Colors.white), // Indikator loading
+              if (_randomAyah != null)
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        _randomAyah!.ayaText,
+                        textAlign: TextAlign.center,
+                        textDirection: TextDirection.rtl,
+                        style: const TextStyle(
+                          fontFamily: 'LPMQ',
+                          fontSize: 24,
+                          color: Colors.white,
+                          height: 1.8,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        _randomAyah!.translationAyaText,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureItem(BuildContext context, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.check_circle, color: Theme.of(context).primaryColor, size: 18),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 14, color: Colors.white60),
+          ),
+        ],
       ),
     );
   }

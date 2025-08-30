@@ -1,4 +1,3 @@
-// lib/models/ayah_model.dart
 class SurahInfo {
   final String name;
   final String englishName;
@@ -23,15 +22,19 @@ class SurahInfo {
 }
 
 class Ayah {
+  final int ayaId;
   final int ayaNumber;
   final String ayaText;
   final int suraId;
   final String translationAyaText;
   final String tafsirJalalayn;
   final bool sajda;
-  final SurahInfo? surah; // Informasi surah untuk setiap ayat
+  final SurahInfo? surah;
+  final String transliteration;
+  final int pageNumber; // <-- PROPERTI YANG HILANG DITAMBAHKAN
 
   Ayah({
+    required this.ayaId,
     required this.ayaNumber,
     required this.ayaText,
     required this.suraId,
@@ -39,18 +42,23 @@ class Ayah {
     required this.tafsirJalalayn,
     required this.sajda,
     this.surah,
+    required this.transliteration,
+    required this.pageNumber, // <-- DITAMBAHKAN KE KONSTRUKTOR
   });
 
   factory Ayah.fromJson(Map<String, dynamic> json) {
     return Ayah(
+      ayaId: json['aya_id'],
       ayaNumber: json['aya_number'],
       ayaText: json['aya_text'],
       suraId: json['sura_id'],
       translationAyaText: json['translation_aya_text'],
-      // Pastikan key tafsir sesuai dengan file JSON Anda
       tafsirJalalayn: json['tafsir_jalalayn'] ?? 'Tafsir tidak tersedia.',
       sajda: json['sajda'] ?? false,
       surah: json['surah'] != null ? SurahInfo.fromJson(json['surah']) : null,
+      transliteration: json['transliteration'] ?? '',
+      pageNumber: json['page_number'], // <-- DITAMBAHKAN DARI JSON
     );
   }
 }
+

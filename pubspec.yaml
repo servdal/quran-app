@@ -20,7 +20,9 @@ dependencies:
   screenshot: ^3.0.0
   share_plus: ^11.1.0
   path_provider: ^2.1.3
-  flutter_native_splash: ^2.4.0  
+  flutter_native_splash: ^2.4.0
+  audioplayers: ^6.0.0
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +36,14 @@ flutter:
   assets:
     - assets/surah/
     - assets/halaman/
+    - assets/images/
+    - assets/fonts/
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+    - family: LPMQ
+      fonts:
+        - asset: assets/fonts/LPMQ.ttf

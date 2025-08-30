@@ -1,47 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/surah_model.dart';
-import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
+import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/widgets/ayah_widget.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-// Provider untuk mengambil data detail satu surah
 final surahDetailProvider = FutureProvider.family<Surah?, int>((ref, surahId) async {
   final service = ref.read(quranDataServiceProvider);
-  // Pastikan semua data sudah dimuat sebelum mencari
   await service.loadAllSurahData();
   try {
-    // Cari surah yang sesuai berdasarkan ID
     return service.getAllSurahs().firstWhere((s) => s.suraId == surahId);
   } catch (e) {
-    // Jika tidak ditemukan, kembalikan null
     return null;
   }
 });
 
-class SurahDetailScreen extends ConsumerWidget {
+// Diubah menjadi ConsumerStatefulWidget untuk mengelola scroll controller
+class SurahDetailScreen extends ConsumerStatefulWidget {
   final int surahId;
-  const SurahDetailScreen({super.key, required this.surahId});
+  // #### PARAMETER YANG HILANG DITAMBAHKAN DI SINI ####
+  final int? initialScrollIndex;
 
-  // Fungsi untuk navigasi ke surah lain (sebelumnya atau berikutnya)
-  void _navigateToSurah(BuildContext context, int newSurahId) {
-    // Pastikan ID surah valid (antara 1 dan 114)
-    if (newSurahId >= 1 && newSurahId <= 114) {
-      // Gunakan pushReplacement agar tidak menumpuk halaman di stack navigasi
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => SurahDetailScreen(surahId: newSurahId)),
-      );
+  const SurahDetailScreen({
+    super.key,
+    required this.surahId,
+    this.initialScrollIndex, // Ditambahkan ke konstruktor
+  });
+
+  @override
+  ConsumerState<SurahDetailScreen> createState() => _SurahDetailScreenState();
+}
+
+class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
+  @override
+  void initState() {
+    super.initState();
+    // Logika untuk scroll otomatis ke ayat yang di-bookmark
+    if (widget.initialScrollIndex != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (itemScrollController.isAttached) {
+          itemScrollController.jumpTo(
+            index: widget.initialScrollIndex!,
+            alignment: 0.1,
+          );
+        }
+      });
     }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final surahDetailAsync = ref.watch(surahDetailProvider(surahId));
-    // Membaca state dan notifier dari provider pengaturan font
+  Widget build(BuildContext context) {
+    final surahDetailAsync = ref.watch(surahDetailProvider(widget.surahId));
     final settings = ref.watch(settingsProvider);
-    final settingsNotifier = ref.read(settingsProvider.notifier);
+    final arabicFontSize = settings.arabicFontSize;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,87 +67,110 @@ class SurahDetailScreen extends ConsumerWidget {
           error: (e, s) => const Text('Error'),
         ),
         actions: [
-          // Tombol untuk membuka menu slider font
-          PopupMenuButton(
-            icon: const Icon(Icons.text_fields),
-            tooltip: 'Ubah Ukuran Font',
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                enabled: false, // Agar item tidak bisa diklik
-                child: SizedBox(
-                  width: 250, // Lebar menu popup
-                  child: Column(
-                    children: [
-                      const Text('Ukuran Font Arab'),
-                      Slider(
-                        value: settings.arabicFontSize,
-                        min: 20.0,
-                        max: 48.0,
-                        divisions: 14, // Jumlah step
-                        label: settings.arabicFontSize.round().toString(),
-                        onChanged: (value) {
-                          // Panggil fungsi untuk update font size di provider
-                          settingsNotifier.setFontSize(value);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          IconButton(
+            icon: const Icon(Icons.format_size),
+            onPressed: () => _showFontSizeSlider(context, ref, arabicFontSize),
+          )
         ],
       ),
-      body: surahDetailAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text('Gagal memuat surah: $error')),
-        data: (surah) {
-          if (surah == null) {
-            return const Center(child: Text('Surah tidak ditemukan'));
-          }
-          // Tampilan utama
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(8.0),
+      body: Column(
+        children: [
+          Expanded(
+            child: surahDetailAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(child: Text('Gagal memuat surah: $error')),
+              data: (surah) {
+                if (surah == null) {
+                  return const Center(child: Text('Surah tidak ditemukan'));
+                }
+                return ScrollablePositionedList.builder(
                   itemCount: surah.ayahs.length,
+                  itemScrollController: itemScrollController,
+                  itemPositionsListener: itemPositionsListener,
                   itemBuilder: (context, index) {
-                    return AyahWidget(
-                      ayah: surah.ayahs[index],
-                      viewType: BookmarkViewType.surah, // Tandai bookmark dari surah view
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: AyahWidget(
+                        ayah: surah.ayahs[index],
+                        viewType: BookmarkViewType.surah,
+                      ),
                     );
                   },
-                ),
-              ),
-              // Tombol navigasi di bagian bawah
-              _buildSurahControls(context),
-            ],
-          );
-        },
+                );
+              },
+            ),
+          ),
+          _buildSurahNavigation(context, widget.surahId),
+        ],
       ),
     );
   }
 
-  // Widget untuk tombol navigasi surah
-  Widget _buildSurahControls(BuildContext context) {
+  void _showFontSizeSlider(BuildContext context, WidgetRef ref, double currentSize) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            final currentSliderSize = ref.watch(settingsProvider).arabicFontSize;
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Ukuran Font Teks Arab'),
+                  Slider(
+                    value: currentSliderSize,
+                    min: 20,
+                    max: 48,
+                    divisions: 14,
+                    label: currentSliderSize.round().toString(),
+                    onChanged: (double value) {
+                      ref.read(settingsProvider.notifier).setFontSize(value);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildSurahNavigation(BuildContext context, int currentSurahId) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ElevatedButton.icon(
-            icon: const Icon(Icons.arrow_back),
-            label: const Text('Sebelumnya'),
-            // Tombol nonaktif jika ini surah pertama (Al-Fatihah)
-            onPressed: surahId > 1 ? () => _navigateToSurah(context, surahId - 1) : null,
-          ),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.arrow_forward),
-            label: const Text('Berikutnya'),
-            // Tombol nonaktif jika ini surah terakhir (An-Nas)
-            onPressed: surahId < 114 ? () => _navigateToSurah(context, surahId + 1) : null,
-          ),
+          if (currentSurahId > 1)
+            ElevatedButton.icon(
+              icon: const Icon(Icons.arrow_back),
+              label: const Text('Sebelumnya'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SurahDetailScreen(surahId: currentSurahId - 1),
+                  ),
+                );
+              },
+            ),
+          const Spacer(),
+          if (currentSurahId < 114)
+            ElevatedButton.icon(
+              icon: const Icon(Icons.arrow_forward),
+              label: const Text('Berikutnya'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SurahDetailScreen(surahId: currentSurahId + 1),
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );

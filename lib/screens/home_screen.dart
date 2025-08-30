@@ -1,3 +1,4 @@
+import 'dart:async'; // Diperlukan untuk Timer (debouncing)
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
@@ -6,12 +7,41 @@ import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
 
-class HomeScreen extends ConsumerWidget {
+// Diubah menjadi ConsumerStatefulWidget untuk mengelola Timer
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Membaca data bookmark terakhir dari provider
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel(); // Pastikan timer dibatalkan saat widget ditutup
+    super.dispose();
+  }
+
+  // Fungsi untuk menangani logika debouncing
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      // Aksi ini akan dijalankan 500ms setelah pengguna berhenti mengetik
+      if (query.trim().length > 2) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SearchResultScreen(query: query.trim()),
+          ),
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final bookmarkAsync = ref.watch(bookmarkProvider);
     
     return Scaffold(
@@ -30,22 +60,18 @@ class HomeScreen extends ConsumerWidget {
               _buildSearchBar(context),
               const SizedBox(height: 24),
               
-              // Menampilkan kartu bookmark secara kondisional
               bookmarkAsync.when(
                 data: (bookmark) {
-                  // Jika tidak ada bookmark, tampilkan widget kosong
                   if (bookmark == null) return const SizedBox.shrink();
-                  // Jika ada, tampilkan kartunya
                   return _buildBookmarkCard(context, ref, bookmark);
                 },
                 loading: () => const Padding(
                   padding: EdgeInsets.symmetric(vertical: 24.0),
                   child: Center(child: CircularProgressIndicator()),
                 ),
-                error: (e, s) => const SizedBox.shrink(), // Sembunyikan jika ada error
+                error: (e, s) => const SizedBox.shrink(),
               ),
 
-              // Kartu navigasi utama
               _buildNavigationCard(context,
                 icon: Icons.list_alt_rounded,
                 title: 'Lihat per Surah',
@@ -68,7 +94,6 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  // Widget untuk header sambutan
   Widget _buildHeader(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,28 +105,18 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  // Widget untuk search bar
+  // #### WIDGET SEARCH BAR DIPERBARUI DI SINI ####
   Widget _buildSearchBar(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(
         hintText: 'Cari surah atau terjemahan...',
         prefixIcon: Icon(Icons.search, color: Colors.grey),
       ),
-      // Menggunakan onSubmitted untuk pengalaman yang lebih stabil
-      onSubmitted: (query) {
-        if (query.trim().length > 2) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SearchResultScreen(query: query.trim()),
-            ),
-          );
-        }
-      },
+      // Menggunakan onChanged dengan debouncing
+      onChanged: _onSearchChanged,
     );
   }
 
-  // Widget untuk menampilkan kartu bookmark
   Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, Bookmark bookmark) {
     return Column(
       children: [
@@ -122,10 +137,12 @@ class HomeScreen extends ConsumerWidget {
               },
             ),
             onTap: () {
-              // Navigasi sesuai tipe bookmark
               if (bookmark.type == 'surah') {
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => SurahDetailScreen(surahId: bookmark.surahId),
+                  builder: (context) => SurahDetailScreen(
+                    surahId: bookmark.surahId,
+                    initialScrollIndex: bookmark.ayahNumber - 1,
+                  ),
                 ));
               } else if (bookmark.type == 'page' && bookmark.pageNumber != null) {
                 Navigator.push(context, MaterialPageRoute(
@@ -140,7 +157,6 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  // Widget untuk kartu navigasi
   Widget _buildNavigationCard(BuildContext context, {required IconData icon, required String title, required VoidCallback onTap}) {
     return Card(
       shape: RoundedRectangleBorder(

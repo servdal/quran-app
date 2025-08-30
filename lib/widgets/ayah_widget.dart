@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
-import 'package:quran_app/providers/settings_provider.dart'; // <-- IMPORT YANG HILANG DITAMBAHKAN DI SINI
+import 'package:quran_app/providers/settings_provider.dart';
 
 class AyahWidget extends ConsumerStatefulWidget {
   final Ayah ayah;
@@ -59,9 +59,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       ayahNumber: widget.ayah.ayaNumber,
       pageNumber: widget.ayah.pageNumber,
     );
-
     await ref.read(bookmarkProvider.notifier).setBookmark(newBookmark);
-    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Bookmark disimpan di Surah ${widget.ayah.suraId}, Ayat ${widget.ayah.ayaNumber}'),
@@ -72,7 +70,19 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final arabicFontSize = ref.watch(arabicFontSizeProvider);
+    final settings = ref.watch(settingsProvider);
+    final arabicFontSize = settings.arabicFontSize;
+    final bookmarkAsync = ref.watch(bookmarkProvider);
+
+    // Cek apakah ayat ini adalah yang sedang di-bookmark
+    final bool isBookmarked = bookmarkAsync.when(
+      data: (bookmark) =>
+          bookmark != null &&
+          bookmark.surahId == widget.ayah.suraId &&
+          bookmark.ayahNumber == widget.ayah.ayaNumber,
+      loading: () => false,
+      error: (e, s) => false,
+    );
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -91,10 +101,13 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
               title: widget.ayah.sajda
                   ? const Row(children: [Text("Ayat Sajdah ۩")])
                   : null,
+              // #### PERUBAHAN IKON DAN FUNGSI TOMBOL DI SINI ####
               trailing: IconButton(
-                icon: const Icon(Icons.bookmark_add_outlined),
-                onPressed: _setBookmark,
-                tooltip: 'Simpan Bookmark',
+                icon: Icon(isBookmarked ? Icons.bookmark : Icons.bookmark_add_outlined),
+                color: isBookmarked ? Theme.of(context).primaryColor : null,
+                tooltip: isBookmarked ? 'Ini adalah bookmark Anda' : 'Simpan Bookmark',
+                // Tombol nonaktif jika sudah di-bookmark
+                onPressed: isBookmarked ? null : _setBookmark,
               ),
             ),
             DefaultTabController(

@@ -17,16 +17,14 @@ final surahDetailProvider = FutureProvider.family<Surah?, int>((ref, surahId) as
   }
 });
 
-// Diubah menjadi ConsumerStatefulWidget untuk mengelola scroll controller
 class SurahDetailScreen extends ConsumerStatefulWidget {
   final int surahId;
-  // #### PARAMETER YANG HILANG DITAMBAHKAN DI SINI ####
   final int? initialScrollIndex;
 
   const SurahDetailScreen({
     super.key,
     required this.surahId,
-    this.initialScrollIndex, // Ditambahkan ke konstruktor
+    this.initialScrollIndex,
   });
 
   @override
@@ -40,7 +38,6 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
   @override
   void initState() {
     super.initState();
-    // Logika untuk scroll otomatis ke ayat yang di-bookmark
     if (widget.initialScrollIndex != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (itemScrollController.isAttached) {
@@ -56,8 +53,6 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final surahDetailAsync = ref.watch(surahDetailProvider(widget.surahId));
-    final settings = ref.watch(settingsProvider);
-    final arabicFontSize = settings.arabicFontSize;
 
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +64,8 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.format_size),
-            onPressed: () => _showFontSizeSlider(context, ref, arabicFontSize),
+            // Panggil fungsi tanpa argumen 'currentSize'
+            onPressed: () => _showFontSizeSlider(context, ref),
           )
         ],
       ),
@@ -106,13 +102,19 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
     );
   }
 
-  void _showFontSizeSlider(BuildContext context, WidgetRef ref, double currentSize) {
+  // #### FUNGSI SLIDER DIPERBAIKI DI SINI ####
+  void _showFontSizeSlider(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setModalState) {
-            final currentSliderSize = ref.watch(settingsProvider).arabicFontSize;
+        // Menggunakan Consumer agar UI di dalam bottom sheet
+        // "mendengarkan" perubahan pada provider.
+        return Consumer(
+          builder: (BuildContext context, WidgetRef ref, Widget? child) {
+            // Membaca (watch) state terbaru dari provider SETIAP KALI ada perubahan.
+            final settings = ref.watch(settingsProvider);
+            final currentFontSize = settings.arabicFontSize;
+
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -120,12 +122,16 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
                 children: [
                   const Text('Ukuran Font Teks Arab'),
                   Slider(
-                    value: currentSliderSize,
+                    // Nilai slider sekarang selalu mengambil dari state terbaru provider.
+                    value: currentFontSize,
                     min: 20,
                     max: 48,
                     divisions: 14,
-                    label: currentSliderSize.round().toString(),
+                    label: currentFontSize.round().toString(),
                     onChanged: (double value) {
+                      // Saat digeser, panggil notifier untuk mengubah state.
+                      // Perubahan ini akan dideteksi oleh ref.watch() di atas,
+                      // sehingga UI slider akan diperbarui secara otomatis.
                       ref.read(settingsProvider.notifier).setFontSize(value);
                     },
                   ),

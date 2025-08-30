@@ -263,7 +263,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Mishary Rashid Alafasy'),
+          const Text('KH Bahaudin Nursalim'),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

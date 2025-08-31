@@ -1,4 +1,4 @@
-# 📖 Al-Quran Digital
+# 📖 Bissmillahirrohmanirrohim
 
 Selamat datang di **Al-Quran Digital**, sebuah aplikasi sumber terbuka (**open-source**) yang dirancang untuk mempermudah Anda dalam membaca, mempelajari, dan merenungi ayat-ayat suci Al-Quran.  
 Aplikasi ini dibangun dengan **Flutter** dan dirancang agar **intuitif, cepat, dan kaya fitur**.
@@ -22,7 +22,7 @@ Aplikasi ini dibangun dengan **Flutter** dan dirancang agar **intuitif, cepat, d
 - **Teks** → Arab + pewarnaan Tajwid + transliterasi Latin.  
 - **Arti** → Terjemahan Bahasa Indonesia.  
 - **Tafsir** → Tafsir Jalalayn.  
-- **Audio** → Lantunan ayat per ayat (offline).  
+- **Audio** → Audio dari Guru Tafsir Jalalain terkemuka KH. Bahauddin Nursalim (proses collecting)  
 
 ✅ **Personalisasi**  
 - **Bookmark** → Simpan bacaan terakhir.  

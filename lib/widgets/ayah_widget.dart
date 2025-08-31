@@ -210,7 +210,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
         height: 2.0,
         color: Theme.of(context).colorScheme.onSurface);
         
-    final textToParse = widget.ayah.tajweedText ?? widget.ayah.ayaText;
+    final textToParse = widget.ayah.tajweedText;
     final textSpans = TajweedParser.parse(textToParse, baseTextStyle);
 
     return SingleChildScrollView(

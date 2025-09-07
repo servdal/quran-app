@@ -1,3 +1,5 @@
+// home_screen.dart (SUDAH DIPERBAIKI)
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,8 +8,10 @@ import 'package:quran_app/screens/page_view_screen.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
+import 'package:quran_app/theme/app_theme.dart';
+import 'package:quran_app/screens/page_list_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// Diubah menjadi ConsumerStatefulWidget untuk mengelola Timer debouncing
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -48,7 +52,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Al-Quran Digital'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown, // mengecilkan teks kalau terlalu panjang
+          child: Text("Tafsir Jalalayn Audio KH. Bahauddin Nursalim"),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -85,9 +92,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 icon: Icons.auto_stories_rounded,
                 title: 'Lihat per Halaman',
                 onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => const PageViewScreen()));
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen()));
                 },
               ),
+              const SizedBox(height: 24),
+              _buildGlossary(context, theme),
+              const SizedBox(height: 32),
+              _buildDeveloperInfo(context),
             ],
           ),
         ),
@@ -99,9 +110,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Assalamualaikum', style: theme.textTheme.bodyMedium?.copyWith(fontSize: 18)),
-        const SizedBox(height: 4),
-        Text('Selamat Datang', style: theme.textTheme.headlineLarge?.copyWith(fontSize: 28)),
+        Text('Assalamualaikum Warohmatullahi Wabarokatuh.', style: theme.textTheme.bodyMedium?.copyWith(fontSize: 18)),
       ],
     );
   }
@@ -128,7 +137,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: ListTile(
             leading: Icon(Icons.bookmark, color: onCardColor, size: 30),
             title: Text('Lanjutkan Membaca', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onCardColor)),
-            subtitle: Text('QS. ${bookmark.surahName}: ${bookmark.ayahNumber}', style: TextStyle(color: onCardColor.withOpacity(0.8))),
+            subtitle: Text('Ayah ${bookmark.ayahNumber} | ${bookmark.surahName} ', style: TextStyle(color: onCardColor.withOpacity(0.8))),
             trailing: IconButton(
               icon: Icon(Icons.delete_outline, color: onCardColor),
               tooltip: 'Hapus Bookmark',
@@ -180,5 +189,88 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-}
 
+  Widget _buildGlossary(BuildContext context, ThemeData theme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Glosarium Tajwid',
+          style: theme.textTheme.headlineLarge?.copyWith(fontSize: 22),
+        ),
+        const SizedBox(height: 12),
+        Card(
+          clipBehavior: Clip.antiAlias, // Agar konten di dalam card mengikuti corner radius
+          margin: EdgeInsets.zero, // Hapus margin default dari Card
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: AppTheme.tajweedRules.length,
+            itemBuilder: (context, index) {
+              final rule = AppTheme.tajweedRules[index];
+              return ExpansionTile(
+                // **Leading:** Ikon lingkaran berwarna
+                leading: CircleAvatar(backgroundColor: rule.color, radius: 12),
+                
+                // **Title:** Nama hukum tajwid yang selalu terlihat
+                title: Text(rule.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                
+                // **Children:** Konten yang muncul saat di-klik (expanded)
+                childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                children: <Widget>[
+                  Text(
+                    rule.description,
+                    textAlign: TextAlign.justify, // Tambahkan ini agar teks rata kanan-kiri
+                    style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildDeveloperInfo(BuildContext context) {
+    final Uri githubUrl = Uri.parse('https://github.com/servdal/quran-app');
+
+    // Fungsi untuk membuka URL
+    Future<void> _launchUrl() async {
+      if (!await launchUrl(githubUrl, mode: LaunchMode.externalApplication)) {
+        // Menampilkan pesan jika gagal membuka URL
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Tidak dapat membuka link: $githubUrl')),
+          );
+        }
+      }
+    }
+
+    return Column(
+      children: [
+        Text(
+          'Dikembangkan dengan ❤️ oleh Duidev Software House',
+          style: Theme.of(context).textTheme.bodySmall,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        InkWell(
+          onTap: _launchUrl, // Panggil fungsi saat di-klik
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            child: Text(
+              'Bantu kembangkan di https://github.com/servdal/quran-app',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                decoration: TextDecoration.underline,
+                decorationColor: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

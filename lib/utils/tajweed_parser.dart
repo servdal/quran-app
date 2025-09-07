@@ -23,7 +23,7 @@ class TajweedParser {
     const String daggerAlef = 'ٰ'; // ٰ (dagger alif)
     const String smallAlef = 'ٲ'; // literal used in source text
 
-    Color _colorForRule(String raw) {
+    Color colorForRule(String raw) {
       // Normalisasi rule: ambil bagian sebelum ':' lalu trim
       String rule = raw;
       final int colon = rule.indexOf(':');
@@ -34,7 +34,7 @@ class TajweedParser {
       return AppTheme.tajweedColors[rule] ?? colorStack.last;
     }
 
-    bool _isDiacritic(String ch) {
+    bool isDiacritic(String ch) {
       if (ch.isEmpty) return false;
       final int cp = ch.codeUnitAt(0);
       // Rentang umum harakat & tanda-tanda Qur'anic combining marks
@@ -44,13 +44,17 @@ class TajweedParser {
     }
 
     /// Normalisasi glyph tertentu sebelum ditampilkan
-    String _normalizeGlyph(String glyph) {
+    String normalizeGlyph(String glyph, {String? next, String? fullText, int? index}) {
       if (glyph == 'ٮٰ') {
         // ba' tanpa titik + alif kecil → alif maqṣūrah
         return 'ى';
       }
       if (glyph == 'ٱ') {
         // alif wasl → alif-lam (tampilan yang diinginkan)
+        if (next == 'ل' || next == 'h') return 'ا';
+        if (fullText != null && index != null && fullText.startsWith('[l[', index + 1)) {
+          return 'ا';
+        }
         return 'ال';
       }
       if (glyph == 'ٲ') {
@@ -60,7 +64,7 @@ class TajweedParser {
       return glyph;
     }
 
-    void _flushBuffer() {
+    void flushBuffer() {
       if (buf.isNotEmpty) {
         spans.add(TextSpan(
           text: buf.toString(),
@@ -72,7 +76,7 @@ class TajweedParser {
 
     // jika ada fatha di akhir buffer atau di akhir span terakhir, hapuslah
     // dan kembalikan true. (digunakan untuk menggabungkan fatha+ٲ -> dagger)
-    bool _removeTrailingFatha() {
+    bool removeTrailingFatha() {
       // Cek buffer terlebih dahulu
       if (buf.isNotEmpty) {
         final String s = buf.toString();
@@ -105,6 +109,8 @@ class TajweedParser {
     int i = 0;
     while (i < text.length) {
       final String ch = text[i];
+      final nextChar = (i + 1 < text.length) ? text[i + 1] : null;
+          
       if (ch == '[') {
         final int end = text.indexOf(']', i);
         if (end == -1) {
@@ -118,7 +124,7 @@ class TajweedParser {
 
         // CASE A: Penutup blok '[]'
         if (inside.isEmpty) {
-          _flushBuffer();
+          flushBuffer();
           if (colorStack.length > 1) {
             colorStack.removeLast();
           }
@@ -136,19 +142,19 @@ class TajweedParser {
           // maka kita ingin menggabungkannya menjadi daggerAlef (ٰ)
           if (innerText.length >= 2 && innerText[0] == fatha && innerText[1] == smallAlef) {
             // Hapus fatha di akhir buffer/last span bila ada, lalu flush
-            final bool hadFatha = _removeTrailingFatha();
-            _flushBuffer();
+            final bool hadFatha = removeTrailingFatha();
+            flushBuffer();
 
             // Ambil harakat setelah bracket (mis. kalau ada tashkil jalan)
             int j = end + 1;
             String diacs = '';
-            while (j < text.length && _isDiacritic(text[j])) {
+            while (j < text.length && isDiacritic(text[j])) {
               diacs = '$diacs${text[j]}';
               j += 1;
             }
 
             // Tampilkan dagger (yang mewakili alif panjang) dengan warna rule
-            final Color c = _colorForRule(ruleName);
+            final Color c = colorForRule(ruleName);
             spans.add(TextSpan(
               text: '$daggerAlef$diacs',
               style: baseStyle.copyWith(color: c),
@@ -159,16 +165,16 @@ class TajweedParser {
           }
 
           // Normal inline: normalisasi glyph di dalamnya, lalu gabungkan harakat setelah ']'
-          innerText = _normalizeGlyph(innerText);
+          innerText = normalizeGlyph(innerText, next: nextChar, fullText: text, index: i);
 
           int j = end + 1;
-          while (j < text.length && _isDiacritic(text[j])) {
+          while (j < text.length && isDiacritic(text[j])) {
             innerText = '$innerText${text[j]}';
             j += 1;
           }
 
-          _flushBuffer();
-          final Color c = _colorForRule(ruleName);
+          flushBuffer();
+          final Color c = colorForRule(ruleName);
           if (innerText.isNotEmpty) {
             spans.add(TextSpan(
               text: innerText,
@@ -180,18 +186,18 @@ class TajweedParser {
         }
 
         // CASE C: Pembuka blok [rule]
-        _flushBuffer();
-        final Color newColor = _colorForRule(inside);
+        flushBuffer();
+        final Color newColor = colorForRule(inside);
         colorStack.add(newColor);
         i = end + 1;
       } else {
         // normal char
-        buf.write(_normalizeGlyph(ch));
+        buf.write(normalizeGlyph(ch, next: nextChar, fullText: text, index: i));
         i += 1;
       }
     }
 
-    _flushBuffer();
+    flushBuffer();
     return spans;
   }
 }

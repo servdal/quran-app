@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Al-Quran Digital',
+      title: 'Tafsir Jalalayn Audio KH. Bahauddin Nursalim',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme, // Gunakan tema baru di sini
       home: const SplashScreen(),

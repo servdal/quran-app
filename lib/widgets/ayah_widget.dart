@@ -42,16 +42,11 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
 
   Future<void> _playAudio() async {
-    // Membaca peta audio dari provider
     final audioMapAsyncValue = ref.read(audioPathsProvider);
-
     audioMapAsyncValue.when(
       data: (audioMap) async {
-        // Mencari jalur audio berdasarkan aya_id
         final audioPath = audioMap[widget.ayah.ayaId];
         if (audioPath != null) {
-          // Menggunakan AssetSource untuk memutar file dari folder assets
-          // replaceFirst('assets/', '') diperlukan agar AssetSource bisa menemukan file
           await _audioPlayer.play(AssetSource(audioPath.replaceFirst('assets/', '')));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +54,9 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
           );
         }
       },
-      loading: () => print("Memuat data audio..."),
+      loading: () => ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Memuat data audio...')),
+      ),
       error: (e, s) => ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Gagal memuat data audio: $e')),
       ),
@@ -78,7 +75,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     final newBookmark = Bookmark(
       type: widget.viewType == BookmarkViewType.page ? 'page' : 'surah',
       surahId: widget.ayah.suraId,
-      surahName: widget.ayah.surah?.englishName ?? 'Surah',
+      surahName: widget.ayah.surah?.name ?? 'Surah ke ${widget.ayah.suraId}',
       ayahNumber: widget.ayah.ayaNumber,
       pageNumber: widget.ayah.pageNumber,
     );
@@ -132,7 +129,10 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       loading: () => false,
       error: (e, s) => false,
     );
-
+    final infoTextStyle = TextStyle(
+      fontSize: 12,
+      color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+    );
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Padding(
@@ -147,9 +147,28 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
                   style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
               ),
-              title: widget.ayah.sajda
-                  ? const Row(children: [Text("Ayat Sajdah ۩")])
-                  : null,
+              title: Wrap(
+                spacing: 8.0, // Jarak horizontal antar item
+                runSpacing: 4.0, // Jarak vertikal jika item turun baris
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text('Juz ${widget.ayah.juzId}', style: infoTextStyle),
+                  Text('Hal. ${widget.ayah.pageNumber}', style: infoTextStyle),
+                  Text('Surah Ke. ${widget.ayah.suraId}', style: infoTextStyle),
+                  // Menampilkan penanda Ayat Sajdah jika ada
+                  if (widget.ayah.sajda)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4.0),
+                      child: Text(
+                        "۩ Ayat Sajdah",
+                        style: infoTextStyle.copyWith(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

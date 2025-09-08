@@ -23,6 +23,7 @@ class SurahInfo {
 
 class Ayah {
   final int ayaId;
+  final int juzId;
   final int ayaNumber;
   final String ayaText;
   final int suraId;
@@ -36,6 +37,7 @@ class Ayah {
 
   Ayah({
     required this.ayaId,
+    required this.juzId,
     required this.ayaNumber,
     required this.ayaText,
     required this.suraId,
@@ -51,6 +53,7 @@ class Ayah {
   factory Ayah.fromJson(Map<String, dynamic> json) {
     return Ayah(
       ayaId: json['aya_id'],
+      juzId: json['juz_id'],
       ayaNumber: json['aya_number'],
       ayaText: json['aya_text'],
       suraId: json['sura_id'],

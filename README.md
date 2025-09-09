@@ -51,6 +51,14 @@ Aplikasi ini adalah hasil kolaborasi antara kecerdasan buatan dan kreativitas ma
 - Prompt oleh: **Duidev Software House**  
 
 ---
+## 🚀 Deploy
+
+Aplikasi ini tersedia di beberapa platform berikut:
+
+- **Android**: [Google Play Store](https://play.google.com/store/apps/details?id=alquran.duidev.com)
+- **Website**: [duidev-project.web.app](https://duidev-project.web.app)
+
+---
 
 ## 📜 Lisensi
 

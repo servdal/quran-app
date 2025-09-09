@@ -1,58 +1,74 @@
-Al-Quran Digital
+# 📖 Al-Quran Digital
 
-Selamat datang di Al-Quran Digital, sebuah aplikasi sumber terbuka (open-source) yang dirancang untuk mempermudah Anda dalam membaca, mempelajari, dan merenungi ayat-ayat suci Al-Quran. Aplikasi ini dibangun dengan Flutter dan dirancang agar intuitif, cepat, dan kaya akan fitur.
-Fitur Utama
+Selamat datang di **Al-Quran Digital**, sebuah aplikasi sumber terbuka (**open-source**) yang dirancang untuk mempermudah Anda dalam membaca, mempelajari, dan merenungi ayat-ayat suci Al-Quran.  
+Aplikasi ini dibangun dengan **Flutter** dan dirancang agar **intuitif, cepat, dan kaya fitur**.
 
-Aplikasi ini dilengkapi dengan berbagai fitur untuk meningkatkan pengalaman membaca Anda:
+---
 
-    Dua Mode Tampilan: Baca Al-Quran berdasarkan halaman (seperti mushaf) atau berdasarkan surah.
+## ✨ Fitur Utama
 
-    Navigasi Mudah: Tombol "Berikutnya" dan "Sebelumnya" untuk berpindah antar surah atau halaman dengan cepat.
+✅ **Dua Mode Tampilan**  
+- Mushaf (per halaman).  
+- Per surah.  
 
-    Pencarian Cerdas:
+✅ **Navigasi Mudah**  
+- Tombol "Berikutnya" & "Sebelumnya" untuk berpindah antar surah/halaman.  
 
-        Cari surah berdasarkan nama.
+✅ **Pencarian Cerdas**  
+- Cari surah berdasarkan nama.  
+- Cari ayat berdasarkan teks terjemahan → langsung lompat ke hasil.  
 
-        Cari ayat berdasarkan teks terjemahan dan langsung lompat ke ayat yang ditemukan.
+✅ **Detail Ayat Lengkap (4 Tab)**  
+- **Teks** → Arab + pewarnaan Tajwid + transliterasi Latin.  
+- **Arti** → Terjemahan Bahasa Indonesia.  
+- **Tafsir** → Tafsir Jalalayn.  
+- **Audio** → Lantunan ayat per ayat (offline).  
 
-    Detail Ayat Lengkap (4 Tab):
+✅ **Personalisasi**  
+- **Bookmark** → Simpan bacaan terakhir.  
+- **Ukuran Font** → Atur besar font Arab sesuai kenyamanan.  
 
-        Teks: Teks Arab asli dengan pewarnaan Tajwid dan teks Latin (transliterasi).
+✅ **Lainnya**  
+- Penanda **ayat sajdah**.  
+- Fitur **berbagi ayat** lengkap (teks Arab, arti, tafsir).  
 
-        Arti: Terjemahan dalam Bahasa Indonesia.
+---
 
-        Tafsir: Tafsir Jalalayn untuk pemahaman yang lebih mendalam.
+## 🛠️ Teknologi
 
-        Audio: Dengarkan lantunan ayat per ayat secara lokal (offline).
+- **Framework**: Flutter  
+- **Manajemen State**: Riverpod  
+- **Data Al-Quran & Tafsir**: Al-Quran Cloud API  
+- **Pewarnaan Tajwid**: Parsing sisi klien dari data mentah  
 
-    Personalisasi:
+---
 
-        Bookmark: Tandai bacaan terakhir Anda dan lanjutkan dengan mudah dari halaman utama.
-
-        Ukuran Font: Sesuaikan ukuran font teks Arab menggunakan slider untuk kenyamanan membaca.
-
-    Penanda Sajdah: Ayat-ayat sajdah ditandai dengan jelas.
-
-    Berbagi Ayat: Salin informasi lengkap ayat (teks Arab, terjemahan, dan tafsir) untuk dibagikan.
-
-Teknologi
-
-    Framework: Flutter
-
-    Manajemen State: Riverpod
-
-    Data Al-Quran & Tafsir: Al-Quran Cloud API
-
-    Pewarnaan Tajwid: Di-parsir di sisi klien dari data mentah.
-
-Pengembang
+## 👨‍💻 Pengembang
 
 Aplikasi ini adalah hasil kolaborasi antara kecerdasan buatan dan kreativitas manusia.
 
-    Dibangun oleh: Gemini (Model AI dari Google)
+- Dibangun oleh: **Gemini (AI Google)**  
+- Prompt oleh: **Duidev Software House**  
 
-    Prompt oleh: Duidev Software House
+---
 
-Lisensi & Distribusi
+## 📜 Lisensi
 
-Aplikasi ini sepenuhnya GRATIS. Anda diizinkan untuk mengunduh, menggunakan, memodifikasi, dan menyebarluaskan aplikasi ini untuk tujuan apa pun.
+Aplikasi ini sepenuhnya **GRATIS**.  
+Anda bebas mengunduh, menggunakan, memodifikasi, dan menyebarluaskan aplikasi ini untuk tujuan apa pun.  
+
+---
+
+## ☕ Dukung Pengembangan
+
+Jika aplikasi ini bermanfaat bagi Anda, silakan berdonasi untuk mendukung update di masa mendatang.  
+
+**Scan QRIS berikut untuk berdonasi:**  
+
+<p align="center">
+  <img src="https://masjidi.duidev.com/qrcodeduidev.png" alt="QRIS Donasi" width="300">
+</p>
+
+---
+
+🙏 Terima kasih atas dukungan dan doanya. Semoga aplikasi ini memberi manfaat bagi banyak orang.

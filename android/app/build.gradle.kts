@@ -1,10 +1,8 @@
 import java.util.Properties
 
-// Muat properti dari file key.properties jika ada
 val keyPropertiesFile = rootProject.file("key.properties")
 val keyProperties = Properties()
 if (keyPropertiesFile.exists()) {
-    // Menggunakan .reader() yang merupakan cara yang benar di Kotlin DSL
     keyProperties.load(keyPropertiesFile.reader())
 }
 
@@ -15,28 +13,25 @@ plugins {
 }
 
 android {
-    namespace = "com.example.quran_app"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    namespace = "quran.duidev.com"
+    compileSdk = 35
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     defaultConfig {
-        applicationId = "com.example.quran_app"
+        applicationId = "quran.duidev.com"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
-
-    // #### BLOK YANG DIPERBARUI ADA DI SINI ####
     signingConfigs {
         create("release") {
             if (keyProperties.containsKey("storeFile")) {
@@ -47,10 +42,8 @@ android {
             }
         }
     }
-
     buildTypes {
         release {
-            // Mengarahkan build rilis untuk menggunakan kunci tanda tangan Anda
             signingConfig = signingConfigs.getByName("release")
         }
     }

@@ -13,8 +13,8 @@ plugins {
 }
 
 android {
-    namespace = "quran.duidev.com"
-    compileSdk = 35
+    namespace = "alquran.duidev.com"
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -26,7 +26,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "quran.duidev.com"
+        applicationId = "alquran.duidev.com"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

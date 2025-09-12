@@ -1,12 +1,13 @@
 import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Enum didefinisikan di SATU tempat saja, di sini.
-enum BookmarkViewType { surah, page }
+// === PERUBAHAN DI SINI ===
+// Menambahkan 'deresan' ke dalam enum
+enum BookmarkViewType { surah, page, deresan }
 
-// Model untuk data bookmark
 class Bookmark {
   final String type;
   final int surahId;
@@ -22,45 +23,38 @@ class Bookmark {
     this.pageNumber,
   });
 
-  // Method untuk mengubah objek Bookmark menjadi Map (untuk JSON)
-  Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'surahId': surahId,
-      'surahName': surahName,
-      'ayahNumber': ayahNumber,
-      'pageNumber': pageNumber,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'surahId': surahId,
+        'surahName': surahName,
+        'ayahNumber': ayahNumber,
+        'pageNumber': pageNumber,
+      };
 
-  // Factory constructor untuk membuat objek Bookmark dari Map (dari JSON)
-  factory Bookmark.fromJson(Map<String, dynamic> json) {
-    return Bookmark(
-      type: json['type'],
-      surahId: json['surahId'],
-      surahName: json['surahName'],
-      ayahNumber: json['ayahNumber'],
-      pageNumber: json['pageNumber'],
-    );
-  }
+  factory Bookmark.fromJson(Map<String, dynamic> json) => Bookmark(
+        type: json['type'],
+        surahId: json['surahId'],
+        surahName: json['surahName'],
+        ayahNumber: json['ayahNumber'],
+        pageNumber: json['pageNumber'],
+      );
 }
 
-// Notifier untuk mengelola state bookmark
 class BookmarkNotifier extends StateNotifier<AsyncValue<Bookmark?>> {
-  BookmarkNotifier(this.ref) : super(const AsyncValue.loading()) {
+  BookmarkNotifier() : super(const AsyncValue.loading()) {
     _loadBookmark();
   }
 
-  final Ref ref;
+  static const String _bookmarkKey = 'bookmark_key';
 
   Future<void> _loadBookmark() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final bookmarkString = prefs.getString('bookmark');
-
-      if (bookmarkString != null) {
-        final bookmark = Bookmark.fromJson(json.decode(bookmarkString));
-        state = AsyncValue.data(bookmark);
+      final bookmarkJson = prefs.getString(_bookmarkKey);
+      if (bookmarkJson != null) {
+        final bookmarkData =
+            Bookmark.fromJson(Map<String, dynamic>.from(json.decode(bookmarkJson)));
+        state = AsyncValue.data(bookmarkData);
       } else {
         state = const AsyncValue.data(null);
       }
@@ -69,22 +63,33 @@ class BookmarkNotifier extends StateNotifier<AsyncValue<Bookmark?>> {
     }
   }
 
-  // Menyimpan bookmark baru menggunakan JSON
-  Future<void> setBookmark(Bookmark bookmark) async {
+  Future<void> setBookmark({
+    required int surahId,
+    required String surahName,
+    required int ayahNumber,
+    required int? pageNumber,
+    required BookmarkViewType viewType,
+  }) async {
+    final bookmark = Bookmark(
+      type: viewType.name,
+      surahId: surahId,
+      surahName: surahName,
+      ayahNumber: ayahNumber,
+      pageNumber: pageNumber,
+    );
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('bookmark', json.encode(bookmark.toJson()));
-    _loadBookmark();
+    await prefs.setString(_bookmarkKey, json.encode(bookmark.toJson()));
+    state = AsyncValue.data(bookmark);
   }
 
-  // Menghapus bookmark
   Future<void> removeBookmark() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('bookmark');
+    await prefs.remove(_bookmarkKey);
     state = const AsyncValue.data(null);
   }
 }
 
-final bookmarkProvider = StateNotifierProvider<BookmarkNotifier, AsyncValue<Bookmark?>>((ref) {
-  return BookmarkNotifier(ref);
+final bookmarkProvider =
+    StateNotifierProvider<BookmarkNotifier, AsyncValue<Bookmark?>>((ref) {
+  return BookmarkNotifier();
 });
-

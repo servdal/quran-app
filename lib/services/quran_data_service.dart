@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:math' show Random; // <-- PERBAIKAN DI SINI
+import 'dart:math' show Random;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/surah_model.dart';

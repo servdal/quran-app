@@ -332,6 +332,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen()));
                   },
                 ),
+                const SizedBox(height: 12),
+                _buildNavigationCard(context, theme,
+                  icon: Icons.menu_book_rounded,
+                  title: 'Deresan AlQuran',
+                  onTap: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen(mode: PageListViewMode.deresan)));
+                  },
+                ),
                 const SizedBox(height: 24),
                 _buildGlossary(context, theme),
                 const SizedBox(height: 32),

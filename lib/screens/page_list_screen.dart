@@ -2,10 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
+import 'package:quran_app/screens/deresan_view_screen.dart'; // Import layar baru
+
+enum PageListViewMode { page, deresan }
 
 class PageListScreen extends StatelessWidget {
-  const PageListScreen({super.key});
-
+  final PageListViewMode mode;
+  const PageListScreen({super.key, this.mode = PageListViewMode.page});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -14,10 +17,8 @@ class PageListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Daftar Halaman'),
       ),
-      // Menggunakan GridView untuk menampilkan nomor halaman dalam bentuk kotak
       body: GridView.builder(
         padding: const EdgeInsets.all(12.0),
-        // Menentukan berapa banyak item per baris dan jaraknya
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4, // 4 kotak per baris
           crossAxisSpacing: 12.0, // Jarak horizontal
@@ -28,13 +29,21 @@ class PageListScreen extends StatelessWidget {
           final pageNumber = index + 1;
           return InkWell(
             onTap: () {
-              // Navigasi ke PageViewScreen dengan membawa nomor halaman yang dipilih
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PageViewScreen(initialPage: pageNumber),
-                ),
-              );
+              if (mode == PageListViewMode.page) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PageViewScreen(initialPage: pageNumber),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeresanViewScreen(initialPage: pageNumber),
+                  ),
+                );
+              }
             },
             borderRadius: BorderRadius.circular(12),
             child: Container(

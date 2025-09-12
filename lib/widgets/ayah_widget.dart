@@ -71,20 +71,16 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     await _audioPlayer.stop();
   }
 
-  Future<void> _setBookmark() async {
-    final newBookmark = Bookmark(
-      type: widget.viewType == BookmarkViewType.page ? 'page' : 'surah',
-      surahId: widget.ayah.suraId,
-      surahName: widget.ayah.surah?.name ?? 'Surah ke ${widget.ayah.suraId}',
-      ayahNumber: widget.ayah.ayaNumber,
-      pageNumber: widget.ayah.pageNumber,
-    );
-    await ref.read(bookmarkProvider.notifier).setBookmark(newBookmark);
+  void _bookmarkAyah(WidgetRef ref) {
+    ref.read(bookmarkProvider.notifier).setBookmark(
+          surahId: widget.ayah.suraId,
+          surahName: widget.ayah.surah?.englishName ?? widget.ayah.suraId.toString(),
+          ayahNumber: widget.ayah.ayaId,
+          pageNumber: widget.ayah.pageNumber,
+          viewType: widget.viewType,
+        );
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Bookmark disimpan di Surah ${widget.ayah.suraId}, Ayat ${widget.ayah.ayaNumber}'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      const SnackBar(content: Text('Ayat telah ditandai.')),
     );
   }
 
@@ -181,7 +177,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
                     icon: Icon(isBookmarked ? Icons.bookmark : Icons.bookmark_add_outlined),
                     color: isBookmarked ? Theme.of(context).primaryColor : null,
                     tooltip: isBookmarked ? 'Ini adalah bookmark Anda' : 'Simpan Bookmark',
-                    onPressed: isBookmarked ? null : _setBookmark,
+                    onPressed: isBookmarked ? null : () => _bookmarkAyah(ref),
                   ),
                 ],
               ),

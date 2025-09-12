@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/models/ayah_model.dart';
-import 'package:quran_app/providers/bookmark_provider.dart'; // Mengimpor enum dari sini
+import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/widgets/ayah_widget.dart';
 

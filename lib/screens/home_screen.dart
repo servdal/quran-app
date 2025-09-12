@@ -17,6 +17,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:quran_app/screens/deresan_view_screen.dart';
 
 
 // Fungsi helper untuk memproses data jadwal sholat, agar bisa digunakan kembali
@@ -404,6 +405,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               } else if (bookmark.type == 'page' && bookmark.pageNumber != null) {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) => PageViewScreen(initialPage: bookmark.pageNumber!),
+                ));
+              } else if (bookmark.type == BookmarkViewType.deresan.name && bookmark.pageNumber != null) {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => DeresanViewScreen(initialPage: bookmark.pageNumber!),
                 ));
               }
             },

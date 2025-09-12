@@ -42,8 +42,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              // Balik arah geser agar sesuai dengan mushaf (kanan ke kiri)
-              reverse: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: 604, // Total halaman dalam mushaf standar
               itemBuilder: (context, index) {
                 // index dimulai dari 0, sedangkan nomor halaman dari 1

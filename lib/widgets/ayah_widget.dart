@@ -74,8 +74,8 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   void _bookmarkAyah(WidgetRef ref) {
     ref.read(bookmarkProvider.notifier).setBookmark(
           surahId: widget.ayah.suraId,
-          surahName: widget.ayah.surah?.englishName ?? widget.ayah.suraId.toString(),
-          ayahNumber: widget.ayah.ayaId,
+          surahName: widget.ayah.surah?.englishName ?? 'Surah ${widget.ayah.suraId}',
+          ayahNumber: widget.ayah.ayaNumber, 
           pageNumber: widget.ayah.pageNumber,
           viewType: widget.viewType,
         );

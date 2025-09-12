@@ -161,7 +161,7 @@ class DeresanPage extends ConsumerWidget {
             height: 2.2,
             color: theme.colorScheme.onSurface,
           );
-          textSpans.addAll(TajweedParser.parse(ayah.ayaText, baseTextStyle));
+          textSpans.addAll(TajweedParser.parse(ayah.tajweedText, baseTextStyle));
           textSpans.add(const TextSpan(text: ' ')); // Spasi antar ayat
 
           // 3. Menambahkan penanda nomor ayat dan sajdah

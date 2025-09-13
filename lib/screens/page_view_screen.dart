@@ -21,7 +21,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
   void initState() {
     super.initState();
     _currentPage = widget.initialPage;
-    // PageController diinisialisasi dengan halaman awal. Ingat, index array dimulai dari 0.
     _pageController = PageController(initialPage: widget.initialPage - 1);
   }
 
@@ -35,7 +34,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Halaman $_currentPage dari 604'),
+        title: Text('$_currentPage dari 604'),
       ),
       body: Column(
         children: [
@@ -43,9 +42,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
             child: PageView.builder(
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 604, // Total halaman dalam mushaf standar
+              itemCount: 604, 
               itemBuilder: (context, index) {
-                // index dimulai dari 0, sedangkan nomor halaman dari 1
                 final pageNumber = index + 1;
                 return _QuranPageWidget(pageNumber: pageNumber);
               },
@@ -56,7 +54,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
               },
             ),
           ),
-          // Tombol navigasi halaman
           _buildPageControls(),
         ],
       ),
@@ -70,18 +67,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ElevatedButton.icon(
-            icon: const Icon(Icons.arrow_back),
-            label: const Text('Sebelumnya'),
-            onPressed: _currentPage > 1
-                ? () {
-                    _pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                  }
-                : null, // Tombol nonaktif jika di halaman pertama
-          ),
-          ElevatedButton.icon(
             icon: const Icon(Icons.arrow_forward),
             label: const Text('Berikutnya'),
             onPressed: _currentPage < 604
@@ -91,15 +76,27 @@ class _PageViewScreenState extends State<PageViewScreen> {
                       curve: Curves.easeOut,
                     );
                   }
-                : null, // Tombol nonaktif jika di halaman terakhir
+                : null,
           ),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.arrow_back),
+            label: const Text('Sebelumnya'),
+            onPressed: _currentPage > 1
+                ? () {
+                    _pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    );
+                  }
+                : null,
+          ),
+          
         ],
       ),
     );
   }
 }
 
-// Widget untuk memuat dan menampilkan konten satu halaman Al-Quran
 class _QuranPageWidget extends ConsumerWidget {
   const _QuranPageWidget({required this.pageNumber});
 
@@ -107,7 +104,6 @@ class _QuranPageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Memanggil provider.family dengan nomor halaman yang sesuai
     final pageDataAsync = ref.watch(pageAyahsProvider(pageNumber));
 
     return pageDataAsync.when(
@@ -119,7 +115,6 @@ class _QuranPageWidget extends ConsumerWidget {
           itemCount: ayahs.length,
           itemBuilder: (context, index) {
             final ayah = ayahs[index];
-            // Cek jika ini adalah ayat pertama dari sebuah surah untuk menampilkan header
             final bool isFirstAyahInSurah = ayah.ayaNumber == 1;
 
             return Column(
@@ -129,7 +124,6 @@ class _QuranPageWidget extends ConsumerWidget {
                   _SurahHeader(surahName: ayah.surah?.name ?? ''),
                 AyahWidget(
                   ayah: ayah,
-                  // Memberi tahu AyahWidget bahwa bookmark harus disimpan sebagai 'page'
                   viewType: BookmarkViewType.page,
                 ),
               ],
@@ -141,7 +135,6 @@ class _QuranPageWidget extends ConsumerWidget {
   }
 }
 
-// Widget untuk header nama surah
 class _SurahHeader extends StatelessWidget {
   const _SurahHeader({required this.surahName});
 

@@ -64,7 +64,6 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.format_size),
-            // Panggil fungsi tanpa argumen 'currentSize'
             onPressed: () => _showFontSizeSlider(context, ref),
           )
         ],
@@ -102,16 +101,12 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
     );
   }
 
-  // #### FUNGSI SLIDER DIPERBAIKI DI SINI ####
   void _showFontSizeSlider(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        // Menggunakan Consumer agar UI di dalam bottom sheet
-        // "mendengarkan" perubahan pada provider.
         return Consumer(
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
-            // Membaca (watch) state terbaru dari provider SETIAP KALI ada perubahan.
             final settings = ref.watch(settingsProvider);
             final currentFontSize = settings.arabicFontSize;
 
@@ -122,16 +117,12 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
                 children: [
                   const Text('Ukuran Font Teks Arab'),
                   Slider(
-                    // Nilai slider sekarang selalu mengambil dari state terbaru provider.
                     value: currentFontSize,
                     min: 20,
                     max: 48,
                     divisions: 14,
                     label: currentFontSize.round().toString(),
                     onChanged: (double value) {
-                      // Saat digeser, panggil notifier untuk mengubah state.
-                      // Perubahan ini akan dideteksi oleh ref.watch() di atas,
-                      // sehingga UI slider akan diperbarui secara otomatis.
                       ref.read(settingsProvider.notifier).setFontSize(value);
                     },
                   ),

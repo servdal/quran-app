@@ -107,36 +107,33 @@ class AppTheme {
     for (var rule in tajweedRules) rule.key: rule.color,
   };
 
-  // #### TEMA TERANG BARU DIDEFINISikan DI SINI ####
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    primaryColor: const Color(0xFF16A34A), // Hijau
-    scaffoldBackgroundColor: const Color(0xFFF8F9FA), // Latar belakang abu-abu sangat terang
+    primaryColor: const Color(0xFF16A34A), 
+    scaffoldBackgroundColor: const Color(0xFFF8F9FA),
     
     colorScheme: const ColorScheme.light(
       primary: Color(0xFF16A34A),
-      secondary: Color(0xFF1B7942), // Hijau lebih gelap untuk aksen
+      secondary: Color(0xFF1B7942),
       background: Color(0xFFF8F9FA),
-      surface: Colors.white, // Warna Card
-      onPrimary: Colors.white, // Teks di atas warna primer (misal: tombol)
-      onBackground: Color(0xFF212529), // Warna teks utama
-      onSurface: Color(0xFF212529), // Warna teks di atas card
+      surface: Colors.white,
+      onPrimary: Colors.white,
+      onBackground: Color(0xFF212529),
+      onSurface: Color(0xFF212529),
     ),
 
     fontFamily: 'Poppins',
     
     textTheme: const TextTheme(
       headlineLarge: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: Color(0xFF212529)),
-      // Warna bodyMedium digelapkan sedikit untuk kontras yang lebih baik
       bodyMedium: TextStyle(fontFamily: 'Poppins', color: Color(0xFF212529), height: 1.5),
       labelLarge: TextStyle(fontFamily: 'Poppins', color: Colors.white, fontWeight: FontWeight.bold),
     ),
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white, // AppBar berwarna putih
+      backgroundColor: Colors.white,
       elevation: 1,
       centerTitle: true,
-      // Ikon dan teks di AppBar berwarna gelap
       iconTheme: IconThemeData(color: Color(0xFF212529)),
       titleTextStyle: TextStyle(fontFamily: 'Poppins', fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF212529))
     ),
@@ -152,7 +149,7 @@ class AppTheme {
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.grey[100], // Latar search bar
+      fillColor: Colors.grey[100],
       hintStyle: TextStyle(color: Colors.grey[500]),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -162,8 +159,7 @@ class AppTheme {
     
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF16A34A), // Warna primer
-        // Warna teks tombol diubah sesuai permintaan
+        backgroundColor: const Color(0xFF16A34A),
         foregroundColor: const Color(0xFFFFFFFF), 
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -180,12 +176,11 @@ class AppTheme {
       indicator: const UnderlineTabIndicator(
         borderSide: BorderSide(color: Color(0xFF16A34A), width: 2),
       ),
-      labelColor: const Color(0xFF16A34A), // Tab yang aktif berwarna hijau
-      unselectedLabelColor: Colors.grey[600], // Tab yang tidak aktif berwarna abu-abu
+      labelColor: const Color(0xFF16A34A),
+      unselectedLabelColor: Colors.grey[600],
     ),
   );
   
-  // Tema gelap yang lama tetap ada jika Anda ingin menggunakannya lagi
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: const Color(0xFF16A34A),

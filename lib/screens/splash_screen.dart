@@ -32,7 +32,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       });
     }
 
-    // Tunggu beberapa detik agar pengguna bisa melihat splash screen
     await Future.delayed(const Duration(seconds: 5));
 
     if (mounted) {
@@ -44,41 +43,34 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Mengambil data tema saat ini (terang atau gelap)
     final theme = Theme.of(context);
     final Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      // Latar belakang sekarang mengambil dari scaffoldBackgroundColor tema
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
           child: Column(
             children: [
-              // Logo Aplikasi
               Image.asset('assets/images/main_logo.png', height: screenSize.height * 0.15),
-              const SizedBox(height: 16),
-              
-              // Judul Aplikasi
+              const SizedBox(height: 16),              
               Text(
-                'Al-Quran Digital',
+                'Tafsir Jalalayn dan Audio KH. Bahauddin Nursalim (Gus Baha)',
                 style: theme.textTheme.headlineLarge?.copyWith(
-                  fontSize: 32,
-                  color: theme.primaryColor, // Warna hijau dari tema
+                  fontSize: 30,
+                  color: theme.primaryColor,
                   letterSpacing: 1.5,
                   shadows: [
                     Shadow(
                       offset: const Offset(0, 0),
                       blurRadius: 15.0,
-                      color: theme.primaryColor.withOpacity(0.5), // Efek glow
+                      color: theme.primaryColor.withOpacity(0.5),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
-
-              // Bagian Tengah
+              const SizedBox(height: 30),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -95,13 +87,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   ],
                 ),
               ),
-
-              // Footer: Ayat Acak
               if (_randomAyah != null)
                 Container(
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surface, // Warna card
+                    color: theme.colorScheme.surface,
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
@@ -122,7 +112,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         style: TextStyle(
                           fontFamily: 'LPMQ',
                           fontSize: 24,
-                          // Warna teks Arab mengambil dari tema
                           color: theme.colorScheme.onSurface,
                           height: 1.8,
                         ),
@@ -134,7 +123,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 14,
-                          // Warna terjemahan mengambil dari tema
                           color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8),
                         ),
                       ),

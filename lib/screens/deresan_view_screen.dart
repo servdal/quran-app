@@ -5,7 +5,6 @@ import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
 
-// Layar utama yang mengelola navigasi halaman (PageView)
 class DeresanViewScreen extends StatefulWidget {
   final int initialPage;
 
@@ -32,11 +31,9 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
     super.dispose();
   }
   
-  // Fungsi untuk menampilkan modal pengaturan
   void _showSettingsModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      // === PERUBAHAN: Melewatkan nomor halaman saat ini ke modal ===
       builder: (ctx) => SettingsModalContent(currentPage: _currentPage),
     );
   }
@@ -45,7 +42,7 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Deresan - Halaman $_currentPage'),
+        title: Text('Hal. $_currentPage'),
         actions: [
           IconButton(
             icon: const Icon(Icons.tune),
@@ -58,9 +55,8 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
         children: [
           PageView.builder(
             controller: _pageController,
-            // === PERUBAHAN: Menonaktifkan scroll dengan swipe gesture ===
             physics: const NeverScrollableScrollPhysics(), 
-            itemCount: 604, // Jumlah halaman Al-Quran
+            itemCount: 604,
             onPageChanged: (page) {
               setState(() {
                 _currentPage = page + 1;
@@ -70,14 +66,12 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
               return DeresanPage(pageNumber: index + 1);
             },
           ),
-          // Tombol Navigasi di bagian bawah
           _buildNavigationControls(),
         ],
       ),
     );
   }
 
-  // Widget untuk tombol navigasi "Sebelumnya" dan "Selanjutnya"
   Widget _buildNavigationControls() {
     return Align(
       alignment: Alignment.bottomCenter,
@@ -88,16 +82,6 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ElevatedButton.icon(
-              icon: const Icon(Icons.arrow_back),
-              label: const Text('Sebelumnya'),
-              onPressed: () {
-                _pageController.previousPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              },
-            ),
-            ElevatedButton.icon(
               label: const Text('Selanjutnya'),
               icon: const Icon(Icons.arrow_forward),
               onPressed: () {
@@ -107,6 +91,17 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
                 );
               },
             ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.arrow_back),
+              label: const Text('Sebelumnya'),
+              onPressed: () {
+                _pageController.previousPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              },
+            ),
+            
           ],
         ),
       ),
@@ -115,7 +110,6 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
 }
 
 
-// Widget yang menampilkan konten satu halaman Al-Quran
 class DeresanPage extends ConsumerWidget {
   final int pageNumber;
 
@@ -145,7 +139,6 @@ class DeresanPage extends ConsumerWidget {
         String currentSurah = '';
 
         for (var ayah in ayahs) {
-          // 1. Menambahkan header surah jika surah berganti
           if (ayah.surah!.englishName != currentSurah) {
             currentSurah = ayah.surah!.englishName;
             textSpans.add(WidgetSpan(
@@ -154,7 +147,6 @@ class DeresanPage extends ConsumerWidget {
             ));
           }
 
-          // 2. Menambahkan teks ayat dengan tajwid
           final baseTextStyle = TextStyle(
             fontFamily: 'LPMQ',
             fontSize: settings.arabicFontSize,
@@ -164,12 +156,11 @@ class DeresanPage extends ConsumerWidget {
           textSpans.addAll(TajweedParser.parse(ayah.tajweedText, baseTextStyle));
           textSpans.add(const TextSpan(text: ' ')); // Spasi antar ayat
 
-          // 3. Menambahkan penanda nomor ayat dan sajdah
           textSpans.add(WidgetSpan(
             child: _AyahNumberMarker(
               number: _convertToArabicNumber(ayah.ayaNumber),
               hasSajda: ayah.sajda,
-              fontSize: settings.arabicFontSize * 0.75, // Ukuran penanda relatif
+              fontSize: settings.arabicFontSize * 0.75,
             ),
             alignment: PlaceholderAlignment.middle,
           ));
@@ -177,7 +168,6 @@ class DeresanPage extends ConsumerWidget {
         }
 
         return SingleChildScrollView(
-          // === PERUBAHAN: Menambahkan padding bawah agar tidak tertutup tombol navigasi ===
           padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 80.0), 
           child: RichText(
             textAlign: TextAlign.justify,
@@ -192,7 +182,6 @@ class DeresanPage extends ConsumerWidget {
   }
 }
 
-// Widget untuk header nama surah
 class _SurahHeaderWidget extends StatelessWidget {
   final String surahName;
   const _SurahHeaderWidget({required this.surahName});
@@ -224,7 +213,6 @@ class _SurahHeaderWidget extends StatelessWidget {
   }
 }
 
-// Widget untuk penanda nomor ayat
 class _AyahNumberMarker extends StatelessWidget {
   final String number;
   final bool hasSajda;
@@ -264,9 +252,7 @@ class _AyahNumberMarker extends StatelessWidget {
   }
 }
 
-// Widget untuk konten modal pengaturan
 class SettingsModalContent extends ConsumerWidget {
-  // === PERUBAHAN: Menambahkan properti untuk menerima nomor halaman ===
   final int currentPage;
   const SettingsModalContent({super.key, required this.currentPage});
 
@@ -296,13 +282,10 @@ class SettingsModalContent extends ConsumerWidget {
             child: ElevatedButton.icon(
               icon: const Icon(Icons.bookmark_add),
               label: const Text('Tandai Halaman Ini'),
-              // === PERUBAHAN: Menambahkan logika bookmark halaman ===
               onPressed: () async {
-                // Ambil data ayat untuk halaman saat ini
                 final ayahs = await ref.read(pageAyahsProvider(currentPage).future);
                 if (ayahs.isNotEmpty) {
                   final firstAyah = ayahs.first;
-                  // Simpan bookmark dengan data ayat pertama sebagai acuan
                   ref.read(bookmarkProvider.notifier).setBookmark(
                         surahId: firstAyah.suraId,
                         surahName: firstAyah.surah!.englishName,

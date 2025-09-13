@@ -9,7 +9,6 @@ class SurahListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Menggunakan provider untuk mendapatkan data semua surah secara asynchronous
     final allSurahsAsyncValue = ref.watch(allSurahsProvider);
 
     return Scaffold(
@@ -17,15 +16,12 @@ class SurahListScreen extends ConsumerWidget {
         title: const Text('Daftar Surah'),
       ),
       body: allSurahsAsyncValue.when(
-        // Tampilan saat data sedang dimuat
         loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
-        // Tampilan jika terjadi error
         error: (error, stackTrace) => Center(
           child: Text('Gagal memuat data: $error'),
         ),
-        // Tampilan saat data berhasil dimuat
         data: (surahs) {
           return ListView.builder(
             itemCount: surahs.length,
@@ -40,7 +36,6 @@ class SurahListScreen extends ConsumerWidget {
   }
 }
 
-// Widget kustom untuk setiap item dalam daftar surah
 class _SurahListItem extends StatelessWidget {
   const _SurahListItem({required this.surah});
 
@@ -48,7 +43,6 @@ class _SurahListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mengambil data tema saat ini untuk pewarnaan dinamis
     final theme = Theme.of(context);
 
     return Card(
@@ -67,7 +61,6 @@ class _SurahListItem extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              // Bagian Nomor Surah
               Container(
                 width: 40,
                 height: 40,
@@ -87,7 +80,6 @@ class _SurahListItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              // Bagian Info Surah (Nama Latin, Tipe, Jumlah Ayat)
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +89,7 @@ class _SurahListItem extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.onSurface, // Warna teks utama
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -105,19 +97,18 @@ class _SurahListItem extends StatelessWidget {
                       '${surah.revelationType} • ${surah.ayahs.length} Ayat',
                       style: TextStyle(
                         fontSize: 12,
-                        color: theme.textTheme.bodyMedium?.color, // Warna teks sekunder
+                        color: theme.textTheme.bodyMedium?.color,
                       ),
                     ),
                   ],
                 ),
               ),
-              // Bagian Nama Arab
               Text(
                 surah.name,
                 style: TextStyle(
                   fontFamily: 'LPMQ',
                   fontSize: 22,
-                  color: theme.primaryColor, // Warna aksen hijau
+                  color: theme.primaryColor,
                 ),
               ),
             ],

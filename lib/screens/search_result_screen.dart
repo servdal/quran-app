@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/services/quran_data_service.dart';
-import 'package:quran_app/screens/surah_detail_screen.dart'; // Import untuk navigasi
+import 'package:quran_app/screens/surah_detail_screen.dart';
 
-// Provider untuk hasil pencarian
 final searchResultsProvider = FutureProvider.family<List<Map<String, dynamic>>, String>((ref, query) async {
-  if (query.length < 3) return []; // Jangan cari jika query terlalu pendek
+  if (query.length < 3) return [];
   final service = ref.read(quranDataServiceProvider);
   await service.loadAllSurahData();
   return service.searchAyahs(query);
@@ -36,7 +35,6 @@ class SearchResultScreen extends ConsumerWidget {
                 title: Text('QS. ${result['surahName']} : ${result['ayahNumber']}'),
                 subtitle: Text(result['ayahTextPreview'], maxLines: 2, overflow: TextOverflow.ellipsis),
                 onTap: () {
-                  // Navigasi ke surah dan ayat spesifik (fitur scroll otomatis belum ada)
                   Navigator.push(
                     context,
                     MaterialPageRoute(

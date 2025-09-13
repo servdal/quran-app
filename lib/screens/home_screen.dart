@@ -1,5 +1,3 @@
-// home_screen.dart (REVISI FINAL)
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io'; 
@@ -20,7 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quran_app/screens/deresan_view_screen.dart';
 
 
-// Fungsi helper untuk memproses data jadwal sholat, agar bisa digunakan kembali
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
 
@@ -63,9 +60,9 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
     "timings": timings,
     "closestPrayer": nextPrayerName,
     "closestTime": nextPrayerTime,
-    "closestDiff": closestDiff, // Mengembalikan Duration, bukan menit
+    "closestDiff": closestDiff,
     "location": data["data"]["meta"]["timezone"],
-    "isOffline": false, // Menandakan data ini dari online
+    "isOffline": false,
   };
 }
 
@@ -94,7 +91,6 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
     final response = await http.get(Uri.parse("http://api.aladhan.com/v1/timings?latitude=$lat&longitude=$lng"));
 
     if (response.statusCode == 200) {
-      // Jika berhasil, simpan data ke SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('last_prayer_data', response.body);
       return _processPrayerData(response.body);
@@ -102,15 +98,13 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
       throw Exception("Gagal terhubung ke server waktu sholat.");
     }
   } on SocketException {
-    // === PERUBAHAN: Logika Fallback ke data offline ===
     final prefs = await SharedPreferences.getInstance();
     final offlineData = prefs.getString('last_prayer_data');
     if (offlineData != null) {
       final processedData = _processPrayerData(offlineData);
-      processedData['isOffline'] = true; // Tandai bahwa data ini offline
+      processedData['isOffline'] = true;
       return processedData;
     } else {
-      // Jika tidak ada koneksi dan tidak ada data offline, baru lempar error
       throw Exception("Tidak ada koneksi internet dan tidak ada data tersimpan.");
     }
   }
@@ -137,14 +131,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
   
   void _startCountdown(DateTime prayerTime) {
-    _countdownTimer?.cancel(); // Batalkan timer lama jika ada
+    _countdownTimer?.cancel();
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       final now = DateTime.now();
       final diff = prayerTime.difference(now);
 
       if (diff.isNegative) {
         timer.cancel();
-        // Reload provider untuk mendapatkan jadwal sholat berikutnya
         ref.invalidate(prayerProvider);
       } else {
         if (mounted) {
@@ -184,7 +177,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final bookmarkAsync = ref.watch(bookmarkProvider);
     final theme = Theme.of(context);
 
-    // Dengar perubahan provider untuk memulai countdown
     ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
       next.whenData((prayerData) {
         final DateTime? closestTime = prayerData['closestTime'];
@@ -209,14 +201,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onPressed: () {
               showAboutDialog(
                 context: context,
-                applicationName: 'Tafsir Jalalayn Audio',
-                applicationVersion: '1.0.0',
+                applicationName: 'Tafsir Jalalayn dengan Audio Gus Baha',
+                applicationVersion: '3.0.0',
                 applicationIcon: const Icon(Icons.mosque_rounded, size: 48),
                 applicationLegalese: '© 2025 Duidev Software House',
                 children: <Widget>[
                   const SizedBox(height: 24),
                   const Text(
-                    'Aplikasi ini menyediakan tafsir audio Al-Quran (Jalalayn) oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya.',
+                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 13 September 2025 / السبت , ٢١ رَبيع الأوّل ١٤٤٧',
                     textAlign: TextAlign.justify,
                   ),
                 ],

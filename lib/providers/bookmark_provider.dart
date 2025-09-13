@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-// === PERUBAHAN DI SINI ===
-// Menambahkan 'deresan' ke dalam enum
 enum BookmarkViewType { surah, page, deresan }
 
 class Bookmark {

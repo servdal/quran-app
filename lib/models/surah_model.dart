@@ -7,8 +7,7 @@ class Surah {
   final String englishName;
   final String englishNameTranslation;
   final String revelationType;
-  final List<Ayah> ayahs; // Daftar ayat dalam surah ini
-
+  final List<Ayah> ayahs;
   Surah({
     required this.suraId,
     required this.name,

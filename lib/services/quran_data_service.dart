@@ -10,7 +10,6 @@ final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
   final jsonMap = json.decode(jsonString);
   final List<dynamic> audioList = jsonMap['audio_mapping'];
   
-  // Mengubah daftar menjadi peta untuk akses instan: { 1: "path/1.mp3", 2: "path/2.mp3", ... }
   final Map<int, String> audioPaths = {
     for (var item in audioList)
       item['aya_id']: item['path_audio']
@@ -59,7 +58,6 @@ class QuranDataService {
     print('All surah data loaded successfully.');
   }
 
-  // #### FUNGSI BARU YANG DITAMBAHKAN ####
   Future<List<Map<String, dynamic>>> searchAyahs(String query) async {
     if (!_isLoaded) {
       await loadAllSurahData();
@@ -71,18 +69,15 @@ class QuranDataService {
     String lowerCaseQuery = query.toLowerCase();
 
     for (var surah in _allSurahs) {
-      // Cek apakah nama surah cocok
       if (surah.englishName.toLowerCase().contains(lowerCaseQuery) || surah.name.contains(lowerCaseQuery)) {
-          // Jika nama surah cocok, tambahkan hasil yang mengarah ke surah tersebut
           results.add({
             'surahId': surah.suraId,
-            'ayahNumber': 1, // Arahkan ke ayat pertama
+            'ayahNumber': 1,
             'surahName': surah.englishName,
             'ayahTextPreview': 'Membuka Surah ${surah.englishName}', 
           });
       }
 
-      // Cek setiap ayat di dalam surah
       for (var ayah in surah.ayahs) {
         if (ayah.translationAyaText.toLowerCase().contains(lowerCaseQuery)) {
           results.add({
@@ -96,7 +91,6 @@ class QuranDataService {
     }
     return results;
   }
-  // #########################################
 
   List<Surah> getAllSurahs() {
     return _allSurahs;

@@ -20,11 +20,11 @@ class PageListScreen extends StatelessWidget {
       body: GridView.builder(
         padding: const EdgeInsets.all(12.0),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, // 4 kotak per baris
-          crossAxisSpacing: 12.0, // Jarak horizontal
-          mainAxisSpacing: 12.0, // Jarak vertikal
+          crossAxisCount: 4,
+          crossAxisSpacing: 12.0, 
+          mainAxisSpacing: 12.0,
         ),
-        itemCount: 604, // Total halaman dalam Al-Qur'an
+        itemCount: 604,
         itemBuilder: (context, index) {
           final pageNumber = index + 1;
           return InkWell(

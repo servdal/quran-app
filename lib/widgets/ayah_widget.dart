@@ -85,7 +85,6 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
 
   Future<void> _copyRawData() async {
-    // Membuat string multi-baris yang terformat
     final String fullAyahText = """
     Surah ${widget.ayah.surah?.englishName ?? widget.ayah.suraId} Ayat ${widget.ayah.ayaNumber}
 
@@ -102,7 +101,6 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     ${widget.ayah.tafsirJalalayn}
     """;
 
-    // Menyalin string yang sudah diformat ke clipboard
     await Clipboard.setData(ClipboardData(text: fullAyahText.trim()));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -144,14 +142,13 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
                 ),
               ),
               title: Wrap(
-                spacing: 8.0, // Jarak horizontal antar item
-                runSpacing: 4.0, // Jarak vertikal jika item turun baris
+                spacing: 8.0,
+                runSpacing: 4.0,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text('Juz ${widget.ayah.juzId}', style: infoTextStyle),
                   Text('Hal. ${widget.ayah.pageNumber}', style: infoTextStyle),
                   Text('Surah Ke. ${widget.ayah.suraId}', style: infoTextStyle),
-                  // Menampilkan penanda Ayat Sajdah jika ada
                   if (widget.ayah.sajda)
                     Padding(
                       padding: const EdgeInsets.only(left: 4.0),
@@ -216,9 +213,6 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
 
   Widget _buildTextTab(double fontSize) {
-    // #### PERBAIKAN DI SINI ####
-    // Warna teks dasar sekarang diambil dari tema (onSurface color)
-    // yang akan menjadi hitam di tema terang dan putih di tema gelap.
     final baseTextStyle = TextStyle(
         fontFamily: 'LPMQ',
         fontSize: fontSize,
@@ -250,7 +244,6 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
             style: TextStyle(
               fontSize: fontSize * 0.6,
               fontStyle: FontStyle.italic,
-              // Warna teks latin juga mengambil dari tema agar lebih konsisten
               color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
             ),
           ),
@@ -278,7 +271,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('KH Bahaudin Nursalim'),
+          const Text('KH Bahauddin Nursalim'),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

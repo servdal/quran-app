@@ -54,11 +54,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           child: Column(
             children: [
               Image.asset('assets/images/main_logo.png', height: screenSize.height * 0.15),
-              const SizedBox(height: 16),              
+              const SizedBox(height: 16),
+              
               Text(
-                'Tafsir Jalalayn dan Audio KH. Bahauddin Nursalim (Gus Baha)',
+                'Al-Quran Digital',
                 style: theme.textTheme.headlineLarge?.copyWith(
-                  fontSize: 30,
+                  fontSize: 32,
                   color: theme.primaryColor,
                   letterSpacing: 1.5,
                   shadows: [
@@ -70,7 +71,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 40),
+
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,6 +89,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   ],
                 ),
               ),
+
               if (_randomAyah != null)
                 Container(
                   padding: const EdgeInsets.all(16.0),

@@ -208,8 +208,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: <Widget>[
                   const SizedBox(height: 24),
                   const Text(
-                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 13 September 2025 / السبت , ٢١ رَبيع الأوّل ١٤٤٧',
+                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 13 September 2025',
                     textAlign: TextAlign.justify,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.right,
+                    text: TextSpan(text: '( السبت , ٢١ رَبيع الأوّل ١٤٤٧ هـ )'),
                   ),
                 ],
               );

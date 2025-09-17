@@ -4,7 +4,7 @@ import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
-
+import 'package:quran_app/theme/app_theme.dart';
 class DeresanViewScreen extends StatefulWidget {
   final int initialPage;
 
@@ -150,17 +150,17 @@ class DeresanPage extends ConsumerWidget {
           final baseTextStyle = TextStyle(
             fontFamily: 'LPMQ',
             fontSize: settings.arabicFontSize,
-            height: 2.2,
+            height: 2,
             color: theme.colorScheme.onSurface,
           );
           textSpans.addAll(TajweedParser.parse(ayah.tajweedText, baseTextStyle));
-          textSpans.add(const TextSpan(text: ' ')); // Spasi antar ayat
+          textSpans.add(const TextSpan(text: ' '));
 
           textSpans.add(WidgetSpan(
             child: _AyahNumberMarker(
               number: _convertToArabicNumber(ayah.ayaNumber),
               hasSajda: ayah.sajda,
-              fontSize: settings.arabicFontSize * 0.75,
+              fontSize: settings.arabicFontSize * 0.8,
             ),
             alignment: PlaceholderAlignment.middle,
           ));
@@ -244,6 +244,7 @@ class _AyahNumberMarker extends StatelessWidget {
               fontSize: fontSize,
               fontFamily: 'LPMQ',
               fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.onSurface
             ),
           ),
         ],

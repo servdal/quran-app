@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
-import 'package:quran_app/screens/deresan_view_screen.dart'; // Import layar baru
+import 'package:quran_app/screens/deresan_view_screen.dart';
 
 enum PageListViewMode { page, deresan }
 

@@ -67,8 +67,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ElevatedButton.icon(
-            icon: const Icon(Icons.arrow_forward),
-            label: const Text('Berikutnya'),
+            icon: const Icon(Icons.arrow_back),
+            label: const Text(' '),
             onPressed: _currentPage < 604
                 ? () {
                     _pageController.nextPage(
@@ -79,8 +79,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
                 : null,
           ),
           ElevatedButton.icon(
-            icon: const Icon(Icons.arrow_back),
-            label: const Text('Sebelumnya'),
+            icon: const Icon(Icons.arrow_forward),
+            label: const Text(' '),
             onPressed: _currentPage > 1
                 ? () {
                     _pageController.previousPage(

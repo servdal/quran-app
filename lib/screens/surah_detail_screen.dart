@@ -144,7 +144,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
           if (currentSurahId > 1)
             ElevatedButton.icon(
               icon: const Icon(Icons.arrow_back),
-              label: const Text('Sebelumnya'),
+              label: const Text(' '),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
@@ -158,7 +158,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
           if (currentSurahId < 114)
             ElevatedButton.icon(
               icon: const Icon(Icons.arrow_forward),
-              label: const Text('Berikutnya'),
+              label: const Text(' '),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,

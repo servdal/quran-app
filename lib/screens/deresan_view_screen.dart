@@ -82,8 +82,8 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ElevatedButton.icon(
-              label: const Text('Selanjutnya'),
-              icon: const Icon(Icons.arrow_forward),
+              icon: const Icon(Icons.arrow_back),
+              label: const Text(' '),
               onPressed: () {
                 _pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
@@ -92,8 +92,8 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
               },
             ),
             ElevatedButton.icon(
-              icon: const Icon(Icons.arrow_back),
-              label: const Text('Sebelumnya'),
+              icon: const Icon(Icons.arrow_forward),
+              label: const Text(' '),
               onPressed: () {
                 _pageController.previousPage(
                   duration: const Duration(milliseconds: 300),

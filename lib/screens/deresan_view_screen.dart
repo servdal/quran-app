@@ -4,7 +4,6 @@ import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
-import 'package:quran_app/theme/app_theme.dart';
 class DeresanViewScreen extends StatefulWidget {
   final int initialPage;
 

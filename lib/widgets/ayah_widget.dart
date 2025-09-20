@@ -127,88 +127,82 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       fontSize: 12,
       color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
     );
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-                child: Text(
-                  widget.ayah.ayaNumber.toString(),
-                  style: TextStyle(color: Theme.of(context).primaryColor),
+    return Column(
+      children: [
+        ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+            child: Text(
+              widget.ayah.ayaNumber.toString(),
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+          ),
+          title: Wrap(
+            spacing: 8.0,
+            runSpacing: 4.0,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text('Juz ${widget.ayah.juzId}', style: infoTextStyle),
+              Text('Hal. ${widget.ayah.pageNumber}', style: infoTextStyle),
+              Text('Surah Ke. ${widget.ayah.suraId}', style: infoTextStyle),
+              if (widget.ayah.sajda)
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    "۩ Ayat Sajdah",
+                    style: infoTextStyle.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
+            ],
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.content_copy_outlined),
+                tooltip: 'Salin Data Mentah',
+                onPressed: _copyRawData,
               ),
-              title: Wrap(
-                spacing: 8.0,
-                runSpacing: 4.0,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text('Juz ${widget.ayah.juzId}', style: infoTextStyle),
-                  Text('Hal. ${widget.ayah.pageNumber}', style: infoTextStyle),
-                  Text('Surah Ke. ${widget.ayah.suraId}', style: infoTextStyle),
-                  if (widget.ayah.sajda)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4.0),
-                      child: Text(
-                        "۩ Ayat Sajdah",
-                        style: infoTextStyle.copyWith(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                ],
+              IconButton(
+                icon: Icon(isBookmarked ? Icons.bookmark : Icons.bookmark_add_outlined),
+                color: isBookmarked ? Theme.of(context).primaryColor : null,
+                tooltip: isBookmarked ? 'Ini adalah bookmark Anda' : 'Simpan Bookmark',
+                onPressed: isBookmarked ? null : () => _bookmarkAyah(ref),
               ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.content_copy_outlined),
-                    tooltip: 'Salin Data Mentah',
-                    onPressed: _copyRawData,
-                  ),
-                  IconButton(
-                    icon: Icon(isBookmarked ? Icons.bookmark : Icons.bookmark_add_outlined),
-                    color: isBookmarked ? Theme.of(context).primaryColor : null,
-                    tooltip: isBookmarked ? 'Ini adalah bookmark Anda' : 'Simpan Bookmark',
-                    onPressed: isBookmarked ? null : () => _bookmarkAyah(ref),
-                  ),
-                ],
-              ),
-            ),
-            DefaultTabController(
-              length: 4,
-              child: Column(
-                children: [
-                  const TabBar(
-                    isScrollable: true,
-                    tabs: [
-                      Tab(text: 'Teks'),
-                      Tab(text: 'Arti'),
-                      Tab(text: 'Tafsir'),
-                      Tab(text: 'Audio'),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 280,
-                    child: TabBarView(
-                      children: [
-                        _buildTextTab(arabicFontSize),
-                        _buildTranslationTab(),
-                        _buildTafsirTab(),
-                        _buildAudioTab(),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        DefaultTabController(
+          length: 4,
+          child: Column(
+            children: [
+              const TabBar(
+                isScrollable: true,
+                tabs: [
+                  Tab(text: 'Teks'),
+                  Tab(text: 'Arti'),
+                  Tab(text: 'Tafsir'),
+                  Tab(text: 'Audio'),
+                ],
+              ),
+              SizedBox(
+                height: 280,
+                child: TabBarView(
+                  children: [
+                    _buildTextTab(arabicFontSize),
+                    _buildTranslationTab(),
+                    _buildTafsirTab(),
+                    _buildAudioTab(),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 

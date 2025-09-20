@@ -95,7 +95,34 @@ class QuranDataService {
   List<Surah> getAllSurahs() {
     return _allSurahs;
   }
-  
+  Future<List<Ayah>> getAyahsBySurahId(int surahId) async {
+    if (!_isLoaded) {
+      await loadAllSurahData();
+    }
+    try {
+      // Cari surah yang sesuai dari daftar yang sudah dimuat
+      final surah = _allSurahs.firstWhere((s) => s.suraId == surahId);
+      return surah.ayahs;
+    } catch (e) {
+      print('Error: Tidak dapat menemukan surah dengan ID $surahId: $e');
+      return [];
+    }
+  }
+  String getSurahNameById(int surahId) {
+    // Pastikan data sudah dimuat, meskipun seharusnya sudah
+    // dari pemanggilan fungsi sebelumnya.
+    if (!_isLoaded) {
+      print("Warning: Quran data service not loaded when getting surah name.");
+      return "Surah $surahId";
+    }
+    try {
+      final surah = _allSurahs.firstWhere((s) => s.suraId == surahId);
+      // Menggunakan englishName yang formatnya "Al-Fatihah", "Al-Baqarah", dst.
+      return surah.englishName;
+    } catch (e) {
+      return "Surah"; // Teks cadangan jika tidak ditemukan
+    }
+  }
   Future<List<Ayah>> getAyahsByPage(int pageNumber) async {
     try {
       String jsonString = await rootBundle.loadString('assets/halaman/$pageNumber.json');

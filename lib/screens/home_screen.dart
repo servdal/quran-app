@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io'; 
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
@@ -16,7 +17,10 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quran_app/screens/deresan_view_screen.dart';
-
+import 'package:quran_app/screens/dzikir_screen.dart';
+import 'package:quran_app/services/notification_service.dart';
+import 'package:quran_app/screens/doa_screen.dart';
+import 'package:quran_app/screens/aqidah_screen.dart';
 
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
@@ -24,6 +28,8 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
   if (data['data'] == null || data['data']['timings'] == null) {
     throw Exception("Struktur data API tidak valid.");
   }
+  final hijriData = data["data"]["date"]["hijri"];
+  final hijriDateString = "${hijriData['day']} ${hijriData['month']['en']} ${hijriData['year']}";
 
   final timings = data["data"]["timings"];
   final prayerOrder = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
@@ -58,6 +64,7 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
     "date": data["data"]["date"]["readable"],
     "method": data["data"]["meta"]["method"]["name"],
     "timings": timings,
+    "hijriDate": hijriDateString,
     "closestPrayer": nextPrayerName,
     "closestTime": nextPrayerTime,
     "closestDiff": closestDiff,
@@ -66,7 +73,7 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
   };
 }
 
-
+// --- (Tidak ada perubahan di bagian ini) ---
 final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
@@ -92,6 +99,7 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
+
       await prefs.setString('last_prayer_data', response.body);
       return _processPrayerData(response.body);
     } else {
@@ -110,7 +118,6 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   }
 });
 
-
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -122,6 +129,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Timer? _debounce;
   Timer? _countdownTimer;
   Duration? _timeUntilPrayer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Meminta izin notifikasi saat layar pertama kali dibuka (untuk iOS)
+    NotificationService().flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+  }
 
   @override
   void dispose() {
@@ -157,7 +178,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return "$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds";
   }
 
-
   void _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
@@ -180,8 +200,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
       next.whenData((prayerData) {
         final DateTime? closestTime = prayerData['closestTime'];
-        if (closestTime != null) {
+        final String? closestPrayer = prayerData['closestPrayer'];
+
+        if (closestTime != null && closestPrayer != null) {
+          // Mulai countdown di UI
           _startCountdown(closestTime);
+
+          // Batalkan semua notifikasi sebelumnya untuk menghindari penumpukan
+          NotificationService().cancelAllNotifications();
+
+          // Jadwalkan notifikasi baru untuk waktu sholat berikutnya
+          NotificationService().scheduleAdzanNotification(
+            id: 0, // ID notifikasi (bisa dibuat dinamis jika perlu)
+            prayerName: closestPrayer,
+            scheduledTime: closestTime,
+          );
         }
       });
     });
@@ -202,18 +235,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               showAboutDialog(
                 context: context,
                 applicationName: 'Tafsir Jalalayn dengan Audio Gus Baha',
-                applicationVersion: '3.0.0',
+                applicationVersion: '3.0.3',
                 applicationIcon: const Icon(Icons.mosque_rounded, size: 48),
                 applicationLegalese: '© 2025 Duidev Software House',
                 children: <Widget>[
                   const SizedBox(height: 24),
                   const Text(
-                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 13 September 2025',
+                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 20 September 2025',
                     textAlign: TextAlign.justify,
                   ),
                   RichText(
                     textAlign: TextAlign.right,
-                    text: TextSpan(text: '( السبت , ٢١ رَبيع الأوّل ١٤٤٧ هـ )'),
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
+                        fontFamily: 'LPMQ',
+                        fontSize: 14,
+                      ),
+                      text: '(السبت، ٨٢ ربيع الأول ١٤٤٧ هـ)',
+                    ),
                   ),
                 ],
               );
@@ -246,7 +286,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Jadwal Sholat (${prayer["date"]})",
+                                Text("Jadwal Sholat (${prayer["hijriDate"]})",
                                     style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                                 if (prayer['isOffline'] == true)
                                   const Tooltip(
@@ -314,32 +354,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   error: (e, s) => const SizedBox.shrink(),
                 ),
 
-                _buildNavigationCard(context, theme,
-                  icon: Icons.list_alt_rounded,
-                  title: 'Lihat per Surah',
-                  onTap: () {
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahListScreen()));
-                  },
-                ),
-                const SizedBox(height: 12),
-                _buildNavigationCard(context, theme,
-                  icon: Icons.auto_stories_rounded,
-                  title: 'Lihat per Halaman',
-                  onTap: () {
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen()));
-                  },
-                ),
-                const SizedBox(height: 12),
-                _buildNavigationCard(context, theme,
-                  icon: Icons.menu_book_rounded,
-                  title: 'Deresan AlQuran',
-                  onTap: () {
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen(mode: PageListViewMode.deresan)));
-                  },
-                ),
-                const SizedBox(height: 24),
-                _buildGlossary(context, theme),
+                _buildMenuGrid(context),
                 const SizedBox(height: 32),
+                
                 _buildDeveloperInfo(context),
               ],
             ),
@@ -415,59 +432,78 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildNavigationCard(BuildContext context, ThemeData theme, {required IconData icon, required String title, required VoidCallback onTap}) {
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
-              Icon(icon, color: theme.primaryColor, size: 30),
-              const SizedBox(width: 16),
-              Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
-              const Spacer(),
-              Icon(Icons.arrow_forward_ios, color: Colors.grey.withOpacity(0.7), size: 16),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGlossary(BuildContext context, ThemeData theme) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildMenuGrid(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2, 
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 12,
+      childAspectRatio: 1.2,
       children: [
-        Text(
-          'Glosarium Tajwid',
-          style: theme.textTheme.headlineLarge?.copyWith(fontSize: 22),
+        _MenuTile(
+          icon: Icons.list_alt_rounded,
+          title: 'Lihat per Surah',
+          color: Colors.teal.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahListScreen()));
+          },
         ),
-        const SizedBox(height: 12),
-        Card(
-          clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.zero,
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: AppTheme.tajweedRules.length,
-            itemBuilder: (context, index) {
-              final rule = AppTheme.tajweedRules[index];
-              return ExpansionTile(
-                leading: CircleAvatar(backgroundColor: rule.color, radius: 12),
-                title: Text(rule.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-                childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-                children: <Widget>[
-                  Text(
-                    rule.description,
-                    textAlign: TextAlign.justify,
-                    style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
-                  ),
-                ],
-              );
-            },
-          ),
+        _MenuTile(
+          icon: Icons.auto_stories_rounded,
+          title: 'Lihat per Halaman',
+          color: Colors.blue.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen()));
+          },
+        ),
+        _MenuTile(
+          icon: Icons.menu_book_rounded,
+          title: 'Deresan AlQuran',
+          color: Colors.indigo.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen(mode: PageListViewMode.deresan)));
+          },
+        ),
+        _MenuTile(
+          icon: Icons.color_lens_outlined,
+          title: 'Glosarium Tajwid',
+          color: Colors.purple.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const GlossaryScreen()));
+          },
+        ),
+        _MenuTile(
+          icon: Icons.wb_sunny_outlined,
+          title: 'Dzikir Pagi',
+          color: Colors.orange.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const DzikirScreen(type: DzikrType.pagi)));
+          },
+        ),
+        _MenuTile(
+          icon: Icons.nights_stay_outlined,
+          title: 'Dzikir Petang',
+          color: Colors.deepPurple.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const DzikirScreen(type: DzikrType.petang)));
+          },
+        ),
+        _MenuTile(
+          icon: Icons.volunteer_activism_rounded,
+          title: 'Kumpulan Doa',
+          color: Colors.green.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const DoaScreen()));
+          },
+        ),
+        _MenuTile(
+          icon: Icons.favorite,
+          title: 'Aqidatul Awam',
+          color: Colors.brown.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const AqidahScreen()));
+          },
         ),
       ],
     );
@@ -514,3 +550,96 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
+
+// --- PERUBAHAN 5: MEMBUAT WIDGET UNTUK TILE MENU SATUAN ---
+class _MenuTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _MenuTile({
+    required this.icon,
+    required this.title,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 3,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          color: color,
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(icon, size: 40, color: Colors.white),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+// --- PERUBAHAN 6: MEMBUAT SCREEN BARU UNTUK GLOSARIUM ---
+class GlossaryScreen extends StatelessWidget {
+  const GlossaryScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Glosarium Tajwid'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            margin: EdgeInsets.zero,
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: AppTheme.tajweedRules.length,
+              itemBuilder: (context, index) {
+                final rule = AppTheme.tajweedRules[index];
+                return ExpansionTile(
+                  leading: CircleAvatar(backgroundColor: rule.color, radius: 12),
+                  title: Text(rule.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                  children: <Widget>[
+                    Text(
+                      rule.description,
+                      textAlign: TextAlign.justify,
+                      style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

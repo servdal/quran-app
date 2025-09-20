@@ -119,7 +119,7 @@ class TajweedParser {
           final String ruleName = inside.substring(0, innerOpen);
           String innerText = inside.substring(innerOpen + 1);
           if (innerText.length >= 2 && innerText[0] == fatha && innerText[1] == smallAlef) {
-            final bool hadFatha = removeTrailingFatha();
+            //final bool hadFatha = removeTrailingFatha();
             flushBuffer();
             int j = end + 1;
             String diacs = '';

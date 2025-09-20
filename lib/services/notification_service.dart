@@ -18,22 +18,19 @@ class NotificationService {
     // Inisialisasi Timezone
     tz.initializeTimeZones(); 
 
-    // Pengaturan Inisialisasi untuk Android
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('ic_stat_notification');
 
-    // Pengaturan Inisialisasi untuk iOS dan macOS (keduanya menggunakan Darwin)
     const DarwinInitializationSettings initializationSettingsDarwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
 
-    // --- PERUBAHAN DI SINI ---
     const InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
-      iOS: initializationSettingsDarwin, // Gunakan pengaturan Darwin
-      macOS: initializationSettingsDarwin, // Tambahkan ini dan gunakan pengaturan Darwin yang sama
+      iOS: initializationSettingsDarwin,
+      macOS: initializationSettingsDarwin,
     );
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -44,7 +41,6 @@ class NotificationService {
     required String prayerName,
     required DateTime scheduledTime,
   }) async {
-    // Meminta izin notifikasi untuk Android 13+
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
@@ -67,14 +63,14 @@ class NotificationService {
         iOS: DarwinNotificationDetails(
           presentSound: true, 
         ),
-        // Untuk macOS, kita bisa biarkan kosong agar menggunakan default
-        // atau definisikan secara spesifik jika perlu
         macOS: DarwinNotificationDetails(
           presentSound: true,
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      
+      // --- BARIS INI DIHAPUS ---
+      // uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 

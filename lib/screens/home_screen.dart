@@ -20,6 +20,7 @@ import 'package:quran_app/screens/dzikir_screen.dart';
 import 'package:quran_app/services/notification_service.dart';
 import 'package:quran_app/screens/doa_screen.dart';
 import 'package:quran_app/screens/aqidah_screen.dart';
+import 'package:quran_app/screens/download_manager_screen.dart';
 
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
@@ -486,6 +487,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           color: Colors.brown.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const AqidahScreen()));
+          },
+        ),
+        _MenuTile(
+          icon: Icons.cloud_download_outlined,
+          title: 'Unduh Audio',
+          color: Colors.blueGrey.shade400,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const DownloadManagerScreen()));
           },
         ),
       ],

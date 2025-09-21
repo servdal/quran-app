@@ -7,6 +7,8 @@ import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
 import 'package:quran_app/services/quran_data_service.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class AyahWidget extends ConsumerStatefulWidget {
   final Ayah ayah;
@@ -35,19 +37,37 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     });
   }
 
+  Future<String> get _localAudioPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return '${directory.path}/audio';
+  }
+
   @override
   void dispose() {
     _audioPlayer.dispose();
     super.dispose();
   }
-
+  
   Future<void> _playAudio() async {
     final audioMapAsyncValue = ref.read(audioPathsProvider);
+
     audioMapAsyncValue.when(
       data: (audioMap) async {
-        final audioPath = audioMap[widget.ayah.ayaId];
-        if (audioPath != null) {
-          await _audioPlayer.play(AssetSource(audioPath.replaceFirst('assets/', '')));
+        final filename = audioMap[widget.ayah.ayaId];
+        if (filename != null) {
+          final localPath = await _localAudioPath;
+          final localFilePath = '$localPath/$filename';
+          final audioFile = File(localFilePath);
+
+          if (await audioFile.exists()) {
+            // Jika file ada, putar dari penyimpanan lokal
+            await _audioPlayer.play(DeviceFileSource(localFilePath));
+          } else {
+            // Jika file tidak ada, beri tahu pengguna
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('File audio belum diunduh. Silakan unduh melalui menu utama.')),
+            );
+          }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('File audio untuk ayat ini tidak ditemukan.')),

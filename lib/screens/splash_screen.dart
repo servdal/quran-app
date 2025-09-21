@@ -3,7 +3,6 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:quran_app/services/notification_service.dart';
 import 'package:timezone/data/latest.dart' as tz;

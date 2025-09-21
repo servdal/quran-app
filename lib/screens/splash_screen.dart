@@ -1,6 +1,12 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:quran_app/services/notification_service.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/screens/home_screen.dart';
 import 'package:quran_app/services/quran_data_service.dart';
@@ -39,8 +45,30 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     }
+    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
+      await NotificationService().init();
+      tz.initializeTimeZones();
+    }
+    await _requestAllPermissions();
+    if (mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    }
   }
-
+  Future<void> _requestAllPermissions() async {
+    try {
+      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
+        await NotificationService().requestPermissions();
+      }
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+    } catch (e) {
+      throw Exception("Gagal meminta izin lokasi di splash screen: $e");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

@@ -1,11 +1,11 @@
 // lib/services/notification_service.dart
 
+import 'dart:io'; // Import dart:io
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
-  // Singleton pattern
   static final NotificationService _notificationService = NotificationService._internal();
   factory NotificationService() {
     return _notificationService;
@@ -15,7 +15,6 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
-    // Inisialisasi Timezone
     tz.initializeTimeZones(); 
 
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -36,15 +35,40 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
+  // --- FUNGSI BARU UNTUK MEMINTA IZIN ---
+  Future<void> requestPermissions() async {
+    if (Platform.isIOS || Platform.isMacOS) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              MacOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    } else if (Platform.isAndroid) {
+      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+          flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+
+      await androidImplementation?.requestNotificationsPermission();
+    }
+  }
+
   Future<void> scheduleAdzanNotification({
     required int id,
     required String prayerName,
     required DateTime scheduledTime,
   }) async {
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
-
+    // Permintaan izin sudah dipindahkan dari sini
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       'Waktu Sholat Telah Tiba',
@@ -60,17 +84,10 @@ class NotificationService {
           sound: UriAndroidNotificationSound('content://settings/system/alarm_alert'),
           playSound: true,
         ),
-        iOS: DarwinNotificationDetails(
-          presentSound: true, 
-        ),
-        macOS: DarwinNotificationDetails(
-          presentSound: true,
-        ),
+        iOS: DarwinNotificationDetails(presentSound: true),
+        macOS: DarwinNotificationDetails(presentSound: true),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      
-      // --- BARIS INI DIHAPUS ---
-      // uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
@@ -73,13 +72,11 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
   };
 }
 
-// --- (Tidak ada perubahan di bagian ini) ---
 final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
     throw Exception("Layanan lokasi (GPS) tidak aktif. Harap aktifkan untuk melihat jadwal sholat.");
   }
-
   LocationPermission permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
@@ -133,17 +130,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Meminta izin notifikasi saat layar pertama kali dibuka (untuk iOS)
-    NotificationService().flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
   }
-
   @override
   void dispose() {
     _debounce?.cancel();
@@ -365,7 +352,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-
   Widget _buildHeader(BuildContext context, ThemeData theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -374,7 +360,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ],
     );
   }
-
   Widget _buildSearchBar(BuildContext context, ThemeData theme) {
     return TextField(
       decoration: const InputDecoration(
@@ -384,7 +369,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       onChanged: _onSearchChanged,
     );
   }
-
   Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme, Bookmark bookmark) {
     final cardColor = theme.brightness == Brightness.light ? theme.primaryColor : theme.colorScheme.surface;
     final onCardColor = theme.brightness == Brightness.light ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface;
@@ -431,7 +415,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ],
     );
   }
-
   Widget _buildMenuGrid(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2, 
@@ -550,8 +533,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
-
-// --- PERUBAHAN 5: MEMBUAT WIDGET UNTUK TILE MENU SATUAN ---
 class _MenuTile extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -599,8 +580,6 @@ class _MenuTile extends StatelessWidget {
   }
 }
 
-
-// --- PERUBAHAN 6: MEMBUAT SCREEN BARU UNTUK GLOSARIUM ---
 class GlossaryScreen extends StatelessWidget {
   const GlossaryScreen({super.key});
 

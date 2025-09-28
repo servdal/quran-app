@@ -34,6 +34,7 @@ class Ayah {
   final String transliteration;
   final int pageNumber;
   final String tajweedText;
+  final List<Word> words;
 
   Ayah({
     required this.ayaId,
@@ -48,9 +49,16 @@ class Ayah {
     required this.transliteration,
     required this.pageNumber,
     required this.tajweedText,
+    required this.words
   });
 
   factory Ayah.fromJson(Map<String, dynamic> json) {
+    var wordList = <Word>[];
+    if (json['words'] != null) {
+      wordList = List<Word>.from(
+        (json['words'] as List).map((wordJson) => Word.fromJson(wordJson)),
+      );
+    }
     return Ayah(
       ayaId: json['aya_id'],
       juzId: json['juz_id'],
@@ -64,7 +72,55 @@ class Ayah {
       transliteration: json['transliteration'] ?? '',
       pageNumber: json['page_number'],
       tajweedText: json['tajweed_text'],
+      words: wordList,
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'aya_id': ayaId,
+      'juz_id': juzId,
+      'aya_number': ayaNumber,
+      'aya_text': ayaText,
+      'sura_id': suraId,
+      'translation_aya_text': translationAyaText,
+      'tafsir_jalalayn': tafsirJalalayn,
+      'sajda': sajda,
+      'transliteration': transliteration,
+      'page_number': pageNumber,
+      'tajweed_text': tajweedText,
+      'words': words.map((word) => word.toJson()).toList(),
+    };
   }
 }
 
+class Word {
+  final int position;
+  final String arabic;
+  final String transliteration;
+  final String translation;
+
+  Word({
+    required this.position,
+    required this.arabic,
+    required this.transliteration,
+    required this.translation,
+  });
+
+  factory Word.fromJson(Map<String, dynamic> json) {
+    return Word(
+      position: json['position'] ?? 0,
+      arabic: json['arabic'] ?? '',
+      transliteration: json['transliteration'] ?? '',
+      translation: json['translation'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'position': position,
+      'arabic': arabic,
+      'transliteration': transliteration,
+      'translation': translation,
+    };
+  }
+}

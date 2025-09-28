@@ -53,7 +53,7 @@ class _SurahListItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SurahDetailScreen(surahId: surah.suraId),
+              builder: (context) => SurahDetailScreen(surahId: surah.id),
             ),
           );
         },
@@ -71,7 +71,7 @@ class _SurahListItem extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    surah.suraId.toString(),
+                    surah.id.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: theme.primaryColor,

@@ -71,7 +71,7 @@ class QuranDataService {
     for (var surah in _allSurahs) {
       if (surah.englishName.toLowerCase().contains(lowerCaseQuery) || surah.name.contains(lowerCaseQuery)) {
           results.add({
-            'surahId': surah.suraId,
+            'surahId': surah.id,
             'ayahNumber': 1,
             'surahName': surah.englishName,
             'ayahTextPreview': 'Membuka Surah ${surah.englishName}', 
@@ -101,7 +101,7 @@ class QuranDataService {
     }
     try {
       // Cari surah yang sesuai dari daftar yang sudah dimuat
-      final surah = _allSurahs.firstWhere((s) => s.suraId == surahId);
+      final surah = _allSurahs.firstWhere((s) => s.id == surahId);
       return surah.ayahs;
     } catch (e) {
       print('Error: Tidak dapat menemukan surah dengan ID $surahId: $e');
@@ -116,7 +116,7 @@ class QuranDataService {
       return "Surah $surahId";
     }
     try {
-      final surah = _allSurahs.firstWhere((s) => s.suraId == surahId);
+      final surah = _allSurahs.firstWhere((s) => s.id == surahId);
       // Menggunakan englishName yang formatnya "Al-Fatihah", "Al-Baqarah", dst.
       return surah.englishName;
     } catch (e) {

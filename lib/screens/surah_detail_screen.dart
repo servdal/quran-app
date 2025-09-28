@@ -11,7 +11,7 @@ final surahDetailProvider = FutureProvider.family<Surah?, int>((ref, surahId) as
   final service = ref.read(quranDataServiceProvider);
   await service.loadAllSurahData();
   try {
-    return service.getAllSurahs().firstWhere((s) => s.suraId == surahId);
+    return service.getAllSurahs().firstWhere((s) => s.id == surahId);
   } catch (e) {
     return null;
   }

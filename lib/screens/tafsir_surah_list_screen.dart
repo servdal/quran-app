@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/models/surah_model.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/tafsir_view_screen.dart';
 

@@ -52,6 +52,7 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: surahAsync.when(
+          // ignore: unnecessary_null_comparison
           data: (surah) => Text(surah != null ? "Tafsir ${surah.englishName}" : "Data Belum Tersedia"),
           loading: () => const Text("Memuat..."),
           error: (e, s) => const Text("Error"),
@@ -59,6 +60,7 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
         actions: [
           surahAsync.when(
             data: (surah) {
+              // ignore: unnecessary_null_comparison
               if (surah == null) return const SizedBox.shrink();
               return IconButton(
                 icon: Icon(_isEditing ? Icons.save_alt_rounded : Icons.edit_note_rounded),
@@ -109,6 +111,7 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
       ),
       body: surahAsync.when(
         data: (surah) {
+          // ignore: unnecessary_null_comparison
           if (surah == null) {
             return Center(
               child: Padding(
@@ -157,7 +160,7 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
             itemCount: _editableSurah!.ayahs.length,
             itemBuilder: (context, index) {
               final ayah = _editableSurah!.ayahs[index];
-              final baseTextStyle = TextStyle(fontFamily: 'UthmanicHafs', fontSize: 24, height: 2.2, color: Theme.of(context).colorScheme.onSurface);
+              final baseTextStyle = TextStyle(fontFamily: 'LPMQ', fontSize: 24, height: 2.2, color: Theme.of(context).colorScheme.onSurface);
               final textSpans = TajweedParser.parse(ayah.tajweedText, baseTextStyle);
 
               return Padding(
@@ -203,7 +206,7 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
         if (word.arabic.trim().length > 2) {
           return Column(
             children: [
-              Text(word.arabic, style: const TextStyle(fontFamily: 'UthmanicHafs', fontSize: 20)),
+              Text(word.arabic, style: const TextStyle(fontFamily: 'LPMQ', fontSize: 20)),
               Text(word.translation, style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
             ],
           );
@@ -227,7 +230,7 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
             width: 100,
             child: Column(
               children: [
-                Text(word.arabic, style: const TextStyle(fontFamily: 'UthmanicHafs', fontSize: 20)),
+                Text(word.arabic, style: const TextStyle(fontFamily: 'LPMQ', fontSize: 20)),
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: (i < controllers.length) ? controllers[i] : null,

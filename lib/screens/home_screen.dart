@@ -22,7 +22,6 @@ import 'package:quran_app/screens/doa_screen.dart';
 import 'package:quran_app/screens/aqidah_screen.dart';
 import 'package:quran_app/screens/download_manager_screen.dart';
 import 'package:quran_app/screens/tafsir_surah_list_screen.dart';
-import 'package:quran_app/screens/sync_screen.dart';
 
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
@@ -506,22 +505,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           color: Colors.blueGrey.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const DownloadManagerScreen()));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.sync_rounded,
-          title: 'Sinkronisasi Tafsir',
-          color: Colors.blue.shade600,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const SyncScreen()));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.info_outline,
-          title: 'Tentang Aplikasi',
-          color: Colors.grey.shade500,
-          onTap: () {
-            // Fungsi untuk menampilkan dialog "About" bisa dipanggil di sini
           },
         ),
       ],

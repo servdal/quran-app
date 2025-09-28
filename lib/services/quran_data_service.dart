@@ -134,6 +134,11 @@ class QuranDataService {
       return [];
     }
   }
+  Future<Surah> getSurahDetailById(int surahId) async {
+    final String response = await rootBundle.loadString('assets/surah/$surahId.json');
+    final data = json.decode(response);
+    return Surah.fromJson(data);
+  }
 }
 
 final quranDataServiceProvider = Provider((ref) => QuranDataService());
@@ -149,3 +154,6 @@ final pageAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, pageNumbe
   return service.getAyahsByPage(pageNumber);
 });
 
+final surahDetailProvider = FutureProvider.family<Surah, int>((ref, surahId) {
+  return ref.watch(quranDataServiceProvider).getSurahDetailById(surahId);
+});

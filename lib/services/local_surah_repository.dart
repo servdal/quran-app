@@ -37,7 +37,6 @@ class LocalSurahRepository {
   Future<Surah> _loadFromAssets(int surahId) async {
     String jsonString = await rootBundle.loadString('assets/surah/$surahId.json');
     final surah = Surah.fromJson(json.decode(jsonString));
-    // Simpan ke file lokal untuk penggunaan selanjutnya
     await updateSurah(surah);
     return surah;
   }

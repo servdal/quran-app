@@ -26,7 +26,7 @@ def create_root_word_dictionary():
             # Iterasi melalui setiap ayat dan setiap kata
             for verse in surah_content.get('data', []):
                 for word in verse.get('words', []):
-                    root = word.get('root_word')
+                    root = word.get('analysis', {}).get('root')
                     if root:
                         unique_roots.add(root)
         except Exception as e:
@@ -38,7 +38,11 @@ def create_root_word_dictionary():
     root_word_dict = {
         root: {
             "translation": "",     # Placeholder untuk Anda isi
-            "transliteration": ""  # Placeholder untuk Anda isi
+            "transliteration": "",  # Placeholder untuk Anda isi
+            "lemma": "",
+            "grammar": "",
+            "verb_form": "",
+            "occurrences": 0
         } 
         for root in sorted(list(unique_roots)) # Diurutkan agar mudah dibaca
     }

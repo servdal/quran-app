@@ -7,6 +7,7 @@ import 'package:quran_app/models/surah_model.dart';
 import 'package:quran_app/screens/sync_screen.dart';
 import 'package:quran_app/services/surah_repository.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
+import 'package:quran_app/services/local_surah_repository.dart';
 
 class TafsirViewScreen extends ConsumerStatefulWidget {
   final int surahId;
@@ -47,7 +48,7 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final surahAsync = ref.watch(surahDataProvider(widget.surahId));
+    final surahAsync = ref.watch(localSurahDataProvider(widget.surahId));
 
     return Scaffold(
       appBar: AppBar(
@@ -81,20 +82,15 @@ class _TafsirViewScreenState extends ConsumerState<TafsirViewScreen> {
                       }
                     }
 
-                    // --- PERBAIKAN DI SINI ---
-                    // Simpan data, DAN setelah selesai, perbarui state lokal dan refresh provider
-                    final surahToUpdate = _editableSurah!;
-                    ref.read(surahRepositoryProvider).updateSurah(surahToUpdate).then((_) {
+                    ref.read(localSurahRepositoryProvider).updateSurah(_editableSurah!).then((_) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Perubahan berhasil disimpan!")));
                       
-                      // Perbarui state lokal dengan data yang baru saja disimpan
                       setState(() {
-                        _editableSurah = surahToUpdate; 
-                        _isEditing = false; // Keluar dari mode edit
+                        _isEditing = false;
                       });
-                      
-                      // Refresh provider untuk memastikan data di masa depan sinkron
-                      ref.invalidate(surahDataProvider(widget.surahId));
+
+                      // Refresh provider
+                      ref.invalidate(localSurahDataProvider(widget.surahId));
                     });
                   } else {
                     _editableSurah = Surah.fromJson(surah.toJson());

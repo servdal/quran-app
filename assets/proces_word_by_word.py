@@ -1,6 +1,7 @@
 import os
 import json
 import pyarabic.araby as araby
+from tashaphyne.stemming import ArabicLightStemmer
 
 # Konfigurasi
 # Pastikan skrip ini berada di direktori yang sama dengan folder 'surah' Anda
@@ -13,7 +14,7 @@ def process_all_surahs_for_word_by_word():
     Skrip ini aman untuk dijalankan berulang kali.
     """
     print("Memulai proses penambahan struktur analisis kata mendalam...")
-
+    ArListem = ArabicLightStemmer()
     # Loop dari surah 1 hingga 114
     for surah_id in range(1, 115):
         file_name = os.path.join(SUMBER_FOLDER, f"{surah_id}.json")
@@ -45,7 +46,8 @@ def process_all_surahs_for_word_by_word():
                 for index, word in enumerate(arabic_words):
                     if word: # Pastikan kata tidak kosong
                         stripped_word = araby.strip_tashkeel(word)
-                        root_word = araby.stem(stripped_word)
+                        ArListem.light_stem(stripped_word)
+                        root_word = ArListem.get_stem()
 
                         # Struktur data baru yang lebih kaya untuk analisis mendalam
                         word_entry = {

@@ -9,25 +9,22 @@ import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/utils/tajweed_parser.dart'; // Import Tajweed Parser
 
-// Helper class untuk menyatukan data doa dan data ayatnya
 class DoaUIData {
   final List<Ayah> ayahs;
   final DoaItem doaInfo;
-
   DoaUIData({required this.ayahs, required this.doaInfo});
 }
 
-// Provider untuk mengambil semua data ayat yang dibutuhkan untuk doa
 final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
   final dataService = ref.watch(quranDataServiceProvider);
-  await dataService.loadAllSurahData();
+  // HAPUS: await dataService.loadAllSurahData();
   
   List<DoaUIData> uiDataList = [];
-
   for (final doaItem in daftarDoaAlQuran) {
-    List<Ayah> fetchedAyahs = [];
+    // getAyahsBySurahId sekarang sudah cukup
     final allAyahsInSurah = await dataService.getAyahsBySurahId(doaItem.surahId);
-
+    
+    List<Ayah> fetchedAyahs = [];
     for (final ayahNum in doaItem.ayahs) {
       try {
         final foundAyah = allAyahsInSurah.firstWhere((a) => a.ayaNumber == ayahNum);
@@ -36,17 +33,12 @@ final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
         print("Ayat tidak ditemukan: Surah ${doaItem.surahId} Ayat $ayahNum");
       }
     }
-
     if (fetchedAyahs.isNotEmpty) {
-      uiDataList.add(DoaUIData(
-        ayahs: fetchedAyahs,
-        doaInfo: doaItem,
-      ));
+      uiDataList.add(DoaUIData(ayahs: fetchedAyahs, doaInfo: doaItem));
     }
   }
   return uiDataList;
 });
-
 
 class DoaScreen extends StatelessWidget {
   const DoaScreen({super.key});

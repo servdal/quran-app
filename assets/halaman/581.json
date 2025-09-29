@@ -13,12 +13,43 @@
             "sajda": false,
             "transliteration": "Alam nakhlukkum mimmaaa'im maheen",
             "tajweed_text": "أَلَمْ نَخْلُ[b:14217[ق]كّ[w:14218[ُم م]ّ[a:840[ِن م]ّ[o[َا]ٓ[a:10629[ءٍ م]َّه[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلَمْ",
+                    "transliteration": "alam",
+                    "translation": "Did not",
+                    "analysis_id": 1513
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَخْلُقْكُّمْ",
+                    "transliteration": "nakhluqkkum",
+                    "translation": "We create you",
+                    "analysis_id": 28540
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَّاۤءٍ",
+                    "transliteration": "māin",
+                    "translation": "a water",
+                    "analysis_id": 2219
+                },
+                {
+                    "position": 5,
+                    "arabic": "مَّهِيْنٍۙ",
+                    "transliteration": "mahīnin",
+                    "translation": "despicable",
+                    "analysis_id": 27747
+                }
+            ]
         },
         {
             "aya_id": 5643,
@@ -32,12 +63,36 @@
             "sajda": false,
             "transliteration": "Faja'alnaahu fee qaraarim makeen",
             "tajweed_text": "فَجَعَلْنَ[n[ـٰ]هُ فِى قَرَا[a:9148[رٍ م]َّك[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَجَعَلْنٰهُ",
+                    "transliteration": "fajaʿalnāhu",
+                    "translation": "Then We placed it",
+                    "analysis_id": 20690
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 3,
+                    "arabic": "قَرَارٍ",
+                    "transliteration": "qarārin",
+                    "translation": "an abode",
+                    "analysis_id": 16231
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَّكِيْنٍ",
+                    "transliteration": "makīnin",
+                    "translation": "safe",
+                    "analysis_id": 19945
+                }
+            ]
         },
         {
             "aya_id": 5644,
@@ -51,12 +106,29 @@
             "sajda": false,
             "transliteration": "Illaa qadrim ma'loom",
             "tajweed_text": "إِلَىٰ قَدَ[a:14219[رٍ م]َّعْل[p[ُو]مٍ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "For",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 2,
+                    "arabic": "قَدَرٍ",
+                    "transliteration": "qadarin",
+                    "translation": "a period",
+                    "analysis_id": 28541
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَّعْلُوْمٍۙ",
+                    "transliteration": "maʿlūmin",
+                    "translation": "known",
+                    "analysis_id": 28542
+                }
+            ]
         },
         {
             "aya_id": 5645,
@@ -70,12 +142,29 @@
             "sajda": false,
             "transliteration": "Faqadarnaa fani'mal qaadiroon",
             "tajweed_text": "فَقَدَرْنَا فَنِعْمَ [h:14220[ٱ]لْقَ[n[ـٰ]دِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَقَدَرْنَاۖ",
+                    "transliteration": "faqadarnā",
+                    "translation": "So We measured",
+                    "analysis_id": 28543
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَنِعْمَ",
+                    "transliteration": "faniʿ'ma",
+                    "translation": "and Best",
+                    "analysis_id": 15921
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْقٰدِرُوْنَ",
+                    "transliteration": "l-qādirūna",
+                    "translation": "(are We to) measure",
+                    "analysis_id": 28544
+                }
+            ]
         },
         {
             "aya_id": 5646,
@@ -89,12 +178,29 @@
             "sajda": false,
             "transliteration": "Wailuny yawma 'izil lilmukazzibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                }
+            ]
         },
         {
             "aya_id": 5647,
@@ -108,12 +214,36 @@
             "sajda": false,
             "transliteration": "Alam naj'alil arda kifaataa",
             "tajweed_text": "أَلَمْ نَ[q:14221[جْ]عَلِ [h:14222[ٱ]لْأَرْضَ كِفَاتًا",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلَمْ",
+                    "transliteration": "alam",
+                    "translation": "Have not",
+                    "analysis_id": 1513
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَجْعَلِ",
+                    "transliteration": "najʿali",
+                    "translation": "We made",
+                    "analysis_id": 18207
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاَرْضَ",
+                    "transliteration": "l-arḍa",
+                    "translation": "the earth",
+                    "analysis_id": 952
+                },
+                {
+                    "position": 4,
+                    "arabic": "كِفَاتًاۙ",
+                    "transliteration": "kifātan",
+                    "translation": "a receptacle",
+                    "analysis_id": 28545
+                }
+            ]
         },
         {
             "aya_id": 5648,
@@ -127,12 +257,22 @@
             "sajda": false,
             "transliteration": "Ahyaaa'anw wa amwaataa",
             "tajweed_text": "أَحْي[o[َا]ٓ[a:14223[ءً و]َأَمْو[n[َٲ]تًا",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَحْيَاۤءً",
+                    "transliteration": "aḥyāan",
+                    "translation": "(For the) living",
+                    "analysis_id": 28546
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَّاَمْوَاتًاۙ",
+                    "transliteration": "wa-amwātan",
+                    "translation": "and (the) dead",
+                    "analysis_id": 28547
+                }
+            ]
         },
         {
             "aya_id": 5649,
@@ -146,12 +286,57 @@
             "sajda": false,
             "transliteration": "Wa ja'alnaa feehaa rawaasiya shaamikhaatinw wa asqainaakum maaa'an furaataa",
             "tajweed_text": "وَجَعَلْنَا فِيهَا رَو[n[َٲ]سِىَ شَ[n[ـٰ]مِخَ[n[ـٰ][a:14224[تٍ و]َأَسْقَيْنَ[n[ـٰ]ك[w:14225[ُم م]ّ[o[َا]ٓ[f:14226[ءً ف]ُرَاتًا",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّجَعَلْنَا",
+                    "transliteration": "wajaʿalnā",
+                    "translation": "And We made",
+                    "analysis_id": 8655
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَوَاسِيَ",
+                    "transliteration": "rawāsiya",
+                    "translation": "firmly set mountains",
+                    "analysis_id": 15740
+                },
+                {
+                    "position": 4,
+                    "arabic": "شٰمِخٰتٍ",
+                    "transliteration": "shāmikhātin",
+                    "translation": "lofty",
+                    "analysis_id": 28548
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَّاَسْقَيْنٰكُمْ",
+                    "transliteration": "wa-asqaynākum",
+                    "translation": "and We gave you to drink",
+                    "analysis_id": 28549
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَّاۤءً",
+                    "transliteration": "māan",
+                    "translation": "water ",
+                    "analysis_id": 7110
+                },
+                {
+                    "position": 7,
+                    "arabic": "فُرَاتًاۗ",
+                    "transliteration": "furātan",
+                    "translation": "sweet",
+                    "analysis_id": 28550
+                }
+            ]
         },
         {
             "aya_id": 5650,
@@ -165,12 +350,29 @@
             "sajda": false,
             "transliteration": "Wailuny yawma 'izil lilmukazzibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                }
+            ]
         },
         {
             "aya_id": 5651,
@@ -184,12 +386,50 @@
             "sajda": false,
             "transliteration": "Intaliqooo ilaa maa kuntum bihee tukazziboon",
             "tajweed_text": "ٱ[f:14227[نط]َلِق[o[ُوٓ][s[اْ] إِلَىٰ مَا كُ[f:100[نت][c:6084[ُم ب]ِه[n[ِۦ] تُكَذِّب[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنْطَلِقُوْٓا",
+                    "transliteration": "inṭaliqū",
+                    "translation": "Proceed",
+                    "analysis_id": 28551
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 4,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you used to",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِهٖ",
+                    "transliteration": "bihi",
+                    "translation": "in it",
+                    "analysis_id": 375
+                },
+                {
+                    "position": 6,
+                    "arabic": "تُكَذِّبُوْنَۚ",
+                    "transliteration": "tukadhibūna",
+                    "translation": "deny",
+                    "analysis_id": 28552
+                }
+            ]
         },
         {
             "aya_id": 5652,
@@ -203,12 +443,50 @@
             "sajda": false,
             "transliteration": "Intaliqooo ilaa zillin zee salaasi shu'ab",
             "tajweed_text": "ٱ[f:14227[نط]َلِق[o[ُوٓ][s[اْ] إِلَىٰ ظِ[f:14228[لٍّ ذ]ِى ثَلَ[n[ـٰ]ثِ شُعَ[q[ب]ٍ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنْطَلِقُوْٓا",
+                    "transliteration": "inṭaliqū",
+                    "translation": "Proceed",
+                    "analysis_id": 28551
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 3,
+                    "arabic": "ظِلٍّ",
+                    "transliteration": "ẓillin",
+                    "translation": "a shadow",
+                    "analysis_id": 28553
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذِيْ",
+                    "transliteration": "dhī",
+                    "translation": "having",
+                    "analysis_id": 10839
+                },
+                {
+                    "position": 5,
+                    "arabic": "ثَلٰثِ",
+                    "transliteration": "thalāthi",
+                    "translation": "three",
+                    "analysis_id": 28554
+                },
+                {
+                    "position": 6,
+                    "arabic": "شُعَبٍ",
+                    "transliteration": "shuʿabin",
+                    "translation": "columns",
+                    "analysis_id": 28555
+                }
+            ]
         },
         {
             "aya_id": 5653,
@@ -222,12 +500,50 @@
             "sajda": false,
             "transliteration": "Laa zaleelinw wa laa yughnee minal lahab",
             "tajweed_text": "لَّا ظَلِي[a:14229[لٍ و]َلَا يُغْنِى مِنَ [h:14230[ٱ][l[ل]لَّهَ[q[ب]ِ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "No",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 2,
+                    "arabic": "ظَلِيْلٍ",
+                    "transliteration": "ẓalīlin",
+                    "translation": "cool shade",
+                    "analysis_id": 28556
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَّلَا",
+                    "transliteration": "walā",
+                    "translation": "and not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 4,
+                    "arabic": "يُغْنِيْ",
+                    "transliteration": "yugh'nī",
+                    "translation": "availing",
+                    "analysis_id": 13950
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "against",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 6,
+                    "arabic": "اللَّهَبِۗ",
+                    "transliteration": "l-lahabi",
+                    "translation": "the flame",
+                    "analysis_id": 28557
+                }
+            ]
         },
         {
             "aya_id": 5654,
@@ -241,12 +557,36 @@
             "sajda": false,
             "transliteration": "Innahaa tarmee bishararin kalqasr",
             "tajweed_text": "إِ[g[نّ]َهَا تَرْمِى بِشَرَ[f:14231[رٍ ك]َ[h:14232[ٱ]لْقَصْرِ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّهَا",
+                    "transliteration": "innahā",
+                    "translation": "Indeed, it",
+                    "analysis_id": 948
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَرْمِيْ",
+                    "transliteration": "tarmī",
+                    "translation": "throws up",
+                    "analysis_id": 28558
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِشَرَرٍ",
+                    "transliteration": "bishararin",
+                    "translation": "sparks",
+                    "analysis_id": 28559
+                },
+                {
+                    "position": 4,
+                    "arabic": "كَالْقَصْرِۚ",
+                    "transliteration": "kal-qaṣri",
+                    "translation": "as the fortress",
+                    "analysis_id": 28560
+                }
+            ]
         },
         {
             "aya_id": 5655,
@@ -260,12 +600,29 @@
             "sajda": false,
             "transliteration": "Ka annahoo jimaalatun sufr",
             "tajweed_text": "كَأَ[g[نّ]َهُ[n[ۥ] جِمَ[n[ـٰ]لَ[f:14233[تٌ ص]ُفْرٌ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَاَنَّهٗ",
+                    "transliteration": "ka-annahu",
+                    "translation": "As if they (were)",
+                    "analysis_id": 21339
+                },
+                {
+                    "position": 2,
+                    "arabic": "جِمٰلَتٌ",
+                    "transliteration": "jimālatun",
+                    "translation": "camels",
+                    "analysis_id": 28561
+                },
+                {
+                    "position": 3,
+                    "arabic": "صُفْرٌۗ",
+                    "transliteration": "ṣuf'run",
+                    "translation": "yellow",
+                    "analysis_id": 28562
+                }
+            ]
         },
         {
             "aya_id": 5656,
@@ -279,12 +636,29 @@
             "sajda": false,
             "transliteration": "Wailuny yawma 'izil lilmukazibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                }
+            ]
         },
         {
             "aya_id": 5657,
@@ -298,12 +672,36 @@
             "sajda": false,
             "transliteration": "Haazaa yawmu laa uantiqoon",
             "tajweed_text": "هَ[n[ـٰ]ذَا يَوْمُ لَا يَ[f:8795[نط]ِق[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "This",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَوْمُ",
+                    "transliteration": "yawmu",
+                    "translation": "(is) a Day",
+                    "analysis_id": 9698
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَنْطِقُوْنَۙ",
+                    "transliteration": "yanṭiqūna",
+                    "translation": "they will speak",
+                    "analysis_id": 28563
+                }
+            ]
         },
         {
             "aya_id": 5658,
@@ -317,12 +715,36 @@
             "sajda": false,
             "transliteration": "Wa laa yu'zanu lahum fa ya'taziroon",
             "tajweed_text": "وَلَا يُؤْذَنُ لَهُمْ فَيَعْتَذِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "And not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُؤْذَنُ",
+                    "transliteration": "yu'dhanu",
+                    "translation": "will it be permitted",
+                    "analysis_id": 16927
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَيَعْتَذِرُوْنَ",
+                    "transliteration": "fayaʿtadhirūna",
+                    "translation": "to make excuses",
+                    "analysis_id": 28564
+                }
+            ]
         },
         {
             "aya_id": 5659,
@@ -336,12 +758,29 @@
             "sajda": false,
             "transliteration": "Wailunw yawma 'izil lilmukazzibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                }
+            ]
         },
         {
             "aya_id": 5660,
@@ -355,12 +794,43 @@
             "sajda": false,
             "transliteration": "Haaza yawmul fasli jama 'naakum wal awwaleen",
             "tajweed_text": "هَ[n[ـٰ]ذَا يَوْمُ [h:11336[ٱ]لْفَصْلِ‌ۖ جَمَعْنَ[n[ـٰ]كُمْ وَ[h:14234[ٱ]لْأَوَّل[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "This",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَوْمُ",
+                    "transliteration": "yawmu",
+                    "translation": "(is the) Day",
+                    "analysis_id": 9698
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْفَصْلِ",
+                    "transliteration": "l-faṣli",
+                    "translation": "(of) Judgment",
+                    "analysis_id": 23554
+                },
+                {
+                    "position": 4,
+                    "arabic": "جَمَعْنٰكُمْ",
+                    "transliteration": "jamaʿnākum",
+                    "translation": "We have gathered you",
+                    "analysis_id": 28565
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَالْاَوَّلِيْنَ",
+                    "transliteration": "wal-awalīna",
+                    "translation": "and the former (people)",
+                    "analysis_id": 28566
+                }
+            ]
         },
         {
             "aya_id": 5661,
@@ -374,12 +844,43 @@
             "sajda": false,
             "transliteration": "Fa in kaana lakum kaidun fakeedoon",
             "tajweed_text": "فَإِ[f:1670[ن ك]َانَ لَكُمْ كَيْ[f:14235[دٌ ف]َكِيد[p[ُو]نِ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِنْ",
+                    "transliteration": "fa-in",
+                    "translation": "So if",
+                    "analysis_id": 297
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "is",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَكُمْ",
+                    "transliteration": "lakum",
+                    "translation": "for you",
+                    "analysis_id": 411
+                },
+                {
+                    "position": 4,
+                    "arabic": "كَيْدٌ",
+                    "transliteration": "kaydun",
+                    "translation": "a plan",
+                    "analysis_id": 28567
+                },
+                {
+                    "position": 5,
+                    "arabic": "فَكِيْدُوْنِ",
+                    "transliteration": "fakīdūni",
+                    "translation": "then plan against Me",
+                    "analysis_id": 28568
+                }
+            ]
         },
         {
             "aya_id": 5662,
@@ -393,12 +894,36 @@
             "sajda": false,
             "transliteration": "Wailuny yawma'izil lilmukazzibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                },
+                {
+                    "position": 4,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(40)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 5663,
@@ -412,12 +937,43 @@
             "sajda": false,
             "transliteration": "Innal muttaqeena fee zilaalinw wa 'uyoon",
             "tajweed_text": "إِ[g[نّ]َ [h:7256[ٱ]لْمُتَّقِينَ فِى ظِلَ[n[ـٰ][a:14236[لٍ و]َعُي[p[ُو]نٍ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمُتَّقِيْنَ",
+                    "transliteration": "l-mutaqīna",
+                    "translation": "the righteous",
+                    "analysis_id": 5267
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "(will be) in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 4,
+                    "arabic": "ظِلٰلٍ",
+                    "transliteration": "ẓilālin",
+                    "translation": "shades",
+                    "analysis_id": 23463
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَّعُيُوْنٍۙ",
+                    "transliteration": "waʿuyūnin",
+                    "translation": "and springs",
+                    "analysis_id": 16451
+                }
+            ]
         },
         {
             "aya_id": 5664,
@@ -431,12 +987,29 @@
             "sajda": false,
             "transliteration": "Wa fawaakiha mimmaa yastahoon",
             "tajweed_text": "وَفَو[n[َٲ]كِهَ مِ[g[مّ]َا يَشْتَه[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّفَوَاكِهَ",
+                    "transliteration": "wafawākiha",
+                    "translation": "And fruits",
+                    "analysis_id": 28569
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِمَّا",
+                    "transliteration": "mimmā",
+                    "translation": "from what",
+                    "analysis_id": 282
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَشْتَهُوْنَۗ",
+                    "transliteration": "yashtahūna",
+                    "translation": "they desire",
+                    "analysis_id": 23157
+                }
+            ]
         },
         {
             "aya_id": 5665,
@@ -450,12 +1023,50 @@
             "sajda": false,
             "transliteration": "Kuloo washraboo haneee 'am bimaa kuntum ta'maloon",
             "tajweed_text": "كُلُو[s[اْ] وَ[h:300[ٱ]شْرَبُو[s[اْ] هَنِ[o[يٓـ]ـ[i:12907[ـَٔۢا ب]ِمَا كُ[f:100[نت]ُمْ تَعْمَل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كُلُوْا",
+                    "transliteration": "kulū",
+                    "translation": "Eat",
+                    "analysis_id": 2287
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَاشْرَبُوْا",
+                    "transliteration": "wa-ish'rabū",
+                    "translation": "and drink",
+                    "analysis_id": 26257
+                },
+                {
+                    "position": 3,
+                    "arabic": "هَنِيْۤـًٔا",
+                    "transliteration": "hanīan",
+                    "translation": "(in) satisfaction",
+                    "analysis_id": 28570
+                },
+                {
+                    "position": 4,
+                    "arabic": "ۢبِمَا",
+                    "transliteration": "bimā",
+                    "translation": "for what",
+                    "analysis_id": 7268
+                },
+                {
+                    "position": 5,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you used to",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 6,
+                    "arabic": "تَعْمَلُوْنَ",
+                    "transliteration": "taʿmalūna",
+                    "translation": "do",
+                    "analysis_id": 5437
+                }
+            ]
         },
         {
             "aya_id": 5666,
@@ -469,12 +1080,36 @@
             "sajda": false,
             "transliteration": "Innaa kazaalika najzil muhsineen",
             "tajweed_text": "إِ[g[نّ]َا كَذ[n[َٲ]لِكَ نَ[q:4214[جْ]زِى [h:4215[ٱ]لْمُحْسِن[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّا",
+                    "transliteration": "innā",
+                    "translation": "Indeed, We",
+                    "analysis_id": 8304
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَذٰلِكَ",
+                    "transliteration": "kadhālika",
+                    "translation": "thus",
+                    "analysis_id": 3608
+                },
+                {
+                    "position": 3,
+                    "arabic": "نَجْزِى",
+                    "transliteration": "najzī",
+                    "translation": "reward",
+                    "analysis_id": 11262
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمُحْسِنِيْنَ",
+                    "transliteration": "l-muḥ'sinīna",
+                    "translation": "the good-doers",
+                    "analysis_id": 9445
+                }
+            ]
         },
         {
             "aya_id": 5667,
@@ -488,12 +1123,29 @@
             "sajda": false,
             "transliteration": "Wailuny yawma 'izil lilmuzkazzibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                }
+            ]
         },
         {
             "aya_id": 5668,
@@ -507,12 +1159,43 @@
             "sajda": false,
             "transliteration": "Kuloo wa tamatta'oo qaleelan innakum mujrimoon",
             "tajweed_text": "كُلُو[s[اْ] وَتَمَتَّعُو[s[اْ] قَلِيلاً إِ[g[نّ]َك[w:14237[ُم م]ُّ[q:12353[جْ]رِم[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كُلُوْا",
+                    "transliteration": "kulū",
+                    "translation": "Eat",
+                    "analysis_id": 2287
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَتَمَتَّعُوْا",
+                    "transliteration": "watamattaʿū",
+                    "translation": "and enjoy yourselves",
+                    "analysis_id": 28571
+                },
+                {
+                    "position": 3,
+                    "arabic": "قَلِيْلًا",
+                    "transliteration": "qalīlan",
+                    "translation": "a little",
+                    "analysis_id": 1070
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِنَّكُمْ",
+                    "transliteration": "innakum",
+                    "translation": "indeed, you",
+                    "analysis_id": 701
+                },
+                {
+                    "position": 5,
+                    "arabic": "مُّجْرِمُوْنَ",
+                    "transliteration": "muj'rimūna",
+                    "translation": "(are) criminals",
+                    "analysis_id": 25238
+                }
+            ]
         },
         {
             "aya_id": 5669,
@@ -526,12 +1209,29 @@
             "sajda": false,
             "transliteration": "Wailunny yawma 'izil lilmukazzibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                }
+            ]
         },
         {
             "aya_id": 5670,
@@ -545,12 +1245,50 @@
             "sajda": false,
             "transliteration": "Wa izaa qeela lahumur ka'oo aa yarka'oon",
             "tajweed_text": "وَإِذَا قِيلَ لَهُمُ [h:14238[ٱ]رْكَعُو[s[اْ] لَا يَرْكَع[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِذَا",
+                    "transliteration": "wa-idhā",
+                    "translation": "And when",
+                    "analysis_id": 118
+                },
+                {
+                    "position": 2,
+                    "arabic": "قِيْلَ",
+                    "transliteration": "qīla",
+                    "translation": "it is said",
+                    "analysis_id": 119
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَهُمُ",
+                    "transliteration": "lahumu",
+                    "translation": "to them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 4,
+                    "arabic": "ارْكَعُوْا",
+                    "transliteration": "ir'kaʿū",
+                    "translation": "Bow",
+                    "analysis_id": 19895
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَرْكَعُوْنَ",
+                    "transliteration": "yarkaʿūna",
+                    "translation": "they bow",
+                    "analysis_id": 28572
+                }
+            ]
         },
         {
             "aya_id": 5671,
@@ -564,12 +1302,29 @@
             "sajda": false,
             "transliteration": "Wailunny yawma 'izil lilmukazzibeen",
             "tajweed_text": "وَيْ[a:14214[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيْلٌ",
+                    "transliteration": "waylun",
+                    "translation": "Woe",
+                    "analysis_id": 25293
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 28535
+                }
+            ]
         },
         {
             "aya_id": 5672,
@@ -583,12 +1338,50 @@
             "sajda": false,
             "transliteration": "Fabi ayyi hadeesim ba'dahoo yu'minoon",
             "tajweed_text": "فَبِأَىِّ حَدِي[i:5170[ثِۭ ب]َعْدَهُ[n[ۥ] يُؤْمِن[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُرۡسَلَاتِ",
-                "englishName": "Al-Mursalaat",
-                "englishNameTranslation": "The Emissaries",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "Then in what",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "حَدِيْثٍۢ",
+                    "transliteration": "ḥadīthin",
+                    "translation": "statement",
+                    "analysis_id": 12214
+                },
+                {
+                    "position": 3,
+                    "arabic": "بَعْدَهٗ",
+                    "transliteration": "baʿdahu",
+                    "translation": "after it",
+                    "analysis_id": 12215
+                },
+                {
+                    "position": 4,
+                    "arabic": "يُؤْمِنُوْنَ",
+                    "transliteration": "yu'minūna",
+                    "translation": "will they believe",
+                    "analysis_id": 41
+                },
+                {
+                    "position": 5,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(50)",
+                    "analysis_id": 31
+                },
+                {
+                    "position": 8,
+                    "arabic": "۔",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 1930
+                }
+            ]
         }
     ]
 }

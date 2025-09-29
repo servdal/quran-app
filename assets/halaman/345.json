@@ -13,12 +13,64 @@
             "sajda": false,
             "transliteration": "Maa tasbiqu min ummatin ajalahaa wa maa yastaakhiroon",
             "tajweed_text": "مَا تَسْبِقُ مِنْ أُ[g[مّ]َةٍ أَجَلَهَا وَمَا يَسْتَــْٔخِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "Not",
+                    "analysis_id": 1478
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَسْبِقُ",
+                    "transliteration": "tasbiqu",
+                    "translation": "can precede",
+                    "analysis_id": 16360
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "any",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "اُمَّةٍ",
+                    "transliteration": "ummatin",
+                    "translation": "nation",
+                    "analysis_id": 5515
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَجَلَهَا",
+                    "transliteration": "ajalahā",
+                    "translation": "its term",
+                    "analysis_id": 16361
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَمَا",
+                    "transliteration": "wamā",
+                    "translation": "and not",
+                    "analysis_id": 174
+                },
+                {
+                    "position": 7,
+                    "arabic": "يَسْتَأْخِرُوْنَ",
+                    "transliteration": "yastakhirūna",
+                    "translation": "they (can) delay (it)",
+                    "analysis_id": 11207
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۗ",
+                    "transliteration": null,
+                    "translation": "(43)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2717,
@@ -32,12 +84,134 @@
             "sajda": false,
             "transliteration": "Summa arsalnaa Rusulanaa tatraa kulla maa jaaa'a ummatar Rasooluhaa kazzabooh; fa atba'naa ba'dahum ba'danw wa ja'alnaahum ahaadees; fabu'dal liqawmil laa yu'minoon",
             "tajweed_text": "ثُ[g[مّ]َ أَرْسَلْنَا رُسُلَنَا تَتْرَا‌ۖ كُلَّ مَا ج[o[َا]ٓءَ أُ[g[مّ]َ[u:9214[ةً ر]َّسُولُهَا كَذَّبُوهُ‌ۚ فَأَتْبَعْنَا بَعْضَه[c:9215[ُم ب]َعْ[a:9216[ضًا و]َجَعَلْنَ[n[ـٰ]هُمْ أَحَادِيثَ‌ۚ فَبُعْ[u:9217[دًا ل]ِّقَوْ[u:9218[مٍ ل]َّا يُؤْمِن[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَرْسَلْنَا",
+                    "transliteration": "arsalnā",
+                    "translation": "We sent",
+                    "analysis_id": 2105
+                },
+                {
+                    "position": 3,
+                    "arabic": "رُسُلَنَا",
+                    "transliteration": "rusulanā",
+                    "translation": "Our Messengers",
+                    "analysis_id": 13838
+                },
+                {
+                    "position": 4,
+                    "arabic": "تَتْرَاۗ",
+                    "transliteration": "tatrā",
+                    "translation": "(in) succession",
+                    "analysis_id": 20043
+                },
+                {
+                    "position": 6,
+                    "arabic": "كُلَّمَا",
+                    "transliteration": "mā",
+                    "translation": "Every time",
+                    "analysis_id": 20044
+                },
+                {
+                    "position": 7,
+                    "arabic": "جَاۤءَ",
+                    "transliteration": "jāa",
+                    "translation": "came",
+                    "analysis_id": 7104
+                },
+                {
+                    "position": 8,
+                    "arabic": "اُمَّةً",
+                    "transliteration": "ummatan",
+                    "translation": "(to) a nation",
+                    "analysis_id": 1785
+                },
+                {
+                    "position": 9,
+                    "arabic": "رَّسُوْلُهَا",
+                    "transliteration": "rasūluhā",
+                    "translation": "its Messenger",
+                    "analysis_id": 20045
+                },
+                {
+                    "position": 10,
+                    "arabic": "كَذَّبُوْهُ",
+                    "transliteration": "kadhabūhu",
+                    "translation": "they denied him",
+                    "analysis_id": 20046
+                },
+                {
+                    "position": 11,
+                    "arabic": "فَاَتْبَعْنَا",
+                    "transliteration": "fa-atbaʿnā",
+                    "translation": "so We made (them) follow ",
+                    "analysis_id": 20047
+                },
+                {
+                    "position": 12,
+                    "arabic": "بَعْضَهُمْ",
+                    "transliteration": "baʿḍahum",
+                    "translation": "some of them",
+                    "analysis_id": 3836
+                },
+                {
+                    "position": 13,
+                    "arabic": "بَعْضًا",
+                    "transliteration": "baʿḍan",
+                    "translation": "others",
+                    "analysis_id": 5147
+                },
+                {
+                    "position": 14,
+                    "arabic": "وَّجَعَلْنٰهُمْ",
+                    "transliteration": "wajaʿalnāhum",
+                    "translation": "and We made them",
+                    "analysis_id": 14127
+                },
+                {
+                    "position": 15,
+                    "arabic": "اَحَادِيْثَۚ",
+                    "transliteration": "aḥādītha",
+                    "translation": "narrations",
+                    "analysis_id": 20048
+                },
+                {
+                    "position": 16,
+                    "arabic": "فَبُعْدًا",
+                    "transliteration": "fabuʿ'dan",
+                    "translation": "So away",
+                    "analysis_id": 20041
+                },
+                {
+                    "position": 17,
+                    "arabic": "لِّقَوْمٍ",
+                    "transliteration": "liqawmin",
+                    "translation": "with a people ",
+                    "analysis_id": 9082
+                },
+                {
+                    "position": 18,
+                    "arabic": "لَّا",
+                    "transliteration": "lā",
+                    "translation": "not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 19,
+                    "arabic": "يُؤْمِنُوْنَ",
+                    "transliteration": "yu'minūna",
+                    "translation": "they believe",
+                    "analysis_id": 41
+                }
+            ]
         },
         {
             "aya_id": 2718,
@@ -51,12 +225,71 @@
             "sajda": false,
             "transliteration": "Summa arsalnaa Moosaa wa akhaahu Haaroona bi Aayaatinaa wa sultaanim mubeen",
             "tajweed_text": "ثُ[g[مّ]َ أَرْسَلْنَا مُوسَىٰ وَأَخَاهُ هَ[n[ـٰ]رُونَ بِـَٔـايَ[n[ـٰ]تِنَا وَسُلْطَ[n[ـٰ][a:6479[نٍ م]ُّب[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَرْسَلْنَا",
+                    "transliteration": "arsalnā",
+                    "translation": "We sent",
+                    "analysis_id": 2105
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُوْسٰى",
+                    "transliteration": "mūsā",
+                    "translation": "Musa",
+                    "analysis_id": 698
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَاَخَاهُ",
+                    "transliteration": "wa-akhāhu",
+                    "translation": "and his brother",
+                    "analysis_id": 20049
+                },
+                {
+                    "position": 5,
+                    "arabic": "هٰرُوْنَ",
+                    "transliteration": "hārūna",
+                    "translation": "Harun",
+                    "analysis_id": 18510
+                },
+                {
+                    "position": 6,
+                    "arabic": "ەۙ",
+                    "transliteration": "biāyātinā",
+                    "translation": "with Our Signs",
+                    "analysis_id": 11414
+                },
+                {
+                    "position": 7,
+                    "arabic": "بِاٰيٰتِنَا",
+                    "transliteration": "wasul'ṭānin",
+                    "translation": "and an authority",
+                    "analysis_id": 20050
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَسُلْطٰنٍ",
+                    "transliteration": "mubīnin",
+                    "translation": "clear",
+                    "analysis_id": 20051
+                },
+                {
+                    "position": 9,
+                    "arabic": "مُّبِيْنٍۙ",
+                    "transliteration": null,
+                    "translation": "(45)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2719,
@@ -70,12 +303,64 @@
             "sajda": false,
             "transliteration": "Ilaa Fir'awna wa mala'ihee fastakbaroo wa kaanoo qawman 'aaleem",
             "tajweed_text": "إِلَىٰ فِرْعَوْنَ وَمَلَإِ[s[يْ]ه[n[ِۦ] فَ[h:4956[ٱ]سْتَكْبَرُو[s[اْ] وَكَانُو[s[اْ] قَوْمًا عَال[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "To",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِرْعَوْنَ",
+                    "transliteration": "fir'ʿawna",
+                    "translation": "Firaun",
+                    "analysis_id": 660
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَمَلَا۟ىِٕهٖ",
+                    "transliteration": "wamala-ihi",
+                    "translation": "and his chiefs",
+                    "analysis_id": 11634
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَاسْتَكْبَرُوْا",
+                    "transliteration": "fa-is'takbarū",
+                    "translation": "but they behaved arrogantly",
+                    "analysis_id": 11764
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَكَانُوْا",
+                    "transliteration": "wakānū",
+                    "translation": "and they were",
+                    "analysis_id": 1224
+                },
+                {
+                    "position": 6,
+                    "arabic": "قَوْمًا",
+                    "transliteration": "qawman",
+                    "translation": "a people",
+                    "analysis_id": 5349
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَالِيْنَ",
+                    "transliteration": "ʿālīna",
+                    "translation": "haughty",
+                    "analysis_id": 20052
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۚ",
+                    "transliteration": null,
+                    "translation": "(46)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2720,
@@ -89,12 +374,64 @@
             "sajda": false,
             "transliteration": "Faqaaloo annu'minu libasharaini mislinaa wa qawmuhumaa lanaa 'aabidoon",
             "tajweed_text": "فَقَال[o[ُوٓ][s[اْ] أَنُؤْمِنُ لِبَشَرَيْنِ مِثْلِنَا وَقَوْمُهُمَا لَنَا عَ[n[ـٰ]بِد[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَقَالُوْٓا",
+                    "transliteration": "faqālū",
+                    "translation": "Then they said",
+                    "analysis_id": 20053
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنُؤْمِنُ",
+                    "transliteration": "anu'minu",
+                    "translation": "Shall we believe",
+                    "analysis_id": 139
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِبَشَرَيْنِ",
+                    "transliteration": "libasharayni",
+                    "translation": "(in) two men",
+                    "analysis_id": 20054
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِثْلِنَا",
+                    "transliteration": "mith'linā",
+                    "translation": "like ourselves",
+                    "analysis_id": 20055
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَقَوْمُهُمَا",
+                    "transliteration": "waqawmuhumā",
+                    "translation": "while their people",
+                    "analysis_id": 20056
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَنَا",
+                    "transliteration": "lanā",
+                    "translation": "for us",
+                    "analysis_id": 802
+                },
+                {
+                    "position": 7,
+                    "arabic": "عٰبِدُوْنَ",
+                    "transliteration": "ʿābidūna",
+                    "translation": "(are) slaves",
+                    "analysis_id": 20057
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۚ",
+                    "transliteration": null,
+                    "translation": "(47)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2721,
@@ -108,12 +445,36 @@
             "sajda": false,
             "transliteration": "Fakazzaboohumaa fakaanoo minal mmuhlakeen",
             "tajweed_text": "فَكَذَّبُوهُمَا فَكَانُو[s[اْ] مِنَ [h:9219[ٱ]لْمُهْلَك[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَكَذَّبُوْهُمَا",
+                    "transliteration": "fakadhabūhumā",
+                    "translation": "So they denied them",
+                    "analysis_id": 20058
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَكَانُوْا",
+                    "transliteration": "fakānū",
+                    "translation": "and they became",
+                    "analysis_id": 20059
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمُهْلَكِيْنَ",
+                    "transliteration": "l-muh'lakīna",
+                    "translation": "those who were destroyed",
+                    "analysis_id": 20060
+                }
+            ]
         },
         {
             "aya_id": 2722,
@@ -127,12 +488,50 @@
             "sajda": false,
             "transliteration": "Wa laqad aatainaa Moosal Kitaaba la'allahum yahtadoon",
             "tajweed_text": "وَلَقَ[q:341[دْ] ءَاتَيْنَا مُوسَى [h:257[ٱ]لْكِتَ[n[ـٰ]بَ لَعَلَّهُمْ يَهْتَد[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَقَدْ",
+                    "transliteration": "walaqad",
+                    "translation": "And verily",
+                    "analysis_id": 881
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰتَيْنَا",
+                    "transliteration": "ātaynā",
+                    "translation": "We gave",
+                    "analysis_id": 693
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُوْسَى",
+                    "transliteration": "mūsā",
+                    "translation": "Musa",
+                    "analysis_id": 14949
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْكِتٰبَ",
+                    "transliteration": "l-kitāba",
+                    "translation": "the Scripture",
+                    "analysis_id": 695
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَعَلَّهُمْ",
+                    "transliteration": "laʿallahum",
+                    "translation": "so that they may",
+                    "analysis_id": 5203
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَهْتَدُوْنَ",
+                    "transliteration": "yahtadūna",
+                    "translation": "be guided",
+                    "analysis_id": 7776
+                }
+            ]
         },
         {
             "aya_id": 2723,
@@ -146,12 +545,92 @@
             "sajda": false,
             "transliteration": "Wa ja'alnab na Maryama wa ummahooo aayatannw wa aawainaahumaaa ilaa rabwatin zaati qaraarinw wa ma'een",
             "tajweed_text": "وَجَعَلْنَا [h:9220[ٱ][q:451[بْ]نَ مَرْيَمَ وَأُ[g[مّ]َهُ[o[ۥٓ] ءَايَ[a:9221[ةً و]َءَاوَيْنَ[n[ـٰ]هُم[o[َآ] إِلَىٰ رَ[q:9222[بْ]وَ[f:9223[ةٍ ذ]َاتِ قَرَا[a:9224[رٍ و]َمَع[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَجَعَلْنَا",
+                    "transliteration": "wajaʿalnā",
+                    "translation": "And We made",
+                    "analysis_id": 8655
+                },
+                {
+                    "position": 2,
+                    "arabic": "ابْنَ",
+                    "transliteration": "ib'na",
+                    "translation": "(the) son",
+                    "analysis_id": 3843
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَرْيَمَ",
+                    "transliteration": "maryama",
+                    "translation": "(of) Maryam",
+                    "analysis_id": 20061
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَاُمَّهٗٓ",
+                    "transliteration": "wa-ummahu",
+                    "translation": "and his mother",
+                    "analysis_id": 20062
+                },
+                {
+                    "position": 5,
+                    "arabic": "اٰيَةً",
+                    "transliteration": "āyatan",
+                    "translation": "a Sign",
+                    "analysis_id": 4931
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَّاٰوَيْنٰهُمَآ",
+                    "transliteration": "waāwaynāhumā",
+                    "translation": "and We sheltered them",
+                    "analysis_id": 20063
+                },
+                {
+                    "position": 7,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 8,
+                    "arabic": "رَبْوَةٍ",
+                    "transliteration": "rabwatin",
+                    "translation": "a high ground",
+                    "analysis_id": 20064
+                },
+                {
+                    "position": 9,
+                    "arabic": "ذَاتِ",
+                    "transliteration": "dhāti",
+                    "translation": "of tranquility",
+                    "analysis_id": 20065
+                },
+                {
+                    "position": 10,
+                    "arabic": "قَرَارٍ",
+                    "transliteration": "qarārin",
+                    "translation": "of tranquility",
+                    "analysis_id": 16231
+                },
+                {
+                    "position": 11,
+                    "arabic": "وَّمَعِيْنٍ",
+                    "transliteration": "wamaʿīnin",
+                    "translation": "and water springs",
+                    "analysis_id": 20066
+                },
+                {
+                    "position": 12,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(50)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 2724,
@@ -165,12 +644,92 @@
             "sajda": false,
             "transliteration": "Yaaa aiyuhar Rusulu kuloo minat taiyibaati wa'maloo saalihan innee bimaa ta'maloona 'Aleem",
             "tajweed_text": "يَ[o[ـٰٓ]أَيُّهَا [h:9225[ٱ][l[ل]رُّسُلُ كُلُو[s[اْ] مِنَ [h:5307[ٱ][l[ل]طَّيِّبَ[n[ـٰ]تِ وَ[h:9226[ٱ]عْمَلُو[s[اْ] صَ[n[ـٰ]لِحًا‌ۖ إِ[g[نّ]ِى بِمَا تَعْمَلُونَ عَل[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يٰٓاَيُّهَا",
+                    "transliteration": "yāayyuhā",
+                    "translation": "O Messengers",
+                    "analysis_id": 1470
+                },
+                {
+                    "position": 2,
+                    "arabic": "الرُّسُلُ",
+                    "transliteration": "l-rusulu",
+                    "translation": "O Messengers",
+                    "analysis_id": 3834
+                },
+                {
+                    "position": 3,
+                    "arabic": "كُلُوْا",
+                    "transliteration": "kulū",
+                    "translation": "Eat",
+                    "analysis_id": 2287
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "الطَّيِّبٰتِ",
+                    "transliteration": "l-ṭayibāti",
+                    "translation": "the good things",
+                    "analysis_id": 12478
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَاعْمَلُوْا",
+                    "transliteration": "wa-iʿ'malū",
+                    "translation": "and do",
+                    "analysis_id": 20067
+                },
+                {
+                    "position": 7,
+                    "arabic": "صَالِحًاۗ",
+                    "transliteration": "ṣāliḥan",
+                    "translation": "righteous (deeds)",
+                    "analysis_id": 20068
+                },
+                {
+                    "position": 8,
+                    "arabic": "اِنِّيْ",
+                    "transliteration": "innī",
+                    "translation": "Indeed, I Am",
+                    "analysis_id": 430
+                },
+                {
+                    "position": 9,
+                    "arabic": "بِمَا",
+                    "transliteration": "bimā",
+                    "translation": "of what",
+                    "analysis_id": 765
+                },
+                {
+                    "position": 10,
+                    "arabic": "تَعْمَلُوْنَ",
+                    "transliteration": "taʿmalūna",
+                    "translation": "you do",
+                    "analysis_id": 5437
+                },
+                {
+                    "position": 11,
+                    "arabic": "عَلِيْمٌ",
+                    "transliteration": "ʿalīmun",
+                    "translation": "All-Knower",
+                    "analysis_id": 5135
+                },
+                {
+                    "position": 12,
+                    "arabic": "ۗ",
+                    "transliteration": null,
+                    "translation": "(51)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2725,
@@ -184,12 +743,64 @@
             "sajda": false,
             "transliteration": "Wa inna haaziheee ummatukum ummatanw waahidatanw wa Ana Rabbukum fattaqoon",
             "tajweed_text": "وَإِ[g[نّ]َ هَ[n[ـٰ]ذِه[o[ِۦٓ] أُ[g[مّ]َتُكُمْ أُ[g[مّ]َ[a:1159[ةً و][n[َٲ]حِدَ[a:8854[ةً و]َأَنَا۟ رَبُّكُمْ فَ[h:210[ٱ]تَّق[p[ُو]نِ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّ",
+                    "transliteration": "wa-inna",
+                    "translation": "And indeed",
+                    "analysis_id": 10618
+                },
+                {
+                    "position": 2,
+                    "arabic": "هٰذِهٖٓ",
+                    "transliteration": "hādhihi",
+                    "translation": "this",
+                    "analysis_id": 10746
+                },
+                {
+                    "position": 3,
+                    "arabic": "اُمَّتُكُمْ",
+                    "transliteration": "ummatukum",
+                    "translation": "your religion",
+                    "analysis_id": 19482
+                },
+                {
+                    "position": 4,
+                    "arabic": "اُمَّةً",
+                    "transliteration": "ummatan",
+                    "translation": "(is) religion",
+                    "analysis_id": 1785
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَّاحِدَةً",
+                    "transliteration": "wāḥidatan",
+                    "translation": "one",
+                    "analysis_id": 13823
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَّاَنَا۠",
+                    "transliteration": "wa-anā",
+                    "translation": "And I Am",
+                    "analysis_id": 11859
+                },
+                {
+                    "position": 7,
+                    "arabic": "رَبُّكُمْ",
+                    "transliteration": "rabbukum",
+                    "translation": "your Lord",
+                    "analysis_id": 5665
+                },
+                {
+                    "position": 8,
+                    "arabic": "فَاتَّقُوْنِ",
+                    "transliteration": "fa-ittaqūni",
+                    "translation": "so fear Me",
+                    "analysis_id": 16572
+                }
+            ]
         },
         {
             "aya_id": 2726,
@@ -203,12 +814,71 @@
             "sajda": false,
             "transliteration": "Fataqatta'ooo amrahum bainahum zuburaa; kullu hizbim bimaa ladaihim farihoon",
             "tajweed_text": "فَتَقَطَّع[o[ُوٓ][s[اْ] أَمْرَه[c:8517[ُم ب]َيْنَهُمْ زُبُ[f:9227[رًا‌ۖ ك]ُلُّ حِزْ[i:9228[بِۭ ب]ِمَا لَدَيْهِمْ فَرِح[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَتَقَطَّعُوْٓا",
+                    "transliteration": "fataqaṭṭaʿū",
+                    "translation": "But they cut off",
+                    "analysis_id": 20069
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَمْرَهُمْ",
+                    "transliteration": "amrahum",
+                    "translation": "their affair (of unity)",
+                    "analysis_id": 15695
+                },
+                {
+                    "position": 3,
+                    "arabic": "بَيْنَهُمْ",
+                    "transliteration": "baynahum",
+                    "translation": "between them",
+                    "analysis_id": 2476
+                },
+                {
+                    "position": 4,
+                    "arabic": "زُبُرًاۗ",
+                    "transliteration": "zuburan",
+                    "translation": "(into) sects",
+                    "analysis_id": 20070
+                },
+                {
+                    "position": 6,
+                    "arabic": "كُلُّ",
+                    "transliteration": "ḥiz'bin",
+                    "translation": "faction",
+                    "analysis_id": 20071
+                },
+                {
+                    "position": 7,
+                    "arabic": "حِزْبٍۢ",
+                    "transliteration": "bimā",
+                    "translation": "in what",
+                    "analysis_id": 20072
+                },
+                {
+                    "position": 8,
+                    "arabic": "بِمَا",
+                    "transliteration": "ladayhim",
+                    "translation": "they have",
+                    "analysis_id": 20073
+                },
+                {
+                    "position": 9,
+                    "arabic": "لَدَيْهِمْ",
+                    "transliteration": "fariḥūna",
+                    "translation": "rejoicing",
+                    "analysis_id": 20074
+                },
+                {
+                    "position": 10,
+                    "arabic": "فَرِحُوْنَ",
+                    "transliteration": null,
+                    "translation": "(53)",
+                    "analysis_id": 20075
+                }
+            ]
         },
         {
             "aya_id": 2727,
@@ -222,12 +892,43 @@
             "sajda": false,
             "transliteration": "Fazarhum fee ghamratihim hattaa heen",
             "tajweed_text": "فَذَرْهُمْ فِى غَمْرَتِهِمْ حَتَّىٰ ح[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَذَرْهُمْ",
+                    "transliteration": "fadharhum",
+                    "translation": "So leave them",
+                    "analysis_id": 10575
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 3,
+                    "arabic": "غَمْرَتِهِمْ",
+                    "transliteration": "ghamratihim",
+                    "translation": "their confusion",
+                    "analysis_id": 20076
+                },
+                {
+                    "position": 4,
+                    "arabic": "حَتّٰى",
+                    "transliteration": "ḥattā",
+                    "translation": "until",
+                    "analysis_id": 720
+                },
+                {
+                    "position": 5,
+                    "arabic": "حِيْنٍ",
+                    "transliteration": "ḥīnin",
+                    "translation": "a time",
+                    "analysis_id": 11124
+                }
+            ]
         },
         {
             "aya_id": 2728,
@@ -241,12 +942,64 @@
             "sajda": false,
             "transliteration": "A-yahsaboona annnamaa numiduhum bihee mimmaalinw wa baneen",
             "tajweed_text": "أَيَحْسَبُونَ أَ[g[نّ]َمَا نُمِدُّه[c:9229[ُم ب]ِه[n[ِۦ] م[a:9230[ِن م]َّا[a:9231[لٍ و]َبَن[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَيَحْسَبُوْنَ",
+                    "transliteration": "ayaḥsabūna",
+                    "translation": "Do they think",
+                    "analysis_id": 20077
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنَّمَا",
+                    "transliteration": "annamā",
+                    "translation": "that what",
+                    "analysis_id": 6166
+                },
+                {
+                    "position": 3,
+                    "arabic": "نُمِدُّهُمْ",
+                    "transliteration": "numidduhum",
+                    "translation": "We extend to them",
+                    "analysis_id": 20078
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِهٖ",
+                    "transliteration": "bihi",
+                    "translation": "[with it]",
+                    "analysis_id": 375
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَّالٍ",
+                    "transliteration": "mālin",
+                    "translation": "wealth",
+                    "analysis_id": 20079
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَّبَنِيْنَ",
+                    "transliteration": "wabanīna",
+                    "translation": "and children",
+                    "analysis_id": 17122
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(55)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2729,
@@ -260,12 +1013,57 @@
             "sajda": false,
             "transliteration": "Nusaari'u lahum fil khairaat; bal laa yash'uroon",
             "tajweed_text": "نُسَارِعُ لَهُمْ فِى [h:2181[ٱ]لْخَيْر[n[َٲ]تِ‌ۚ بَل لَّا يَشْعُر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "نُسَارِعُ",
+                    "transliteration": "nusāriʿu",
+                    "translation": "We hasten",
+                    "analysis_id": 20080
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "to them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْخَيْرٰتِۗ",
+                    "transliteration": "l-khayrāti",
+                    "translation": "the good",
+                    "analysis_id": 5571
+                },
+                {
+                    "position": 5,
+                    "arabic": "بَلْ",
+                    "transliteration": "bal",
+                    "translation": "Nay",
+                    "analysis_id": 2300
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَّا",
+                    "transliteration": "lā",
+                    "translation": "not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 7,
+                    "arabic": "يَشْعُرُوْنَ",
+                    "transliteration": "yashʿurūna",
+                    "translation": "they perceive",
+                    "analysis_id": 133
+                }
+            ]
         },
         {
             "aya_id": 2730,
@@ -279,12 +1077,64 @@
             "sajda": false,
             "transliteration": "Innal lazeena hum min khashyati Rabbihim mushfiqoon",
             "tajweed_text": "إِ[g[نّ]َ [h:24[ٱ]لَّذِينَ ه[w:9232[ُم م]ِّنْ خَشْيَةِ رَبِّه[w:9233[ِم م]ُّشْفِق[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "هُمْ",
+                    "transliteration": "hum",
+                    "translation": "[they]",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "خَشْيَةِ",
+                    "transliteration": "khashyati",
+                    "translation": "(the) fear",
+                    "analysis_id": 20081
+                },
+                {
+                    "position": 6,
+                    "arabic": "رَبِّهِمْ",
+                    "transliteration": "rabbihim",
+                    "translation": "(of) their Lord",
+                    "analysis_id": 61
+                },
+                {
+                    "position": 7,
+                    "arabic": "مُّشْفِقُوْنَ",
+                    "transliteration": "mush'fiqūna",
+                    "translation": "(are) cautious",
+                    "analysis_id": 19256
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(57)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2731,
@@ -298,12 +1148,50 @@
             "sajda": false,
             "transliteration": "Wallazeena hum bi Aayaati Rabbihim yu'minoon",
             "tajweed_text": "وَ[h:9999[ٱ]لَّذِينَ ه[c:9234[ُم ب]ِـَٔـايَ[n[ـٰ]تِ رَبِّهِمْ يُؤْمِن[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالَّذِيْنَ",
+                    "transliteration": "wa-alladhīna",
+                    "translation": "And those",
+                    "analysis_id": 48
+                },
+                {
+                    "position": 2,
+                    "arabic": "هُمْ",
+                    "transliteration": "hum",
+                    "translation": "[they]",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِاٰيٰتِ",
+                    "transliteration": "biāyāti",
+                    "translation": "in (the) Signs",
+                    "analysis_id": 4715
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَبِّهِمْ",
+                    "transliteration": "rabbihim",
+                    "translation": "(of) their Lord",
+                    "analysis_id": 61
+                },
+                {
+                    "position": 5,
+                    "arabic": "يُؤْمِنُوْنَ",
+                    "transliteration": "yu'minūna",
+                    "translation": "believe",
+                    "analysis_id": 41
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(58)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2732,
@@ -317,12 +1205,50 @@
             "sajda": false,
             "transliteration": "Wallazeena hum bi Rabbihim laa yushrikoon",
             "tajweed_text": "وَ[h:9999[ٱ]لَّذِينَ ه[c:9235[ُم ب]ِرَبِّهِمْ لَا يُشْرِك[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُؤۡمِنُونَ",
-                "englishName": "Al-Muminoon",
-                "englishNameTranslation": "The Believers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالَّذِيْنَ",
+                    "transliteration": "wa-alladhīna",
+                    "translation": "And those",
+                    "analysis_id": 48
+                },
+                {
+                    "position": 2,
+                    "arabic": "هُمْ",
+                    "transliteration": "hum",
+                    "translation": "[they]",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِرَبِّهِمْ",
+                    "transliteration": "birabbihim",
+                    "translation": "with their Lord",
+                    "analysis_id": 10889
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "(do) not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 5,
+                    "arabic": "يُشْرِكُوْنَ",
+                    "transliteration": "yush'rikūna",
+                    "translation": "associate partners",
+                    "analysis_id": 12272
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(59)",
+                    "analysis_id": 20
+                }
+            ]
         }
     ]
 }

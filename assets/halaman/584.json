@@ -13,12 +13,50 @@
             "sajda": false,
             "transliteration": "Iz nadaahu rabbuhu bil waadil-muqad dasi tuwa",
             "tajweed_text": "إِذْ نَادَ[n[ٮٰ]هُ رَبُّهُ[n[ۥ] بِ[h:8451[ٱ]لْوَادِ [h:8452[ٱ]لْمُقَدَّسِ طُوًى",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِذْ",
+                    "transliteration": "idh",
+                    "translation": "When",
+                    "analysis_id": 1814
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَادٰىهُ",
+                    "transliteration": "nādāhu",
+                    "translation": "called him",
+                    "analysis_id": 28668
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبُّهٗ",
+                    "transliteration": "rabbuhu",
+                    "translation": "his Lord",
+                    "analysis_id": 11852
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِالْوَادِ",
+                    "transliteration": "bil-wādi",
+                    "translation": "in the valley",
+                    "analysis_id": 18680
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمُقَدَّسِ",
+                    "transliteration": "l-muqadasi",
+                    "translation": "the sacred",
+                    "analysis_id": 18681
+                },
+                {
+                    "position": 6,
+                    "arabic": "طُوًىۚ",
+                    "transliteration": "ṭuwan",
+                    "translation": "(of) Tuwa",
+                    "analysis_id": 28669
+                }
+            ]
         },
         {
             "aya_id": 5729,
@@ -32,12 +70,43 @@
             "sajda": false,
             "transliteration": "Izhab ilaa fir'auna innahu taghaa.",
             "tajweed_text": "ٱذْهَ[q:7814[بْ] إِلَىٰ فِرْعَوْنَ إِ[g[نّ]َهُ[n[ۥ] طَغَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِذْهَبْ",
+                    "transliteration": "idh'hab",
+                    "translation": "Go",
+                    "analysis_id": 17403
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِرْعَوْنَ",
+                    "transliteration": "fir'ʿawna",
+                    "translation": "Firaun",
+                    "analysis_id": 660
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, he",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 5,
+                    "arabic": "طَغٰىۖ",
+                    "transliteration": "ṭaghā",
+                    "translation": "(has) transgressed",
+                    "analysis_id": 18791
+                }
+            ]
         },
         {
             "aya_id": 5730,
@@ -51,12 +120,50 @@
             "sajda": false,
             "transliteration": "Faqul hal laka ilaa-an tazakka.",
             "tajweed_text": "فَقُلْ هَل لَّكَ إِلَ[o[ىٰٓ] أَ[f:14276[ن ت]َزَكَّىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَقُلْ",
+                    "transliteration": "faqul",
+                    "translation": "And say",
+                    "analysis_id": 28670
+                },
+                {
+                    "position": 2,
+                    "arabic": "هَلْ",
+                    "transliteration": "hal",
+                    "translation": "Would",
+                    "analysis_id": 2935
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَّكَ",
+                    "transliteration": "laka",
+                    "translation": "[for] you",
+                    "analysis_id": 719
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِلٰٓى",
+                    "transliteration": "ilā",
+                    "translation": "[to]",
+                    "analysis_id": 1871
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "[that]",
+                    "analysis_id": 391
+                },
+                {
+                    "position": 6,
+                    "arabic": "تَزَكّٰىۙ",
+                    "transliteration": "tazakkā",
+                    "translation": "purify yourself",
+                    "analysis_id": 28671
+                }
+            ]
         },
         {
             "aya_id": 5731,
@@ -70,12 +177,36 @@
             "sajda": false,
             "transliteration": "Wa ahdi yaka ila rabbika fatakh sha",
             "tajweed_text": "وَأَهْدِيَكَ إِلَىٰ رَبِّكَ فَتَخْشَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَهْدِيَكَ",
+                    "transliteration": "wa-ahdiyaka",
+                    "translation": "And I will guide you",
+                    "analysis_id": 28672
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَتَخْشٰىۚ",
+                    "transliteration": "fatakhshā",
+                    "translation": "so you would fear",
+                    "analysis_id": 28673
+                }
+            ]
         },
         {
             "aya_id": 5732,
@@ -89,12 +220,29 @@
             "sajda": false,
             "transliteration": "Fa araahul-aayatal kubra.",
             "tajweed_text": "فَأَرَ[n[ٮٰ]هُ [h:14277[ٱ]لْأَيَةَ [h:14278[ٱ]لْكُ[q:8463[بْ]رَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاَرٰىهُ",
+                    "transliteration": "fa-arāhu",
+                    "translation": "Then he showed him",
+                    "analysis_id": 28674
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْاٰيَةَ",
+                    "transliteration": "l-āyata",
+                    "translation": "the sign",
+                    "analysis_id": 28675
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْكُبْرٰىۖ",
+                    "transliteration": "l-kub'rā",
+                    "translation": "the great",
+                    "analysis_id": 25225
+                }
+            ]
         },
         {
             "aya_id": 5733,
@@ -108,12 +256,22 @@
             "sajda": false,
             "transliteration": "Fa kazzaba wa asaa.",
             "tajweed_text": "فَكَذَّبَ وَعَصَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَكَذَّبَ",
+                    "transliteration": "fakadhaba",
+                    "translation": "But he denied",
+                    "analysis_id": 18840
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَعَصٰىۖ",
+                    "transliteration": "waʿaṣā",
+                    "translation": "and disobeyed",
+                    "analysis_id": 28676
+                }
+            ]
         },
         {
             "aya_id": 5734,
@@ -127,12 +285,29 @@
             "sajda": false,
             "transliteration": "Thumma adbara yas'aa.",
             "tajweed_text": "ثُ[g[مّ]َ أَ[q:13927[دْ]بَرَ يَسْعَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَدْبَرَ",
+                    "transliteration": "adbara",
+                    "translation": "he turned his back",
+                    "analysis_id": 27962
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَسْعٰىۖ",
+                    "transliteration": "yasʿā",
+                    "translation": "striving",
+                    "analysis_id": 26398
+                }
+            ]
         },
         {
             "aya_id": 5735,
@@ -146,12 +321,22 @@
             "sajda": false,
             "transliteration": "Fa hashara fanada.",
             "tajweed_text": "فَحَشَرَ فَنَادَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَحَشَرَ",
+                    "transliteration": "faḥashara",
+                    "translation": "And he gathered",
+                    "analysis_id": 28677
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَنَادٰىۖ",
+                    "transliteration": "fanādā",
+                    "translation": "and called out",
+                    "analysis_id": 28678
+                }
+            ]
         },
         {
             "aya_id": 5736,
@@ -165,12 +350,36 @@
             "sajda": false,
             "transliteration": "Faqala ana rabbu kumul-a'laa.",
             "tajweed_text": "فَقَالَ أَنَا۟ رَبُّكُمُ [h:14279[ٱ]لْأَعْلَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَقَالَ",
+                    "transliteration": "faqāla",
+                    "translation": "Then he said",
+                    "analysis_id": 459
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنَا۠",
+                    "transliteration": "anā",
+                    "translation": "I am",
+                    "analysis_id": 8827
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبُّكُمُ",
+                    "transliteration": "rabbukumu",
+                    "translation": "your Lord",
+                    "analysis_id": 5665
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْاَعْلٰىۖ",
+                    "transliteration": "l-aʿlā",
+                    "translation": "the Most High",
+                    "analysis_id": 28679
+                }
+            ]
         },
         {
             "aya_id": 5737,
@@ -184,12 +393,43 @@
             "sajda": false,
             "transliteration": "Fa-akha zahul laahu nakalal aakhirati wal-oola.",
             "tajweed_text": "فَأَخَذَهُ [h:14280[ٱ]للَّهُ نَكَالَ [h:14281[ٱ]لْأَخِرَةِ وَ[h:12987[ٱ]لْأُولَىٰٓ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاَخَذَهُ",
+                    "transliteration": "fa-akhadhahu",
+                    "translation": "So seized him",
+                    "analysis_id": 28680
+                },
+                {
+                    "position": 2,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 3,
+                    "arabic": "نَكَالَ",
+                    "transliteration": "nakāla",
+                    "translation": "(with) an exemplary punishment",
+                    "analysis_id": 28681
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْاٰخِرَةِ",
+                    "transliteration": "l-ākhirati",
+                    "translation": "(for) the last",
+                    "analysis_id": 1811
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَالْاُوْلٰىۗ",
+                    "transliteration": "wal-ūlā",
+                    "translation": "and the first",
+                    "analysis_id": 28682
+                }
+            ]
         },
         {
             "aya_id": 5738,
@@ -203,12 +443,64 @@
             "sajda": false,
             "transliteration": "Inna fee zaalika la'ibratal limaiy-yaksha",
             "tajweed_text": "إِ[g[نّ]َ فِى ذ[n[َٲ]لِكَ لَعِ[q:1764[بْ]رَ[u:14282[ةً ل]ِّم[a:8436[َن ي]َخْشَىٰٓ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 3,
+                    "arabic": "ذٰلِكَ",
+                    "transliteration": "dhālika",
+                    "translation": "that",
+                    "analysis_id": 33
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَعِبْرَةً",
+                    "transliteration": "laʿib'ratan",
+                    "translation": "surely (is) a lesson",
+                    "analysis_id": 16801
+                },
+                {
+                    "position": 5,
+                    "arabic": "لِّمَنْ",
+                    "transliteration": "liman",
+                    "translation": "for whoever",
+                    "analysis_id": 2122
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَّخْشٰى",
+                    "transliteration": "yakhshā",
+                    "translation": "fears",
+                    "analysis_id": 18655
+                },
+                {
+                    "position": 7,
+                    "arabic": "ۗ",
+                    "transliteration": null,
+                    "translation": "(26)",
+                    "analysis_id": 20
+                },
+                {
+                    "position": 8,
+                    "arabic": "ࣖ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 5739,
@@ -222,12 +514,57 @@
             "sajda": false,
             "transliteration": "A-antum a shaddu khalqan amis samaa-u banaaha.",
             "tajweed_text": "ءَأَ[f:716[نت]ُمْ أَشَدُّ خَلْقًا أَمِ [h:14283[ٱ][l[ل]سَّم[o[َا]ٓءُ‌ۚ بَنَ[n[ـٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ءَاَنْتُمْ",
+                    "transliteration": "a-antum",
+                    "translation": "Are you",
+                    "analysis_id": 20657
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَشَدُّ",
+                    "transliteration": "ashaddu",
+                    "translation": "a more difficult",
+                    "analysis_id": 987
+                },
+                {
+                    "position": 3,
+                    "arabic": "خَلْقًا",
+                    "transliteration": "khalqan",
+                    "translation": "creation",
+                    "analysis_id": 17349
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَمِ",
+                    "transliteration": "ami",
+                    "translation": "or",
+                    "analysis_id": 70
+                },
+                {
+                    "position": 5,
+                    "arabic": "السَّمَاۤءُ",
+                    "transliteration": "l-samāu",
+                    "translation": "the heaven",
+                    "analysis_id": 20696
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۚ",
+                    "transliteration": "banāhā",
+                    "translation": "He constructed it",
+                    "analysis_id": 28683
+                },
+                {
+                    "position": 7,
+                    "arabic": "بَنٰىهَاۗ",
+                    "transliteration": null,
+                    "translation": "(27)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 5740,
@@ -241,12 +578,29 @@
             "sajda": false,
             "transliteration": "Raf'a sam kaha fasaw waaha",
             "tajweed_text": "رَفَعَ سَمْكَهَا فَسَوَّ[n[ٮٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "رَفَعَ",
+                    "transliteration": "rafaʿa",
+                    "translation": "He raised",
+                    "analysis_id": 15723
+                },
+                {
+                    "position": 2,
+                    "arabic": "سَمْكَهَا",
+                    "transliteration": "samkahā",
+                    "translation": "its ceiling",
+                    "analysis_id": 28684
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَسَوّٰىهَاۙ",
+                    "transliteration": "fasawwāhā",
+                    "translation": "and proportioned it",
+                    "analysis_id": 28685
+                }
+            ]
         },
         {
             "aya_id": 5741,
@@ -260,12 +614,36 @@
             "sajda": false,
             "transliteration": "Wa aghtasha lailaha wa akhraja duhaaha.",
             "tajweed_text": "وَأَغْطَشَ لَيْلَهَا وَأَخْرَجَ ضُحَ[n[ـٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَغْطَشَ",
+                    "transliteration": "wa-aghṭasha",
+                    "translation": "And He darkened",
+                    "analysis_id": 28686
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَيْلَهَا",
+                    "transliteration": "laylahā",
+                    "translation": "its night",
+                    "analysis_id": 28687
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَاَخْرَجَ",
+                    "transliteration": "wa-akhraja",
+                    "translation": "and brought out",
+                    "analysis_id": 28688
+                },
+                {
+                    "position": 4,
+                    "arabic": "ضُحٰىهَاۖ",
+                    "transliteration": "ḍuḥāhā",
+                    "translation": "its brightness",
+                    "analysis_id": 28689
+                }
+            ]
         },
         {
             "aya_id": 5742,
@@ -279,12 +657,36 @@
             "sajda": false,
             "transliteration": "Wal arda b'ada zaalika dahaaha.",
             "tajweed_text": "وَ[h:9999[ٱ]لْأَرْضَ بَعْدَ ذ[n[َٲ]لِكَ دَحَ[n[ـٰ]هَآ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالْاَرْضَ",
+                    "transliteration": "wal-arḍa",
+                    "translation": "And the earth",
+                    "analysis_id": 9709
+                },
+                {
+                    "position": 2,
+                    "arabic": "بَعْدَ",
+                    "transliteration": "baʿda",
+                    "translation": "after",
+                    "analysis_id": 2222
+                },
+                {
+                    "position": 3,
+                    "arabic": "ذٰلِكَ",
+                    "transliteration": "dhālika",
+                    "translation": "that",
+                    "analysis_id": 33
+                },
+                {
+                    "position": 4,
+                    "arabic": "دَحٰىهَاۗ",
+                    "transliteration": "daḥāhā",
+                    "translation": "He spread it",
+                    "analysis_id": 28690
+                }
+            ]
         },
         {
             "aya_id": 5743,
@@ -298,12 +700,36 @@
             "sajda": false,
             "transliteration": "Akhraja minha maa-aha wa mar 'aaha.",
             "tajweed_text": "أَخْرَجَ مِنْهَا م[o[َا]ٓءَهَا وَمَرْعَ[n[ـٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَخْرَجَ",
+                    "transliteration": "akhraja",
+                    "translation": "He brought forth",
+                    "analysis_id": 11147
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِنْهَا",
+                    "transliteration": "min'hā",
+                    "translation": "from it",
+                    "analysis_id": 510
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَاۤءَهَا",
+                    "transliteration": "māahā",
+                    "translation": "its water",
+                    "analysis_id": 28691
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَمَرْعٰىهَاۖ",
+                    "transliteration": "wamarʿāhā",
+                    "translation": "and its pasture",
+                    "analysis_id": 28692
+                }
+            ]
         },
         {
             "aya_id": 5744,
@@ -317,12 +743,22 @@
             "sajda": false,
             "transliteration": "Wal jibala arsaaha.",
             "tajweed_text": "وَ[h:9999[ٱ]لْجِبَالَ أَرْسَ[n[ـٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالْجِبَالَ",
+                    "transliteration": "wal-jibāla",
+                    "translation": "And the mountains",
+                    "analysis_id": 28578
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَرْسٰىهَاۙ",
+                    "transliteration": "arsāhā",
+                    "translation": "He made them firm",
+                    "analysis_id": 28693
+                }
+            ]
         },
         {
             "aya_id": 5745,
@@ -336,12 +772,29 @@
             "sajda": false,
             "transliteration": "Mataa'al lakum wali an 'aamikum.",
             "tajweed_text": "مَتَ[n[ـٰ][u:3808[عًا ل]َّكُمْ وَلِأَنْعَ[n[ـٰ]مِكُمْ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَتَاعًا",
+                    "transliteration": "matāʿan",
+                    "translation": "(As) a provision",
+                    "analysis_id": 3593
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَّكُمْ",
+                    "transliteration": "lakum",
+                    "translation": "for you",
+                    "analysis_id": 411
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَلِاَنْعَامِكُمْۗ",
+                    "transliteration": "wali-anʿāmikum",
+                    "translation": "and for your cattle",
+                    "analysis_id": 28694
+                }
+            ]
         },
         {
             "aya_id": 5746,
@@ -355,12 +808,36 @@
             "sajda": false,
             "transliteration": "Fa-izaa jaaa'atit taaam matul kubraa.",
             "tajweed_text": "فَإِذَا ج[o[َا]ٓءَتِ [h:14284[ٱ][l[ل]طّ[m[َا]ٓ[g[مّ]َةُ [h:14285[ٱ]لْكُ[q:8463[بْ]رَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِذَا",
+                    "transliteration": "fa-idhā",
+                    "translation": "But when",
+                    "analysis_id": 2829
+                },
+                {
+                    "position": 2,
+                    "arabic": "جَاۤءَتِ",
+                    "transliteration": "jāati",
+                    "translation": "comes",
+                    "analysis_id": 10543
+                },
+                {
+                    "position": 3,
+                    "arabic": "الطَّاۤمَّةُ",
+                    "transliteration": "l-ṭāmatu",
+                    "translation": "the Overwhelming Calamity",
+                    "analysis_id": 28695
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْكُبْرٰىۖ",
+                    "transliteration": "l-kub'rā",
+                    "translation": "the great",
+                    "analysis_id": 28696
+                }
+            ]
         },
         {
             "aya_id": 5747,
@@ -374,12 +851,43 @@
             "sajda": false,
             "transliteration": "Yauma Yata zakkarul insaanu ma sa'aa.",
             "tajweed_text": "يَوْمَ يَتَذَكَّرُ [h:14286[ٱ]لْإِ[f:2732[نس]َ[n[ـٰ]نُ مَا سَعَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "yawma",
+                    "translation": "(The) Day",
+                    "analysis_id": 2352
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَتَذَكَّرُ",
+                    "transliteration": "yatadhakkaru",
+                    "translation": "will remember",
+                    "analysis_id": 18795
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاِنْسَانُ",
+                    "transliteration": "l-insānu",
+                    "translation": "man",
+                    "analysis_id": 17144
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 5,
+                    "arabic": "سَعٰىۙ",
+                    "transliteration": "saʿā",
+                    "translation": "he strove (for)",
+                    "analysis_id": 26398
+                }
+            ]
         },
         {
             "aya_id": 5748,
@@ -393,12 +901,36 @@
             "sajda": false,
             "transliteration": "Wa burrizatil-jaheemu limany-yaraa.",
             "tajweed_text": "وَبُرِّزَتِ [h:9792[ٱ]لْجَحِيمُ لِم[a:14287[َن ي]َرَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَبُرِّزَتِ",
+                    "transliteration": "waburrizati",
+                    "translation": "And will be made manifest",
+                    "analysis_id": 21014
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْجَحِيْمُ",
+                    "transliteration": "l-jaḥīmu",
+                    "translation": "the Hellfire",
+                    "analysis_id": 21015
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِمَنْ",
+                    "transliteration": "liman",
+                    "translation": "to (him) who",
+                    "analysis_id": 2122
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَّرٰى",
+                    "transliteration": "yarā",
+                    "translation": "sees",
+                    "analysis_id": 28697
+                }
+            ]
         },
         {
             "aya_id": 5749,
@@ -412,12 +944,29 @@
             "sajda": false,
             "transliteration": "Fa ammaa man taghaa.",
             "tajweed_text": "فَأَ[g[مّ]َا مَ[f:14288[ن ط]َغَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاَمَّا",
+                    "transliteration": "fa-ammā",
+                    "translation": "Then as for",
+                    "analysis_id": 5085
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(him) who",
+                    "analysis_id": 854
+                },
+                {
+                    "position": 3,
+                    "arabic": "طَغٰىۖ",
+                    "transliteration": "ṭaghā",
+                    "translation": "transgressed",
+                    "analysis_id": 18791
+                }
+            ]
         },
         {
             "aya_id": 5750,
@@ -431,12 +980,29 @@
             "sajda": false,
             "transliteration": "Wa aasaral hayaatad dunyaa",
             "tajweed_text": "وَءَاثَرَ [h:14289[ٱ]لْحَيَ[s[و][n[ٲ]ةَ [h:446[ٱ][l[ل]دُّنْيَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاٰثَرَ",
+                    "transliteration": "waāthara",
+                    "translation": "And preferred",
+                    "analysis_id": 28698
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْحَيٰوةَ",
+                    "transliteration": "l-ḥayata",
+                    "translation": "the life",
+                    "analysis_id": 14387
+                },
+                {
+                    "position": 3,
+                    "arabic": "الدُّنْيَاۙ",
+                    "transliteration": "l-dun'yā",
+                    "translation": "(of) the world",
+                    "analysis_id": 26378
+                }
+            ]
         },
         {
             "aya_id": 5751,
@@ -450,12 +1016,36 @@
             "sajda": false,
             "transliteration": "Fa innal jaheema hiyal maawaa.",
             "tajweed_text": "فَإِ[g[نّ]َ [h:14290[ٱ]لْجَحِيمَ هِىَ [h:14291[ٱ]لْمَأْوَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِنَّ",
+                    "transliteration": "fa-inna",
+                    "translation": "Then indeed",
+                    "analysis_id": 1359
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْجَحِيْمَ",
+                    "transliteration": "l-jaḥīma",
+                    "translation": "the Hellfire",
+                    "analysis_id": 27899
+                },
+                {
+                    "position": 3,
+                    "arabic": "هِيَ",
+                    "transliteration": "hiya",
+                    "translation": "it",
+                    "analysis_id": 917
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمَأْوٰىۗ",
+                    "transliteration": "l-mawā",
+                    "translation": "(is) the refuge",
+                    "analysis_id": 28699
+                }
+            ]
         },
         {
             "aya_id": 5752,
@@ -469,12 +1059,71 @@
             "sajda": false,
             "transliteration": "Wa ammaa man khaafa maqaama Rabbihee wa nahan nafsa 'anil hawaa",
             "tajweed_text": "وَأَ[g[مّ]َا مَنْ خَافَ مَقَامَ رَبِّه[n[ِۦ] وَنَهَى [h:14292[ٱ][l[ل][g[نّ]َفْسَ عَنِ [h:12957[ٱ]لْهَوَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَمَّا",
+                    "transliteration": "wa-ammā",
+                    "translation": "But as for",
+                    "analysis_id": 5092
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(him) who",
+                    "analysis_id": 854
+                },
+                {
+                    "position": 3,
+                    "arabic": "خَافَ",
+                    "transliteration": "khāfa",
+                    "translation": "feared",
+                    "analysis_id": 2471
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَقَامَ",
+                    "transliteration": "maqāma",
+                    "translation": "standing",
+                    "analysis_id": 26645
+                },
+                {
+                    "position": 5,
+                    "arabic": "رَبِّهٖ",
+                    "transliteration": "rabbihi",
+                    "translation": "(before) his Lord",
+                    "analysis_id": 541
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَنَهَى",
+                    "transliteration": "wanahā",
+                    "translation": "and restrained",
+                    "analysis_id": 28700
+                },
+                {
+                    "position": 7,
+                    "arabic": "النَّفْسَ",
+                    "transliteration": "l-nafsa",
+                    "translation": "his soul",
+                    "analysis_id": 9026
+                },
+                {
+                    "position": 8,
+                    "arabic": "عَنِ",
+                    "transliteration": "ʿani",
+                    "translation": "from",
+                    "analysis_id": 647
+                },
+                {
+                    "position": 9,
+                    "arabic": "الْهَوٰىۙ",
+                    "transliteration": "l-hawā",
+                    "translation": "the vain desires",
+                    "analysis_id": 28701
+                }
+            ]
         },
         {
             "aya_id": 5753,
@@ -488,12 +1137,36 @@
             "sajda": false,
             "transliteration": "Fa innal jannata hiyal maawaa",
             "tajweed_text": "فَإِ[g[نّ]َ [h:14293[ٱ]لْجَ[g[نّ]َةَ هِىَ [h:14291[ٱ]لْمَأْوَىٰ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِنَّ",
+                    "transliteration": "fa-inna",
+                    "translation": "Then indeed",
+                    "analysis_id": 1359
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْجَنَّةَ",
+                    "transliteration": "l-janata",
+                    "translation": "Paradise ",
+                    "analysis_id": 508
+                },
+                {
+                    "position": 3,
+                    "arabic": "هِيَ",
+                    "transliteration": "hiya",
+                    "translation": "it (is)",
+                    "analysis_id": 917
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمَأْوٰىۗ",
+                    "transliteration": "l-mawā",
+                    "translation": "the refuge",
+                    "analysis_id": 28699
+                }
+            ]
         },
         {
             "aya_id": 5754,
@@ -507,12 +1180,43 @@
             "sajda": false,
             "transliteration": "Yas'aloonaka 'anis saa'ati ayyaana mursaahaa",
             "tajweed_text": "يَسْــَٔلُونَكَ عَنِ [h:5172[ٱ][l[ل]سَّاعَةِ أَيَّانَ مُرْسَ[n[ـٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَسْـَٔلُوْنَكَ",
+                    "transliteration": "yasalūnaka",
+                    "translation": "They ask you",
+                    "analysis_id": 3044
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَنِ",
+                    "transliteration": "ʿani",
+                    "translation": "about",
+                    "analysis_id": 647
+                },
+                {
+                    "position": 3,
+                    "arabic": "السَّاعَةِ",
+                    "transliteration": "l-sāʿati",
+                    "translation": "the Hour",
+                    "analysis_id": 12217
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَيَّانَ",
+                    "transliteration": "ayyāna",
+                    "translation": "when",
+                    "analysis_id": 28702
+                },
+                {
+                    "position": 5,
+                    "arabic": "مُرْسٰىهَاۗ",
+                    "transliteration": "mur'sāhā",
+                    "translation": "(is) its arrival",
+                    "analysis_id": 12219
+                }
+            ]
         },
         {
             "aya_id": 5755,
@@ -526,12 +1230,36 @@
             "sajda": false,
             "transliteration": "Feema anta min zikraahaa",
             "tajweed_text": "فِيمَ أَ[f:169[نت]َ مِ[f:14294[ن ذ]ِكْرَ[n[ٮٰ]هَآ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فِيْمَ",
+                    "transliteration": "fīma",
+                    "translation": "In what",
+                    "analysis_id": 7757
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنْتَ",
+                    "transliteration": "anta",
+                    "translation": "(are) you",
+                    "analysis_id": 472
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "[of]",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذِكْرٰىهَاۗ",
+                    "transliteration": "dhik'rāhā",
+                    "translation": "(to) mention it",
+                    "analysis_id": 28703
+                }
+            ]
         },
         {
             "aya_id": 5756,
@@ -545,12 +1273,29 @@
             "sajda": false,
             "transliteration": "Ilaa Rabbika muntahaa haa",
             "tajweed_text": "إِلَىٰ رَبِّكَ مُ[f:14295[نت]َهَ[n[ـٰ]هَآ",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "To",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُنْتَهٰىهَاۗ",
+                    "transliteration": "muntahāhā",
+                    "translation": "(is) its finality",
+                    "analysis_id": 28704
+                }
+            ]
         },
         {
             "aya_id": 5757,
@@ -564,12 +1309,43 @@
             "sajda": false,
             "transliteration": "Innamaaa anta munziru maiy yakshaahaa",
             "tajweed_text": "إِ[g[نّ]َم[o[َآ] أَ[f:169[نت]َ مُ[f:14296[نذ]ِرُ م[a:14297[َن ي]َخْشَ[n[ـٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّمَآ",
+                    "transliteration": "innamā",
+                    "translation": "Only",
+                    "analysis_id": 10952
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنْتَ",
+                    "transliteration": "anta",
+                    "translation": "you",
+                    "analysis_id": 472
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُنْذِرُ",
+                    "transliteration": "mundhiru",
+                    "translation": "(are) a warner",
+                    "analysis_id": 28705
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(for him) who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَّخْشٰىهَاۗ",
+                    "transliteration": "yakhshāhā",
+                    "translation": "fears it",
+                    "analysis_id": 28706
+                }
+            ]
         },
         {
             "aya_id": 5758,
@@ -583,12 +1359,78 @@
             "sajda": false,
             "transliteration": "Ka annahum Yawma yarawnahaa lam yalbasooo illaa 'ashiyyatan aw duhaahaa",
             "tajweed_text": "كَأَ[g[نّ]َهُمْ يَوْمَ يَرَوْنَهَا لَمْ يَلْبَث[o[ُوٓ][s[اْ] إِلَّا عَشِيَّةً أَوْ ضُحَ[n[ـٰ]هَا",
-            "surah": {
-                "name": "سُورَةُ النَّازِعَاتِ",
-                "englishName": "An-Naazi'aat",
-                "englishNameTranslation": "Those who drag forth",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَاَنَّهُمْ",
+                    "transliteration": "ka-annahum",
+                    "translation": "As though they",
+                    "analysis_id": 26279
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "yawma",
+                    "translation": "(the) Day",
+                    "analysis_id": 2352
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَرَوْنَهَا",
+                    "transliteration": "yarawnahā",
+                    "translation": "they see it",
+                    "analysis_id": 28707
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَلْبَثُوْٓا",
+                    "transliteration": "yalbathū",
+                    "translation": "they had remained",
+                    "analysis_id": 13984
+                },
+                {
+                    "position": 6,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَشِيَّةً",
+                    "transliteration": "ʿashiyyatan",
+                    "translation": "an evening",
+                    "analysis_id": 28708
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 9,
+                    "arabic": "ضُحٰىهَا",
+                    "transliteration": "ḍuḥāhā",
+                    "translation": "a morning thereof",
+                    "analysis_id": 28709
+                },
+                {
+                    "position": 10,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(46)",
+                    "analysis_id": 31
+                }
+            ]
         }
     ]
 }

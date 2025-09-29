@@ -4,7 +4,7 @@
         {
             "aya_id": 8,
             "aya_number": 1,
-            "aya_text": "الۤمّۤ ۚ",
+            "aya_text": "الۤمۤ ۚ",
             "sura_id": 2,
             "juz_id": 1,
             "page_number": 2,
@@ -13,88 +13,447 @@
             "sajda": false,
             "transliteration": "Alif-Laaam-Meeem",
             "tajweed_text": "ا[m[لٓ][m[مٓ]",
-            "surah": {
-                "name": "سُورَةُ البَقَرَةِ",
-                "englishName": "Al-Baqara",
-                "englishNameTranslation": "The Cow",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الۤمۤ",
+                    "transliteration": "alif-lam-meem",
+                    "translation": "Alif Laam Meem",
+                    "analysis_id": 32
+                },
+                {
+                    "position": 2,
+                    "arabic": "ۚ",
+                    "transliteration": null,
+                    "translation": "(1)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 9,
             "aya_number": 2,
-            "aya_text": "ذٰلِكَ الْكِتٰبُ لَا رَيْبَ ۛ فِيْهِ ۛ هُدًى لِّلْمُتَّقِيْنَۙ",
+            "aya_text": "ذٰلِكَ الْكِتٰبُ لَا رَيْبَ ۛ فِيْهِ ۛ هُدًى لِّلْمُتَّقِيْنَۙ",
             "sura_id": 2,
             "juz_id": 1,
             "page_number": 2,
             "translation_aya_text": "Kitab (Al-Qur'an) ini tidak ada keraguan padanya; petunjuk bagi mereka yang bertakwa,",
-            "tafsir_jalalayn": "(Kitab ini) yakni yang dibaca oleh Muhammad saw. (tidak ada keraguan) atau kebimbangan (padanya) bahwa ia benar-benar dari Allah swt. Kalimat negatif menjadi predikat dari subyek 'Kitab ini', sedangkan kata-kata isyarat 'ini' dipakai sebagai penghormatan. (menjadi petunjuk) sebagai predikat kedua, artinya menjadi penuntun (bagi orang-orang yang bertakwa) maksudnya orang-orang yang mengusahakan diri mereka supaya menjadi takwa dengan jalan mengikuti perintah dan menjauhi larangan demi menjaga diri dari api neraka.",
+            "tafsir_jalalayn": "(Itulah) yakni kitab ini (Alquran) (yang tidak ada keraguan) atau kebimbangan (padanya) bahwa ia benar-benar dari Allah...",
             "sajda": false,
-            "transliteration": "Zaalikal Kitaabu laa raiba feeh; udal lilmuttaqeen",
-            "tajweed_text": "ذ[n[َٲ]لِكَ [h:11[ٱ]لْكِتَ[n[ـٰ]بُ لَا رَيْبَ‌ۛ فِيهِ‌ۛ هُ[u:12[دًى ل]ِّلْمُتَّق[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ البَقَرَةِ",
-                "englishName": "Al-Baqara",
-                "englishNameTranslation": "The Cow",
-                "revelationType": "Medinan"
-            }
+            "transliteration": "Zaalikal Kitaabu laa raiba feeh, hudal lilmuttaqeen",
+            "tajweed_text": "ذَ[n[ـٰ]لِكَ [h:1[ٱ]لْكِتَ[n[ـٰ]بُ لَا رَيْبَۛ ف[p[ِي]هِۛ هُد[iً] لِّلْمُتَّق[p[ِي]نَ",
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ذٰلِكَ",
+                    "transliteration": "dhālika",
+                    "translation": "That",
+                    "analysis_id": 33
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْكِتٰبُ",
+                    "transliteration": "l-kitābu",
+                    "translation": "(is) the book",
+                    "analysis_id": 34
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "no",
+                    "analysis_id": 35
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَيْبَ",
+                    "transliteration": "rayba",
+                    "translation": "doubt",
+                    "analysis_id": 36
+                },
+                {
+                    "position": 5,
+                    "arabic": "ۛ",
+                    "transliteration": "fīhi",
+                    "translation": "in it",
+                    "analysis_id": 37
+                },
+                {
+                    "position": 6,
+                    "arabic": "فِيْهِ",
+                    "transliteration": "hudan",
+                    "translation": "a Guidance",
+                    "analysis_id": 38
+                },
+                {
+                    "position": 7,
+                    "arabic": "ۛ",
+                    "transliteration": "lil'muttaqīna",
+                    "translation": "for the God-conscious",
+                    "analysis_id": 39
+                },
+                {
+                    "position": 8,
+                    "arabic": "هُدًى",
+                    "transliteration": null,
+                    "translation": "(2)",
+                    "analysis_id": 40
+                },
+                {
+                    "position": 9,
+                    "arabic": "لِّلْمُتَّقِيْنَۙ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 10,
             "aya_number": 3,
-            "aya_text": "الَّذِيْنَ يُؤْمِنُوْنَ بِالْغَيْبِ وَيُقِيْمُوْنَ الصَّلٰوةَ وَمِمَّا رَزَقْنٰهُمْ يُنْفِقُوْنَ ۙ",
+            "aya_text": "الَّذِيْنَ يُؤْمِنُوْنَ بِالْغَيْبِ وَيُقِيْمُوْنَ الصَّلٰوةَ وَمِمَّا رَزَقْنٰهُمْ يُنْفِقُوْنَۙ",
             "sura_id": 2,
             "juz_id": 1,
             "page_number": 2,
             "translation_aya_text": "(yaitu) mereka yang beriman kepada yang gaib, melaksanakan salat, dan menginfakkan sebagian rezeki yang Kami berikan kepada mereka,",
-            "tafsir_jalalayn": "(Orang-orang yang beriman) yang membenarkan (kepada yang gaib) yaitu yang tidak kelihatan oleh mereka, seperti kebangkitan, surga dan neraka (dan mendirikan salat) artinya melakukannya sebagaimana mestinya (dan sebagian dari yang Kami berikan kepada mereka) yang Kami anugerahkan kepada mereka sebagai rezeki (mereka nafkahkan) mereka belanjakan untuk jalan menaati Allah.",
+            "tafsir_jalalayn": "(Yakni orang-orang yang beriman) yang membenarkan (kepada yang gaib) ...",
             "sajda": false,
-            "transliteration": "Allazeena yu'minoona bilghaibi wa yuqeemoonas salaata wa mimmaa razaqnaahum yunfiqoon",
-            "tajweed_text": "ٱلَّذِينَ يُؤْمِنُونَ بِ[h:13[ٱ]لْغَيْبِ وَيُقِيمُونَ [h:14[ٱ][l[ل]صَّلَ[s[و][n[ٲ]ةَ وَمِ[g[مّ]َا رَزَ[q:15[قْ]نَ[n[ـٰ]هُمْ يُ[f:16[نف]ِق[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ البَقَرَةِ",
-                "englishName": "Al-Baqara",
-                "englishNameTranslation": "The Cow",
-                "revelationType": "Medinan"
-            }
+            "transliteration": "Allazeena yu'minoona bilghaibi wa yuqeemoonas Salaata wa mimmaa razaqnaahum yunfiqoon",
+            "tajweed_text": "[h:8[ٱ]لَّذِينَ يُؤْمِنُونَ بِ[h:9[ٱ]لْغَيْبِ وَيُقِيمُونَ [h:10[ٱ][l[ل]صَّلَو[n[ٰ]ةَ وَمِمَّا رَزَقْنَ[n[ـٰ]هُمْ يُنفِقُونَ",
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "Those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُؤْمِنُوْنَ",
+                    "transliteration": "yu'minūna",
+                    "translation": "believe",
+                    "analysis_id": 41
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِالْغَيْبِ",
+                    "transliteration": "bil-ghaybi",
+                    "translation": "in the unseen",
+                    "analysis_id": 42
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَيُقِيْمُوْنَ",
+                    "transliteration": "wayuqīmūna",
+                    "translation": "and establish",
+                    "analysis_id": 43
+                },
+                {
+                    "position": 5,
+                    "arabic": "الصَّلٰوةَ",
+                    "transliteration": "l-ṣalata",
+                    "translation": "the prayer",
+                    "analysis_id": 44
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَمِمَّا",
+                    "transliteration": "wamimmā",
+                    "translation": "and out of what",
+                    "analysis_id": 45
+                },
+                {
+                    "position": 7,
+                    "arabic": "رَزَقْنٰهُمْ",
+                    "transliteration": "razaqnāhum",
+                    "translation": "We have provided them",
+                    "analysis_id": 46
+                },
+                {
+                    "position": 8,
+                    "arabic": "يُنْفِقُوْنَۙ",
+                    "transliteration": "yunfiqūna",
+                    "translation": "they spend",
+                    "analysis_id": 47
+                }
+            ]
         },
         {
             "aya_id": 11,
             "aya_number": 4,
-            "aya_text": "وَالَّذِيْنَ يُؤْمِنُوْنَ بِمَآ اُنْزِلَ اِلَيْكَ وَمَآ اُنْزِلَ مِنْ قَبْلِكَ ۚ وَبِالْاٰخِرَةِ هُمْ يُوْقِنُوْنَۗ",
+            "aya_text": "وَالَّذِيْنَ يُؤْمِنُوْنَ بِمَآ اُنْزِلَ اِلَيْكَ وَمَآ اُنْزِلَ مِنْ قَبْلِكَ ۚ وَبِالْاٰخِرَةِ هُمْ يُوْقِنُوْنَۗ",
             "sura_id": 2,
             "juz_id": 1,
             "page_number": 2,
             "translation_aya_text": "dan mereka yang beriman kepada (Al-Qur'an) yang diturunkan kepadamu (Muhammad) dan (kitab-kitab) yang telah diturunkan sebelum engkau, dan mereka yakin akan adanya akhirat.",
-            "tafsir_jalalayn": "(Dan orang-orang yang beriman pada apa yang diturunkan kepadamu) maksudnya Alquran, (dan apa yang diturunkan sebelummu) yaitu Taurat, Injil dan selainnya (serta mereka yakin akan hari akhirat), artinya mengetahui secara pasti.",
+            "tafsir_jalalayn": "(Dan orang-orang yang beriman kepada apa yang diturunkan kepadamu) yakni Alquran...",
             "sajda": false,
-            "transliteration": "Wallazeena yu'minoona bimaa unzila ilaika wa maaa unzila min qablika wa bil Aakhirati hum yooqinoon",
-            "tajweed_text": "وَ[h:9999[ٱ]لَّذِينَ يُؤْمِنُونَ بِم[o[َآ] أُ[f:17[نز]ِلَ إِلَيْكَ وَم[o[َآ] أُ[f:17[نز]ِلَ مِ[f:18[ن ق]َ[q:19[بْ]لِكَ وَبِ[h:20[ٱ]لْأَخِرَةِ هُمْ يُوقِن[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ البَقَرَةِ",
-                "englishName": "Al-Baqara",
-                "englishNameTranslation": "The Cow",
-                "revelationType": "Medinan"
-            }
+            "transliteration": "Wallazeena yu'minoona bimaa unzila ilaika wa maa unzila min qablik, wa bil Aakhirati hum yooqinoon",
+            "tajweed_text": "وَ[h:8[ٱ]لَّذِينَ يُؤْمِنُونَ بِم[m[َا] أُنزِلَ إِلَيْكَ وَم[m[َا] أُنزِلَ مِن قَبْلِكَ وَبِ[h:11[ٱ]لْأ[n[َٲ]خِرَةِ هُمْ يُوقِنُونَ",
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالَّذِيْنَ",
+                    "transliteration": "wa-alladhīna",
+                    "translation": "And those who",
+                    "analysis_id": 48
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُؤْمِنُوْنَ",
+                    "transliteration": "yu'minūna",
+                    "translation": "believe",
+                    "analysis_id": 41
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِمَآ",
+                    "transliteration": "bimā",
+                    "translation": "in what",
+                    "analysis_id": 49
+                },
+                {
+                    "position": 4,
+                    "arabic": "اُنْزِلَ",
+                    "transliteration": "unzila",
+                    "translation": "(is) sent down",
+                    "analysis_id": 50
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِلَيْكَ",
+                    "transliteration": "ilayka",
+                    "translation": "to you",
+                    "analysis_id": 51
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَمَآ",
+                    "transliteration": "wamā",
+                    "translation": "and what",
+                    "analysis_id": 52
+                },
+                {
+                    "position": 7,
+                    "arabic": "اُنْزِلَ",
+                    "transliteration": "unzila",
+                    "translation": "was sent down",
+                    "analysis_id": 50
+                },
+                {
+                    "position": 8,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 9,
+                    "arabic": "قَبْلِكَ",
+                    "transliteration": "qablika",
+                    "translation": "before you",
+                    "analysis_id": 54
+                },
+                {
+                    "position": 10,
+                    "arabic": "ۚ",
+                    "transliteration": "wabil-ākhirati",
+                    "translation": "and in the Hereafter",
+                    "analysis_id": 55
+                },
+                {
+                    "position": 11,
+                    "arabic": "وَبِالْاٰخِرَةِ",
+                    "transliteration": "hum",
+                    "translation": "they",
+                    "analysis_id": 56
+                },
+                {
+                    "position": 12,
+                    "arabic": "هُمْ",
+                    "transliteration": "yūqinūna",
+                    "translation": "firmly believe",
+                    "analysis_id": 57
+                },
+                {
+                    "position": 13,
+                    "arabic": "يُوْقِنُوْنَۗ",
+                    "transliteration": null,
+                    "translation": "(4)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 12,
             "aya_number": 5,
-            "aya_text": "اُولٰۤىِٕكَ عَلٰى هُدًى مِّنْ رَّبِّهِمْ ۙ وَاُولٰۤىِٕكَ هُمُ الْمُفْلِحُوْنَ",
+            "aya_text": "اُولٰۤىِٕكَ عَلٰى هُدًى مِّنْ رَّبِّهِمْ ۙ وَاُولٰۤىِٕكَ هُمُ الْمُفْلِحُوْنَ",
             "sura_id": 2,
             "juz_id": 1,
             "page_number": 2,
             "translation_aya_text": "Merekalah yang mendapat petunjuk dari Tuhannya, dan mereka itulah orang-orang yang beruntung.",
-            "tafsir_jalalayn": "(Merekalah), yakni orang-orang yang memenuhi sifat-sifat yang disebutkan di atas (yang beroleh petunjuk dari Tuhan mereka dan merekalah orang-orang yang beruntung) yang akan berhasil meraih surga dan terlepas dari siksa neraka.",
+            "tafsir_jalalayn": "(Merekalah) orang-orang yang bersifat demikian (yang berada di atas petunjuk dari Tuhan mereka dan merekalah orang-orang yang beruntung) ...",
             "sajda": false,
-            "transliteration": "Ulaaa'ika 'alaa hudam mir rabbihim wa ulaaa'ika humul muflihoon",
-            "tajweed_text": "أُ[s[وْ]لَ[o[ـٰٓ]ئِكَ عَلَىٰ هُ[a:21[دًى م]ّ[u:22[ِن ر]َّبِّهِمْ‌ۖ وَأُ[s[وْ]لَ[o[ـٰٓ]ئِكَ هُمُ [h:23[ٱ]لْمُفْلِح[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ البَقَرَةِ",
-                "englishName": "Al-Baqara",
-                "englishNameTranslation": "The Cow",
-                "revelationType": "Medinan"
-            }
+            "transliteration": "Ulaaa'ika 'alaa hudam mir Rabbihim wa ulaaa'ika humul muflihoon",
+            "tajweed_text": "أُو۟لَ[n[ـٰ]ئِكَ عَلَى[n[ٰ] هُد[iً] مِّن رَّبِّهِمْ وَأُو۟لَ[n[ـٰ]ئِكَ هُمُ [h:12[ٱ]لْمُفْلِحُونَ",
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اُولٰۤىِٕكَ",
+                    "transliteration": "ulāika",
+                    "translation": "Those",
+                    "analysis_id": 58
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "(are) on",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 3,
+                    "arabic": "هُدًى",
+                    "transliteration": "hudan",
+                    "translation": "Guidance",
+                    "analysis_id": 60
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "رَّبِّهِمْ",
+                    "transliteration": "rabbihim",
+                    "translation": "their Lord",
+                    "analysis_id": 61
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۙ",
+                    "transliteration": "wa-ulāika",
+                    "translation": "and those ",
+                    "analysis_id": 62
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَاُولٰۤىِٕكَ",
+                    "transliteration": "humu",
+                    "translation": "they",
+                    "analysis_id": 63
+                },
+                {
+                    "position": 8,
+                    "arabic": "هُمُ",
+                    "transliteration": "l-muf'liḥūna",
+                    "translation": "(are) the successful ones",
+                    "analysis_id": 64
+                },
+                {
+                    "position": 9,
+                    "arabic": "الْمُفْلِحُوْنَ",
+                    "transliteration": null,
+                    "translation": "(5)",
+                    "analysis_id": 65
+                }
+            ]
+        },
+        {
+            "aya_id": 13,
+            "aya_number": 6,
+            "aya_text": "اِنَّ الَّذِيْنَ كَفَرُوْا سَوَاۤءٌ عَلَيْهِمْ ءَاَنْذَرْتَهُمْ اَمْ لَمْ تُنْذِرْهُمْ لَا يُؤْمِنُوْنَ",
+            "sura_id": 2,
+            "juz_id": 1,
+            "page_number": 2,
+            "translation_aya_text": "Sesungguhnya orang-orang kafir, sama saja bagi mereka, engkau (Muhammad) beri peringatan atau tidak engkau beri peringatan, mereka tidak akan beriman.",
+            "tafsir_jalalayn": "(Sesungguhnya orang-orang kafir) seperti Abu Jahal, Abu Lahab dan lain-lain (sama saja bagi mereka, kamu beri peringatan) ...",
+            "sajda": false,
+            "transliteration": "Innal lazeena kafaroo sawaaa'un 'alaihim 'a-anzartahum am lam tunzirhum laa yu'minoon",
+            "tajweed_text": "إِنَّ [h:8[ٱ]لَّذِينَ كَفَرُوا سَوَا[m[ءٌ] عَلَيْهِمْ [q[ءَ]أَنذَرْتَهُمْ أَمْ لَمْ تُنذِرْهُمْ لَا يُؤْمِنُونَ",
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَفَرُوْا",
+                    "transliteration": "kafarū",
+                    "translation": "disbelieve[d]",
+                    "analysis_id": 67
+                },
+                {
+                    "position": 4,
+                    "arabic": "سَوَاۤءٌ",
+                    "transliteration": "sawāon",
+                    "translation": "(it) is same",
+                    "analysis_id": 68
+                },
+                {
+                    "position": 5,
+                    "arabic": "عَلَيْهِمْ",
+                    "transliteration": "ʿalayhim",
+                    "translation": "to them",
+                    "analysis_id": 24
+                },
+                {
+                    "position": 6,
+                    "arabic": "ءَاَنْذَرْتَهُمْ",
+                    "transliteration": "a-andhartahum",
+                    "translation": "whether you warn them",
+                    "analysis_id": 69
+                },
+                {
+                    "position": 7,
+                    "arabic": "اَمْ",
+                    "transliteration": "am",
+                    "translation": "or",
+                    "analysis_id": 70
+                },
+                {
+                    "position": 8,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 9,
+                    "arabic": "تُنْذِرْهُمْ",
+                    "transliteration": "tundhir'hum",
+                    "translation": "you warn them",
+                    "analysis_id": 72
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 11,
+                    "arabic": "يُؤْمِنُوْنَ",
+                    "transliteration": "yu'minūna",
+                    "translation": "they believe",
+                    "analysis_id": 41
+                }
+            ]
         }
     ]
 }

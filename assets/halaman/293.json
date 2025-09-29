@@ -13,12 +13,71 @@
             "sajda": false,
             "transliteration": "Wa bilhaqqi anzalnaahu wa bilhaqqi nazal; wa maaa arsalnaaka illaa mubash shiranw wa nazeeraa",
             "tajweed_text": "وَبِ[h:9999[ٱ]لْحَقِّ أَ[f:4236[نز]َلْنَ[n[ـٰ]هُ وَبِ[h:7923[ٱ]لْحَقِّ نَزَلَ‌ۗ وَم[o[َآ] أَرْسَلْنَ[n[ـٰ]كَ إِلَّا مُبَشِّ[a:7924[رًا و]َنَذِيرًا",
-            "surah": {
-                "name": "سُورَةُ الإِسۡرَاءِ",
-                "englishName": "Al-Israa",
-                "englishNameTranslation": "The Night Journey",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَبِالْحَقِّ",
+                    "transliteration": "wabil-ḥaqi",
+                    "translation": "And with the truth",
+                    "analysis_id": 17606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنْزَلْنٰهُ",
+                    "transliteration": "anzalnāhu",
+                    "translation": "We sent it down",
+                    "analysis_id": 10378
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَبِالْحَقِّ",
+                    "transliteration": "wabil-ḥaqi",
+                    "translation": "and with the truth",
+                    "analysis_id": 17606
+                },
+                {
+                    "position": 4,
+                    "arabic": "نَزَلَۗ",
+                    "transliteration": "nazala",
+                    "translation": "it descended",
+                    "analysis_id": 17607
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَمَآ",
+                    "transliteration": "wamā",
+                    "translation": "And not",
+                    "analysis_id": 12997
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَرْسَلْنٰكَ",
+                    "transliteration": "arsalnāka",
+                    "translation": "We sent you",
+                    "analysis_id": 1678
+                },
+                {
+                    "position": 7,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 8,
+                    "arabic": "مُبَشِّرًا",
+                    "transliteration": "mubashiran",
+                    "translation": "(as) a bearer of glad tidings",
+                    "analysis_id": 17608
+                },
+                {
+                    "position": 9,
+                    "arabic": "وَّنَذِيْرًاۘ",
+                    "transliteration": "wanadhīran",
+                    "translation": "and a warner",
+                    "analysis_id": 1680
+                }
+            ]
         },
         {
             "aya_id": 2135,
@@ -32,12 +91,71 @@
             "sajda": false,
             "transliteration": "Wa quraanan faraqnaahu litaqra ahoo 'alan naasi 'alaa muksinw wa nazzalnaahu tanzeelaa",
             "tajweed_text": "وَقُرْءَا[f:7925[نًا ف]َرَ[q:7926[قْ]نَ[n[ـٰ]هُ لِتَ[q:7927[قْ]رَأَهُ[n[ۥ] عَلَى [h:729[ٱ][l[ل][g[نّ]َاسِ عَلَىٰ مُكْ[a:7928[ثٍ و]َنَزَّلْنَ[n[ـٰ]هُ تَ[f:7929[نز]ِيلاً",
-            "surah": {
-                "name": "سُورَةُ الإِسۡرَاءِ",
-                "englishName": "Al-Israa",
-                "englishNameTranslation": "The Night Journey",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَقُرْاٰنًا",
+                    "transliteration": "waqur'ānan",
+                    "translation": "And the Quran",
+                    "analysis_id": 17609
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَرَقْنٰهُ",
+                    "transliteration": "faraqnāhu",
+                    "translation": "We have divided",
+                    "analysis_id": 17610
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِتَقْرَاَهٗ",
+                    "transliteration": "litaqra-ahu",
+                    "translation": "that you might recite it",
+                    "analysis_id": 17611
+                },
+                {
+                    "position": 4,
+                    "arabic": "عَلَى",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 457
+                },
+                {
+                    "position": 5,
+                    "arabic": "النَّاسِ",
+                    "transliteration": "l-nāsi",
+                    "translation": "the people",
+                    "analysis_id": 87
+                },
+                {
+                    "position": 6,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "at",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 7,
+                    "arabic": "مُكْثٍ",
+                    "transliteration": "muk'thin",
+                    "translation": "intervals",
+                    "analysis_id": 17612
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَّنَزَّلْنٰهُ",
+                    "transliteration": "wanazzalnāhu",
+                    "translation": "And We have revealed it",
+                    "analysis_id": 17613
+                },
+                {
+                    "position": 9,
+                    "arabic": "تَنْزِيْلًا",
+                    "transliteration": "tanzīlan",
+                    "translation": "(in) stages",
+                    "analysis_id": 17614
+                }
+            ]
         },
         {
             "aya_id": 2136,
@@ -51,12 +169,134 @@
             "sajda": false,
             "transliteration": "Qul aaaniminoo biheee aw laa tu'minoo; innal lazeena ootul 'ilma min qabliheee izaa yutlaa 'alaihim yakhirroona lil azqaani sujjadaa",
             "tajweed_text": "قُلْ ءَامِنُو[s[اْ] بِه[o[ِۦٓ] أَوْ لَا تُؤْمِن[o[ُوٓ[s[اْ]‌ۚ] إِ[g[نّ]َ [h:24[ٱ]لَّذِينَ أُوتُو[s[اْ] [h:7379[ٱ]لْعِلْمَ مِ[f:1097[ن ق]َ[q:1098[بْ]لِه[o[ِۦٓ] إِذَا يُتْلَىٰ عَلَيْهِمْ يَخِرُّونَ لِلْأَذْقَانِ سُجَّدًا",
-            "surah": {
-                "name": "سُورَةُ الإِسۡرَاءِ",
-                "englishName": "Al-Israa",
-                "englishNameTranslation": "The Night Journey",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰمِنُوْا",
+                    "transliteration": "āminū",
+                    "translation": "Believe",
+                    "analysis_id": 135
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِهٖٓ",
+                    "transliteration": "bihi",
+                    "translation": "in it",
+                    "analysis_id": 390
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "(do) not",
+                    "analysis_id": 121
+                },
+                {
+                    "position": 6,
+                    "arabic": "تُؤْمِنُوْاۗ",
+                    "transliteration": "tu'minū",
+                    "translation": "believe",
+                    "analysis_id": 17615
+                },
+                {
+                    "position": 7,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 8,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 9,
+                    "arabic": "اُوْتُوا",
+                    "transliteration": "ūtū",
+                    "translation": "were given",
+                    "analysis_id": 2023
+                },
+                {
+                    "position": 10,
+                    "arabic": "الْعِلْمَ",
+                    "transliteration": "l-ʿil'ma",
+                    "translation": "the knowledge",
+                    "analysis_id": 16655
+                },
+                {
+                    "position": 11,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "before it",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 12,
+                    "arabic": "قَبْلِهٖٓ",
+                    "transliteration": "qablihi",
+                    "translation": "before it",
+                    "analysis_id": 17616
+                },
+                {
+                    "position": 13,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 14,
+                    "arabic": "يُتْلٰى",
+                    "transliteration": "yut'lā",
+                    "translation": "it is recited",
+                    "analysis_id": 17617
+                },
+                {
+                    "position": 15,
+                    "arabic": "عَلَيْهِمْ",
+                    "transliteration": "ʿalayhim",
+                    "translation": "to them",
+                    "analysis_id": 24
+                },
+                {
+                    "position": 16,
+                    "arabic": "يَخِرُّوْنَ",
+                    "transliteration": "yakhirrūna",
+                    "translation": "they fall",
+                    "analysis_id": 17618
+                },
+                {
+                    "position": 17,
+                    "arabic": "لِلْاَذْقَانِ",
+                    "transliteration": "lil'adhqāni",
+                    "translation": "on their faces",
+                    "analysis_id": 17619
+                },
+                {
+                    "position": 18,
+                    "arabic": "سُجَّدًاۙ",
+                    "transliteration": "sujjadan",
+                    "translation": "(in) prostration",
+                    "analysis_id": 17620
+                }
+            ]
         },
         {
             "aya_id": 2137,
@@ -70,12 +310,64 @@
             "sajda": false,
             "transliteration": "Wa yaqooloona Subhaana Rabbinaaa in kaana wa'du Rabbinaa lamaf'oolaa",
             "tajweed_text": "وَيَقُولُونَ سُ[q:7648[بْ]حَ[n[ـٰ]نَ رَبِّن[o[َآ] إِ[f:2594[ن ك]َانَ وَعْدُ رَبِّنَا لَمَفْعُولاً",
-            "surah": {
-                "name": "سُورَةُ الإِسۡرَاءِ",
-                "englishName": "Al-Israa",
-                "englishNameTranslation": "The Night Journey",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّيَقُوْلُوْنَ",
+                    "transliteration": "wayaqūlūna",
+                    "translation": "And they say",
+                    "analysis_id": 5281
+                },
+                {
+                    "position": 2,
+                    "arabic": "سُبْحٰنَ",
+                    "transliteration": "sub'ḥāna",
+                    "translation": "Glory be to",
+                    "analysis_id": 17092
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّنَآ",
+                    "transliteration": "rabbinā",
+                    "translation": "our Lord",
+                    "analysis_id": 17621
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "Indeed",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 5,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "is",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَعْدُ",
+                    "transliteration": "waʿdu",
+                    "translation": "(the) promise",
+                    "analysis_id": 15965
+                },
+                {
+                    "position": 7,
+                    "arabic": "رَبِّنَا",
+                    "transliteration": "rabbinā",
+                    "translation": "(of) our Lord",
+                    "analysis_id": 9869
+                },
+                {
+                    "position": 8,
+                    "arabic": "لَمَفْعُوْلًا",
+                    "transliteration": "lamafʿūlan",
+                    "translation": "surely fulfilled",
+                    "analysis_id": 17622
+                }
+            ]
         },
         {
             "aya_id": 2138,
@@ -89,12 +381,50 @@
             "sajda": true,
             "transliteration": "Wa yakhirroona lil azqaani yabkoona wa yazeeduhum khushoo'aa",
             "tajweed_text": "وَيَخِرُّونَ لِلْأَذْقَانِ يَ[q:6573[بْ]كُونَ وَيَزِيدُهُمْ خُشُوعًا ۩",
-            "surah": {
-                "name": "سُورَةُ الإِسۡرَاءِ",
-                "englishName": "Al-Israa",
-                "englishNameTranslation": "The Night Journey",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيَخِرُّوْنَ",
+                    "transliteration": "wayakhirrūna",
+                    "translation": "And they fall",
+                    "analysis_id": 17623
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِلْاَذْقَانِ",
+                    "transliteration": "lil'adhqāni",
+                    "translation": "on their faces",
+                    "analysis_id": 17619
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَبْكُوْنَ",
+                    "transliteration": "yabkūna",
+                    "translation": "weeping",
+                    "analysis_id": 17624
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَيَزِيْدُهُمْ",
+                    "transliteration": "wayazīduhum",
+                    "translation": "and it increases them",
+                    "analysis_id": 8428
+                },
+                {
+                    "position": 5,
+                    "arabic": "خُشُوْعًا",
+                    "transliteration": "khushūʿan",
+                    "translation": "(in) humility",
+                    "analysis_id": 17625
+                },
+                {
+                    "position": 6,
+                    "arabic": "۩",
+                    "transliteration": "",
+                    "translation": "(109)",
+                    "analysis_id": 12356
+                }
+            ]
         },
         {
             "aya_id": 2139,
@@ -108,12 +438,162 @@
             "sajda": false,
             "transliteration": "Qulid'ul laaha awid'ur Rahmaana ayyam maa tad'oo falahul asmaaa'ul Husnaa; wa laa tajhar bi Salaatika wa laa tukhaafit bihaa wabtaghi baina zaalika sabeela",
             "tajweed_text": "قُلِ [h:5199[ٱ][q:4751[دْ]عُو[s[اْ] [h:7930[ٱ]للَّهَ أَوِ [h:7931[ٱ][q:4751[دْ]عُو[s[اْ] [h:7932[ٱ][l[ل]رَّحْمَ[n[ـٰ]نَ‌ۖ أَي[a:7933[ًّا م]َّا تَ[q:7934[دْ]عُو[s[اْ] فَلَهُ [h:7935[ٱ]لْأَسْم[o[َا]ٓءُ [h:5156[ٱ]لْحُسْنَىٰ‌ۚ وَلَا تَ[q:7936[جْ]هَرْ بِصَلَاتِكَ وَلَا تُخَافِتْ بِهَا وَ[h:7937[ٱ][q:7937[بْ]تَغِ بَيْنَ ذ[n[َٲ]لِكَ سَبِيلاً",
-            "surah": {
-                "name": "سُورَةُ الإِسۡرَاءِ",
-                "englishName": "Al-Israa",
-                "englishNameTranslation": "The Night Journey",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلِ",
+                    "transliteration": "quli",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "ادْعُوا",
+                    "transliteration": "id'ʿū",
+                    "translation": "Invoke",
+                    "analysis_id": 11359
+                },
+                {
+                    "position": 3,
+                    "arabic": "اللّٰهَ",
+                    "transliteration": "l-laha",
+                    "translation": "Allah",
+                    "analysis_id": 98
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَوِ",
+                    "transliteration": "awi",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 5,
+                    "arabic": "ادْعُوا",
+                    "transliteration": "id'ʿū",
+                    "translation": "invoke",
+                    "analysis_id": 11359
+                },
+                {
+                    "position": 6,
+                    "arabic": "الرَّحْمٰنَۗ",
+                    "transliteration": "l-raḥmāna",
+                    "translation": "the Most Gracious",
+                    "analysis_id": 17626
+                },
+                {
+                    "position": 7,
+                    "arabic": "اَيًّا",
+                    "transliteration": "ayyan",
+                    "translation": "By whatever (name)",
+                    "analysis_id": 17627
+                },
+                {
+                    "position": 8,
+                    "arabic": "مَّا",
+                    "transliteration": "mā",
+                    "translation": "By whatever (name)",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 9,
+                    "arabic": "تَدْعُوْا",
+                    "transliteration": "tadʿū",
+                    "translation": "you invoke",
+                    "analysis_id": 17628
+                },
+                {
+                    "position": 10,
+                    "arabic": "فَلَهُ",
+                    "transliteration": "falahu",
+                    "translation": "to Him (belongs)",
+                    "analysis_id": 17629
+                },
+                {
+                    "position": 11,
+                    "arabic": "الْاَسْمَاۤءُ",
+                    "transliteration": "l-asmāu",
+                    "translation": "the Most Beautiful Names",
+                    "analysis_id": 12194
+                },
+                {
+                    "position": 12,
+                    "arabic": "الْحُسْنٰىۚ",
+                    "transliteration": "l-ḥus'nā",
+                    "translation": "the Most Beautiful Names",
+                    "analysis_id": 15889
+                },
+                {
+                    "position": 13,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "And (do) not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 14,
+                    "arabic": "تَجْهَرْ",
+                    "transliteration": "tajhar",
+                    "translation": "be loud",
+                    "analysis_id": 17630
+                },
+                {
+                    "position": 15,
+                    "arabic": "بِصَلَاتِكَ",
+                    "transliteration": "biṣalātika",
+                    "translation": "in your prayers",
+                    "analysis_id": 17631
+                },
+                {
+                    "position": 16,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "and not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 17,
+                    "arabic": "تُخَافِتْ",
+                    "transliteration": "tukhāfit",
+                    "translation": "be silent",
+                    "analysis_id": 17632
+                },
+                {
+                    "position": 18,
+                    "arabic": "بِهَا",
+                    "transliteration": "bihā",
+                    "translation": "therein",
+                    "analysis_id": 5632
+                },
+                {
+                    "position": 19,
+                    "arabic": "وَابْتَغِ",
+                    "transliteration": "wa-ib'taghi",
+                    "translation": "but seek",
+                    "analysis_id": 17633
+                },
+                {
+                    "position": 20,
+                    "arabic": "بَيْنَ",
+                    "transliteration": "bayna",
+                    "translation": "between",
+                    "analysis_id": 3262
+                },
+                {
+                    "position": 21,
+                    "arabic": "ذٰلِكَ",
+                    "transliteration": "dhālika",
+                    "translation": "that",
+                    "analysis_id": 33
+                },
+                {
+                    "position": 22,
+                    "arabic": "سَبِيْلًا",
+                    "transliteration": "sabīlan",
+                    "translation": "a way",
+                    "analysis_id": 7177
+                }
+            ]
         },
         {
             "aya_id": 2140,
@@ -127,12 +607,162 @@
             "sajda": false,
             "transliteration": "Wa qulil hamdu lillaahil lazee lam yattakhiz waladanw wa lam yakul lahoo shareekun fil mulki wa lam yakul lahoo waliyyum minaz zulli wa kabbirhu takbeeraa",
             "tajweed_text": "وَقُلِ [h:7938[ٱ]لْحَمْدُ لِلَّهِ [h:3912[ٱ]لَّذِى لَمْ يَتَّخِذْ وَلَ[a:7939[دًا و]َلَمْ يَك[u:2596[ُن ل]َّهُ[n[ۥ] شَرِي[f:7940[كٌ ف]ِى [h:7941[ٱ]لْمُلْكِ وَلَمْ يَك[u:2596[ُن ل]َّهُ[n[ۥ] وَلِ[a:7942[ىٌّ م]ِّنَ [h:7943[ٱ][l[ل]ذُّلِّ‌ۖ وَكَبِّرْهُ تَكْبِيرَۢا",
-            "surah": {
-                "name": "سُورَةُ الإِسۡرَاءِ",
-                "englishName": "Al-Israa",
-                "englishNameTranslation": "The Night Journey",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَقُلِ",
+                    "transliteration": "waquli",
+                    "translation": "And say",
+                    "analysis_id": 7276
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْحَمْدُ",
+                    "transliteration": "l-ḥamdu",
+                    "translation": "All Praise",
+                    "analysis_id": 5
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِلّٰهِ",
+                    "transliteration": "lillahi",
+                    "translation": "(is) for Allah",
+                    "analysis_id": 6
+                },
+                {
+                    "position": 4,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "the One Who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "has not taken",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَتَّخِذْ",
+                    "transliteration": "yattakhidh",
+                    "translation": "has not taken",
+                    "analysis_id": 4777
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَلَدًا",
+                    "transliteration": "waladan",
+                    "translation": "a son",
+                    "analysis_id": 1640
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَّلَمْ",
+                    "transliteration": "walam",
+                    "translation": "and not",
+                    "analysis_id": 8257
+                },
+                {
+                    "position": 9,
+                    "arabic": "يَكُنْ",
+                    "transliteration": "yakun",
+                    "translation": "is",
+                    "analysis_id": 7543
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَّهٗ",
+                    "transliteration": "lahu",
+                    "translation": "for Him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 11,
+                    "arabic": "شَرِيْكٌ",
+                    "transliteration": "sharīkun",
+                    "translation": "a partner",
+                    "analysis_id": 17634
+                },
+                {
+                    "position": 12,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 13,
+                    "arabic": "الْمُلْكِ",
+                    "transliteration": "l-mul'ki",
+                    "translation": "the dominion",
+                    "analysis_id": 4753
+                },
+                {
+                    "position": 14,
+                    "arabic": "وَلَمْ",
+                    "transliteration": "walam",
+                    "translation": "and not",
+                    "analysis_id": 8257
+                },
+                {
+                    "position": 15,
+                    "arabic": "يَكُنْ",
+                    "transliteration": "yakun",
+                    "translation": "is",
+                    "analysis_id": 7543
+                },
+                {
+                    "position": 16,
+                    "arabic": "لَّهٗ",
+                    "transliteration": "lahu",
+                    "translation": "for Him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 17,
+                    "arabic": "وَلِيٌّ",
+                    "transliteration": "waliyyun",
+                    "translation": "any protector",
+                    "analysis_id": 10046
+                },
+                {
+                    "position": 18,
+                    "arabic": "مِّنَ",
+                    "transliteration": "mina",
+                    "translation": "out of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 19,
+                    "arabic": "الذُّلِّ",
+                    "transliteration": "l-dhuli",
+                    "translation": "weakness",
+                    "analysis_id": 17232
+                },
+                {
+                    "position": 20,
+                    "arabic": "وَكَبِّرْهُ",
+                    "transliteration": "wakabbir'hu",
+                    "translation": "And magnify Him",
+                    "analysis_id": 17635
+                },
+                {
+                    "position": 21,
+                    "arabic": "تَكْبِيْرًا",
+                    "transliteration": "takbīran",
+                    "translation": "(with all) magnificence",
+                    "analysis_id": 17636
+                },
+                {
+                    "position": 22,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(111)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 2141,
@@ -146,12 +776,92 @@
             "sajda": false,
             "transliteration": "Alhamdu lillaahil lazeee anzala 'alaa 'abdihil kitaaba wa lam yaj'al lahoo 'iwajaa",
             "tajweed_text": "ٱلْحَمْدُ لِلَّهِ [h:3912[ٱ]لَّذ[o[ِىٓ] أَ[f:471[نز]َلَ عَلَىٰ عَ[q:7944[بْ]دِهِ [h:7945[ٱ]لْكِتَ[n[ـٰ]بَ وَلَمْ يَ[q:4397[جْ]عَل لَّهُ[n[ۥ] عِوَجَاۜ",
-            "surah": {
-                "name": "سُورَةُ الكَهۡفِ",
-                "englishName": "Al-Kahf",
-                "englishNameTranslation": "The Cave",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلْحَمْدُ",
+                    "transliteration": "al-ḥamdu",
+                    "translation": "All Praise",
+                    "analysis_id": 5
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِلّٰهِ",
+                    "transliteration": "lillahi",
+                    "translation": "(is) for Allah",
+                    "analysis_id": 6
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْٓ",
+                    "transliteration": "alladhī",
+                    "translation": "the One Who",
+                    "analysis_id": 2509
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَنْزَلَ",
+                    "transliteration": "anzala",
+                    "translation": "(has) revealed",
+                    "analysis_id": 1258
+                },
+                {
+                    "position": 5,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 6,
+                    "arabic": "عَبْدِهِ",
+                    "transliteration": "ʿabdihi",
+                    "translation": "His slave",
+                    "analysis_id": 17637
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْكِتٰبَ",
+                    "transliteration": "l-kitāba",
+                    "translation": "the Book",
+                    "analysis_id": 695
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَلَمْ",
+                    "transliteration": "walam",
+                    "translation": "and not",
+                    "analysis_id": 8257
+                },
+                {
+                    "position": 9,
+                    "arabic": "يَجْعَلْ",
+                    "transliteration": "yajʿal",
+                    "translation": "(has) made",
+                    "analysis_id": 10663
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَّهٗ",
+                    "transliteration": "lahu",
+                    "translation": "in it",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 11,
+                    "arabic": "عِوَجًا",
+                    "transliteration": "ʿiwajā",
+                    "translation": "any crookedness",
+                    "analysis_id": 17638
+                },
+                {
+                    "position": 12,
+                    "arabic": "ۜ",
+                    "transliteration": null,
+                    "translation": "(1)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2142,
@@ -165,12 +875,113 @@
             "sajda": false,
             "transliteration": "Qaiyimal liyunzira baasan shadeedam mil ladunhu wa yubashshiral mu'mineenal lazeena ya'maloonas saalihaati anna lahum ajran hasanaa",
             "tajweed_text": "قَيِّ[u:7946[مًا ل]ِّيُ[f:7947[نذ]ِرَ بَأْ[f:7948[سًا ش]َدِي[a:7949[دًا م]ّ[u:2794[ِن ل]َّدُنْهُ وَيُبَشِّرَ [h:7950[ٱ]لْمُؤْمِنِينَ [h:7681[ٱ]لَّذِينَ يَعْمَلُونَ [h:7682[ٱ][l[ل]صَّ[n[ـٰ]لِحَ[n[ـٰ]تِ أَ[g[نّ]َ لَهُمْ أَ[q:2795[جْ]رًا حَسَنًا",
-            "surah": {
-                "name": "سُورَةُ الكَهۡفِ",
-                "englishName": "Al-Kahf",
-                "englishNameTranslation": "The Cave",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَيِّمًا",
+                    "transliteration": "qayyiman",
+                    "translation": "Straight",
+                    "analysis_id": 17639
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِّيُنْذِرَ",
+                    "transliteration": "liyundhira",
+                    "translation": "to warn",
+                    "analysis_id": 17640
+                },
+                {
+                    "position": 3,
+                    "arabic": "بَأْسًا",
+                    "transliteration": "basan",
+                    "translation": "(of) a punishment",
+                    "analysis_id": 17641
+                },
+                {
+                    "position": 4,
+                    "arabic": "شَدِيْدًا",
+                    "transliteration": "shadīdan",
+                    "translation": "severe",
+                    "analysis_id": 5089
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَّدُنْهُ",
+                    "transliteration": "ladun'hu",
+                    "translation": "near Him",
+                    "analysis_id": 7082
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَيُبَشِّرَ",
+                    "transliteration": "wayubashira",
+                    "translation": "and give glad tidings",
+                    "analysis_id": 17642
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْمُؤْمِنِيْنَ",
+                    "transliteration": "l-mu'minīna",
+                    "translation": "(to) the believers",
+                    "analysis_id": 5646
+                },
+                {
+                    "position": 9,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 10,
+                    "arabic": "يَعْمَلُوْنَ",
+                    "transliteration": "yaʿmalūna",
+                    "translation": "do",
+                    "analysis_id": 1335
+                },
+                {
+                    "position": 11,
+                    "arabic": "الصّٰلِحٰتِ",
+                    "transliteration": "l-ṣāliḥāti",
+                    "translation": "righteous deeds",
+                    "analysis_id": 311
+                },
+                {
+                    "position": 12,
+                    "arabic": "اَنَّ",
+                    "transliteration": "anna",
+                    "translation": "that",
+                    "analysis_id": 312
+                },
+                {
+                    "position": 13,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 14,
+                    "arabic": "اَجْرًا",
+                    "transliteration": "ajran",
+                    "translation": "(is) a good reward",
+                    "analysis_id": 7083
+                },
+                {
+                    "position": 15,
+                    "arabic": "حَسَنًاۙ",
+                    "transliteration": "ḥasanan",
+                    "translation": "(is) a good reward",
+                    "analysis_id": 4870
+                }
+            ]
         },
         {
             "aya_id": 2143,
@@ -184,12 +995,29 @@
             "sajda": false,
             "transliteration": "Maakiseena feehi abadaa",
             "tajweed_text": "مَّ[n[ـٰ]كِثِينَ فِيهِ أَبَدًا",
-            "surah": {
-                "name": "سُورَةُ الكَهۡفِ",
-                "englishName": "Al-Kahf",
-                "englishNameTranslation": "The Cave",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَّاكِثِيْنَ",
+                    "transliteration": "mākithīna",
+                    "translation": "(They will) abide",
+                    "analysis_id": 17643
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْهِ",
+                    "transliteration": "fīhi",
+                    "translation": "in it",
+                    "analysis_id": 204
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَبَدًاۙ",
+                    "transliteration": "abadan",
+                    "translation": "forever",
+                    "analysis_id": 7207
+                }
+            ]
         },
         {
             "aya_id": 2144,
@@ -203,12 +1031,50 @@
             "sajda": false,
             "transliteration": "Wa yunziral lazeena qaalut takhazal laahu waladaa",
             "tajweed_text": "وَيُ[f:7951[نذ]ِرَ [h:7952[ٱ]لَّذِينَ قَالُو[s[اْ] [h:6120[ٱ]تَّخَذَ [h:606[ٱ]للَّهُ وَلَدًا",
-            "surah": {
-                "name": "سُورَةُ الكَهۡفِ",
-                "englishName": "Al-Kahf",
-                "englishNameTranslation": "The Cave",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّيُنْذِرَ",
+                    "transliteration": "wayundhira",
+                    "translation": "And to warn",
+                    "analysis_id": 17644
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "قَالُوا",
+                    "transliteration": "qālū",
+                    "translation": "say",
+                    "analysis_id": 465
+                },
+                {
+                    "position": 4,
+                    "arabic": "اتَّخَذَ",
+                    "transliteration": "ittakhadha",
+                    "translation": "Allah has taken",
+                    "analysis_id": 1639
+                },
+                {
+                    "position": 5,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "Allah has taken",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَلَدًاۖ",
+                    "transliteration": "waladan",
+                    "translation": "a son",
+                    "analysis_id": 17645
+                }
+            ]
         }
     ]
 }

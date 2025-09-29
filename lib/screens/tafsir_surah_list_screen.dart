@@ -1,5 +1,8 @@
+// lib/screens/tafsir_surah_list_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quran_app/models/surah_index_model.dart'; // Ganti model
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/tafsir_view_screen.dart';
 
@@ -24,7 +27,7 @@ class TafsirSurahListScreen extends ConsumerWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: ListTile(
                   leading: CircleAvatar(
-                    child: Text(surah.id.toString()),
+                    child: Text(surah.suraId.toString()),
                   ),
                   title: Text(surah.englishName),
                   subtitle: Text("${surah.englishNameTranslation} | ${surah.numberOfAyahs} Ayat"),
@@ -33,11 +36,10 @@ class TafsirSurahListScreen extends ConsumerWidget {
                     style: const TextStyle(fontFamily: 'LPMQ', fontSize: 18),
                   ),
                   onTap: () {
-                    // --- NAVIGASI KE TAFSIR VIEW SCREEN ---
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TafsirViewScreen(surahId: surah.id),
+                        builder: (context) => TafsirViewScreen(surahId: surah.suraId),
                       ),
                     );
                   },

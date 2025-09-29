@@ -13,12 +13,64 @@
             "sajda": false,
             "transliteration": "Taa-Seeen; tilka Aayaatul Qur-aani wa Kitaabim Mubeen",
             "tajweed_text": "ط[m[سٓ]‌ۚ تِلْكَ ءَايَ[n[ـٰ]تُ [h:9883[ٱ]لْقُرْءَانِ وَكِتَا[a:9884[بٍ م]ُّب[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "طٰسۤ",
+                    "transliteration": "tta-seen",
+                    "translation": "Ta Seen",
+                    "analysis_id": 21161
+                },
+                {
+                    "position": 2,
+                    "arabic": "ۚ",
+                    "transliteration": "til'ka",
+                    "translation": "These",
+                    "analysis_id": 1573
+                },
+                {
+                    "position": 3,
+                    "arabic": "تِلْكَ",
+                    "transliteration": "āyātu",
+                    "translation": "(are the) Verses",
+                    "analysis_id": 14993
+                },
+                {
+                    "position": 4,
+                    "arabic": "اٰيٰتُ",
+                    "transliteration": "l-qur'āni",
+                    "translation": "(of) the Quran",
+                    "analysis_id": 21162
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْقُرْاٰنِ",
+                    "transliteration": "wakitābin",
+                    "translation": "and a Book",
+                    "analysis_id": 21163
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَكِتَابٍ",
+                    "transliteration": "mubīnin",
+                    "translation": "clear",
+                    "analysis_id": 21164
+                },
+                {
+                    "position": 7,
+                    "arabic": "مُّبِيْنٍ",
+                    "transliteration": null,
+                    "translation": "(1)",
+                    "analysis_id": 2928
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۙ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3161,
@@ -32,12 +84,36 @@
             "sajda": false,
             "transliteration": "Hudanw wa bushraa lil mu'mineen",
             "tajweed_text": "هُ[a:9885[دًى و]َبُشْرَىٰ لِلْمُؤْمِن[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هُدًى",
+                    "transliteration": "hudan",
+                    "translation": "A guidance",
+                    "analysis_id": 60
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَّبُشْرٰى",
+                    "transliteration": "wabush'rā",
+                    "translation": "and glad tidings",
+                    "analysis_id": 16943
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِلْمُؤْمِنِيْنَ",
+                    "transliteration": "lil'mu'minīna",
+                    "translation": "for the believers",
+                    "analysis_id": 5661
+                },
+                {
+                    "position": 4,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(2)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3162,
@@ -51,12 +127,71 @@
             "sajda": false,
             "transliteration": "Allazeena yuqeemoonas Salaata wa yu'toonaz Zakaata wa hum bil Aakhirati hum yooqinoon",
             "tajweed_text": "ٱلَّذِينَ يُقِيمُونَ [h:3638[ٱ][l[ل]صَّلَ[s[و][n[ٲ]ةَ وَيُؤْتُونَ [h:3639[ٱ][l[ل]زَّكَ[s[و][n[ٲ]ةَ وَه[c:4710[ُم ب]ِ[h:447[ٱ]لْأَخِرَةِ هُمْ يُوقِن[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "Those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُقِيْمُوْنَ",
+                    "transliteration": "yuqīmūna",
+                    "translation": "establish",
+                    "analysis_id": 9144
+                },
+                {
+                    "position": 3,
+                    "arabic": "الصَّلٰوةَ",
+                    "transliteration": "l-ṣalata",
+                    "translation": "the prayer",
+                    "analysis_id": 44
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَيُؤْتُوْنَ",
+                    "transliteration": "wayu'tūna",
+                    "translation": "and give",
+                    "analysis_id": 9145
+                },
+                {
+                    "position": 5,
+                    "arabic": "الزَّكٰوةَ",
+                    "transliteration": "l-zakata",
+                    "translation": "zakah",
+                    "analysis_id": 610
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَهُمْ",
+                    "transliteration": "wahum",
+                    "translation": "and they",
+                    "analysis_id": 9179
+                },
+                {
+                    "position": 7,
+                    "arabic": "بِالْاٰخِرَةِ",
+                    "transliteration": "bil-ākhirati",
+                    "translation": "in the Hereafter",
+                    "analysis_id": 10385
+                },
+                {
+                    "position": 8,
+                    "arabic": "هُمْ",
+                    "transliteration": "hum",
+                    "translation": "[they]",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 9,
+                    "arabic": "يُوْقِنُوْنَ",
+                    "transliteration": "yūqinūna",
+                    "translation": "believe with certainty",
+                    "analysis_id": 9083
+                }
+            ]
         },
         {
             "aya_id": 3163,
@@ -70,12 +205,85 @@
             "sajda": false,
             "transliteration": "Innal lazeena laa yu'mimoona bil Aakhirati zaiyannaa lahum a'maalahum fahum ya'mahoon",
             "tajweed_text": "إِ[g[نّ]َ [h:24[ٱ]لَّذِينَ لَا يُؤْمِنُونَ بِ[h:447[ٱ]لْأَخِرَةِ زَيَّ[g[نّ]َا لَهُمْ أَعْمَ[n[ـٰ]لَهُمْ فَهُمْ يَعْمَه[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "(do) not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 4,
+                    "arabic": "يُؤْمِنُوْنَ",
+                    "transliteration": "yu'minūna",
+                    "translation": "believe",
+                    "analysis_id": 41
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِالْاٰخِرَةِ",
+                    "transliteration": "bil-ākhirati",
+                    "translation": "in the Hereafter",
+                    "analysis_id": 10385
+                },
+                {
+                    "position": 6,
+                    "arabic": "زَيَّنَّا",
+                    "transliteration": "zayyannā",
+                    "translation": "We have made fair-seeming",
+                    "analysis_id": 21165
+                },
+                {
+                    "position": 7,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "to them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَعْمَالَهُمْ",
+                    "transliteration": "aʿmālahum",
+                    "translation": "their deeds",
+                    "analysis_id": 12619
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَهُمْ",
+                    "transliteration": "fahum",
+                    "translation": "so they",
+                    "analysis_id": 11618
+                },
+                {
+                    "position": 10,
+                    "arabic": "يَعْمَهُوْنَ",
+                    "transliteration": "yaʿmahūna",
+                    "translation": "wander blindly",
+                    "analysis_id": 10549
+                },
+                {
+                    "position": 11,
+                    "arabic": "ۗ",
+                    "transliteration": null,
+                    "translation": "(4)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3164,
@@ -89,12 +297,78 @@
             "sajda": false,
             "transliteration": "Ulaaa'ikal lazeena lahum sooo'ul 'azaabi wa hum fil Aakhirati humul akhsaroon",
             "tajweed_text": "أُ[s[وْ]لَ[o[ـٰٓ]ئِكَ [h:51[ٱ]لَّذِينَ لَهُمْ س[o[ُو]ٓءُ [h:9886[ٱ]لْعَذَابِ وَهُمْ فِى [h:536[ٱ]لْأَخِرَةِ هُمُ [h:6285[ٱ]لْأَخْسَر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اُولٰۤىِٕكَ",
+                    "transliteration": "ulāika",
+                    "translation": "Those",
+                    "analysis_id": 58
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "(are) the ones",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 4,
+                    "arabic": "سُوْۤءُ",
+                    "transliteration": "sūu",
+                    "translation": "(is) an evil",
+                    "analysis_id": 13067
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْعَذَابِ",
+                    "transliteration": "l-ʿadhābi",
+                    "translation": "[the] punishment",
+                    "analysis_id": 663
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَهُمْ",
+                    "transliteration": "wahum",
+                    "translation": "and they",
+                    "analysis_id": 9179
+                },
+                {
+                    "position": 7,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْاٰخِرَةِ",
+                    "transliteration": "l-ākhirati",
+                    "translation": "the Hereafter",
+                    "analysis_id": 1811
+                },
+                {
+                    "position": 9,
+                    "arabic": "هُمُ",
+                    "transliteration": "humu",
+                    "translation": "[they]",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 10,
+                    "arabic": "الْاَخْسَرُوْنَ",
+                    "transliteration": "l-akhsarūna",
+                    "translation": "(will be) the greatest losers",
+                    "analysis_id": 21166
+                }
+            ]
         },
         {
             "aya_id": 3165,
@@ -108,12 +382,57 @@
             "sajda": false,
             "transliteration": "Wa innaka latulaqqal Qur-aana mil ladun Hakeemin 'Aleem",
             "tajweed_text": "وَإِ[g[نّ]َكَ لَتُلَقَّى [h:9887[ٱ]لْقُرْءَانَ م[u:6233[ِن ل]َّدُنْ حَكِيمٍ عَل[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّكَ",
+                    "transliteration": "wa-innaka",
+                    "translation": "And indeed, you",
+                    "analysis_id": 14783
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَتُلَقَّى",
+                    "transliteration": "latulaqqā",
+                    "translation": "surely, receive",
+                    "analysis_id": 21167
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْقُرْاٰنَ",
+                    "transliteration": "l-qur'āna",
+                    "translation": "the Quran",
+                    "analysis_id": 7491
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from [near]",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَّدُنْ",
+                    "transliteration": "ladun",
+                    "translation": "from [near]",
+                    "analysis_id": 21168
+                },
+                {
+                    "position": 6,
+                    "arabic": "حَكِيْمٍ",
+                    "transliteration": "ḥakīmin",
+                    "translation": "the All-Wise",
+                    "analysis_id": 21169
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَلِيْمٍ",
+                    "transliteration": "ʿalīmin",
+                    "translation": "the All-Knower",
+                    "analysis_id": 11665
+                }
+            ]
         },
         {
             "aya_id": 3166,
@@ -127,12 +446,120 @@
             "sajda": false,
             "transliteration": "Iz qaala Moosaa li ahliheee inneee aanastu naaran saaateekum minhaa bikhabarin aw aateekum bishihaabin qabasil la'allakum tastaloon",
             "tajweed_text": "إِذْ قَالَ مُوسَىٰ لِأَهْلِه[o[ِۦٓ] إِ[g[نّ][o[ِىٓ] ءَانَسْتُ نَا[f:9888[رًا س]َـَٔـاتِيك[w:9889[ُم م]ِّنْهَا بِخَبَرٍ أَوْ ءَاتِيك[c:9890[ُم ب]ِشِهَا[f:9891[بٍ ق]َبَ[u:9892[سٍ ل]َّعَلَّكُمْ تَصْطَل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِذْ",
+                    "transliteration": "idh",
+                    "translation": "When",
+                    "analysis_id": 1814
+                },
+                {
+                    "position": 2,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "said",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُوْسٰى",
+                    "transliteration": "mūsā",
+                    "translation": "Musa",
+                    "analysis_id": 698
+                },
+                {
+                    "position": 4,
+                    "arabic": "لِاَهْلِهٖٓ",
+                    "transliteration": "li-ahlihi",
+                    "translation": "to his family",
+                    "analysis_id": 21170
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِنِّيْٓ",
+                    "transliteration": "innī",
+                    "translation": "Indeed, I",
+                    "analysis_id": 8831
+                },
+                {
+                    "position": 6,
+                    "arabic": "اٰنَسْتُ",
+                    "transliteration": "ānastu",
+                    "translation": "perceive",
+                    "analysis_id": 18671
+                },
+                {
+                    "position": 7,
+                    "arabic": "نَارًاۗ",
+                    "transliteration": "nāran",
+                    "translation": "a fire",
+                    "analysis_id": 7194
+                },
+                {
+                    "position": 8,
+                    "arabic": "سَاٰتِيْكُمْ",
+                    "transliteration": "saātīkum",
+                    "translation": "I will bring you",
+                    "analysis_id": 21171
+                },
+                {
+                    "position": 9,
+                    "arabic": "مِّنْهَا",
+                    "transliteration": "min'hā",
+                    "translation": "from it",
+                    "analysis_id": 510
+                },
+                {
+                    "position": 10,
+                    "arabic": "بِخَبَرٍ",
+                    "transliteration": "bikhabarin",
+                    "translation": "some information",
+                    "analysis_id": 21172
+                },
+                {
+                    "position": 11,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 12,
+                    "arabic": "اٰتِيْكُمْ",
+                    "transliteration": "ātīkum",
+                    "translation": "I will bring you",
+                    "analysis_id": 18673
+                },
+                {
+                    "position": 13,
+                    "arabic": "بِشِهَابٍ",
+                    "transliteration": "bishihābin",
+                    "translation": "a torch",
+                    "analysis_id": 21173
+                },
+                {
+                    "position": 14,
+                    "arabic": "قَبَسٍ",
+                    "transliteration": "qabasin",
+                    "translation": "burning",
+                    "analysis_id": 21174
+                },
+                {
+                    "position": 15,
+                    "arabic": "لَّعَلَّكُمْ",
+                    "transliteration": "laʿallakum",
+                    "translation": "so that you may",
+                    "analysis_id": 691
+                },
+                {
+                    "position": 16,
+                    "arabic": "تَصْطَلُوْنَ",
+                    "transliteration": "taṣṭalūna",
+                    "translation": "warm yourselves",
+                    "analysis_id": 21175
+                }
+            ]
         },
         {
             "aya_id": 3167,
@@ -146,12 +573,106 @@
             "sajda": false,
             "transliteration": "Falammaa jaaa'ahaa noodiya am boorika man finnnnaari wa man hawlahaa wa Subhaanal laahi Rabbil 'aalameen",
             "tajweed_text": "فَلَ[g[مّ]َا ج[o[َا]ٓءَهَا نُودِىَ أ[i:9893[َنۢ ب]ُورِكَ مَ[f:2074[ن ف]ِى [h:4674[ٱ][l[ل][g[نّ]َارِ وَمَنْ حَوْلَهَا وَسُ[q:6849[بْ]حَ[n[ـٰ]نَ [h:6850[ٱ]للَّهِ رَبِّ [h:4[ٱ]لْعَ[n[ـٰ]لَم[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلَمَّا",
+                    "transliteration": "falammā",
+                    "translation": "But when",
+                    "analysis_id": 3740
+                },
+                {
+                    "position": 2,
+                    "arabic": "جَاۤءَهَا",
+                    "transliteration": "jāahā",
+                    "translation": "he came to it",
+                    "analysis_id": 21176
+                },
+                {
+                    "position": 3,
+                    "arabic": "نُوْدِيَ",
+                    "transliteration": "nūdiya",
+                    "translation": "he was called",
+                    "analysis_id": 18676
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَنْۢ",
+                    "transliteration": "an",
+                    "translation": "[that]",
+                    "analysis_id": 21177
+                },
+                {
+                    "position": 5,
+                    "arabic": "بُوْرِكَ",
+                    "transliteration": "būrika",
+                    "translation": "Blessed is",
+                    "analysis_id": 21178
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 7,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "(is) at",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 8,
+                    "arabic": "النَّارِ",
+                    "transliteration": "l-nāri",
+                    "translation": "the fire",
+                    "analysis_id": 569
+                },
+                {
+                    "position": 9,
+                    "arabic": "وَمَنْ",
+                    "transliteration": "waman",
+                    "translation": "and whoever",
+                    "analysis_id": 4698
+                },
+                {
+                    "position": 10,
+                    "arabic": "حَوْلَهَاۗ",
+                    "transliteration": "ḥawlahā",
+                    "translation": "(is) around it",
+                    "analysis_id": 21179
+                },
+                {
+                    "position": 11,
+                    "arabic": "وَسُبْحٰنَ",
+                    "transliteration": "wasub'ḥāna",
+                    "translation": "And glory be",
+                    "analysis_id": 21180
+                },
+                {
+                    "position": 12,
+                    "arabic": "اللّٰهِ",
+                    "transliteration": "l-lahi",
+                    "translation": "(to) Allah",
+                    "analysis_id": 2
+                },
+                {
+                    "position": 13,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "(the) Lord",
+                    "analysis_id": 7
+                },
+                {
+                    "position": 14,
+                    "arabic": "الْعٰلَمِيْنَ",
+                    "transliteration": "l-ʿālamīna",
+                    "translation": "(of) the worlds",
+                    "analysis_id": 642
+                }
+            ]
         },
         {
             "aya_id": 3168,
@@ -165,12 +686,57 @@
             "sajda": false,
             "transliteration": "Yaa Moosaaa innahooo Anal laahul 'Azeezul Hakeem",
             "tajweed_text": "يَ[n[ـٰ]مُوسَ[o[ىٰٓ] إِ[g[نّ]َهُ[o[ۥٓ] أَنَا [h:8455[ٱ]للَّهُ [h:9894[ٱ]لْعَزِيزُ [h:681[ٱ]لْحَك[p[ِي]مُ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يٰمُوْسٰٓى",
+                    "transliteration": "yāmūsā",
+                    "translation": "O Musa",
+                    "analysis_id": 18677
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنَّهٗٓ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed",
+                    "analysis_id": 21181
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنَا",
+                    "transliteration": "anā",
+                    "translation": "I Am",
+                    "analysis_id": 16543
+                },
+                {
+                    "position": 4,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْعَزِيْزُ",
+                    "transliteration": "l-ʿazīzu",
+                    "translation": "the All-Mighty",
+                    "analysis_id": 14709
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْحَكِيْمُ",
+                    "transliteration": "l-ḥakīmu",
+                    "translation": "the All-Wise",
+                    "analysis_id": 474
+                },
+                {
+                    "position": 7,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(9)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3169,
@@ -184,12 +750,148 @@
             "sajda": false,
             "transliteration": "Wa alqi 'asaak; falammmaa ra aahaa tahtazzu ka annahaa jaaannunw wallaa mudbiranw wa lam yu'aqqib; yaa Moosaa laa takhaf innee laa yakhaafu ladaiyal mursaloon",
             "tajweed_text": "وَأَلْقِ عَصَاكَ‌ۚ فَلَ[g[مّ]َا رَءَاهَا تَهْتَزُّ كَأَ[g[نّ]َهَا ج[m[َا]ٓ[a:9895[[g[نّ]ٌ و]َلَّىٰ مُ[q:9896[دْ]بِ[a:9897[رًا و]َلَمْ يُعَقِّ[q:9898[بْ]‌ۚ يَ[n[ـٰ]مُوسَىٰ لَا تَخَفْ إِ[g[نّ]ِى لَا يَخَافُ لَدَىَّ [h:9899[ٱ]لْمُرْسَل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَلْقِ",
+                    "transliteration": "wa-alqi",
+                    "translation": "And, \"Throw",
+                    "analysis_id": 18882
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَصَاكَ",
+                    "transliteration": "ʿaṣāka",
+                    "translation": "your staff",
+                    "analysis_id": 21182
+                },
+                {
+                    "position": 3,
+                    "arabic": "ۗفَلَمَّا",
+                    "transliteration": "falammā",
+                    "translation": "But when",
+                    "analysis_id": 182
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَاٰهَا",
+                    "transliteration": "raāhā",
+                    "translation": "he saw it",
+                    "analysis_id": 21183
+                },
+                {
+                    "position": 5,
+                    "arabic": "تَهْتَزُّ",
+                    "transliteration": "tahtazzu",
+                    "translation": "moving",
+                    "analysis_id": 21184
+                },
+                {
+                    "position": 6,
+                    "arabic": "كَاَنَّهَا",
+                    "transliteration": "ka-annahā",
+                    "translation": "as if it",
+                    "analysis_id": 21185
+                },
+                {
+                    "position": 7,
+                    "arabic": "جَاۤنٌّ",
+                    "transliteration": "jānnun",
+                    "translation": "(were) a snake",
+                    "analysis_id": 21186
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَّلّٰى",
+                    "transliteration": "wallā",
+                    "translation": "he turned back",
+                    "analysis_id": 21187
+                },
+                {
+                    "position": 9,
+                    "arabic": "مُدْبِرًا",
+                    "transliteration": "mud'biran",
+                    "translation": "(in) flight",
+                    "analysis_id": 21188
+                },
+                {
+                    "position": 10,
+                    "arabic": "وَّلَمْ",
+                    "transliteration": "walam",
+                    "translation": "and (did) not",
+                    "analysis_id": 8257
+                },
+                {
+                    "position": 11,
+                    "arabic": "يُعَقِّبْۗ",
+                    "transliteration": "yuʿaqqib",
+                    "translation": "look back",
+                    "analysis_id": 21189
+                },
+                {
+                    "position": 12,
+                    "arabic": "يٰمُوْسٰى",
+                    "transliteration": "yāmūsā",
+                    "translation": "O Musa",
+                    "analysis_id": 716
+                },
+                {
+                    "position": 13,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "(Do) not",
+                    "analysis_id": 121
+                },
+                {
+                    "position": 14,
+                    "arabic": "تَخَفْۗ",
+                    "transliteration": "takhaf",
+                    "translation": "fear",
+                    "analysis_id": 18710
+                },
+                {
+                    "position": 15,
+                    "arabic": "اِنِّيْ",
+                    "transliteration": "innī",
+                    "translation": "Indeed, [I]",
+                    "analysis_id": 430
+                },
+                {
+                    "position": 16,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "(do) not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 17,
+                    "arabic": "يَخَافُ",
+                    "transliteration": "yakhāfu",
+                    "translation": "fear",
+                    "analysis_id": 21190
+                },
+                {
+                    "position": 18,
+                    "arabic": "لَدَيَّ",
+                    "transliteration": "ladayya",
+                    "translation": "(in) My presence",
+                    "analysis_id": 21191
+                },
+                {
+                    "position": 19,
+                    "arabic": "الْمُرْسَلُوْنَ",
+                    "transliteration": "l-mur'salūna",
+                    "translation": "the Messengers",
+                    "analysis_id": 16481
+                },
+                {
+                    "position": 20,
+                    "arabic": "ۖ",
+                    "transliteration": null,
+                    "translation": "(10)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3170,
@@ -203,12 +905,85 @@
             "sajda": false,
             "transliteration": "Illaa man zalama summa baddala husnam ba'da sooo'in fa innee Ghafoorur Raheem",
             "tajweed_text": "إِلَّا مَ[f:8211[ن ظ]َلَمَ ثُ[g[مّ]َ بَدَّلَ حُسْن[i:9900[َۢا ب]َعْدَ س[o[ُو]ٓ[f:9901[ءٍ ف]َإِ[g[نّ]ِى غَفُو[u:890[رٌ ر]َّح[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "Except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 3,
+                    "arabic": "ظَلَمَ",
+                    "transliteration": "ẓalama",
+                    "translation": "wrongs",
+                    "analysis_id": 18198
+                },
+                {
+                    "position": 4,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 5,
+                    "arabic": "بَدَّلَ",
+                    "transliteration": "baddala",
+                    "translation": "substitutes",
+                    "analysis_id": 21192
+                },
+                {
+                    "position": 6,
+                    "arabic": "حُسْنًاۢ",
+                    "transliteration": "ḥus'nan",
+                    "translation": "good",
+                    "analysis_id": 21193
+                },
+                {
+                    "position": 7,
+                    "arabic": "بَعْدَ",
+                    "transliteration": "baʿda",
+                    "translation": "after",
+                    "analysis_id": 2222
+                },
+                {
+                    "position": 8,
+                    "arabic": "سُوْۤءٍ",
+                    "transliteration": "sūin",
+                    "translation": "evil",
+                    "analysis_id": 8246
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَاِنِّيْ",
+                    "transliteration": "fa-innī",
+                    "translation": "then indeed, I Am",
+                    "analysis_id": 18065
+                },
+                {
+                    "position": 10,
+                    "arabic": "غَفُوْرٌ",
+                    "transliteration": "ghafūrun",
+                    "translation": "Oft-Forgiving",
+                    "analysis_id": 2679
+                },
+                {
+                    "position": 11,
+                    "arabic": "رَّحِيْمٌ",
+                    "transliteration": "raḥīmun",
+                    "translation": "Most Merciful",
+                    "analysis_id": 2680
+                }
+            ]
         },
         {
             "aya_id": 3171,
@@ -222,12 +997,141 @@
             "sajda": false,
             "transliteration": "Wa adkhil yadaka fee jaibika takhruj baidaaa'a min ghairisooo'in feetis'i Aayaatin ilaa Fir'awna wa qawmih; innahum kaanoo qawman faasiqeen",
             "tajweed_text": "وَأَ[q:9902[دْ]خِلْ يَدَكَ فِى جَيْبِكَ تَخْرُ[q:8461[جْ] بَيْض[o[َا]ٓءَ مِنْ غَيْرِ س[o[ُو]ٓ[f:9903[ءٍ‌ۖ ف]ِى تِسْعِ ءَايَ[n[ـٰ]تٍ إِلَىٰ فِرْعَوْنَ وَقَوْمِه[o[ِۦٓ‌ۚ] إِ[g[نّ]َهُمْ كَانُو[s[اْ] قَوْ[f:5652[مًا ف]َ[n[ـٰ]سِق[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَدْخِلْ",
+                    "transliteration": "wa-adkhil",
+                    "translation": "And enter",
+                    "analysis_id": 21194
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَدَكَ",
+                    "transliteration": "yadaka",
+                    "translation": "your hand",
+                    "analysis_id": 8824
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "into",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 4,
+                    "arabic": "جَيْبِكَ",
+                    "transliteration": "jaybika",
+                    "translation": "your bosom",
+                    "analysis_id": 21195
+                },
+                {
+                    "position": 5,
+                    "arabic": "تَخْرُجْ",
+                    "transliteration": "takhruj",
+                    "translation": "it will come forth",
+                    "analysis_id": 18716
+                },
+                {
+                    "position": 6,
+                    "arabic": "بَيْضَاۤءَ",
+                    "transliteration": "bayḍāa",
+                    "translation": "white",
+                    "analysis_id": 18717
+                },
+                {
+                    "position": 7,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "without",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 8,
+                    "arabic": "غَيْرِ",
+                    "transliteration": "ghayri",
+                    "translation": "without",
+                    "analysis_id": 13788
+                },
+                {
+                    "position": 9,
+                    "arabic": "سُوْۤءٍۙ",
+                    "transliteration": "sūin",
+                    "translation": "harm",
+                    "analysis_id": 21196
+                },
+                {
+                    "position": 10,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "(These are) among",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 11,
+                    "arabic": "تِسْعِ",
+                    "transliteration": "tis'ʿi",
+                    "translation": "nine",
+                    "analysis_id": 21197
+                },
+                {
+                    "position": 12,
+                    "arabic": "اٰيٰتٍ",
+                    "transliteration": "āyātin",
+                    "translation": "signs",
+                    "analysis_id": 21198
+                },
+                {
+                    "position": 13,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 14,
+                    "arabic": "فِرْعَوْنَ",
+                    "transliteration": "fir'ʿawna",
+                    "translation": "Firaun",
+                    "analysis_id": 660
+                },
+                {
+                    "position": 15,
+                    "arabic": "وَقَوْمِهٖۚ",
+                    "transliteration": "waqawmihi",
+                    "translation": "and his people",
+                    "analysis_id": 21199
+                },
+                {
+                    "position": 16,
+                    "arabic": "اِنَّهُمْ",
+                    "transliteration": "innahum",
+                    "translation": "Indeed, they",
+                    "analysis_id": 130
+                },
+                {
+                    "position": 17,
+                    "arabic": "كَانُوْا",
+                    "transliteration": "kānū",
+                    "translation": "are",
+                    "analysis_id": 175
+                },
+                {
+                    "position": 18,
+                    "arabic": "قَوْمًا",
+                    "transliteration": "qawman",
+                    "translation": "a people",
+                    "analysis_id": 5349
+                },
+                {
+                    "position": 19,
+                    "arabic": "فٰسِقِيْنَ",
+                    "transliteration": "fāsiqīna",
+                    "translation": "defiantly disobedient",
+                    "analysis_id": 13185
+                }
+            ]
         },
         {
             "aya_id": 3172,
@@ -241,12 +1145,71 @@
             "sajda": false,
             "transliteration": "Falammaa jaaa'at hum Aayaatunaa mubsiratan qaaloo haazaa sihrum mubeen",
             "tajweed_text": "فَلَ[g[مّ]َا ج[o[َا]ٓءَتْهُمْ ءَايَ[n[ـٰ]تُنَا مُ[q:7692[بْ]صِرَ[f:9904[ةً ق]َالُو[s[اْ] هَ[n[ـٰ]ذَا سِحْ[a:3879[رٌ م]ُّب[p[ِي]نٌ",
-            "surah": {
-                "name": "سُورَةُ النَّمۡلِ",
-                "englishName": "An-Naml",
-                "englishNameTranslation": "The Ant",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلَمَّا",
+                    "transliteration": "falammā",
+                    "translation": "But when",
+                    "analysis_id": 3740
+                },
+                {
+                    "position": 2,
+                    "arabic": "جَاۤءَتْهُمْ",
+                    "transliteration": "jāathum",
+                    "translation": "came to them",
+                    "analysis_id": 3851
+                },
+                {
+                    "position": 3,
+                    "arabic": "اٰيٰتُنَا",
+                    "transliteration": "āyātunā",
+                    "translation": "Our Signs",
+                    "analysis_id": 12499
+                },
+                {
+                    "position": 4,
+                    "arabic": "مُبْصِرَةً",
+                    "transliteration": "mub'ṣiratan",
+                    "translation": "visible",
+                    "analysis_id": 17152
+                },
+                {
+                    "position": 5,
+                    "arabic": "قَالُوْا",
+                    "transliteration": "qālū",
+                    "translation": "they said",
+                    "analysis_id": 465
+                },
+                {
+                    "position": 6,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "This",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 7,
+                    "arabic": "سِحْرٌ",
+                    "transliteration": "siḥ'run",
+                    "translation": "(is) a magic",
+                    "analysis_id": 9756
+                },
+                {
+                    "position": 8,
+                    "arabic": "مُّبِيْنٌ",
+                    "transliteration": "mubīnun",
+                    "translation": "manifest",
+                    "analysis_id": 2294
+                },
+                {
+                    "position": 9,
+                    "arabic": "ۚ",
+                    "transliteration": null,
+                    "translation": "(13)",
+                    "analysis_id": 20
+                }
+            ]
         }
     ]
 }

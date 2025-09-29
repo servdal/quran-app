@@ -13,12 +13,22 @@
             "sajda": false,
             "transliteration": "Kaaaf-Haa-Yaa-'Ayyyn-Saaad",
             "tajweed_text": "[m[كٓ]هي[m[عٓ][m[صٓ]",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كۤهٰيٰعۤصۤ",
+                    "transliteration": "kaf-ha-ya-ain-sad",
+                    "translation": "Kaaf Ha Ya Ain Sad",
+                    "analysis_id": 18295
+                },
+                {
+                    "position": 2,
+                    "arabic": "ۚ",
+                    "transliteration": null,
+                    "translation": "(1)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2252,
@@ -32,12 +42,50 @@
             "sajda": false,
             "transliteration": "Zikru rahmati Rabbika 'abdahoo Zakariyya",
             "tajweed_text": "ذِكْرُ رَحْمَتِ رَبِّكَ عَ[q:8257[بْ]دَهُ[n[ۥ] زَكَرِيَّآ",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ذِكْرُ",
+                    "transliteration": "dhik'ru",
+                    "translation": "(A) mention",
+                    "analysis_id": 18296
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَحْمَتِ",
+                    "transliteration": "raḥmati",
+                    "translation": "(of the) Mercy",
+                    "analysis_id": 5507
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "عَبْدَهٗ",
+                    "transliteration": "ʿabdahu",
+                    "translation": "(to) His servant",
+                    "analysis_id": 18297
+                },
+                {
+                    "position": 5,
+                    "arabic": "زَكَرِيَّا",
+                    "transliteration": "zakariyyā",
+                    "translation": "Zakariya",
+                    "analysis_id": 4872
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۚ",
+                    "transliteration": null,
+                    "translation": "(2)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2253,
@@ -51,12 +99,43 @@
             "sajda": false,
             "transliteration": "Iz naadaa Rabbahoo nidaaa'an khafiyyaa",
             "tajweed_text": "إِذْ نَادَىٰ رَبَّهُ[n[ۥ] نِد[o[َا]ٓءً خَفِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِذْ",
+                    "transliteration": "idh",
+                    "translation": "When",
+                    "analysis_id": 1814
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَادٰى",
+                    "transliteration": "nādā",
+                    "translation": "he called",
+                    "analysis_id": 18298
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبَّهٗ",
+                    "transliteration": "rabbahu",
+                    "translation": "(to) his Lord",
+                    "analysis_id": 4331
+                },
+                {
+                    "position": 4,
+                    "arabic": "نِدَاۤءً",
+                    "transliteration": "nidāan",
+                    "translation": "a call ",
+                    "analysis_id": 18299
+                },
+                {
+                    "position": 5,
+                    "arabic": "خَفِيًّا",
+                    "transliteration": "khafiyyan",
+                    "translation": "secret",
+                    "analysis_id": 18300
+                }
+            ]
         },
         {
             "aya_id": 2254,
@@ -70,12 +149,106 @@
             "sajda": false,
             "transliteration": "Qaala Rabbi innee wahanal'azmu minnee washta'alar raasu shaibanw wa lam akum bidu'aaa'ika Rabbi shaqiyyaa",
             "tajweed_text": "قَالَ رَبِّ إِ[g[نّ]ِى وَهَنَ [h:8258[ٱ]لْعَظْمُ مِ[g[نّ]ِى وَ[h:8259[ٱ]شْتَعَلَ [h:8260[ٱ][l[ل]رَّأْسُ شَيْ[a:8261[بًا و]َلَمْ أَك[i:8262[ُنۢ ب]ِدُع[o[َا]ٓئِكَ رَبِّ شَقِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "He said",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "My Lord",
+                    "analysis_id": 1754
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِنِّيْ",
+                    "transliteration": "innī",
+                    "translation": "Indeed, [I]",
+                    "analysis_id": 430
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَهَنَ",
+                    "transliteration": "wahana",
+                    "translation": "(have) weakened",
+                    "analysis_id": 18301
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْعَظْمُ",
+                    "transliteration": "l-ʿaẓmu",
+                    "translation": "my bones",
+                    "analysis_id": 18302
+                },
+                {
+                    "position": 6,
+                    "arabic": "مِنِّيْ",
+                    "transliteration": "minnī",
+                    "translation": "my bones",
+                    "analysis_id": 4844
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَاشْتَعَلَ",
+                    "transliteration": "wa-ish'taʿala",
+                    "translation": "and flared",
+                    "analysis_id": 18303
+                },
+                {
+                    "position": 8,
+                    "arabic": "الرَّأْسُ",
+                    "transliteration": "l-rasu",
+                    "translation": "(my) head",
+                    "analysis_id": 18304
+                },
+                {
+                    "position": 9,
+                    "arabic": "شَيْبًا",
+                    "transliteration": "shayban",
+                    "translation": "(with) white",
+                    "analysis_id": 18305
+                },
+                {
+                    "position": 10,
+                    "arabic": "وَّلَمْ",
+                    "transliteration": "walam",
+                    "translation": "and not",
+                    "analysis_id": 8257
+                },
+                {
+                    "position": 11,
+                    "arabic": "اَكُنْۢ",
+                    "transliteration": "akun",
+                    "translation": "I have been",
+                    "analysis_id": 18306
+                },
+                {
+                    "position": 12,
+                    "arabic": "بِدُعَاۤىِٕكَ",
+                    "transliteration": "biduʿāika",
+                    "translation": "in (my) supplication (to) You",
+                    "analysis_id": 18307
+                },
+                {
+                    "position": 13,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "my Lord",
+                    "analysis_id": 5036
+                },
+                {
+                    "position": 14,
+                    "arabic": "شَقِيًّا",
+                    "transliteration": "shaqiyyan",
+                    "translation": "unblessed",
+                    "analysis_id": 18308
+                }
+            ]
         },
         {
             "aya_id": 2255,
@@ -89,12 +262,106 @@
             "sajda": false,
             "transliteration": "Wa innee khiftul mawaa liya minw waraaa'ee wa kaana tim ra atee 'aairan fahab lee mil ladunka waliyyaa",
             "tajweed_text": "وَإِ[g[نّ]ِى خِفْتُ [h:8263[ٱ]لْمَو[n[َٲ]لِىَ م[a:8264[ِن و]َر[o[َا]ٓءِى وَكَانَتِ [h:8265[ٱ]مْرَأَتِى عَاقِ[f:8266[رًا ف]َهَ[q:8267[بْ] لِى م[u:1746[ِن ل]َّدُ[f:1747[نك]َ وَلِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنِّيْ",
+                    "transliteration": "wa-innī",
+                    "translation": "And indeed, I",
+                    "analysis_id": 12620
+                },
+                {
+                    "position": 2,
+                    "arabic": "خِفْتُ",
+                    "transliteration": "khif'tu",
+                    "translation": "[I] fear",
+                    "analysis_id": 18309
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْمَوَالِيَ",
+                    "transliteration": "l-mawāliya",
+                    "translation": "the successors",
+                    "analysis_id": 18310
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "after me",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَّرَاۤءِيْ",
+                    "transliteration": "warāī",
+                    "translation": "after me",
+                    "analysis_id": 18311
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَكَانَتِ",
+                    "transliteration": "wakānati",
+                    "translation": "and is",
+                    "analysis_id": 18312
+                },
+                {
+                    "position": 7,
+                    "arabic": "امْرَاَتِيْ",
+                    "transliteration": "im'ra-atī",
+                    "translation": "my wife",
+                    "analysis_id": 18313
+                },
+                {
+                    "position": 8,
+                    "arabic": "عَاقِرًا",
+                    "transliteration": "ʿāqiran",
+                    "translation": "barren",
+                    "analysis_id": 18314
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَهَبْ",
+                    "transliteration": "fahab",
+                    "translation": "So give",
+                    "analysis_id": 18315
+                },
+                {
+                    "position": 10,
+                    "arabic": "لِيْ",
+                    "transliteration": "lī",
+                    "translation": "[to] me",
+                    "analysis_id": 2115
+                },
+                {
+                    "position": 11,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 12,
+                    "arabic": "لَّدُنْكَ",
+                    "transliteration": "ladunka",
+                    "translation": "Yourself",
+                    "analysis_id": 4587
+                },
+                {
+                    "position": 13,
+                    "arabic": "وَلِيًّا",
+                    "transliteration": "waliyyan",
+                    "translation": "an heir",
+                    "analysis_id": 7123
+                },
+                {
+                    "position": 14,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(5)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 2256,
@@ -108,12 +375,64 @@
             "sajda": false,
             "transliteration": "Yarisunee wa yarisu min aali Ya'qoob, waj'alhu Rabbi radiyya",
             "tajweed_text": "يَرِثُنِى وَيَرِثُ مِنْ ءَالِ يَعْقُوبَ‌ۖ وَ[h:8268[ٱ][q:8268[جْ]عَلْهُ رَبِّ رَضِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَّرِثُنِيْ",
+                    "transliteration": "yarithunī",
+                    "translation": "Who will inherit me",
+                    "analysis_id": 18316
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَيَرِثُ",
+                    "transliteration": "wayarithu",
+                    "translation": "and inherit",
+                    "analysis_id": 18317
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "اٰلِ",
+                    "transliteration": "āli",
+                    "translation": "(the) family",
+                    "analysis_id": 659
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَعْقُوْبَ",
+                    "transliteration": "yaʿqūba",
+                    "translation": "(of) Yaqub",
+                    "analysis_id": 14737
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَاجْعَلْهُ",
+                    "transliteration": "wa-ij'ʿalhu",
+                    "translation": "And make him",
+                    "analysis_id": 18318
+                },
+                {
+                    "position": 7,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "my Lord",
+                    "analysis_id": 5036
+                },
+                {
+                    "position": 8,
+                    "arabic": "رَضِيًّا",
+                    "transliteration": "raḍiyyan",
+                    "translation": "pleasing",
+                    "analysis_id": 18319
+                }
+            ]
         },
         {
             "aya_id": 2257,
@@ -127,12 +446,92 @@
             "sajda": false,
             "transliteration": "Yaa Zakariyyaaa innaa nubashshiruka bighulaami nismuhoo Yahyaa lam naj'al lahoo min qablu samiyyaa",
             "tajweed_text": "يَ[n[ـٰ]زَكَرِيّ[o[َآ] إِ[g[نّ]َا نُبَشِّرُكَ بِغُلَ[n[ـٰ]مٍ [h:8269[ٱ]سْمُهُ[n[ۥ] يَحْيَىٰ لَمْ نَ[q:8219[جْ]عَل لَّهُ[n[ۥ] مِ[f:128[ن ق]َ[q:129[بْ]لُ سَمِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يٰزَكَرِيَّآ",
+                    "transliteration": "yāzakariyyā",
+                    "translation": "O Zakariya",
+                    "analysis_id": 18320
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنَّا",
+                    "transliteration": "innā",
+                    "translation": "Indeed, We",
+                    "analysis_id": 8304
+                },
+                {
+                    "position": 3,
+                    "arabic": "نُبَشِّرُكَ",
+                    "transliteration": "nubashiruka",
+                    "translation": "[We] give you glad tidings",
+                    "analysis_id": 16471
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِغُلٰمِ",
+                    "transliteration": "bighulāmin",
+                    "translation": "of a boy",
+                    "analysis_id": 16472
+                },
+                {
+                    "position": 5,
+                    "arabic": "ِۨاسْمُهٗ",
+                    "transliteration": "us'muhu",
+                    "translation": "his name",
+                    "analysis_id": 18321
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَحْيٰىۙ",
+                    "transliteration": "yaḥyā",
+                    "translation": "(will be) Yahya",
+                    "analysis_id": 18322
+                },
+                {
+                    "position": 7,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 8,
+                    "arabic": "نَجْعَلْ",
+                    "transliteration": "najʿal",
+                    "translation": "We (have) assigned",
+                    "analysis_id": 18207
+                },
+                {
+                    "position": 9,
+                    "arabic": "لَّهٗ",
+                    "transliteration": "lahu",
+                    "translation": "[for] it",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 10,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "before",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 11,
+                    "arabic": "قَبْلُ",
+                    "transliteration": "qablu",
+                    "translation": "before",
+                    "analysis_id": 1225
+                },
+                {
+                    "position": 12,
+                    "arabic": "سَمِيًّا",
+                    "transliteration": "samiyyan",
+                    "translation": "(this) name",
+                    "analysis_id": 18323
+                }
+            ]
         },
         {
             "aya_id": 2258,
@@ -146,12 +545,106 @@
             "sajda": false,
             "transliteration": "Qaala Rabbi annaa yakoonu lee ghulaamunw wa kaanatim ra atee aaqiranw wa qad balaghtu minal kibari 'itiyyaa",
             "tajweed_text": "قَالَ رَبِّ أَ[g[نّ]َىٰ يَكُونُ لِى غُلَ[n[ـٰ][a:8270[مٌ و]َكَانَتِ [h:8265[ٱ]مْرَأَتِى عَاقِ[a:8271[رًا و]َقَ[q:387[دْ] بَلَغْتُ مِنَ [h:8272[ٱ]لْكِبَرِ عِتِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "He said",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "My Lord",
+                    "analysis_id": 5036
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنّٰى",
+                    "transliteration": "annā",
+                    "translation": "How",
+                    "analysis_id": 3981
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَكُوْنُ",
+                    "transliteration": "yakūnu",
+                    "translation": "can",
+                    "analysis_id": 4920
+                },
+                {
+                    "position": 5,
+                    "arabic": "لِيْ",
+                    "transliteration": "lī",
+                    "translation": "I have",
+                    "analysis_id": 2115
+                },
+                {
+                    "position": 6,
+                    "arabic": "غُلٰمٌ",
+                    "transliteration": "ghulāmun",
+                    "translation": "a boy",
+                    "analysis_id": 4921
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَّكَانَتِ",
+                    "transliteration": "wakānati",
+                    "translation": "while is",
+                    "analysis_id": 18324
+                },
+                {
+                    "position": 8,
+                    "arabic": "امْرَاَتِيْ",
+                    "transliteration": "im'ra-atī",
+                    "translation": "my wife",
+                    "analysis_id": 18313
+                },
+                {
+                    "position": 9,
+                    "arabic": "عَاقِرًا",
+                    "transliteration": "ʿāqiran",
+                    "translation": "barren",
+                    "analysis_id": 18314
+                },
+                {
+                    "position": 10,
+                    "arabic": "وَّقَدْ",
+                    "transliteration": "waqad",
+                    "translation": "and indeed",
+                    "analysis_id": 10603
+                },
+                {
+                    "position": 11,
+                    "arabic": "بَلَغْتُ",
+                    "transliteration": "balaghtu",
+                    "translation": "I have reached",
+                    "analysis_id": 18325
+                },
+                {
+                    "position": 12,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 13,
+                    "arabic": "الْكِبَرِ",
+                    "transliteration": "l-kibari",
+                    "translation": "the old age",
+                    "analysis_id": 16288
+                },
+                {
+                    "position": 14,
+                    "arabic": "عِتِيًّا",
+                    "transliteration": "ʿitiyyan",
+                    "translation": "extreme",
+                    "analysis_id": 18326
+                }
+            ]
         },
         {
             "aya_id": 2259,
@@ -165,12 +658,106 @@
             "sajda": false,
             "transliteration": "Qaala kazaalika qaala Rabbuka huwa 'alaiya haiyinunw wa qad khalaqtuka min qablu wa lam taku shai'aa",
             "tajweed_text": "قَالَ كَذ[n[َٲ]لِكَ قَالَ رَبُّكَ هُوَ عَلَىَّ هَيِّ[a:8273[نٌ و]َقَ[q:387[دْ] خَلَ[q:8274[قْ]تُكَ مِ[f:128[ن ق]َ[q:129[بْ]لُ وَلَمْ تَكُ شَيْــًٔا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "He said",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَذٰلِكَۗ",
+                    "transliteration": "kadhālika",
+                    "translation": "Thus",
+                    "analysis_id": 2614
+                },
+                {
+                    "position": 3,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "said",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَبُّكَ",
+                    "transliteration": "rabbuka",
+                    "translation": "your Lord",
+                    "analysis_id": 428
+                },
+                {
+                    "position": 5,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "'It",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 6,
+                    "arabic": "عَلَيَّ",
+                    "transliteration": "ʿalayya",
+                    "translation": "(is) easy for Me",
+                    "analysis_id": 7341
+                },
+                {
+                    "position": 7,
+                    "arabic": "هَيِّنٌ",
+                    "transliteration": "hayyinun",
+                    "translation": "(is) easy for Me",
+                    "analysis_id": 18327
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَّقَدْ",
+                    "transliteration": "waqad",
+                    "translation": "and certainly",
+                    "analysis_id": 10603
+                },
+                {
+                    "position": 9,
+                    "arabic": "خَلَقْتُكَ",
+                    "transliteration": "khalaqtuka",
+                    "translation": "I (have) created you",
+                    "analysis_id": 18328
+                },
+                {
+                    "position": 10,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "before",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 11,
+                    "arabic": "قَبْلُ",
+                    "transliteration": "qablu",
+                    "translation": "before",
+                    "analysis_id": 1225
+                },
+                {
+                    "position": 12,
+                    "arabic": "وَلَمْ",
+                    "transliteration": "walam",
+                    "translation": "while not",
+                    "analysis_id": 4981
+                },
+                {
+                    "position": 13,
+                    "arabic": "تَكُ",
+                    "transliteration": "taku",
+                    "translation": "you were",
+                    "analysis_id": 14941
+                },
+                {
+                    "position": 14,
+                    "arabic": "شَيْـًٔا",
+                    "transliteration": "shayan",
+                    "translation": "anything.'",
+                    "analysis_id": 649
+                }
+            ]
         },
         {
             "aya_id": 2260,
@@ -184,12 +771,99 @@
             "sajda": false,
             "transliteration": "Qaala Rabbij 'al leee Aayah; qaala Aayatuka allaa tukalliman naasa salaasa layaalin sawiyyaa",
             "tajweed_text": "قَالَ رَبِّ [h:657[ٱ][q:658[جْ]عَل لّ[o[ِىٓ] ءَايَ[f:1895[ةً‌ۚ ق]َالَ ءَايَتُكَ أَلَّا تُكَلِّمَ [h:1896[ٱ][l[ل][g[نّ]َاسَ ثَلَ[n[ـٰ]ثَ لَيَا[f:8275[لٍ س]َوِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "He said",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "My Lord",
+                    "analysis_id": 5036
+                },
+                {
+                    "position": 3,
+                    "arabic": "اجْعَلْ",
+                    "transliteration": "ij'ʿal",
+                    "translation": "Make",
+                    "analysis_id": 1755
+                },
+                {
+                    "position": 4,
+                    "arabic": "لِّيْٓ",
+                    "transliteration": "lī",
+                    "translation": "for me",
+                    "analysis_id": 4930
+                },
+                {
+                    "position": 5,
+                    "arabic": "اٰيَةً",
+                    "transliteration": "āyatan",
+                    "translation": "a sign",
+                    "analysis_id": 4931
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۗقَالَ",
+                    "transliteration": "qāla",
+                    "translation": "He said",
+                    "analysis_id": 479
+                },
+                {
+                    "position": 7,
+                    "arabic": "اٰيَتُكَ",
+                    "transliteration": "āyatuka",
+                    "translation": "Your sign",
+                    "analysis_id": 18329
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَلَّا",
+                    "transliteration": "allā",
+                    "translation": "(is) that not",
+                    "analysis_id": 5142
+                },
+                {
+                    "position": 9,
+                    "arabic": "تُكَلِّمَ",
+                    "transliteration": "tukallima",
+                    "translation": "you will speak",
+                    "analysis_id": 18330
+                },
+                {
+                    "position": 10,
+                    "arabic": "النَّاسَ",
+                    "transliteration": "l-nāsa",
+                    "translation": "(to) the people",
+                    "analysis_id": 2218
+                },
+                {
+                    "position": 11,
+                    "arabic": "ثَلٰثَ",
+                    "transliteration": "thalātha",
+                    "translation": "(for) three",
+                    "analysis_id": 18331
+                },
+                {
+                    "position": 12,
+                    "arabic": "لَيَالٍ",
+                    "transliteration": "layālin",
+                    "translation": "nights",
+                    "analysis_id": 18332
+                },
+                {
+                    "position": 13,
+                    "arabic": "سَوِيًّا",
+                    "transliteration": "sawiyyan",
+                    "translation": "sound",
+                    "analysis_id": 18333
+                }
+            ]
         },
         {
             "aya_id": 2261,
@@ -203,12 +877,85 @@
             "sajda": false,
             "transliteration": "Fakharaja 'alaa qawmihee minal mihraabi fa-awhaaa ilaihim an sabbihoo bukratanw wa 'ashiyyaa",
             "tajweed_text": "فَخَرَجَ عَلَىٰ قَوْمِه[n[ِۦ] مِنَ [h:8276[ٱ]لْمِحْرَابِ فَأَوْحَ[o[ىٰٓ] إِلَيْهِمْ أَ[f:8277[ن س]َبِّحُو[s[اْ] بُكْرَ[a:8278[ةً و]َعَشِيًّا",
-            "surah": {
-                "name": "سُورَةُ مَرۡيَمَ",
-                "englishName": "Maryam",
-                "englishNameTranslation": "Mary",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَخَرَجَ",
+                    "transliteration": "fakharaja",
+                    "translation": "Then he came out",
+                    "analysis_id": 18334
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 3,
+                    "arabic": "قَوْمِهٖ",
+                    "transliteration": "qawmihi",
+                    "translation": "his people",
+                    "analysis_id": 11391
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمِحْرَابِ",
+                    "transliteration": "l-miḥ'rābi",
+                    "translation": "the prayer chamber",
+                    "analysis_id": 18335
+                },
+                {
+                    "position": 6,
+                    "arabic": "فَاَوْحٰٓى",
+                    "transliteration": "fa-awḥā",
+                    "translation": "and he signaled",
+                    "analysis_id": 18336
+                },
+                {
+                    "position": 7,
+                    "arabic": "اِلَيْهِمْ",
+                    "transliteration": "ilayhim",
+                    "translation": "to them",
+                    "analysis_id": 5273
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "to",
+                    "analysis_id": 6336
+                },
+                {
+                    "position": 9,
+                    "arabic": "سَبِّحُوْا",
+                    "transliteration": "sabbiḥū",
+                    "translation": "glorify (Allah)",
+                    "analysis_id": 18337
+                },
+                {
+                    "position": 10,
+                    "arabic": "بُكْرَةً",
+                    "transliteration": "buk'ratan",
+                    "translation": "(in) the morning",
+                    "analysis_id": 18338
+                },
+                {
+                    "position": 11,
+                    "arabic": "وَّعَشِيًّا",
+                    "transliteration": "waʿashiyyan",
+                    "translation": "and (in) the evening",
+                    "analysis_id": 18339
+                }
+            ]
         }
     ]
 }

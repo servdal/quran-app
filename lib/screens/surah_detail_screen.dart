@@ -7,14 +7,9 @@ import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/widgets/ayah_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-final surahDetailProvider = FutureProvider.family<Surah?, int>((ref, surahId) async {
-  final service = ref.read(quranDataServiceProvider);
-  await service.loadAllSurahData();
-  try {
-    return service.getAllSurahs().firstWhere((s) => s.id == surahId);
-  } catch (e) {
-    return null;
-  }
+final surahDetailProvider = FutureProvider.family<Surah, int>((ref, surahId) {
+  final service = ref.watch(quranDataServiceProvider);
+  return service.getSurahDetailById(surahId);
 });
 
 class SurahDetailScreen extends ConsumerStatefulWidget {
@@ -57,7 +52,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: surahDetailAsync.when(
-          data: (surah) => Text(surah?.englishName ?? 'Memuat...'),
+          data: (surah) => Text(surah.englishName),
           loading: () => const Text('Memuat...'),
           error: (e, s) => const Text('Error'),
         ),
@@ -75,9 +70,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Center(child: Text('Gagal memuat surah: $error')),
               data: (surah) {
-                if (surah == null) {
-                  return const Center(child: Text('Surah tidak ditemukan'));
-                }
+                
                 return ScrollablePositionedList.builder(
                   itemCount: surah.ayahs.length,
                   itemScrollController: itemScrollController,

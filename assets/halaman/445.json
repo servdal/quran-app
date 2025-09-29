@@ -13,12 +13,92 @@
             "sajda": false,
             "transliteration": "Awalam yaraw annaa khalaqnaa lahum mimmaa 'amilat aideenaaa an'aaman fahum lahaa maalikoon",
             "tajweed_text": "أَوَلَمْ يَرَوْ[s[اْ] أَ[g[نّ]َا خَلَ[q:5159[قْ]نَا لَه[w:402[ُم م]ِّ[g[مّ]َا عَمِلَتْ أَيْدِين[o[َآ] أَنْعَ[n[ـٰ][f:11292[مًا ف]َهُمْ لَهَا مَ[n[ـٰ]لِك[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَوَلَمْ",
+                    "transliteration": "awalam",
+                    "translation": "Do not",
+                    "analysis_id": 4038
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَرَوْا",
+                    "transliteration": "yaraw",
+                    "translation": "they see",
+                    "analysis_id": 9735
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنَّا",
+                    "transliteration": "annā",
+                    "translation": "that We",
+                    "analysis_id": 7307
+                },
+                {
+                    "position": 4,
+                    "arabic": "خَلَقْنَا",
+                    "transliteration": "khalaqnā",
+                    "translation": "[We] created",
+                    "analysis_id": 16414
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 6,
+                    "arabic": "مِّمَّا",
+                    "transliteration": "mimmā",
+                    "translation": "from what",
+                    "analysis_id": 282
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَمِلَتْ",
+                    "transliteration": "ʿamilat",
+                    "translation": "have made",
+                    "analysis_id": 4797
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَيْدِيْنَآ",
+                    "transliteration": "aydīnā",
+                    "translation": "Our hands",
+                    "analysis_id": 23494
+                },
+                {
+                    "position": 9,
+                    "arabic": "اَنْعَامًا",
+                    "transliteration": "anʿāman",
+                    "translation": "cattle",
+                    "analysis_id": 23495
+                },
+                {
+                    "position": 10,
+                    "arabic": "فَهُمْ",
+                    "transliteration": "fahum",
+                    "translation": "then they",
+                    "analysis_id": 11618
+                },
+                {
+                    "position": 11,
+                    "arabic": "لَهَا",
+                    "transliteration": "lahā",
+                    "translation": "[for them]",
+                    "analysis_id": 8453
+                },
+                {
+                    "position": 12,
+                    "arabic": "مَالِكُوْنَ",
+                    "transliteration": "mālikūna",
+                    "translation": "(are the) owners",
+                    "analysis_id": 23496
+                }
+            ]
         },
         {
             "aya_id": 3777,
@@ -32,12 +112,50 @@
             "sajda": false,
             "transliteration": "Wa zallalnaahaa lahum faminhaa rakoobuhum wa minhaa yaakuloon",
             "tajweed_text": "وَذَلَّلْنَ[n[ـٰ]هَا لَهُمْ فَمِنْهَا رَكُوبُهُمْ وَمِنْهَا يَأْكُل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَذَلَّلْنٰهَا",
+                    "transliteration": "wadhallalnāhā",
+                    "translation": "And We have tamed them",
+                    "analysis_id": 23497
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَمِنْهَا",
+                    "transliteration": "famin'hā",
+                    "translation": "so some of them ",
+                    "analysis_id": 23498
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَكُوْبُهُمْ",
+                    "transliteration": "rakūbuhum",
+                    "translation": "they ride them",
+                    "analysis_id": 23499
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَمِنْهَا",
+                    "transliteration": "wamin'hā",
+                    "translation": "and some of them",
+                    "analysis_id": 11128
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَأْكُلُوْنَ",
+                    "transliteration": "yakulūna",
+                    "translation": "they eat",
+                    "analysis_id": 2349
+                }
+            ]
         },
         {
             "aya_id": 3778,
@@ -51,12 +169,50 @@
             "sajda": false,
             "transliteration": "Wa lahum feehaa manaa fi'u wa mashaarib; afalaa yashkuroon",
             "tajweed_text": "وَلَهُمْ فِيهَا مَنَ[n[ـٰ]فِعُ وَمَشَارِبُ‌ۖ أَفَلَا يَشْكُر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَهُمْ",
+                    "transliteration": "walahum",
+                    "translation": "And for them",
+                    "analysis_id": 16771
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَنَافِعُ",
+                    "transliteration": "manāfiʿu",
+                    "translation": "(are) benefits",
+                    "analysis_id": 19709
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَمَشَارِبُۗ",
+                    "transliteration": "wamashāribu",
+                    "translation": "and drinks",
+                    "analysis_id": 23500
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَفَلَا",
+                    "transliteration": "afalā",
+                    "translation": "so (will) not",
+                    "analysis_id": 7489
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَشْكُرُوْنَ",
+                    "transliteration": "yashkurūna",
+                    "translation": "they give thanks",
+                    "analysis_id": 14063
+                }
+            ]
         },
         {
             "aya_id": 3779,
@@ -70,12 +226,64 @@
             "sajda": false,
             "transliteration": "Wattakhazoo min doonil laahi aalihatal la'allahum yunsaroon",
             "tajweed_text": "وَ[h:9999[ٱ]تَّخَذُو[s[اْ] مِ[f:107[ن د]ُونِ [h:108[ٱ]للَّهِ ءَالِهَ[u:11293[ةً ل]َّعَلَّهُمْ يُ[f:237[نص]َر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاتَّخَذُوْا",
+                    "transliteration": "wa-ittakhadhū",
+                    "translation": "But they have taken",
+                    "analysis_id": 18610
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "besides",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 3,
+                    "arabic": "دُوْنِ",
+                    "transliteration": "dūni",
+                    "translation": "besides",
+                    "analysis_id": 2238
+                },
+                {
+                    "position": 4,
+                    "arabic": "اللّٰهِ",
+                    "transliteration": "l-lahi",
+                    "translation": "Allah",
+                    "analysis_id": 2
+                },
+                {
+                    "position": 5,
+                    "arabic": "اٰلِهَةً",
+                    "transliteration": "ālihatan",
+                    "translation": "gods",
+                    "analysis_id": 18611
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَّعَلَّهُمْ",
+                    "transliteration": "laʿallahum",
+                    "translation": "that they may",
+                    "analysis_id": 5203
+                },
+                {
+                    "position": 7,
+                    "arabic": "يُنْصَرُوْنَ",
+                    "transliteration": "yunṣarūna",
+                    "translation": "be helped",
+                    "analysis_id": 656
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۗ",
+                    "transliteration": null,
+                    "translation": "(74)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3780,
@@ -89,12 +297,57 @@
             "sajda": false,
             "transliteration": "Laa yastatee'oona nasrahum wa hum lahum jundum muhdaroon",
             "tajweed_text": "لَا يَسْتَطِيعُونَ نَصْرَهُمْ وَهُمْ لَهُمْ جُن[a:11294[دٌ م]ُّحْضَر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "Not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَسْتَطِيْعُوْنَ",
+                    "transliteration": "yastaṭīʿūna",
+                    "translation": "they are able",
+                    "analysis_id": 4239
+                },
+                {
+                    "position": 3,
+                    "arabic": "نَصْرَهُمْۙ",
+                    "transliteration": "naṣrahum",
+                    "translation": "to help them",
+                    "analysis_id": 23501
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَهُمْ",
+                    "transliteration": "wahum",
+                    "translation": "but they ",
+                    "analysis_id": 9179
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 6,
+                    "arabic": "جُنْدٌ",
+                    "transliteration": "jundun",
+                    "translation": "(are) hosts",
+                    "analysis_id": 23502
+                },
+                {
+                    "position": 7,
+                    "arabic": "مُّحْضَرُوْنَ",
+                    "transliteration": "muḥ'ḍarūna",
+                    "translation": "(who will) be brought",
+                    "analysis_id": 22182
+                }
+            ]
         },
         {
             "aya_id": 3781,
@@ -108,12 +361,71 @@
             "sajda": false,
             "transliteration": "Falaa yahzunka qawluhum; innaa na'lamu maa yusirroona wa maa yu'linoon",
             "tajweed_text": "فَلَا يَحْزُ[f:2435[نك]َ قَوْلُهُمْ‌ۘ إِ[g[نّ]َا نَعْلَمُ مَا يُسِرُّونَ وَمَا يُعْلِن[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلَا",
+                    "transliteration": "falā",
+                    "translation": "So (let) not",
+                    "analysis_id": 5110
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَحْزُنْكَ",
+                    "transliteration": "yaḥzunka",
+                    "translation": "grieve you",
+                    "analysis_id": 6152
+                },
+                {
+                    "position": 3,
+                    "arabic": "قَوْلُهُمْ",
+                    "transliteration": "qawluhum",
+                    "translation": "their speech",
+                    "analysis_id": 12987
+                },
+                {
+                    "position": 4,
+                    "arabic": "ۘاِنَّا",
+                    "transliteration": "innā",
+                    "translation": "Indeed, We",
+                    "analysis_id": 155
+                },
+                {
+                    "position": 5,
+                    "arabic": "نَعْلَمُ",
+                    "transliteration": "naʿlamu",
+                    "translation": "[We] know",
+                    "analysis_id": 9933
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 7,
+                    "arabic": "يُسِرُّوْنَ",
+                    "transliteration": "yusirrūna",
+                    "translation": "they conceal",
+                    "analysis_id": 1048
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَمَا",
+                    "transliteration": "wamā",
+                    "translation": "and what",
+                    "analysis_id": 1049
+                },
+                {
+                    "position": 9,
+                    "arabic": "يُعْلِنُوْنَ",
+                    "transliteration": "yuʿ'linūna",
+                    "translation": "they declare",
+                    "analysis_id": 1050
+                }
+            ]
         },
         {
             "aya_id": 3782,
@@ -127,12 +439,85 @@
             "sajda": false,
             "transliteration": "Awalam yaral insaanu annaa khalaqnaahu min nutfatin fa-izaa huwa khaseemum mubeen",
             "tajweed_text": "أَوَلَمْ يَرَ [h:11295[ٱ]لْإِ[f:2732[نس]َ[n[ـٰ]نُ أَ[g[نّ]َا خَلَ[q:7232[قْ]نَ[n[ـٰ]هُ م[a:7325[ِن ن]ُّ[q:7326[طْ]فَ[f:7327[ةٍ ف]َإِذَا هُوَ خَصِي[a:7328[مٌ م]ُّب[p[ِي]نٌ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَوَلَمْ",
+                    "transliteration": "awalam",
+                    "translation": "Does not",
+                    "analysis_id": 4038
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَرَ",
+                    "transliteration": "yara",
+                    "translation": "see",
+                    "analysis_id": 19267
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاِنْسَانُ",
+                    "transliteration": "l-insānu",
+                    "translation": "[the] man",
+                    "analysis_id": 17144
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَنَّا",
+                    "transliteration": "annā",
+                    "translation": "that We",
+                    "analysis_id": 7307
+                },
+                {
+                    "position": 5,
+                    "arabic": "خَلَقْنٰهُ",
+                    "transliteration": "khalaqnāhu",
+                    "translation": "[We] created him",
+                    "analysis_id": 16419
+                },
+                {
+                    "position": 6,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 7,
+                    "arabic": "نُّطْفَةٍ",
+                    "transliteration": "nuṭ'fatin",
+                    "translation": "a semen-drop",
+                    "analysis_id": 16574
+                },
+                {
+                    "position": 8,
+                    "arabic": "فَاِذَا",
+                    "transliteration": "fa-idhā",
+                    "translation": "Then behold",
+                    "analysis_id": 2829
+                },
+                {
+                    "position": 9,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "He",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 10,
+                    "arabic": "خَصِيْمٌ",
+                    "transliteration": "khaṣīmun",
+                    "translation": "(is) an opponent",
+                    "analysis_id": 16575
+                },
+                {
+                    "position": 11,
+                    "arabic": "مُّبِيْنٌ",
+                    "transliteration": "mubīnun",
+                    "translation": "clear",
+                    "analysis_id": 2294
+                }
+            ]
         },
         {
             "aya_id": 3783,
@@ -146,12 +531,85 @@
             "sajda": false,
             "transliteration": "Wa daraba lanaa maslanw-wa nasiya khalqahoo qaala mai-yuhyil'izaama wa hiya rameem",
             "tajweed_text": "وَضَرَبَ لَنَا مَثَل[a:11296[اً و]َنَسِىَ خَلْقَهُ[n[ۥ]‌ۖ قَالَ م[a:11297[َن ي]ُحْىِ [h:11298[ٱ]لْعِظَ[n[ـٰ]مَ وَهِىَ رَم[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَضَرَبَ",
+                    "transliteration": "waḍaraba",
+                    "translation": "And he sets forth",
+                    "analysis_id": 16872
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَنَا",
+                    "transliteration": "lanā",
+                    "translation": "for Us",
+                    "analysis_id": 802
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَثَلًا",
+                    "transliteration": "mathalan",
+                    "translation": "an example",
+                    "analysis_id": 12168
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَّنَسِيَ",
+                    "transliteration": "wanasiya",
+                    "translation": "and forgets",
+                    "analysis_id": 18019
+                },
+                {
+                    "position": 5,
+                    "arabic": "خَلْقَهٗۗ",
+                    "transliteration": "khalqahu",
+                    "translation": "his (own) creation",
+                    "analysis_id": 23503
+                },
+                {
+                    "position": 6,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "He says",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 7,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "Who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 8,
+                    "arabic": "يُّحْيِ",
+                    "transliteration": "yuḥ'yī",
+                    "translation": "will give life",
+                    "analysis_id": 23504
+                },
+                {
+                    "position": 9,
+                    "arabic": "الْعِظَامَ",
+                    "transliteration": "l-ʿiẓāma",
+                    "translation": "(to) the bones",
+                    "analysis_id": 23505
+                },
+                {
+                    "position": 10,
+                    "arabic": "وَهِيَ",
+                    "transliteration": "wahiya",
+                    "translation": "while they",
+                    "analysis_id": 3978
+                },
+                {
+                    "position": 11,
+                    "arabic": "رَمِيْمٌ",
+                    "transliteration": "ramīmun",
+                    "translation": "(are) decomposed",
+                    "analysis_id": 23506
+                }
+            ]
         },
         {
             "aya_id": 3784,
@@ -165,12 +623,85 @@
             "sajda": false,
             "transliteration": "Qul yuh yeehal lazeee ansha ahaaa awwala marrah; wa Huwa bikulli khalqin 'Aleem",
             "tajweed_text": "قُلْ يُحْيِيهَا [h:11299[ٱ]لَّذ[o[ِىٓ] أَ[f:11300[نش]َأَه[o[َآ] أَوَّلَ مَرَّ[a:11301[ةٍ‌ۖ و]َهُوَ بِكُلِّ خَلْقٍ عَل[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُحْيِيْهَا",
+                    "transliteration": "yuḥ'yīhā",
+                    "translation": "He will give them life",
+                    "analysis_id": 23507
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْٓ",
+                    "transliteration": "alladhī",
+                    "translation": "Who",
+                    "analysis_id": 2509
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَنْشَاَهَآ",
+                    "transliteration": "ansha-ahā",
+                    "translation": "produced them",
+                    "analysis_id": 23508
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَوَّلَ",
+                    "transliteration": "awwala",
+                    "translation": "(the) first",
+                    "analysis_id": 593
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَرَّةٍ",
+                    "transliteration": "marratin",
+                    "translation": "time",
+                    "analysis_id": 10412
+                },
+                {
+                    "position": 7,
+                    "arabic": "ۗوَهُوَ",
+                    "transliteration": "wahuwa",
+                    "translation": "and He",
+                    "analysis_id": 2891
+                },
+                {
+                    "position": 8,
+                    "arabic": "بِكُلِّ",
+                    "transliteration": "bikulli",
+                    "translation": "(is) of every",
+                    "analysis_id": 2024
+                },
+                {
+                    "position": 9,
+                    "arabic": "خَلْقٍ",
+                    "transliteration": "khalqin",
+                    "translation": "creation",
+                    "analysis_id": 22454
+                },
+                {
+                    "position": 10,
+                    "arabic": "عَلِيْمٌ",
+                    "transliteration": "ʿalīmun",
+                    "translation": "All-Knower",
+                    "analysis_id": 3265
+                },
+                {
+                    "position": 11,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(79)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3785,
@@ -184,12 +715,85 @@
             "sajda": false,
             "transliteration": "Allazee ja'ala lakum minash shajaril akhdari naaran fa-izaaa antum minhu tooqidoon",
             "tajweed_text": "ٱلَّذِى جَعَلَ لَك[w:1578[ُم م]ِّنَ [h:11302[ٱ][l[ل]شَّجَرِ [h:11303[ٱ]لْأَخْضَرِ نَا[f:11304[رًا ف]َإِذ[o[َآ] أَ[f:428[نت][w:11305[ُم م]ِّنْهُ تُوقِد[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 2,
+                    "arabic": "ِۨالَّذِيْ",
+                    "transliteration": "jaʿala",
+                    "translation": "made",
+                    "analysis_id": 23509
+                },
+                {
+                    "position": 3,
+                    "arabic": "جَعَلَ",
+                    "transliteration": "lakum",
+                    "translation": "for you",
+                    "analysis_id": 257
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَكُمْ",
+                    "transliteration": "mina",
+                    "translation": "from",
+                    "analysis_id": 1521
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِّنَ",
+                    "transliteration": "l-shajari",
+                    "translation": "the tree",
+                    "analysis_id": 23510
+                },
+                {
+                    "position": 6,
+                    "arabic": "الشَّجَرِ",
+                    "transliteration": "l-akhḍari",
+                    "translation": "[the] green ",
+                    "analysis_id": 23511
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْاَخْضَرِ",
+                    "transliteration": "nāran",
+                    "translation": "fire",
+                    "analysis_id": 23512
+                },
+                {
+                    "position": 8,
+                    "arabic": "نَارًاۙ",
+                    "transliteration": "fa-idhā",
+                    "translation": "and behold",
+                    "analysis_id": 23513
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَاِذَآ",
+                    "transliteration": "antum",
+                    "translation": "You",
+                    "analysis_id": 22205
+                },
+                {
+                    "position": 10,
+                    "arabic": "اَنْتُمْ",
+                    "transliteration": "min'hu",
+                    "translation": "from it",
+                    "analysis_id": 23514
+                },
+                {
+                    "position": 11,
+                    "arabic": "مِّنْهُ",
+                    "transliteration": "tūqidūna",
+                    "translation": "ignite",
+                    "analysis_id": 23515
+                },
+                {
+                    "position": 12,
+                    "arabic": "تُوْقِدُوْنَ",
+                    "transliteration": null,
+                    "translation": "(80)",
+                    "analysis_id": 23516
+                }
+            ]
         },
         {
             "aya_id": 3786,
@@ -203,12 +807,106 @@
             "sajda": false,
             "transliteration": "Awa laisal lazee khalaqas samaawaati wal arda biqaadirin 'alaaa ai-yakhluqa mislahum; balaa wa Huwal Khallaaqul 'Aleem",
             "tajweed_text": "أَوَلَيْسَ [h:11306[ٱ]لَّذِى خَلَقَ [h:3913[ٱ][l[ل]سَّمَ[n[ـٰ]و[n[َٲ]تِ وَ[h:1474[ٱ]لْأَرْضَ بِقَ[n[ـٰ]دِرٍ عَلَ[o[ىٰٓ] أ[a:7911[َن ي]َخْلُقَ مِثْلَه[c:11307[ُم‌ۚ ب]َلَىٰ وَهُوَ [h:11308[ٱ]لْخَلَّ[n[ـٰ]قُ [h:7305[ٱ]لْعَل[p[ِي]مُ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَوَلَيْسَ",
+                    "transliteration": "awalaysa",
+                    "translation": "Is it not",
+                    "analysis_id": 21947
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "(He) Who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 3,
+                    "arabic": "خَلَقَ",
+                    "transliteration": "khalaqa",
+                    "translation": "created",
+                    "analysis_id": 410
+                },
+                {
+                    "position": 4,
+                    "arabic": "السَّمٰوٰتِ",
+                    "transliteration": "l-samāwāti",
+                    "translation": "the heavens",
+                    "analysis_id": 1517
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَالْاَرْضَ",
+                    "transliteration": "wal-arḍa",
+                    "translation": "and the earth",
+                    "analysis_id": 9709
+                },
+                {
+                    "position": 6,
+                    "arabic": "بِقٰدِرٍ",
+                    "transliteration": "biqādirin",
+                    "translation": "Able",
+                    "analysis_id": 23517
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَلٰٓى",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 5339
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "[that]",
+                    "analysis_id": 391
+                },
+                {
+                    "position": 9,
+                    "arabic": "يَّخْلُقَ",
+                    "transliteration": "yakhluqa",
+                    "translation": "create",
+                    "analysis_id": 23518
+                },
+                {
+                    "position": 10,
+                    "arabic": "مِثْلَهُمْ",
+                    "transliteration": "mith'lahum",
+                    "translation": "(the) like of them",
+                    "analysis_id": 23519
+                },
+                {
+                    "position": 11,
+                    "arabic": "ۗبَلٰى",
+                    "transliteration": "balā",
+                    "translation": "Yes, indeed",
+                    "analysis_id": 9906
+                },
+                {
+                    "position": 12,
+                    "arabic": "وَهُوَ",
+                    "transliteration": "wahuwa",
+                    "translation": "and He",
+                    "analysis_id": 8451
+                },
+                {
+                    "position": 13,
+                    "arabic": "الْخَلّٰقُ",
+                    "transliteration": "l-khalāqu",
+                    "translation": "(is) the Supreme Creator",
+                    "analysis_id": 16531
+                },
+                {
+                    "position": 14,
+                    "arabic": "الْعَلِيْمُ",
+                    "transliteration": "l-ʿalīmu",
+                    "translation": "the All-Knower",
+                    "analysis_id": 1893
+                }
+            ]
         },
         {
             "aya_id": 3787,
@@ -222,12 +920,78 @@
             "sajda": false,
             "transliteration": "Innamaa amruhooo izaaa araada shai'an ai-yaqoola lahoo kun fa-yakoon",
             "tajweed_text": "إِ[g[نّ]َم[o[َآ] أَمْرُهُ[o[ۥٓ] إِذ[o[َآ] أَرَادَ شَيْــًٔا أ[a:11309[َن ي]َقُولَ لَهُ[n[ۥ] كُ[f:613[ن ف]َيَك[p[ُو]نُ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّمَآ",
+                    "transliteration": "innamā",
+                    "translation": "Only",
+                    "analysis_id": 10952
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَمْرُهٗٓ",
+                    "transliteration": "amruhu",
+                    "translation": "His Command",
+                    "analysis_id": 23520
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِذَآ",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2139
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَرَادَ",
+                    "transliteration": "arāda",
+                    "translation": "He intends",
+                    "analysis_id": 15164
+                },
+                {
+                    "position": 5,
+                    "arabic": "شَيْـًٔاۖ",
+                    "transliteration": "shayan",
+                    "translation": "a thing",
+                    "analysis_id": 4333
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "that",
+                    "analysis_id": 391
+                },
+                {
+                    "position": 7,
+                    "arabic": "يَّقُوْلَ",
+                    "transliteration": "yaqūla",
+                    "translation": "He says",
+                    "analysis_id": 5289
+                },
+                {
+                    "position": 8,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "to it",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 9,
+                    "arabic": "كُنْ",
+                    "transliteration": "kun",
+                    "translation": "Be",
+                    "analysis_id": 16718
+                },
+                {
+                    "position": 10,
+                    "arabic": "فَيَكُوْنُ",
+                    "transliteration": "fayakūnu",
+                    "translation": "and it is",
+                    "analysis_id": 16719
+                }
+            ]
         },
         {
             "aya_id": 3788,
@@ -241,12 +1005,71 @@
             "sajda": false,
             "transliteration": "Fa Subhaanal lazee biyadihee malakootu kulli shai-inw-wa ilaihi turja'oon",
             "tajweed_text": "فَسُ[q:8705[بْ]حَ[n[ـٰ]نَ [h:11310[ٱ]لَّذِى بِيَدِه[n[ِۦ] مَلَكُوتُ كُلِّ ش[a:11311[َىْءٍ و]َإِلَيْهِ تُرْجَع[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ يسٓ",
-                "englishName": "Yaseen",
-                "englishNameTranslation": "Yaseen",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَسُبْحٰنَ",
+                    "transliteration": "fasub'ḥāna",
+                    "translation": "So glory be",
+                    "analysis_id": 19241
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "(to) the One who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِيَدِهٖ",
+                    "transliteration": "biyadihi",
+                    "translation": "in Whose hand",
+                    "analysis_id": 3563
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَلَكُوْتُ",
+                    "transliteration": "malakūtu",
+                    "translation": "is (the) dominion",
+                    "analysis_id": 20136
+                },
+                {
+                    "position": 5,
+                    "arabic": "كُلِّ",
+                    "transliteration": "kulli",
+                    "translation": "(of) all",
+                    "analysis_id": 2225
+                },
+                {
+                    "position": 6,
+                    "arabic": "شَيْءٍ",
+                    "transliteration": "shayin",
+                    "translation": "things",
+                    "analysis_id": 4783
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَّاِلَيْهِ",
+                    "transliteration": "wa-ilayhi",
+                    "translation": "and to Him",
+                    "analysis_id": 14042
+                },
+                {
+                    "position": 8,
+                    "arabic": "تُرْجَعُوْنَ",
+                    "transliteration": "tur'jaʿūna",
+                    "translation": "you will be returned",
+                    "analysis_id": 3649
+                },
+                {
+                    "position": 9,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(83)",
+                    "analysis_id": 31
+                }
+            ]
         }
     ]
 }

@@ -13,12 +13,36 @@
             "sajda": false,
             "transliteration": "Maa lakum kaifa tahkumoon",
             "tajweed_text": "مَا لَكُمْ كَيْفَ تَحْكُم[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "What is with you",
+                    "analysis_id": 916
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَكُمْۗ",
+                    "transliteration": "lakum",
+                    "translation": "What is with you",
+                    "analysis_id": 6916
+                },
+                {
+                    "position": 4,
+                    "arabic": "كَيْفَ",
+                    "transliteration": "taḥkumūna",
+                    "translation": "you judge",
+                    "analysis_id": 13945
+                },
+                {
+                    "position": 5,
+                    "arabic": "تَحْكُمُوْنَ",
+                    "transliteration": null,
+                    "translation": "(154)",
+                    "analysis_id": 13946
+                }
+            ]
         },
         {
             "aya_id": 3943,
@@ -32,12 +56,22 @@
             "sajda": false,
             "transliteration": "Afalaa tazakkaroon",
             "tajweed_text": "أَفَلَا تَذَكَّر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَفَلَا",
+                    "transliteration": "afalā",
+                    "translation": "Then will not",
+                    "analysis_id": 7489
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَذَكَّرُوْنَۚ",
+                    "transliteration": "tadhakkarūna",
+                    "translation": "you pay heed",
+                    "analysis_id": 14449
+                }
+            ]
         },
         {
             "aya_id": 3944,
@@ -51,12 +85,36 @@
             "sajda": false,
             "transliteration": "Am lakum sultaanum mubeen",
             "tajweed_text": "أَمْ لَكُمْ سُلْطَ[n[ـٰ][a:11446[نٌ م]ُّب[p[ِي]نٌ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَمْ",
+                    "transliteration": "am",
+                    "translation": "Or",
+                    "analysis_id": 70
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَكُمْ",
+                    "transliteration": "lakum",
+                    "translation": "(is) for you",
+                    "analysis_id": 411
+                },
+                {
+                    "position": 3,
+                    "arabic": "سُلْطٰنٌ",
+                    "transliteration": "sul'ṭānun",
+                    "translation": "an authority",
+                    "analysis_id": 16445
+                },
+                {
+                    "position": 4,
+                    "arabic": "مُّبِيْنٌۙ",
+                    "transliteration": "mubīnun",
+                    "translation": "clear",
+                    "analysis_id": 23735
+                }
+            ]
         },
         {
             "aya_id": 3945,
@@ -70,12 +128,43 @@
             "sajda": false,
             "transliteration": "Faatoo bi Kitaabikum in kuntum saadiqeen",
             "tajweed_text": "فَأْتُو[s[اْ] بِكِتَ[n[ـٰ]بِكُمْ إِ[f:109[ن ك]ُ[f:100[نت]ُمْ صَ[n[ـٰ]دِق[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَأْتُوْا",
+                    "transliteration": "fatū",
+                    "translation": "Then bring",
+                    "analysis_id": 14378
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِكِتٰبِكُمْ",
+                    "transliteration": "bikitābikum",
+                    "translation": "your book",
+                    "analysis_id": 23736
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 4,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you are",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 5,
+                    "arabic": "صٰدِقِيْنَ",
+                    "transliteration": "ṣādiqīna",
+                    "translation": "truthful",
+                    "analysis_id": 464
+                }
+            ]
         },
         {
             "aya_id": 3946,
@@ -89,12 +178,78 @@
             "sajda": false,
             "transliteration": "Wa ja'aloo bainahoo wa bainal jinnati nasabaa; wa laqad 'alimatil jinnatu innahum lamuhdaroon",
             "tajweed_text": "وَجَعَلُو[s[اْ] بَيْنَهُ[n[ۥ] وَبَيْنَ [h:11447[ٱ]لْجِ[g[نّ]َةِ نَسَ[a:11448[بًا‌ۚ و]َلَقَ[q:341[دْ] عَلِمَتِ [h:11449[ٱ]لْجِ[g[نّ]َةُ إِ[g[نّ]َهُمْ لَمُحْضَر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَجَعَلُوْا",
+                    "transliteration": "wajaʿalū",
+                    "translation": "And they have made",
+                    "analysis_id": 10479
+                },
+                {
+                    "position": 2,
+                    "arabic": "بَيْنَهٗ",
+                    "transliteration": "baynahu",
+                    "translation": "between Him",
+                    "analysis_id": 20456
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَبَيْنَ",
+                    "transliteration": "wabayna",
+                    "translation": "and between",
+                    "analysis_id": 8791
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْجِنَّةِ",
+                    "transliteration": "l-jinati",
+                    "translation": "the jinn",
+                    "analysis_id": 14980
+                },
+                {
+                    "position": 5,
+                    "arabic": "نَسَبًا",
+                    "transliteration": "nasaban",
+                    "translation": "a relationship",
+                    "analysis_id": 20799
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۗوَلَقَدْ",
+                    "transliteration": "walaqad",
+                    "translation": "but certainly",
+                    "analysis_id": 15220
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَلِمَتِ",
+                    "transliteration": "ʿalimati",
+                    "translation": "know",
+                    "analysis_id": 23737
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْجِنَّةُ",
+                    "transliteration": "l-jinatu",
+                    "translation": "the jinn",
+                    "analysis_id": 23738
+                },
+                {
+                    "position": 9,
+                    "arabic": "اِنَّهُمْ",
+                    "transliteration": "innahum",
+                    "translation": "that they",
+                    "analysis_id": 130
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَمُحْضَرُوْنَۙ",
+                    "transliteration": "lamuḥ'ḍarūna",
+                    "translation": "(will) surely be brought",
+                    "analysis_id": 23695
+                }
+            ]
         },
         {
             "aya_id": 3947,
@@ -108,12 +263,36 @@
             "sajda": false,
             "transliteration": "Subhaanal laahi 'ammaa yasifoon",
             "tajweed_text": "سُ[q:7648[بْ]حَ[n[ـٰ]نَ [h:9282[ٱ]للَّهِ عَ[g[مّ]َا يَصِف[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "سُبْحٰنَ",
+                    "transliteration": "sub'ḥāna",
+                    "translation": "Glory be",
+                    "analysis_id": 17092
+                },
+                {
+                    "position": 2,
+                    "arabic": "اللّٰهِ",
+                    "transliteration": "l-lahi",
+                    "translation": "(to) Allah",
+                    "analysis_id": 2
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَمَّا",
+                    "transliteration": "ʿammā",
+                    "translation": "above what",
+                    "analysis_id": 9056
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَصِفُوْنَۙ",
+                    "transliteration": "yaṣifūna",
+                    "translation": "they attribute",
+                    "analysis_id": 23739
+                }
+            ]
         },
         {
             "aya_id": 3948,
@@ -127,12 +306,36 @@
             "sajda": false,
             "transliteration": "Illaa 'ibaadal laahil mukhlaseen",
             "tajweed_text": "إِلَّا عِبَادَ [h:11354[ٱ]للَّهِ [h:11355[ٱ]لْمُخْلَص[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "Except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 2,
+                    "arabic": "عِبَادَ",
+                    "transliteration": "ʿibāda",
+                    "translation": "(the) slaves",
+                    "analysis_id": 23579
+                },
+                {
+                    "position": 3,
+                    "arabic": "اللّٰهِ",
+                    "transliteration": "l-lahi",
+                    "translation": "(of) Allah",
+                    "analysis_id": 2
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمُخْلَصِيْنَ",
+                    "transliteration": "l-mukh'laṣīna",
+                    "translation": "the chosen",
+                    "analysis_id": 16443
+                }
+            ]
         },
         {
             "aya_id": 3949,
@@ -146,12 +349,29 @@
             "sajda": false,
             "transliteration": "Fa innakum wa maa ta'ubdoon",
             "tajweed_text": "فَإِ[g[نّ]َكُمْ وَمَا تَعْبُد[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِنَّكُمْ",
+                    "transliteration": "fa-innakum",
+                    "translation": "So indeed, you",
+                    "analysis_id": 23740
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَمَا",
+                    "transliteration": "wamā",
+                    "translation": "and what",
+                    "analysis_id": 1049
+                },
+                {
+                    "position": 3,
+                    "arabic": "تَعْبُدُوْنَۙ",
+                    "transliteration": "taʿbudūna",
+                    "translation": "you worship",
+                    "analysis_id": 23741
+                }
+            ]
         },
         {
             "aya_id": 3950,
@@ -165,12 +385,36 @@
             "sajda": false,
             "transliteration": "Maaa antum 'alaihi befaaatineen",
             "tajweed_text": "م[o[َآ] أَ[f:428[نت]ُمْ عَلَيْهِ بِفَ[n[ـٰ]تِن[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَآ",
+                    "transliteration": "mā",
+                    "translation": "Not",
+                    "analysis_id": 8826
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنْتُمْ",
+                    "transliteration": "antum",
+                    "translation": "you",
+                    "analysis_id": 1133
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَلَيْهِ",
+                    "transliteration": "ʿalayhi",
+                    "translation": "from Him",
+                    "analysis_id": 544
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِفَاتِنِيْنَۙ",
+                    "transliteration": "bifātinīna",
+                    "translation": "can tempt away (anyone)",
+                    "analysis_id": 23742
+                }
+            ]
         },
         {
             "aya_id": 3951,
@@ -184,12 +428,43 @@
             "sajda": false,
             "transliteration": "Illaa man huwa saalil jaheem",
             "tajweed_text": "إِلَّا مَنْ هُوَ صَالِ [h:11450[ٱ]لْجَح[p[ِي]مِ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "Except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 3,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "he",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 4,
+                    "arabic": "صَالِ",
+                    "transliteration": "ṣāli",
+                    "translation": "(is) to burn",
+                    "analysis_id": 23743
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْجَحِيْمِ",
+                    "transliteration": "l-jaḥīmi",
+                    "translation": "(in) the Hellfire",
+                    "analysis_id": 1683
+                }
+            ]
         },
         {
             "aya_id": 3952,
@@ -203,12 +478,50 @@
             "sajda": false,
             "transliteration": "Wa maa minnasa illaa lahoo maqaamum ma'loom",
             "tajweed_text": "وَمَا مِ[g[نّ][o[َآ] إِلَّا لَهُ[n[ۥ] مَقَا[a:11451[مٌ م]َّعْل[p[ُو]مٌ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمَا",
+                    "transliteration": "wamā",
+                    "translation": "And not",
+                    "analysis_id": 174
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِنَّآ",
+                    "transliteration": "minnā",
+                    "translation": "among us",
+                    "analysis_id": 9161
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "for him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 5,
+                    "arabic": "مَقَامٌ",
+                    "transliteration": "maqāmun",
+                    "translation": "(is) a position",
+                    "analysis_id": 23744
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَّعْلُوْمٌۙ",
+                    "transliteration": "maʿlūmun",
+                    "translation": "known",
+                    "analysis_id": 23581
+                }
+            ]
         },
         {
             "aya_id": 3953,
@@ -222,12 +535,29 @@
             "sajda": false,
             "transliteration": "Wa innaa llanah nus saaffoon",
             "tajweed_text": "وَإِ[g[نّ]َا لَنَحْنُ [h:11452[ٱ][l[ل]صّ[m[َا]ٓفّ[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّا",
+                    "transliteration": "wa-innā",
+                    "translation": "And indeed, we",
+                    "analysis_id": 8765
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَنَحْنُ",
+                    "transliteration": "lanaḥnu",
+                    "translation": "surely, [we]",
+                    "analysis_id": 16407
+                },
+                {
+                    "position": 3,
+                    "arabic": "الصَّۤافُّوْنَۖ",
+                    "transliteration": "l-ṣāfūna",
+                    "translation": "stand in rows",
+                    "analysis_id": 23745
+                }
+            ]
         },
         {
             "aya_id": 3954,
@@ -241,12 +571,29 @@
             "sajda": false,
             "transliteration": "Wa innaa lanah nul musabbihoon",
             "tajweed_text": "وَإِ[g[نّ]َا لَنَحْنُ [h:11453[ٱ]لْمُسَبِّح[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّا",
+                    "transliteration": "wa-innā",
+                    "translation": "And indeed, we",
+                    "analysis_id": 8765
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَنَحْنُ",
+                    "transliteration": "lanaḥnu",
+                    "translation": "surely, [we]",
+                    "analysis_id": 16407
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْمُسَبِّحُوْنَ",
+                    "transliteration": "l-musabiḥūna",
+                    "translation": "glorify (Allah)",
+                    "analysis_id": 23746
+                }
+            ]
         },
         {
             "aya_id": 3955,
@@ -260,12 +607,29 @@
             "sajda": false,
             "transliteration": "Wa in kaanoo la yaqooloon",
             "tajweed_text": "وَإِ[f:2392[ن ك]َانُو[s[اْ] لَيَقُول[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنْ",
+                    "transliteration": "wa-in",
+                    "translation": "And indeed",
+                    "analysis_id": 3278
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَانُوْا",
+                    "transliteration": "kānū",
+                    "translation": "they used to",
+                    "analysis_id": 175
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَيَقُوْلُوْنَۙ",
+                    "transliteration": "layaqūlūna",
+                    "translation": "say",
+                    "analysis_id": 23730
+                }
+            ]
         },
         {
             "aya_id": 3956,
@@ -279,12 +643,50 @@
             "sajda": false,
             "transliteration": "Law anna 'indana zikram minal awwaleen",
             "tajweed_text": "لَوْ أَ[g[نّ]َ عِ[f:2359[ند]َنَا ذِكْ[a:11454[رًا م]ِّنَ [h:11455[ٱ]لْأَوَّل[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَوْ",
+                    "transliteration": "law",
+                    "translation": "If",
+                    "analysis_id": 2269
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنَّ",
+                    "transliteration": "anna",
+                    "translation": "that",
+                    "analysis_id": 312
+                },
+                {
+                    "position": 3,
+                    "arabic": "عِنْدَنَا",
+                    "transliteration": "ʿindanā",
+                    "translation": "we had",
+                    "analysis_id": 5971
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذِكْرًا",
+                    "transliteration": "dhik'ran",
+                    "translation": "a reminder",
+                    "analysis_id": 2836
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِّنَ",
+                    "transliteration": "mina",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْاَوَّلِيْنَۙ",
+                    "transliteration": "l-awalīna",
+                    "translation": "the former (people)",
+                    "analysis_id": 23747
+                }
+            ]
         },
         {
             "aya_id": 3957,
@@ -298,12 +700,36 @@
             "sajda": false,
             "transliteration": "Lakunna 'ibaadal laahil mukhlaseen",
             "tajweed_text": "لَكُ[g[نّ]َا عِبَادَ [h:11354[ٱ]للَّهِ [h:11355[ٱ]لْمُخْلَص[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَكُنَّا",
+                    "transliteration": "lakunnā",
+                    "translation": "Certainly, we (would) have been",
+                    "analysis_id": 23087
+                },
+                {
+                    "position": 2,
+                    "arabic": "عِبَادَ",
+                    "transliteration": "ʿibāda",
+                    "translation": "slaves",
+                    "analysis_id": 23579
+                },
+                {
+                    "position": 3,
+                    "arabic": "اللّٰهِ",
+                    "transliteration": "l-lahi",
+                    "translation": "(of) Allah",
+                    "analysis_id": 2
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمُخْلَصِيْنَ",
+                    "transliteration": "l-mukh'laṣīna",
+                    "translation": "the chosen",
+                    "analysis_id": 16443
+                }
+            ]
         },
         {
             "aya_id": 3958,
@@ -317,12 +743,36 @@
             "sajda": false,
             "transliteration": "Fakafaroo bihee fasawfa ya'lamoon",
             "tajweed_text": "فَكَفَرُو[s[اْ] بِه[n[ِۦ]‌ۖ فَسَوْفَ يَعْلَم[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَكَفَرُوْا",
+                    "transliteration": "fakafarū",
+                    "translation": "But they disbelieved",
+                    "analysis_id": 23748
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِهٖۚ",
+                    "transliteration": "bihi",
+                    "translation": "in it",
+                    "analysis_id": 1437
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَسَوْفَ",
+                    "transliteration": "fasawfa",
+                    "translation": "so soon",
+                    "analysis_id": 10724
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَعْلَمُوْنَ",
+                    "transliteration": "yaʿlamūna",
+                    "translation": "they will know",
+                    "analysis_id": 1046
+                }
+            ]
         },
         {
             "aya_id": 3959,
@@ -336,12 +786,50 @@
             "sajda": false,
             "transliteration": "Wa laqad sabaqat Kalimatunaa li'ibaadinal mursa leen",
             "tajweed_text": "وَلَقَ[q:341[دْ] سَبَقَتْ كَلِمَتُنَا لِعِبَادِنَا [h:11456[ٱ]لْمُرْسَل[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَقَدْ",
+                    "transliteration": "walaqad",
+                    "translation": "And verily",
+                    "analysis_id": 881
+                },
+                {
+                    "position": 2,
+                    "arabic": "سَبَقَتْ",
+                    "transliteration": "sabaqat",
+                    "translation": "has preceded",
+                    "analysis_id": 13827
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَلِمَتُنَا",
+                    "transliteration": "kalimatunā",
+                    "translation": "Our Word",
+                    "analysis_id": 23749
+                },
+                {
+                    "position": 4,
+                    "arabic": "لِعِبَادِنَا",
+                    "transliteration": "liʿibādinā",
+                    "translation": "for Our slaves",
+                    "analysis_id": 23750
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمُرْسَلِيْنَ",
+                    "transliteration": "l-mur'salīna",
+                    "translation": "the Messengers",
+                    "analysis_id": 23751
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۖ",
+                    "transliteration": null,
+                    "translation": "(171)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 3960,
@@ -355,12 +843,29 @@
             "sajda": false,
             "transliteration": "Innaa hum lahumul mansooroon",
             "tajweed_text": "إِ[g[نّ]َهُمْ لَهُمُ [h:11457[ٱ]لْمَ[f:11458[نص]ُور[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّهُمْ",
+                    "transliteration": "innahum",
+                    "translation": "Indeed they",
+                    "analysis_id": 130
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَهُمُ",
+                    "transliteration": "lahumu",
+                    "translation": "surely they",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْمَنْصُوْرُوْنَۖ",
+                    "transliteration": "l-manṣūrūna",
+                    "translation": "(would be) the victorious",
+                    "analysis_id": 23752
+                }
+            ]
         },
         {
             "aya_id": 3961,
@@ -374,12 +879,36 @@
             "sajda": false,
             "transliteration": "Wa inna jundana lahumul ghaaliboon",
             "tajweed_text": "وَإِ[g[نّ]َ جُ[f:11459[ند]َنَا لَهُمُ [h:11460[ٱ]لْغَ[n[ـٰ]لِب[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّ",
+                    "transliteration": "wa-inna",
+                    "translation": "And indeed",
+                    "analysis_id": 10618
+                },
+                {
+                    "position": 2,
+                    "arabic": "جُنْدَنَا",
+                    "transliteration": "jundanā",
+                    "translation": "Our host",
+                    "analysis_id": 23753
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَهُمُ",
+                    "transliteration": "lahumu",
+                    "translation": "surely, they",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْغٰلِبُوْنَ",
+                    "transliteration": "l-ghālibūna",
+                    "translation": "(will be) those who overcome",
+                    "analysis_id": 9149
+                }
+            ]
         },
         {
             "aya_id": 3962,
@@ -393,12 +922,36 @@
             "sajda": false,
             "transliteration": "Fatawalla 'anhum hatta heen",
             "tajweed_text": "فَتَوَلَّ عَنْهُمْ حَتَّىٰ ح[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَتَوَلَّ",
+                    "transliteration": "fatawalla",
+                    "translation": "So turn away",
+                    "analysis_id": 23754
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَنْهُمْ",
+                    "transliteration": "ʿanhum",
+                    "translation": "from them",
+                    "analysis_id": 4596
+                },
+                {
+                    "position": 3,
+                    "arabic": "حَتّٰى",
+                    "transliteration": "ḥattā",
+                    "translation": "until",
+                    "analysis_id": 720
+                },
+                {
+                    "position": 4,
+                    "arabic": "حِيْنٍۙ",
+                    "transliteration": "ḥīnin",
+                    "translation": "a time",
+                    "analysis_id": 23755
+                }
+            ]
         },
         {
             "aya_id": 3963,
@@ -412,12 +965,29 @@
             "sajda": false,
             "transliteration": "Wa absirhum fasawfa yubsiroon",
             "tajweed_text": "وَأَ[q:11461[بْ]صِرْهُمْ فَسَوْفَ يُ[q:60[بْ]صِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّاَبْصِرْهُمْۗ",
+                    "transliteration": "wa-abṣir'hum",
+                    "translation": "And see them",
+                    "analysis_id": 23756
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَسَوْفَ",
+                    "transliteration": "fasawfa",
+                    "translation": "so soon",
+                    "analysis_id": 10724
+                },
+                {
+                    "position": 3,
+                    "arabic": "يُبْصِرُوْنَ",
+                    "transliteration": "yub'ṣirūna",
+                    "translation": "they will see",
+                    "analysis_id": 12322
+                }
+            ]
         },
         {
             "aya_id": 3964,
@@ -431,12 +1001,22 @@
             "sajda": false,
             "transliteration": "Afabi'azaabinaa yasta'jiloon",
             "tajweed_text": "أَفَبِعَذَابِنَا يَسْتَعْجِل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَفَبِعَذَابِنَا",
+                    "transliteration": "afabiʿadhābinā",
+                    "translation": "Then is (it) for Our punishment",
+                    "analysis_id": 21129
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَسْتَعْجِلُوْنَ",
+                    "transliteration": "yastaʿjilūna",
+                    "translation": "they hasten",
+                    "analysis_id": 21130
+                }
+            ]
         },
         {
             "aya_id": 3965,
@@ -450,12 +1030,50 @@
             "sajda": false,
             "transliteration": "Fa izaa nazala bisaahatihim fasaaa'a sabaahul munzareen",
             "tajweed_text": "فَإِذَا نَزَلَ بِسَاحَتِهِمْ فَس[o[َا]ٓءَ صَبَاحُ [h:11462[ٱ]لْمُ[f:6137[نذ]َر[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِذَا",
+                    "transliteration": "fa-idhā",
+                    "translation": "But when",
+                    "analysis_id": 2829
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَزَلَ",
+                    "transliteration": "nazala",
+                    "translation": "it descends",
+                    "analysis_id": 21113
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِسَاحَتِهِمْ",
+                    "transliteration": "bisāḥatihim",
+                    "translation": "in their territory",
+                    "analysis_id": 23757
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَسَاۤءَ",
+                    "transliteration": "fasāa",
+                    "translation": "then evil (will be)",
+                    "analysis_id": 23758
+                },
+                {
+                    "position": 5,
+                    "arabic": "صَبَاحُ",
+                    "transliteration": "ṣabāḥu",
+                    "translation": "(the) morning",
+                    "analysis_id": 23759
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْمُنْذَرِيْنَ",
+                    "transliteration": "l-mundharīna",
+                    "translation": "(for) those who were warned",
+                    "analysis_id": 14128
+                }
+            ]
         },
         {
             "aya_id": 3966,
@@ -469,12 +1087,36 @@
             "sajda": false,
             "transliteration": "Wa tawalla 'anhum hattaa heen",
             "tajweed_text": "وَتَوَلَّ عَنْهُمْ حَتَّىٰ ح[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَتَوَلَّ",
+                    "transliteration": "watawalla",
+                    "translation": "So turn away",
+                    "analysis_id": 23760
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَنْهُمْ",
+                    "transliteration": "ʿanhum",
+                    "translation": "from them",
+                    "analysis_id": 4596
+                },
+                {
+                    "position": 3,
+                    "arabic": "حَتّٰى",
+                    "transliteration": "ḥattā",
+                    "translation": "for",
+                    "analysis_id": 720
+                },
+                {
+                    "position": 4,
+                    "arabic": "حِيْنٍۙ",
+                    "transliteration": "ḥīnin",
+                    "translation": "a time",
+                    "analysis_id": 23755
+                }
+            ]
         },
         {
             "aya_id": 3967,
@@ -488,12 +1130,29 @@
             "sajda": false,
             "transliteration": "Wa absir fasawfa yubsiroon",
             "tajweed_text": "وَأَ[q:8337[بْ]صِرْ فَسَوْفَ يُ[q:60[بْ]صِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّاَبْصِرْۗ",
+                    "transliteration": "wa-abṣir",
+                    "translation": "And see",
+                    "analysis_id": 18454
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَسَوْفَ",
+                    "transliteration": "fasawfa",
+                    "translation": "so soon",
+                    "analysis_id": 10724
+                },
+                {
+                    "position": 3,
+                    "arabic": "يُبْصِرُوْنَ",
+                    "transliteration": "yub'ṣirūna",
+                    "translation": "they will see",
+                    "analysis_id": 12322
+                }
+            ]
         },
         {
             "aya_id": 3968,
@@ -507,12 +1166,50 @@
             "sajda": false,
             "transliteration": "Subhaana Rabbika Rabbil 'izzati 'amma yasifoon",
             "tajweed_text": "سُ[q:7648[بْ]حَ[n[ـٰ]نَ رَبِّكَ رَبِّ [h:11463[ٱ]لْعِزَّةِ عَ[g[مّ]َا يَصِف[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "سُبْحٰنَ",
+                    "transliteration": "sub'ḥāna",
+                    "translation": "Glory",
+                    "analysis_id": 17092
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(be to) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "(the) Lord",
+                    "analysis_id": 7
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْعِزَّةِ",
+                    "transliteration": "l-ʿizati",
+                    "translation": "(of) Honor",
+                    "analysis_id": 23761
+                },
+                {
+                    "position": 5,
+                    "arabic": "عَمَّا",
+                    "transliteration": "ʿammā",
+                    "translation": "above what",
+                    "analysis_id": 9056
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَصِفُوْنَۚ",
+                    "transliteration": "yaṣifūna",
+                    "translation": "they attribute",
+                    "analysis_id": 23739
+                }
+            ]
         },
         {
             "aya_id": 3969,
@@ -526,12 +1223,29 @@
             "sajda": false,
             "transliteration": "Wa salaamun 'alalmursaleen",
             "tajweed_text": "وَسَلَ[n[ـٰ]مٌ عَلَى [h:11464[ٱ]لْمُرْسَل[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَسَلٰمٌ",
+                    "transliteration": "wasalāmun",
+                    "translation": "And peace be",
+                    "analysis_id": 18351
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلَى",
+                    "transliteration": "ʿalā",
+                    "translation": "upon",
+                    "analysis_id": 457
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْمُرْسَلِيْنَۚ",
+                    "transliteration": "l-mur'salīna",
+                    "translation": "the Messengers",
+                    "analysis_id": 23355
+                }
+            ]
         },
         {
             "aya_id": 3970,
@@ -545,12 +1259,43 @@
             "sajda": false,
             "transliteration": "Walhamdu lillaahi Rabbil 'aalameen",
             "tajweed_text": "وَ[h:9999[ٱ]لْحَمْدُ لِلَّهِ رَبِّ [h:4[ٱ]لْعَ[n[ـٰ]لَم[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الصَّافَّاتِ",
-                "englishName": "As-Saaffaat",
-                "englishNameTranslation": "Those drawn up in Ranks",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالْحَمْدُ",
+                    "transliteration": "wal-ḥamdu",
+                    "translation": "And all praise",
+                    "analysis_id": 23762
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِلّٰهِ",
+                    "transliteration": "lillahi",
+                    "translation": "(be) to Allah",
+                    "analysis_id": 6
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "(the) Lord",
+                    "analysis_id": 7
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْعٰلَمِيْنَ",
+                    "transliteration": "l-ʿālamīna",
+                    "translation": "(of) the worlds",
+                    "analysis_id": 642
+                },
+                {
+                    "position": 5,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(182)",
+                    "analysis_id": 31
+                }
+            ]
         }
     ]
 }

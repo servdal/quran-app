@@ -13,12 +13,99 @@
             "sajda": false,
             "transliteration": "Kazaalika maaa atal lazeena min qablihim mir Rasoolin illaa qaaloo saahirun aw majnoon",
             "tajweed_text": "كَذ[n[َٲ]لِكَ م[o[َآ] أَتَى [h:12876[ٱ]لَّذِينَ مِ[f:617[ن ق]َ[q:618[بْ]لِه[w:3926[ِم م]ّ[u:2882[ِن ر]َّسُولٍ إِلَّا قَالُو[s[اْ] سَاحِرٌ أَوْ مَ[q:12342[جْ]ن[p[ُو]نٌ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَذٰلِكَ",
+                    "transliteration": "kadhālika",
+                    "translation": "Likewise",
+                    "analysis_id": 3608
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَآ",
+                    "transliteration": "mā",
+                    "translation": "not",
+                    "analysis_id": 8826
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَتَى",
+                    "transliteration": "atā",
+                    "translation": "came",
+                    "analysis_id": 21010
+                },
+                {
+                    "position": 4,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "(to) those",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "before them",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 6,
+                    "arabic": "قَبْلِهِمْ",
+                    "transliteration": "qablihim",
+                    "translation": "before them",
+                    "analysis_id": 9737
+                },
+                {
+                    "position": 7,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "any",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 8,
+                    "arabic": "رَّسُوْلٍ",
+                    "transliteration": "rasūlin",
+                    "translation": "Messenger",
+                    "analysis_id": 16072
+                },
+                {
+                    "position": 9,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "but",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 10,
+                    "arabic": "قَالُوْا",
+                    "transliteration": "qālū",
+                    "translation": "they said",
+                    "analysis_id": 465
+                },
+                {
+                    "position": 11,
+                    "arabic": "سَاحِرٌ",
+                    "transliteration": "sāḥirun",
+                    "translation": "A magician",
+                    "analysis_id": 26215
+                },
+                {
+                    "position": 12,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 13,
+                    "arabic": "مَجْنُوْنٌ",
+                    "transliteration": "majnūnun",
+                    "translation": "a madman",
+                    "analysis_id": 26198
+                }
+            ]
         },
         {
             "aya_id": 4728,
@@ -32,12 +119,50 @@
             "sajda": false,
             "transliteration": "Atawaasaw bih; bal hum qawmun taaghoon",
             "tajweed_text": "أَتَوَاصَوْ[s[اْ] بِه[n[ِۦ]‌ۚ بَلْ هُمْ قَوْ[f:12877[مٌ ط]َاغ[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَتَوَاصَوْا",
+                    "transliteration": "atawāṣaw",
+                    "translation": "Have they transmitted it to them",
+                    "analysis_id": 26216
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِهٖۚ",
+                    "transliteration": "bihi",
+                    "translation": "Have they transmitted it to them",
+                    "analysis_id": 1437
+                },
+                {
+                    "position": 3,
+                    "arabic": "بَلْ",
+                    "transliteration": "bal",
+                    "translation": "Nay",
+                    "analysis_id": 2300
+                },
+                {
+                    "position": 4,
+                    "arabic": "هُمْ",
+                    "transliteration": "hum",
+                    "translation": "they",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 5,
+                    "arabic": "قَوْمٌ",
+                    "transliteration": "qawmun",
+                    "translation": "(are) a people",
+                    "analysis_id": 8612
+                },
+                {
+                    "position": 6,
+                    "arabic": "طَاغُوْنَۚ",
+                    "transliteration": "ṭāghūna",
+                    "translation": "transgressing",
+                    "analysis_id": 26217
+                }
+            ]
         },
         {
             "aya_id": 4729,
@@ -51,12 +176,43 @@
             "sajda": false,
             "transliteration": "Fatawalla 'anhum famaaa anta bimaloom",
             "tajweed_text": "فَتَوَلَّ عَنْهُمْ فَم[o[َآ] أَ[f:169[نت]َ بِمَل[p[ُو]مٍ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَتَوَلَّ",
+                    "transliteration": "fatawalla",
+                    "translation": "So turn away",
+                    "analysis_id": 23754
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَنْهُمْ",
+                    "transliteration": "ʿanhum",
+                    "translation": "from them",
+                    "analysis_id": 4596
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَمَآ",
+                    "transliteration": "famā",
+                    "translation": "for not",
+                    "analysis_id": 14899
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَنْتَ",
+                    "transliteration": "anta",
+                    "translation": "you",
+                    "analysis_id": 472
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِمَلُوْمٍ",
+                    "transliteration": "bimalūmin",
+                    "translation": "(are) to be blamed",
+                    "analysis_id": 26218
+                }
+            ]
         },
         {
             "aya_id": 4730,
@@ -70,12 +226,43 @@
             "sajda": false,
             "transliteration": "Wa zakkir fa innaz zikraa tanfa'ul mu'mineen",
             "tajweed_text": "وَذَكِّرْ فَإِ[g[نّ]َ [h:12878[ٱ][l[ل]ذِّكْرَىٰ تَ[f:8613[نف]َعُ [h:12879[ٱ]لْمُؤْمِن[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَذَكِّرْ",
+                    "transliteration": "wadhakkir",
+                    "translation": "And remind",
+                    "analysis_id": 10185
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَاِنَّ",
+                    "transliteration": "fa-inna",
+                    "translation": "for indeed",
+                    "analysis_id": 5361
+                },
+                {
+                    "position": 3,
+                    "arabic": "الذِّكْرٰى",
+                    "transliteration": "l-dhik'rā",
+                    "translation": "the reminder",
+                    "analysis_id": 26219
+                },
+                {
+                    "position": 4,
+                    "arabic": "تَنْفَعُ",
+                    "transliteration": "tanfaʿu",
+                    "translation": "benefits",
+                    "analysis_id": 19070
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمُؤْمِنِيْنَ",
+                    "transliteration": "l-mu'minīna",
+                    "translation": "the believers",
+                    "analysis_id": 5646
+                }
+            ]
         },
         {
             "aya_id": 4731,
@@ -89,12 +276,50 @@
             "sajda": false,
             "transliteration": "Wa maa khalaqtul jinna wal insa illaa liya'budoon",
             "tajweed_text": "وَمَا خَلَ[q:11606[قْ]تُ [h:12880[ٱ]لْجِ[g[نّ]َ وَ[h:12881[ٱ]لْإِ[f:12881[نس]َ إِلَّا لِيَعْبُد[p[ُو]نِ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمَا",
+                    "transliteration": "wamā",
+                    "translation": "And not",
+                    "analysis_id": 174
+                },
+                {
+                    "position": 2,
+                    "arabic": "خَلَقْتُ",
+                    "transliteration": "khalaqtu",
+                    "translation": "I have created",
+                    "analysis_id": 23962
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْجِنَّ",
+                    "transliteration": "l-jina",
+                    "translation": "the jinn",
+                    "analysis_id": 10481
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَالْاِنْسَ",
+                    "transliteration": "wal-insa",
+                    "translation": "and the mankind",
+                    "analysis_id": 26220
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 6,
+                    "arabic": "لِيَعْبُدُوْنِ",
+                    "transliteration": "liyaʿbudūni",
+                    "translation": "that they worship Me",
+                    "analysis_id": 26221
+                }
+            ]
         },
         {
             "aya_id": 4732,
@@ -108,12 +333,71 @@
             "sajda": false,
             "transliteration": "Maaa ureedu minhum mir rizqinw wa maaa ureedu anyyut'imoon",
             "tajweed_text": "م[o[َآ] أُرِيدُ مِنْه[w:8433[ُم م]ّ[u:6099[ِن ر]ِّزْ[a:12882[قٍ و]َم[o[َآ] أُرِيدُ أ[a:12883[َن ي]ُ[q:12884[طْ]عِم[p[ُو]نِ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَآ",
+                    "transliteration": "mā",
+                    "translation": "Not",
+                    "analysis_id": 8826
+                },
+                {
+                    "position": 2,
+                    "arabic": "اُرِيْدُ",
+                    "transliteration": "urīdu",
+                    "translation": "I want",
+                    "analysis_id": 8834
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْهُمْ",
+                    "transliteration": "min'hum",
+                    "translation": "from them",
+                    "analysis_id": 1374
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "any",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "رِّزْقٍ",
+                    "transliteration": "riz'qin",
+                    "translation": "provision",
+                    "analysis_id": 14051
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَّمَآ",
+                    "transliteration": "wamā",
+                    "translation": "and not",
+                    "analysis_id": 12997
+                },
+                {
+                    "position": 7,
+                    "arabic": "اُرِيْدُ",
+                    "transliteration": "urīdu",
+                    "translation": "I want",
+                    "analysis_id": 8834
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "that",
+                    "analysis_id": 391
+                },
+                {
+                    "position": 9,
+                    "arabic": "يُّطْعِمُوْنِ",
+                    "transliteration": "yuṭ'ʿimūni",
+                    "translation": "they (should) feed Me",
+                    "analysis_id": 26222
+                }
+            ]
         },
         {
             "aya_id": 4733,
@@ -127,12 +411,57 @@
             "sajda": false,
             "transliteration": "Innal laaha Huwar Razzaaqu Zul Quwwatil Mateen",
             "tajweed_text": "إِ[g[نّ]َ [h:80[ٱ]للَّهَ هُوَ [h:12885[ٱ][l[ل]رَّزَّاقُ ذُو [h:12886[ٱ]لْقُوَّةِ [h:12887[ٱ]لْمَت[p[ِي]نُ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "اللّٰهَ",
+                    "transliteration": "l-laha",
+                    "translation": "Allah",
+                    "analysis_id": 98
+                },
+                {
+                    "position": 3,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "He",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 4,
+                    "arabic": "الرَّزَّاقُ",
+                    "transliteration": "l-razāqu",
+                    "translation": "(is) the All-Provider",
+                    "analysis_id": 26223
+                },
+                {
+                    "position": 5,
+                    "arabic": "ذُو",
+                    "transliteration": "dhū",
+                    "translation": "Possessor",
+                    "analysis_id": 4306
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْقُوَّةِ",
+                    "transliteration": "l-quwati",
+                    "translation": "(of) Power",
+                    "analysis_id": 26224
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْمَتِيْنُ",
+                    "transliteration": "l-matīnu",
+                    "translation": "the Strong",
+                    "analysis_id": 26225
+                }
+            ]
         },
         {
             "aya_id": 4734,
@@ -146,12 +475,71 @@
             "sajda": false,
             "transliteration": "Fa inna lillazeena zalamoo zanoobam misla zanoobi ashaabihim falaa yasta'jiloon",
             "tajweed_text": "فَإِ[g[نّ]َ لِلَّذِينَ ظَلَمُو[s[اْ] ذَنُو[a:12888[بًا م]ِّثْلَ ذَنُوبِ أَصْحَ[n[ـٰ]بِهِمْ فَلَا يَسْتَعْجِل[p[ُو]نِ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِنَّ",
+                    "transliteration": "fa-inna",
+                    "translation": "So indeed",
+                    "analysis_id": 5361
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِلَّذِيْنَ",
+                    "transliteration": "lilladhīna",
+                    "translation": "for those who",
+                    "analysis_id": 1062
+                },
+                {
+                    "position": 3,
+                    "arabic": "ظَلَمُوْا",
+                    "transliteration": "ẓalamū",
+                    "translation": "do wrong",
+                    "analysis_id": 760
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذَنُوْبًا",
+                    "transliteration": "dhanūban",
+                    "translation": "(is) a portion",
+                    "analysis_id": 26226
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِّثْلَ",
+                    "transliteration": "mith'la",
+                    "translation": "like",
+                    "analysis_id": 10391
+                },
+                {
+                    "position": 6,
+                    "arabic": "ذَنُوْبِ",
+                    "transliteration": "dhanūbi",
+                    "translation": "(the) portion",
+                    "analysis_id": 26227
+                },
+                {
+                    "position": 7,
+                    "arabic": "اَصْحٰبِهِمْ",
+                    "transliteration": "aṣḥābihim",
+                    "translation": "(of) their companions",
+                    "analysis_id": 26228
+                },
+                {
+                    "position": 8,
+                    "arabic": "فَلَا",
+                    "transliteration": "falā",
+                    "translation": "so let them not ask Me to hasten",
+                    "analysis_id": 1827
+                },
+                {
+                    "position": 9,
+                    "arabic": "يَسْتَعْجِلُوْنِ",
+                    "transliteration": "yastaʿjilūni",
+                    "translation": "so let them not ask Me to hasten",
+                    "analysis_id": 26229
+                }
+            ]
         },
         {
             "aya_id": 4735,
@@ -165,12 +553,64 @@
             "sajda": false,
             "transliteration": "Fawailul lillazeena kafaroo miny yawmihimul lazee yoo'adoon",
             "tajweed_text": "فَوَيْ[u:396[لٌ ل]ِّلَّذِينَ كَفَرُو[s[اْ] م[a:12889[ِن ي]َوْمِهِمُ [h:12890[ٱ]لَّذِى يُوعَد[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الذَّارِيَاتِ",
-                "englishName": "Adh-Dhaariyat",
-                "englishNameTranslation": "The Winnowing Winds",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَوَيْلٌ",
+                    "transliteration": "fawaylun",
+                    "translation": "Then woe",
+                    "analysis_id": 1061
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِّلَّذِيْنَ",
+                    "transliteration": "lilladhīna",
+                    "translation": "to those who",
+                    "analysis_id": 1062
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَفَرُوْا",
+                    "transliteration": "kafarū",
+                    "translation": "disbelieve",
+                    "analysis_id": 67
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَّوْمِهِمُ",
+                    "transliteration": "yawmihimu",
+                    "translation": "their Day",
+                    "analysis_id": 11334
+                },
+                {
+                    "position": 6,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "which",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 7,
+                    "arabic": "يُوْعَدُوْنَ",
+                    "transliteration": "yūʿadūna",
+                    "translation": "they are promised",
+                    "analysis_id": 20145
+                },
+                {
+                    "position": 8,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(60)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 4736,
@@ -184,12 +624,15 @@
             "sajda": false,
             "transliteration": "Wat-Toor",
             "tajweed_text": "وَ[h:9999[ٱ][l[ل]طّ[p[ُو]رِ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالطُّوْرِۙ",
+                    "transliteration": "wal-ṭūri",
+                    "translation": "By the Mount",
+                    "analysis_id": 26230
+                }
+            ]
         },
         {
             "aya_id": 4737,
@@ -203,12 +646,22 @@
             "sajda": false,
             "transliteration": "Wa kitaabim mastoor",
             "tajweed_text": "وَكِتَ[n[ـٰ][a:12891[بٍ م]َّسْط[p[ُو]رٍ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَكِتٰبٍ",
+                    "transliteration": "wakitābin",
+                    "translation": "And by (the) Book",
+                    "analysis_id": 26231
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَّسْطُوْرٍۙ",
+                    "transliteration": "masṭūrin",
+                    "translation": "written",
+                    "analysis_id": 26232
+                }
+            ]
         },
         {
             "aya_id": 4738,
@@ -222,12 +675,29 @@
             "sajda": false,
             "transliteration": "Fee raqqim manshoor",
             "tajweed_text": "فِى رَ[a:12892[قٍّ م]َّ[f:12893[نش][p[ُو]رٍ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "In",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَقٍّ",
+                    "transliteration": "raqqin",
+                    "translation": "parchment",
+                    "analysis_id": 26233
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَّنْشُوْرٍۙ",
+                    "transliteration": "manshūrin",
+                    "translation": "unrolled",
+                    "analysis_id": 26234
+                }
+            ]
         },
         {
             "aya_id": 4739,
@@ -241,12 +711,22 @@
             "sajda": false,
             "transliteration": "Wal baitil ma'moor",
             "tajweed_text": "وَ[h:9999[ٱ]لْبَيْتِ [h:12894[ٱ]لْمَعْم[p[ُو]رِ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّالْبَيْتِ",
+                    "transliteration": "wal-bayti",
+                    "translation": "By the House",
+                    "analysis_id": 26235
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمَعْمُوْرِۙ",
+                    "transliteration": "l-maʿmūri",
+                    "translation": "frequented",
+                    "analysis_id": 26236
+                }
+            ]
         },
         {
             "aya_id": 4740,
@@ -260,12 +740,22 @@
             "sajda": false,
             "transliteration": "Wassaqfil marfoo'",
             "tajweed_text": "وَ[h:9999[ٱ][l[ل]سَّ[q:12895[قْ]فِ [h:12896[ٱ]لْمَرْف[p[ُو]عِ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالسَّقْفِ",
+                    "transliteration": "wal-saqfi",
+                    "translation": "By the roof",
+                    "analysis_id": 26237
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمَرْفُوْعِۙ",
+                    "transliteration": "l-marfūʿi",
+                    "translation": "raised high",
+                    "analysis_id": 26238
+                }
+            ]
         },
         {
             "aya_id": 4741,
@@ -279,12 +769,22 @@
             "sajda": false,
             "transliteration": "Wal bahril masjoor",
             "tajweed_text": "وَ[h:9999[ٱ]لْبَحْرِ [h:12897[ٱ]لْمَسْج[p[ُو]رِ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالْبَحْرِ",
+                    "transliteration": "wal-baḥri",
+                    "translation": "By the sea",
+                    "analysis_id": 10139
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمَسْجُوْرِۙ",
+                    "transliteration": "l-masjūri",
+                    "translation": "filled",
+                    "analysis_id": 26239
+                }
+            ]
         },
         {
             "aya_id": 4742,
@@ -298,12 +798,36 @@
             "sajda": false,
             "transliteration": "Inna 'azaaba Rabbika lawaaqi'",
             "tajweed_text": "إِ[g[نّ]َ عَذَابَ رَبِّكَ لَو[n[َٲ]قِعٌ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَذَابَ",
+                    "transliteration": "ʿadhāba",
+                    "translation": "(the) punishment",
+                    "analysis_id": 2855
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَوَاقِعٌۙ",
+                    "transliteration": "lawāqiʿun",
+                    "translation": "(will) surely occur",
+                    "analysis_id": 26155
+                }
+            ]
         },
         {
             "aya_id": 4743,
@@ -317,12 +841,36 @@
             "sajda": false,
             "transliteration": "Maa lahoo min daafi'",
             "tajweed_text": "مَّا لَهُ[n[ۥ] مِ[f:12898[ن د]َافِعٍ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَّا",
+                    "transliteration": "mā",
+                    "translation": "Not",
+                    "analysis_id": 1478
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "for it",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "any",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "دَافِعٍۙ",
+                    "transliteration": "dāfiʿin",
+                    "translation": "preventer",
+                    "analysis_id": 26240
+                }
+            ]
         },
         {
             "aya_id": 4744,
@@ -336,12 +884,36 @@
             "sajda": false,
             "transliteration": "Yawma tamoorus samaaa'u mawraa",
             "tajweed_text": "يَوْمَ تَمُورُ [h:12899[ٱ][l[ل]سَّم[o[َا]ٓءُ مَوْرًا",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَّوْمَ",
+                    "transliteration": "yawma",
+                    "translation": "(On the) Day",
+                    "analysis_id": 12797
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَمُوْرُ",
+                    "transliteration": "tamūru",
+                    "translation": "will shake",
+                    "analysis_id": 26241
+                },
+                {
+                    "position": 3,
+                    "arabic": "السَّمَاۤءُ",
+                    "transliteration": "l-samāu",
+                    "translation": "the heaven",
+                    "analysis_id": 20696
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَوْرًاۙ",
+                    "transliteration": "mawran",
+                    "translation": "(with violent) shake",
+                    "analysis_id": 26242
+                }
+            ]
         },
         {
             "aya_id": 4745,
@@ -355,12 +927,29 @@
             "sajda": false,
             "transliteration": "Wa taseerul jibaalu sairaa",
             "tajweed_text": "وَتَسِيرُ [h:12900[ٱ]لْجِبَالُ سَيْرًا",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّتَسِيْرُ",
+                    "transliteration": "watasīru",
+                    "translation": "And will move away",
+                    "analysis_id": 26243
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْجِبَالُ",
+                    "transliteration": "l-jibālu",
+                    "translation": "the mountains",
+                    "analysis_id": 15957
+                },
+                {
+                    "position": 3,
+                    "arabic": "سَيْرًاۗ",
+                    "transliteration": "sayran",
+                    "translation": "(with an awful) movement",
+                    "analysis_id": 26244
+                }
+            ]
         },
         {
             "aya_id": 4746,
@@ -374,12 +963,29 @@
             "sajda": false,
             "transliteration": "Fawailuny yawma 'izil lil mukaazzibeen",
             "tajweed_text": "فَوَيْ[a:12901[لٌ ي]َوْمَئِ[u:12902[ذٍ ل]ِّلْمُكَذِّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَوَيْلٌ",
+                    "transliteration": "fawaylun",
+                    "translation": "Then woe",
+                    "analysis_id": 1061
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِّلْمُكَذِّبِيْنَۙ",
+                    "transliteration": "lil'mukadhibīna",
+                    "translation": "to the deniers",
+                    "analysis_id": 26245
+                }
+            ]
         },
         {
             "aya_id": 4747,
@@ -393,12 +999,43 @@
             "sajda": false,
             "transliteration": "Allazeena hum fee khawdiny yal'aboon",
             "tajweed_text": "ٱلَّذِينَ هُمْ فِى خَوْ[a:12903[ضٍ ي]َلْعَب[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "Who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 2,
+                    "arabic": "هُمْ",
+                    "transliteration": "hum",
+                    "translation": "[they]",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 4,
+                    "arabic": "خَوْضٍ",
+                    "transliteration": "khawḍin",
+                    "translation": "(vain) discourse",
+                    "analysis_id": 26246
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَّلْعَبُوْنَۘ",
+                    "transliteration": "yalʿabūna",
+                    "translation": "are playing",
+                    "analysis_id": 26247
+                }
+            ]
         },
         {
             "aya_id": 4748,
@@ -412,12 +1049,50 @@
             "sajda": false,
             "transliteration": "Yawma yuda'-'oona ilaa naari jahannama da'-'aa",
             "tajweed_text": "يَوْمَ يُدَعُّونَ إِلَىٰ نَارِ جَهَ[g[نّ]َمَ دَعًّا",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "yawma",
+                    "translation": "(The) Day",
+                    "analysis_id": 12797
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُدَعُّوْنَ",
+                    "transliteration": "yudaʿʿūna",
+                    "translation": "they will be thrust",
+                    "analysis_id": 26248
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "(in)to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 4,
+                    "arabic": "نَارِ",
+                    "transliteration": "nāri",
+                    "translation": "(the) Fire",
+                    "analysis_id": 13031
+                },
+                {
+                    "position": 5,
+                    "arabic": "جَهَنَّمَ",
+                    "transliteration": "jahannama",
+                    "translation": "(of) Hell",
+                    "analysis_id": 4612
+                },
+                {
+                    "position": 6,
+                    "arabic": "دَعًّاۗ",
+                    "transliteration": "daʿʿan",
+                    "translation": "(with) a thrust",
+                    "analysis_id": 26249
+                }
+            ]
         },
         {
             "aya_id": 4749,
@@ -431,12 +1106,50 @@
             "sajda": false,
             "transliteration": "Haazihin naarul latee kuntum bihaa tukazziboon",
             "tajweed_text": "هَ[n[ـٰ]ذِهِ [h:12904[ٱ][l[ل][g[نّ]َارُ [h:12905[ٱ]لَّتِى كُ[f:100[نت][c:11033[ُم ب]ِهَا تُكَذِّب[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذِهِ",
+                    "transliteration": "hādhihi",
+                    "translation": "This",
+                    "analysis_id": 516
+                },
+                {
+                    "position": 2,
+                    "arabic": "النَّارُ",
+                    "transliteration": "l-nāru",
+                    "translation": "(is) the Fire",
+                    "analysis_id": 1078
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّتِيْ",
+                    "transliteration": "allatī",
+                    "translation": "which",
+                    "analysis_id": 303
+                },
+                {
+                    "position": 4,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you used to",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِهَا",
+                    "transliteration": "bihā",
+                    "translation": "[of it]",
+                    "analysis_id": 5632
+                },
+                {
+                    "position": 6,
+                    "arabic": "تُكَذِّبُوْنَ",
+                    "transliteration": "tukadhibūna",
+                    "translation": "deny",
+                    "analysis_id": 20164
+                }
+            ]
         }
     ]
 }

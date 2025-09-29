@@ -13,12 +13,43 @@
             "sajda": false,
             "transliteration": "Wa libu yootihim abwaabanw wa sururan 'alaihaa yattaki'oon",
             "tajweed_text": "وَلِبُيُوتِهِمْ أَ[q:12251[بْ]و[n[َٲ][a:12252[بًا و]َسُرُرًا عَلَيْهَا يَتَّكِــٔ[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلِبُيُوْتِهِمْ",
+                    "transliteration": "walibuyūtihim",
+                    "translation": "And for their houses",
+                    "analysis_id": 25098
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَبْوَابًا",
+                    "transliteration": "abwāban",
+                    "translation": "doors",
+                    "analysis_id": 25099
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَّسُرُرًا",
+                    "transliteration": "wasururan",
+                    "translation": "and couches",
+                    "analysis_id": 25100
+                },
+                {
+                    "position": 4,
+                    "arabic": "عَلَيْهَا",
+                    "transliteration": "ʿalayhā",
+                    "translation": "upon which",
+                    "analysis_id": 9644
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَتَّكِـُٔوْنَۙ",
+                    "transliteration": "yattakiūna",
+                    "translation": "they recline",
+                    "analysis_id": 25101
+                }
+            ]
         },
         {
             "aya_id": 4360,
@@ -32,12 +63,99 @@
             "sajda": false,
             "transliteration": "Wa zukhrufaa; wa in kullu zaalika lammaa mataa'ul hayaatid dunyaa; wal aakhiratu 'inda Rabbika lilmuttaqeen",
             "tajweed_text": "وَزُخْرُ[a:12253[فًا‌ۚ و]َإِ[f:12254[ن ك]ُلُّ ذ[n[َٲ]لِكَ لَ[g[مّ]َا مَتَ[n[ـٰ]عُ [h:1780[ٱ]لْحَيَ[s[و][n[ٲ]ةِ [h:442[ٱ][l[ل]دُّنْيَا‌ۚ وَ[h:2944[ٱ]لْأَخِرَةُ عِ[f:264[ند]َ رَبِّكَ لِلْمُتَّق[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَزُخْرُفًاۗ",
+                    "transliteration": "wazukh'rufan",
+                    "translation": "And ornaments of gold",
+                    "analysis_id": 25102
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَاِنْ",
+                    "transliteration": "wa-in",
+                    "translation": "And not (is)",
+                    "analysis_id": 7976
+                },
+                {
+                    "position": 3,
+                    "arabic": "كُلُّ",
+                    "transliteration": "kullu",
+                    "translation": "all",
+                    "analysis_id": 4314
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذٰلِكَ",
+                    "transliteration": "dhālika",
+                    "translation": "that",
+                    "analysis_id": 33
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَمَّا",
+                    "transliteration": "lammā",
+                    "translation": "but",
+                    "analysis_id": 25103
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَتَاعُ",
+                    "transliteration": "matāʿu",
+                    "translation": "an enjoyment",
+                    "analysis_id": 13074
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْحَيٰوةِ",
+                    "transliteration": "l-ḥayati",
+                    "translation": "(of) the life",
+                    "analysis_id": 2887
+                },
+                {
+                    "position": 8,
+                    "arabic": "الدُّنْيَا",
+                    "transliteration": "l-dun'yā",
+                    "translation": "(of) the world",
+                    "analysis_id": 2888
+                },
+                {
+                    "position": 9,
+                    "arabic": "ۗوَالْاٰخِرَةُ",
+                    "transliteration": "wal-ākhiratu",
+                    "translation": "And the Hereafter",
+                    "analysis_id": 25104
+                },
+                {
+                    "position": 10,
+                    "arabic": "عِنْدَ",
+                    "transliteration": "ʿinda",
+                    "translation": "with",
+                    "analysis_id": 712
+                },
+                {
+                    "position": 11,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 12,
+                    "arabic": "لِلْمُتَّقِيْنَ",
+                    "transliteration": "lil'muttaqīna",
+                    "translation": "(is) for the righteous",
+                    "analysis_id": 5742
+                },
+                {
+                    "position": 13,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(35)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 4361,
@@ -51,12 +169,85 @@
             "sajda": false,
             "transliteration": "Wa mai ya'shu 'an zikrir Rahmaani nuqaiyid lahoo Shaitaanan fahuwa lahoo qareen",
             "tajweed_text": "وَم[a:12255[َن ي]َعْشُ عَ[f:3773[ن ذ]ِكْرِ [h:12256[ٱ][l[ل]رَّحْمَ[n[ـٰ]نِ نُقَيِّضْ لَهُ[n[ۥ] شَيْطَ[n[ـٰ][f:12257[نًا ف]َهُوَ لَهُ[n[ۥ] قَر[p[ِي]نٌ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمَنْ",
+                    "transliteration": "waman",
+                    "translation": "And whoever",
+                    "analysis_id": 4698
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّعْشُ",
+                    "transliteration": "yaʿshu",
+                    "translation": "turns away",
+                    "analysis_id": 25105
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَنْ",
+                    "transliteration": "ʿan",
+                    "translation": "from",
+                    "analysis_id": 647
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذِكْرِ",
+                    "transliteration": "dhik'ri",
+                    "translation": "(the) remembrance",
+                    "analysis_id": 9434
+                },
+                {
+                    "position": 5,
+                    "arabic": "الرَّحْمٰنِ",
+                    "transliteration": "l-raḥmāni",
+                    "translation": "(of) the Most Gracious",
+                    "analysis_id": 3
+                },
+                {
+                    "position": 6,
+                    "arabic": "نُقَيِّضْ",
+                    "transliteration": "nuqayyiḍ",
+                    "translation": "We appoint",
+                    "analysis_id": 25106
+                },
+                {
+                    "position": 7,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "for him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 8,
+                    "arabic": "شَيْطٰنًا",
+                    "transliteration": "shayṭānan",
+                    "translation": "a devil",
+                    "analysis_id": 7977
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَهُوَ",
+                    "transliteration": "fahuwa",
+                    "translation": "then he",
+                    "analysis_id": 15502
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "(is) to him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 11,
+                    "arabic": "قَرِيْنٌ",
+                    "transliteration": "qarīnun",
+                    "translation": "a companion",
+                    "analysis_id": 25107
+                }
+            ]
         },
         {
             "aya_id": 4362,
@@ -70,12 +261,57 @@
             "sajda": false,
             "transliteration": "Wa innahum la yasuddoo nahum 'anis sabeeli wa yahsaboona annahum muhtadoon",
             "tajweed_text": "وَإِ[g[نّ]َهُمْ لَيَصُدُّونَهُمْ عَنِ [h:6998[ٱ][l[ل]سَّبِيلِ وَيَحْسَبُونَ أَ[g[نّ]َه[w:4653[ُم م]ُّهْتَد[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّهُمْ",
+                    "transliteration": "wa-innahum",
+                    "translation": "And indeed, they",
+                    "analysis_id": 14761
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَيَصُدُّوْنَهُمْ",
+                    "transliteration": "layaṣuddūnahum",
+                    "translation": "surely, turn them",
+                    "analysis_id": 25108
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَنِ",
+                    "transliteration": "ʿani",
+                    "translation": "from",
+                    "analysis_id": 647
+                },
+                {
+                    "position": 4,
+                    "arabic": "السَّبِيْلِ",
+                    "transliteration": "l-sabīli",
+                    "translation": "the Path",
+                    "analysis_id": 1538
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَيَحْسَبُوْنَ",
+                    "transliteration": "wayaḥsabūna",
+                    "translation": "and they think",
+                    "analysis_id": 25109
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَنَّهُمْ",
+                    "transliteration": "annahum",
+                    "translation": "that they",
+                    "analysis_id": 635
+                },
+                {
+                    "position": 7,
+                    "arabic": "مُّهْتَدُوْنَ",
+                    "transliteration": "muh'tadūna",
+                    "translation": "(are) guided",
+                    "analysis_id": 10297
+                }
+            ]
         },
         {
             "aya_id": 4363,
@@ -89,12 +325,85 @@
             "sajda": false,
             "transliteration": "Hattaaa izaa jaaa'anaa qaala yaa laita bainee wa bainaka bu'dal mashriqaini fabi'sal qareen",
             "tajweed_text": "حَتَّ[o[ىٰٓ] إِذَا ج[o[َا]ٓءَنَا قَالَ يَ[n[ـٰ]لَيْتَ بَيْنِى وَبَيْنَكَ بُعْدَ [h:12258[ٱ]لْمَشْرِقَيْنِ فَبِئْسَ [h:12259[ٱ]لْقَر[p[ِي]نُ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "حَتّٰىٓ",
+                    "transliteration": "ḥattā",
+                    "translation": "Until",
+                    "analysis_id": 6494
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 3,
+                    "arabic": "جَاۤءَنَا",
+                    "transliteration": "jāanā",
+                    "translation": "he comes to Us",
+                    "analysis_id": 8747
+                },
+                {
+                    "position": 4,
+                    "arabic": "قَالَ",
+                    "transliteration": "qāla",
+                    "translation": "he says",
+                    "analysis_id": 427
+                },
+                {
+                    "position": 5,
+                    "arabic": "يٰلَيْتَ",
+                    "transliteration": "yālayta",
+                    "translation": "O would that",
+                    "analysis_id": 21888
+                },
+                {
+                    "position": 6,
+                    "arabic": "بَيْنِيْ",
+                    "transliteration": "baynī",
+                    "translation": "between me",
+                    "analysis_id": 10089
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَبَيْنَكَ",
+                    "transliteration": "wabaynaka",
+                    "translation": "and between you",
+                    "analysis_id": 18846
+                },
+                {
+                    "position": 8,
+                    "arabic": "بُعْدَ",
+                    "transliteration": "buʿ'da",
+                    "translation": "(were the) distance",
+                    "analysis_id": 25110
+                },
+                {
+                    "position": 9,
+                    "arabic": "الْمَشْرِقَيْنِ",
+                    "transliteration": "l-mashriqayni",
+                    "translation": "(of) the East and the West",
+                    "analysis_id": 25111
+                },
+                {
+                    "position": 10,
+                    "arabic": "فَبِئْسَ",
+                    "transliteration": "fabi'sa",
+                    "translation": "How wretched is",
+                    "analysis_id": 25112
+                },
+                {
+                    "position": 11,
+                    "arabic": "الْقَرِيْنُ",
+                    "transliteration": "l-qarīnu",
+                    "translation": "the companion",
+                    "analysis_id": 25113
+                }
+            ]
         },
         {
             "aya_id": 4364,
@@ -108,12 +417,71 @@
             "sajda": false,
             "transliteration": "Wa lai yanfa'akumul Yawma iz zalamtum annakum fil 'azaabi mushtarikoon",
             "tajweed_text": "وَل[a:12260[َن ي]َ[f:10716[نف]َعَكُمُ [h:12261[ٱ]لْيَوْمَ إِ[d:12262[ذ] ظَّلَمْتُمْ أَ[g[نّ]َكُمْ فِى [h:10442[ٱ]لْعَذَابِ مُشْتَرِك[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَنْ",
+                    "transliteration": "walan",
+                    "translation": "And never",
+                    "analysis_id": 13379
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّنْفَعَكُمُ",
+                    "transliteration": "yanfaʿakumu",
+                    "translation": "will benefit you",
+                    "analysis_id": 22586
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْيَوْمَ",
+                    "transliteration": "l-yawma",
+                    "translation": "the Day",
+                    "analysis_id": 14566
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِذْ",
+                    "transliteration": "idh",
+                    "translation": "when",
+                    "analysis_id": 1814
+                },
+                {
+                    "position": 5,
+                    "arabic": "ظَّلَمْتُمْ",
+                    "transliteration": "ẓalamtum",
+                    "translation": "you have wronged",
+                    "analysis_id": 702
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَنَّكُمْ",
+                    "transliteration": "annakum",
+                    "translation": "that you",
+                    "analysis_id": 10289
+                },
+                {
+                    "position": 7,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "(will be) in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْعَذَابِ",
+                    "transliteration": "l-ʿadhābi",
+                    "translation": "the punishment",
+                    "analysis_id": 663
+                },
+                {
+                    "position": 9,
+                    "arabic": "مُشْتَرِكُوْنَ",
+                    "transliteration": "mush'tarikūna",
+                    "translation": "sharing",
+                    "analysis_id": 23570
+                }
+            ]
         },
         {
             "aya_id": 4365,
@@ -127,12 +495,85 @@
             "sajda": false,
             "transliteration": "Afa anta tusmi'us summa aw tahdil 'umya wa man kaana fee dalaalim mubeen",
             "tajweed_text": "أَفَأَ[f:6069[نت]َ تُسْمِعُ [h:6070[ٱ][l[ل]صُّ[g[مّ]َ أَوْ تَهْدِى [h:6072[ٱ]لْعُمْىَ وَمَ[f:975[ن ك]َانَ فِى ضَلَ[n[ـٰ][a:2393[لٍ م]ُّب[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَفَاَنْتَ",
+                    "transliteration": "afa-anta",
+                    "translation": "Then can you",
+                    "analysis_id": 13978
+                },
+                {
+                    "position": 2,
+                    "arabic": "تُسْمِعُ",
+                    "transliteration": "tus'miʿu",
+                    "translation": "cause to hear",
+                    "analysis_id": 21453
+                },
+                {
+                    "position": 3,
+                    "arabic": "الصُّمَّ",
+                    "transliteration": "l-ṣuma",
+                    "translation": "the deaf",
+                    "analysis_id": 13980
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 5,
+                    "arabic": "تَهْدِى",
+                    "transliteration": "tahdī",
+                    "translation": "guide",
+                    "analysis_id": 25114
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْعُمْيَ",
+                    "transliteration": "l-ʿum'ya",
+                    "translation": "the blind",
+                    "analysis_id": 13982
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَمَنْ",
+                    "transliteration": "waman",
+                    "translation": "and (one) who",
+                    "analysis_id": 4698
+                },
+                {
+                    "position": 8,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "is",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 9,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 10,
+                    "arabic": "ضَلٰلٍ",
+                    "transliteration": "ḍalālin",
+                    "translation": "an error",
+                    "analysis_id": 6058
+                },
+                {
+                    "position": 11,
+                    "arabic": "مُّبِيْنٍ",
+                    "transliteration": "mubīnin",
+                    "translation": "clear",
+                    "analysis_id": 14074
+                }
+            ]
         },
         {
             "aya_id": 4366,
@@ -146,12 +587,50 @@
             "sajda": false,
             "transliteration": "Fa immaa nazhabanna bika fa innaa minhum muntaqimoon",
             "tajweed_text": "فَإِ[g[مّ]َا نَذْهَبَ[g[نّ]َ بِكَ فَإِ[g[نّ]َا مِنْه[w:12263[ُم م]ُّ[f:10659[نت]َقِم[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاِمَّا",
+                    "transliteration": "fa-immā",
+                    "translation": "And whether",
+                    "analysis_id": 25115
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَذْهَبَنَّ",
+                    "transliteration": "nadhhabanna",
+                    "translation": "We take you away",
+                    "analysis_id": 25116
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِكَ",
+                    "transliteration": "bika",
+                    "translation": "We take you away",
+                    "analysis_id": 7089
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَاِنَّا",
+                    "transliteration": "fa-innā",
+                    "translation": "then indeed, We",
+                    "analysis_id": 14526
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِنْهُمْ",
+                    "transliteration": "min'hum",
+                    "translation": "from them",
+                    "analysis_id": 1374
+                },
+                {
+                    "position": 6,
+                    "arabic": "مُّنْتَقِمُوْنَۙ",
+                    "transliteration": "muntaqimūna",
+                    "translation": "(will) take retribution",
+                    "analysis_id": 25117
+                }
+            ]
         },
         {
             "aya_id": 4367,
@@ -165,12 +644,57 @@
             "sajda": false,
             "transliteration": "Aw nuriyannakal lazee wa'adnaahum fa innaa 'alaihim muqtadiroon",
             "tajweed_text": "أَوْ نُرِيَ[g[نّ]َكَ [h:12264[ٱ]لَّذِى وَعَ[q:12265[دْ]نَ[n[ـٰ]هُمْ فَإِ[g[نّ]َا عَلَيْه[w:12266[ِم م]ُّ[q:12267[قْ]تَدِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "Or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 2,
+                    "arabic": "نُرِيَنَّكَ",
+                    "transliteration": "nuriyannaka",
+                    "translation": "We show you",
+                    "analysis_id": 13987
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "that which",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَعَدْنٰهُمْ",
+                    "transliteration": "waʿadnāhum",
+                    "translation": "We have promised them",
+                    "analysis_id": 25118
+                },
+                {
+                    "position": 5,
+                    "arabic": "فَاِنَّا",
+                    "transliteration": "fa-innā",
+                    "translation": "then indeed, We",
+                    "analysis_id": 14526
+                },
+                {
+                    "position": 6,
+                    "arabic": "عَلَيْهِمْ",
+                    "transliteration": "ʿalayhim",
+                    "translation": "over them",
+                    "analysis_id": 24
+                },
+                {
+                    "position": 7,
+                    "arabic": "مُّقْتَدِرُوْنَ",
+                    "transliteration": "muq'tadirūna",
+                    "translation": "have full power",
+                    "analysis_id": 25119
+                }
+            ]
         },
         {
             "aya_id": 4368,
@@ -184,12 +708,64 @@
             "sajda": false,
             "transliteration": "Fastamsik billazeee oohi ya ilaika innaka 'alaa Siraatim Mustaqeem",
             "tajweed_text": "فَ[h:9999[ٱ]سْتَمْسِكْ بِ[h:315[ٱ]لَّذ[o[ِىٓ] أُوحِىَ إِلَيْكَ‌ۖ إِ[g[نّ]َكَ عَلَىٰ صِر[n[َٲ][a:726[طٍ م]ُّسْتَق[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاسْتَمْسِكْ",
+                    "transliteration": "fa-is'tamsik",
+                    "translation": "So hold fast",
+                    "analysis_id": 25120
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِالَّذِيْٓ",
+                    "transliteration": "bi-alladhī",
+                    "translation": "to that which",
+                    "analysis_id": 5199
+                },
+                {
+                    "position": 3,
+                    "arabic": "اُوْحِيَ",
+                    "transliteration": "ūḥiya",
+                    "translation": "is revealed",
+                    "analysis_id": 10388
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِلَيْكَ",
+                    "transliteration": "ilayka",
+                    "translation": "to you",
+                    "analysis_id": 51
+                },
+                {
+                    "position": 5,
+                    "arabic": "ۚاِنَّكَ",
+                    "transliteration": "innaka",
+                    "translation": "Indeed, you",
+                    "analysis_id": 471
+                },
+                {
+                    "position": 6,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "(are) on",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 7,
+                    "arabic": "صِرَاطٍ",
+                    "transliteration": "ṣirāṭin",
+                    "translation": "a Path",
+                    "analysis_id": 8700
+                },
+                {
+                    "position": 8,
+                    "arabic": "مُّسْتَقِيْمٍ",
+                    "transliteration": "mus'taqīmin",
+                    "translation": "Straight",
+                    "analysis_id": 13883
+                }
+            ]
         },
         {
             "aya_id": 4369,
@@ -203,12 +779,50 @@
             "sajda": false,
             "transliteration": "Wa innahoo lazikrul laka wa liqawmika wa sawfa tus'aloon",
             "tajweed_text": "وَإِ[g[نّ]َهُ[n[ۥ] لَذِكْ[u:12268[رٌ ل]َّكَ وَلِقَوْمِكَ‌ۖ وَسَوْفَ تُسْــَٔل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّهٗ",
+                    "transliteration": "wa-innahu",
+                    "translation": "And indeed, it",
+                    "analysis_id": 11014
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَذِكْرٌ",
+                    "transliteration": "ladhik'run",
+                    "translation": "(is) surely, a Reminder",
+                    "analysis_id": 25121
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَّكَ",
+                    "transliteration": "laka",
+                    "translation": "for you",
+                    "analysis_id": 719
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَلِقَوْمِكَ",
+                    "transliteration": "waliqawmika",
+                    "translation": "and your people",
+                    "analysis_id": 25122
+                },
+                {
+                    "position": 5,
+                    "arabic": "ۚوَسَوْفَ",
+                    "transliteration": "wasawfa",
+                    "translation": "and soon",
+                    "analysis_id": 25123
+                },
+                {
+                    "position": 6,
+                    "arabic": "تُسْٔـَلُوْنَ",
+                    "transliteration": "tus'alūna",
+                    "translation": "you will be questioned",
+                    "analysis_id": 25124
+                }
+            ]
         },
         {
             "aya_id": 4370,
@@ -222,12 +836,113 @@
             "sajda": false,
             "transliteration": "Was'al man arsalnaa min qablika mir Rusulinaaa aja'alnaa min doonir Rahmaani aalihatany yu badoon",
             "tajweed_text": "وَسْــَٔلْ مَنْ أَرْسَلْنَا مِ[f:18[ن ق]َ[q:19[بْ]لِكَ م[u:7850[ِن ر]ُّسُلِن[o[َآ] أَجَعَلْنَا مِ[f:107[ن د]ُونِ [h:12269[ٱ][l[ل]رَّحْمَ[n[ـٰ]نِ ءَالِهَ[a:12270[ةً ي]ُعْبَد[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَسْٔـَلْ",
+                    "transliteration": "wasal",
+                    "translation": "And ask",
+                    "analysis_id": 25125
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(those) whom",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَرْسَلْنَا",
+                    "transliteration": "arsalnā",
+                    "translation": "We sent",
+                    "analysis_id": 2105
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "before you",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "قَبْلِكَ",
+                    "transliteration": "qablika",
+                    "translation": "before you",
+                    "analysis_id": 54
+                },
+                {
+                    "position": 6,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 7,
+                    "arabic": "رُّسُلِنَآ",
+                    "transliteration": "rusulinā",
+                    "translation": "Our Messengers",
+                    "analysis_id": 25126
+                },
+                {
+                    "position": 9,
+                    "arabic": "ۖ",
+                    "transliteration": "min",
+                    "translation": "besides",
+                    "analysis_id": 1702
+                },
+                {
+                    "position": 10,
+                    "arabic": "اَجَعَلْنَا",
+                    "transliteration": "dūni",
+                    "translation": "besides",
+                    "analysis_id": 25127
+                },
+                {
+                    "position": 11,
+                    "arabic": "مِنْ",
+                    "transliteration": "l-raḥmāni",
+                    "translation": "the Most Gracious",
+                    "analysis_id": 25128
+                },
+                {
+                    "position": 12,
+                    "arabic": "دُوْنِ",
+                    "transliteration": "ālihatan",
+                    "translation": "gods",
+                    "analysis_id": 25129
+                },
+                {
+                    "position": 13,
+                    "arabic": "الرَّحْمٰنِ",
+                    "transliteration": "yuʿ'badūna",
+                    "translation": "to be worshipped",
+                    "analysis_id": 25130
+                },
+                {
+                    "position": 14,
+                    "arabic": "اٰلِهَةً",
+                    "transliteration": null,
+                    "translation": "(45)",
+                    "analysis_id": 25131
+                },
+                {
+                    "position": 15,
+                    "arabic": "يُّعْبَدُوْنَ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 21820
+                },
+                {
+                    "position": 16,
+                    "arabic": "ࣖ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 4371,
@@ -241,12 +956,92 @@
             "sajda": false,
             "transliteration": "Wa laqad arsalnaa Moosaa bi aayaatinaaa ilaa Fir'awna wa mala'ihee faqaala innee Rasoolu Rabbil 'aalameen",
             "tajweed_text": "وَلَقَ[q:341[دْ] أَرْسَلْنَا مُوسَىٰ بِـَٔـايَ[n[ـٰ]تِن[o[َآ] إِلَىٰ فِرْعَوْنَ وَمَلَإِ[s[يْ]ه[n[ِۦ] فَقَالَ إِ[g[نّ]ِى رَسُولُ رَبِّ [h:4[ٱ]لْعَ[n[ـٰ]لَم[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَقَدْ",
+                    "transliteration": "walaqad",
+                    "translation": "And certainly",
+                    "analysis_id": 881
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَرْسَلْنَا",
+                    "transliteration": "arsalnā",
+                    "translation": "We sent",
+                    "analysis_id": 2105
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُوْسٰى",
+                    "transliteration": "mūsā",
+                    "translation": "Musa",
+                    "analysis_id": 698
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِاٰيٰتِنَآ",
+                    "transliteration": "biāyātinā",
+                    "translation": "with Our Signs",
+                    "analysis_id": 567
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 6,
+                    "arabic": "فِرْعَوْنَ",
+                    "transliteration": "fir'ʿawna",
+                    "translation": "Firaun",
+                    "analysis_id": 660
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَمَلَا۟ىِٕهٖ",
+                    "transliteration": "wamala-ihi",
+                    "translation": "and his chiefs",
+                    "analysis_id": 11634
+                },
+                {
+                    "position": 8,
+                    "arabic": "فَقَالَ",
+                    "transliteration": "faqāla",
+                    "translation": "and he said",
+                    "analysis_id": 459
+                },
+                {
+                    "position": 9,
+                    "arabic": "اِنِّيْ",
+                    "transliteration": "innī",
+                    "translation": "Indeed, I am",
+                    "analysis_id": 430
+                },
+                {
+                    "position": 10,
+                    "arabic": "رَسُوْلُ",
+                    "transliteration": "rasūlu",
+                    "translation": "a Messenger",
+                    "analysis_id": 8395
+                },
+                {
+                    "position": 11,
+                    "arabic": "رَبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "(of the) Lord",
+                    "analysis_id": 7
+                },
+                {
+                    "position": 12,
+                    "arabic": "الْعٰلَمِيْنَ",
+                    "transliteration": "l-ʿālamīna",
+                    "translation": "(of) the worlds",
+                    "analysis_id": 642
+                }
+            ]
         },
         {
             "aya_id": 4372,
@@ -260,12 +1055,57 @@
             "sajda": false,
             "transliteration": "Falammma jaaa'ahum bi aayaatinaaa izaa hum minhaa yadhakoon",
             "tajweed_text": "فَلَ[g[مّ]َا ج[o[َا]ٓءَه[c:12271[ُم ب]ِـَٔـايَ[n[ـٰ]تِن[o[َآ] إِذَا ه[w:7261[ُم م]ِّنْهَا يَضْحَك[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الزُّخۡرُفِ",
-                "englishName": "Az-Zukhruf",
-                "englishNameTranslation": "Ornaments of gold",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلَمَّا",
+                    "transliteration": "falammā",
+                    "translation": "But when",
+                    "analysis_id": 3740
+                },
+                {
+                    "position": 2,
+                    "arabic": "جَاۤءَهُمْ",
+                    "transliteration": "jāahum",
+                    "translation": "he came to them",
+                    "analysis_id": 1220
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِاٰيٰتِنَآ",
+                    "transliteration": "biāyātinā",
+                    "translation": "with Our Signs",
+                    "analysis_id": 567
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "behold",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 5,
+                    "arabic": "هُمْ",
+                    "transliteration": "hum",
+                    "translation": "They",
+                    "analysis_id": 95
+                },
+                {
+                    "position": 6,
+                    "arabic": "مِّنْهَا",
+                    "transliteration": "min'hā",
+                    "translation": "at them",
+                    "analysis_id": 510
+                },
+                {
+                    "position": 7,
+                    "arabic": "يَضْحَكُوْنَ",
+                    "transliteration": "yaḍḥakūna",
+                    "translation": "laughed",
+                    "analysis_id": 25132
+                }
+            ]
         }
     ]
 }

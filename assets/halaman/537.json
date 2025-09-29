@@ -13,12 +13,29 @@
             "sajda": false,
             "transliteration": "Innahoo la quraanun kareem",
             "tajweed_text": "إِ[g[نّ]َهُ[n[ۥ] لَقُرْءَا[f:13290[نٌ ك]َر[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, it",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَقُرْاٰنٌ",
+                    "transliteration": "laqur'ānun",
+                    "translation": "(is) surely, a Quran",
+                    "analysis_id": 26805
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَرِيْمٌۙ",
+                    "transliteration": "karīmun",
+                    "translation": "noble",
+                    "analysis_id": 26806
+                }
+            ]
         },
         {
             "aya_id": 5057,
@@ -32,12 +49,29 @@
             "sajda": false,
             "transliteration": "Fee kitaabim maknoon",
             "tajweed_text": "فِى كِتَ[n[ـٰ][a:13291[بٍ م]َّكْن[p[ُو]نٍ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "In",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 2,
+                    "arabic": "كِتٰبٍ",
+                    "transliteration": "kitābin",
+                    "translation": "a Book",
+                    "analysis_id": 5309
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَّكْنُوْنٍۙ",
+                    "transliteration": "maknūnin",
+                    "translation": "well-guarded",
+                    "analysis_id": 26807
+                }
+            ]
         },
         {
             "aya_id": 5058,
@@ -51,12 +85,36 @@
             "sajda": false,
             "transliteration": "Laa yamassuhooo illal mutahharoon",
             "tajweed_text": "لَّا يَمَسُّهُ[o[ۥٓ] إِلَّا [h:13292[ٱ]لْمُطَهَّر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَّا",
+                    "transliteration": "lā",
+                    "translation": "None",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَمَسُّهٗٓ",
+                    "transliteration": "yamassuhu",
+                    "translation": "touch it",
+                    "analysis_id": 26808
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمُطَهَّرُوْنَۙ",
+                    "transliteration": "l-muṭaharūna",
+                    "translation": "the purified",
+                    "analysis_id": 26809
+                }
+            ]
         },
         {
             "aya_id": 5059,
@@ -70,12 +128,36 @@
             "sajda": false,
             "transliteration": "Tanzeelum mir Rabbil'aalameen",
             "tajweed_text": "تَ[f:11949[نز]ِي[a:12045[لٌ م]ّ[u:4772[ِن ر]َّبِّ [h:4[ٱ]لْعَ[n[ـٰ]لَم[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "تَنْزِيْلٌ",
+                    "transliteration": "tanzīlun",
+                    "translation": "A Revelation",
+                    "analysis_id": 24571
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَّبِّ",
+                    "transliteration": "rabbi",
+                    "translation": "(the) Lord",
+                    "analysis_id": 7
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْعٰلَمِيْنَ",
+                    "transliteration": "l-ʿālamīna",
+                    "translation": "(of) the worlds",
+                    "analysis_id": 642
+                }
+            ]
         },
         {
             "aya_id": 5060,
@@ -89,12 +171,36 @@
             "sajda": false,
             "transliteration": "Afabihaazal hadeesi antum mudhinoon",
             "tajweed_text": "أَفَبِهَ[n[ـٰ]ذَا [h:13293[ٱ]لْحَدِيثِ أَ[f:428[نت][w:13294[ُم م]ُّ[q:13295[دْ]هِن[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَفَبِهٰذَا",
+                    "transliteration": "afabihādhā",
+                    "translation": "Then is it to this",
+                    "analysis_id": 26810
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْحَدِيْثِ",
+                    "transliteration": "l-ḥadīthi",
+                    "translation": "statement",
+                    "analysis_id": 17657
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنْتُمْ",
+                    "transliteration": "antum",
+                    "translation": "that you",
+                    "analysis_id": 1133
+                },
+                {
+                    "position": 4,
+                    "arabic": "مُّدْهِنُوْنَ",
+                    "transliteration": "mud'hinūna",
+                    "translation": "(are) indifferent",
+                    "analysis_id": 26811
+                }
+            ]
         },
         {
             "aya_id": 5061,
@@ -108,12 +214,36 @@
             "sajda": false,
             "transliteration": "Wa taj'aloona rizqakum annakum tukazziboon",
             "tajweed_text": "وَتَ[q:11964[جْ]عَلُونَ رِزْقَكُمْ أَ[g[نّ]َكُمْ تُكَذِّب[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَتَجْعَلُوْنَ",
+                    "transliteration": "watajʿalūna",
+                    "translation": "And you make",
+                    "analysis_id": 26812
+                },
+                {
+                    "position": 2,
+                    "arabic": "رِزْقَكُمْ",
+                    "transliteration": "riz'qakum",
+                    "translation": "your provision",
+                    "analysis_id": 26813
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنَّكُمْ",
+                    "transliteration": "annakum",
+                    "translation": "that you",
+                    "analysis_id": 10289
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبُوْنَ",
+                    "transliteration": "tukadhibūna",
+                    "translation": "deny",
+                    "analysis_id": 20164
+                }
+            ]
         },
         {
             "aya_id": 5062,
@@ -127,12 +257,36 @@
             "sajda": false,
             "transliteration": "Falaw laaa izaa balaghatil hulqoom",
             "tajweed_text": "فَلَوْل[o[َآ] إِذَا بَلَغَتِ [h:13296[ٱ]لْحُلْق[p[ُو]مَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلَوْلَآ",
+                    "transliteration": "falawlā",
+                    "translation": "Then why not",
+                    "analysis_id": 9996
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 3,
+                    "arabic": "بَلَغَتِ",
+                    "transliteration": "balaghati",
+                    "translation": "it reaches",
+                    "analysis_id": 26814
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْحُلْقُوْمَۙ",
+                    "transliteration": "l-ḥul'qūma",
+                    "translation": "the throat",
+                    "analysis_id": 26815
+                }
+            ]
         },
         {
             "aya_id": 5063,
@@ -146,12 +300,29 @@
             "sajda": false,
             "transliteration": "Wa antum heena'izin tanzuroon",
             "tajweed_text": "وَأَ[f:98[نت]ُمْ حِينَئِ[f:13297[ذٍ ت]َ[f:248[نظ]ُر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَنْتُمْ",
+                    "transliteration": "wa-antum",
+                    "translation": "And you",
+                    "analysis_id": 16849
+                },
+                {
+                    "position": 2,
+                    "arabic": "حِيْنَىِٕذٍ",
+                    "transliteration": "ḥīna-idhin",
+                    "translation": "(at) that time",
+                    "analysis_id": 26816
+                },
+                {
+                    "position": 3,
+                    "arabic": "تَنْظُرُوْنَۙ",
+                    "transliteration": "tanẓurūna",
+                    "translation": "look on",
+                    "analysis_id": 26817
+                }
+            ]
         },
         {
             "aya_id": 5064,
@@ -165,12 +336,57 @@
             "sajda": false,
             "transliteration": "Wa nahnu aqrabu ilaihi minkum wa laakil laa tubsiroon",
             "tajweed_text": "وَنَحْنُ أَ[q:1355[قْ]رَبُ إِلَيْهِ مِ[f:344[نك]ُمْ وَلَ[n[ـٰ]ك[u:46[ِن ل]َّا تُ[q:8674[بْ]صِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَنَحْنُ",
+                    "transliteration": "wanaḥnu",
+                    "translation": "And We",
+                    "analysis_id": 6221
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَقْرَبُ",
+                    "transliteration": "aqrabu",
+                    "translation": "(are) nearer",
+                    "analysis_id": 8603
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِلَيْهِ",
+                    "transliteration": "ilayhi",
+                    "translation": "to him",
+                    "analysis_id": 638
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْكُمْ",
+                    "transliteration": "minkum",
+                    "translation": "than you",
+                    "analysis_id": 884
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَلٰكِنْ",
+                    "transliteration": "walākin",
+                    "translation": "but",
+                    "analysis_id": 13952
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَّا",
+                    "transliteration": "lā",
+                    "translation": "you (do) not see",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 7,
+                    "arabic": "تُبْصِرُوْنَ",
+                    "transliteration": "tub'ṣirūna",
+                    "translation": "you (do) not see",
+                    "analysis_id": 19191
+                }
+            ]
         },
         {
             "aya_id": 5065,
@@ -184,12 +400,43 @@
             "sajda": false,
             "transliteration": "Falaw laaa in kuntum ghira madeeneen",
             "tajweed_text": "فَلَوْل[o[َآ] إِ[f:109[ن ك]ُ[f:100[نت]ُمْ غَيْرَ مَدِين[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلَوْلَآ",
+                    "transliteration": "falawlā",
+                    "translation": "Then why not",
+                    "analysis_id": 9996
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you are",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 4,
+                    "arabic": "غَيْرَ",
+                    "transliteration": "ghayra",
+                    "translation": "not",
+                    "analysis_id": 762
+                },
+                {
+                    "position": 5,
+                    "arabic": "مَدِيْنِيْنَۙ",
+                    "transliteration": "madīnīna",
+                    "translation": "to be recompensed",
+                    "analysis_id": 26818
+                }
+            ]
         },
         {
             "aya_id": 5066,
@@ -203,12 +450,36 @@
             "sajda": false,
             "transliteration": "Tarji'oonahaaa in kuntum saadiqeen",
             "tajweed_text": "تَرْجِعُونَه[o[َآ] إِ[f:109[ن ك]ُ[f:100[نت]ُمْ صَ[n[ـٰ]دِق[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "تَرْجِعُوْنَهَآ",
+                    "transliteration": "tarjiʿūnahā",
+                    "translation": "Bring it back",
+                    "analysis_id": 26819
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you are",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 4,
+                    "arabic": "صٰدِقِيْنَ",
+                    "transliteration": "ṣādiqīna",
+                    "translation": "truthful",
+                    "analysis_id": 464
+                }
+            ]
         },
         {
             "aya_id": 5067,
@@ -222,12 +493,43 @@
             "sajda": false,
             "transliteration": "Fa ammaaa in kaana minal muqarrabeen",
             "tajweed_text": "فَأَ[g[مّ][o[َآ] إِ[f:2594[ن ك]َانَ مِنَ [h:13298[ٱ]لْمُقَرَّب[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاَمَّآ",
+                    "transliteration": "fa-ammā",
+                    "translation": "Then",
+                    "analysis_id": 26820
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "he was",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمُقَرَّبِيْنَۙ",
+                    "transliteration": "l-muqarabīna",
+                    "translation": "those brought near",
+                    "analysis_id": 4976
+                }
+            ]
         },
         {
             "aya_id": 5068,
@@ -241,12 +543,43 @@
             "sajda": false,
             "transliteration": "Farawhunw wa raihaa nunw wa jannatu na'eem",
             "tajweed_text": "فَرَوْ[a:13299[حٌ و]َرَيْحَا[a:13300[نٌ و]َجَ[g[نّ]َتُ نَع[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَرَوْحٌ",
+                    "transliteration": "farawḥun",
+                    "translation": "Then rest",
+                    "analysis_id": 26821
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَّرَيْحَانٌ",
+                    "transliteration": "warayḥānun",
+                    "translation": "and bounty",
+                    "analysis_id": 26822
+                },
+                {
+                    "position": 3,
+                    "arabic": "ەۙ",
+                    "transliteration": "wajannatu",
+                    "translation": "and a Garden",
+                    "analysis_id": 26823
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَّجَنَّتُ",
+                    "transliteration": "naʿīmin",
+                    "translation": "(of) Pleasure",
+                    "analysis_id": 26824
+                },
+                {
+                    "position": 5,
+                    "arabic": "نَعِيْمٍ",
+                    "transliteration": null,
+                    "translation": "(89)",
+                    "analysis_id": 26825
+                }
+            ]
         },
         {
             "aya_id": 5069,
@@ -260,12 +593,50 @@
             "sajda": false,
             "transliteration": "Wa ammaaa in kaana min as haabil yameen",
             "tajweed_text": "وَأَ[g[مّ][o[َآ] إِ[f:2594[ن ك]َانَ مِنْ أَصْحَ[n[ـٰ]بِ [h:13301[ٱ]لْيَم[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَمَّآ",
+                    "transliteration": "wa-ammā",
+                    "translation": "And",
+                    "analysis_id": 26826
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "he was",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَصْحٰبِ",
+                    "transliteration": "aṣḥābi",
+                    "translation": "(the) companions",
+                    "analysis_id": 1682
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْيَمِيْنِۙ",
+                    "transliteration": "l-yamīni",
+                    "translation": "(of) the right",
+                    "analysis_id": 26743
+                }
+            ]
         },
         {
             "aya_id": 5070,
@@ -279,12 +650,43 @@
             "sajda": false,
             "transliteration": "Fasalaamul laka min as haabil yameen",
             "tajweed_text": "فَسَلَ[n[ـٰ][u:13302[مٌ ل]َّكَ مِنْ أَصْحَ[n[ـٰ]بِ [h:13301[ٱ]لْيَم[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَسَلٰمٌ",
+                    "transliteration": "fasalāmun",
+                    "translation": "Then, peace",
+                    "analysis_id": 26827
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَّكَ",
+                    "transliteration": "laka",
+                    "translation": "for you",
+                    "analysis_id": 719
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "[from]",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَصْحٰبِ",
+                    "transliteration": "aṣḥābi",
+                    "translation": "(the) companions",
+                    "analysis_id": 1682
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْيَمِيْنِۗ",
+                    "transliteration": "l-yamīni",
+                    "translation": "(of) the right",
+                    "analysis_id": 26743
+                }
+            ]
         },
         {
             "aya_id": 5071,
@@ -298,12 +700,50 @@
             "sajda": false,
             "transliteration": "Wa ammaaa in kaana minal mukazzibeenad daaalleen",
             "tajweed_text": "وَأَ[g[مّ][o[َآ] إِ[f:2594[ن ك]َانَ مِنَ [h:13303[ٱ]لْمُكَذِّبِينَ [h:13304[ٱ][l[ل]ضّ[m[َا]ٓلّ[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَمَّآ",
+                    "transliteration": "wa-ammā",
+                    "translation": "But",
+                    "analysis_id": 26826
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "he was",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمُكَذِّبِيْنَ",
+                    "transliteration": "l-mukadhibīna",
+                    "translation": "the deniers",
+                    "analysis_id": 5738
+                },
+                {
+                    "position": 6,
+                    "arabic": "الضَّاۤلِّيْنَۙ",
+                    "transliteration": "l-ḍālīna",
+                    "translation": "the astray",
+                    "analysis_id": 26828
+                }
+            ]
         },
         {
             "aya_id": 5072,
@@ -317,12 +757,29 @@
             "sajda": false,
             "transliteration": "Fanuzulum min hameem",
             "tajweed_text": "فَنُزُ[a:13305[لٌ م]ِّنْ حَم[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَنُزُلٌ",
+                    "transliteration": "fanuzulun",
+                    "translation": "Then, hospitality",
+                    "analysis_id": 26829
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 3,
+                    "arabic": "حَمِيْمٍۙ",
+                    "transliteration": "ḥamīmin",
+                    "translation": "(the) scalding water",
+                    "analysis_id": 23624
+                }
+            ]
         },
         {
             "aya_id": 5073,
@@ -336,12 +793,22 @@
             "sajda": false,
             "transliteration": "Wa tasliyatu jaheem",
             "tajweed_text": "وَتَصْلِيَةُ جَح[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّتَصْلِيَةُ",
+                    "transliteration": "wataṣliyatu",
+                    "translation": "And burning",
+                    "analysis_id": 26830
+                },
+                {
+                    "position": 2,
+                    "arabic": "جَحِيْمٍ",
+                    "transliteration": "jaḥīmin",
+                    "translation": "(in) Hellfire",
+                    "analysis_id": 26831
+                }
+            ]
         },
         {
             "aya_id": 5074,
@@ -355,12 +822,43 @@
             "sajda": false,
             "transliteration": "Inna haaza lahuwa haqqul yaqeen",
             "tajweed_text": "إِ[g[نّ]َ هَ[n[ـٰ]ذَا لَهُوَ حَقُّ [h:13306[ٱ]لْيَق[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "this",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَهُوَ",
+                    "transliteration": "lahuwa",
+                    "translation": "surely, it",
+                    "analysis_id": 5127
+                },
+                {
+                    "position": 4,
+                    "arabic": "حَقُّ",
+                    "transliteration": "ḥaqqu",
+                    "translation": "(is the) truth",
+                    "analysis_id": 26832
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْيَقِيْنِۚ",
+                    "transliteration": "l-yaqīni",
+                    "translation": "certain",
+                    "analysis_id": 26833
+                }
+            ]
         },
         {
             "aya_id": 5075,
@@ -374,12 +872,43 @@
             "sajda": false,
             "transliteration": "Fasabbih bismi rabbikal 'azeem",
             "tajweed_text": "فَسَبِّحْ بِ[h:13285[ٱ]سْمِ رَبِّكَ [h:13286[ٱ]لْعَظ[p[ِي]مِ",
-            "surah": {
-                "name": "سُورَةُ الوَاقِعَةِ",
-                "englishName": "Al-Waaqia",
-                "englishNameTranslation": "The Inevitable",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَسَبِّحْ",
+                    "transliteration": "fasabbiḥ",
+                    "translation": "So glorify",
+                    "analysis_id": 16559
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِاسْمِ",
+                    "transliteration": "bi-is'mi",
+                    "translation": "(the) name",
+                    "analysis_id": 26800
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْعَظِيْمِ",
+                    "transliteration": "l-ʿaẓīmi",
+                    "translation": "the Most Great",
+                    "analysis_id": 12491
+                },
+                {
+                    "position": 5,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(96)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 5076,
@@ -393,12 +922,71 @@
             "sajda": false,
             "transliteration": "Sabbaha lillaahi maa fissamaawaati wal ardi wa Huwal 'Azeezul Hakeem",
             "tajweed_text": "سَبَّحَ لِلَّهِ مَا فِى [h:609[ٱ][l[ل]سَّمَ[n[ـٰ]و[n[َٲ]تِ وَ[h:177[ٱ]لْأَرْضِ‌ۖ وَهُوَ [h:7045[ٱ]لْعَزِيزُ [h:681[ٱ]لْحَك[p[ِي]مُ",
-            "surah": {
-                "name": "سُورَةُ الحَدِيدِ",
-                "englishName": "Al-Hadid",
-                "englishNameTranslation": "The Iron",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "سَبَّحَ",
+                    "transliteration": "sabbaḥa",
+                    "translation": "Glorifies",
+                    "analysis_id": 26834
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِلّٰهِ",
+                    "transliteration": "lillahi",
+                    "translation": "[to] Allah",
+                    "analysis_id": 6
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "whatever",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 4,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "(is) in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 5,
+                    "arabic": "السَّمٰوٰتِ",
+                    "transliteration": "l-samāwāti",
+                    "translation": "the heavens",
+                    "analysis_id": 1517
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَالْاَرْضِۚ",
+                    "transliteration": "wal-arḍi",
+                    "translation": "and the earth",
+                    "analysis_id": 1650
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَهُوَ",
+                    "transliteration": "wahuwa",
+                    "translation": "and He",
+                    "analysis_id": 8451
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْعَزِيْزُ",
+                    "transliteration": "l-ʿazīzu",
+                    "translation": "(is) the All-Mighty",
+                    "analysis_id": 9697
+                },
+                {
+                    "position": 9,
+                    "arabic": "الْحَكِيْمُ",
+                    "transliteration": "l-ḥakīmu",
+                    "translation": "the All-Wise",
+                    "analysis_id": 474
+                }
+            ]
         },
         {
             "aya_id": 5077,
@@ -412,12 +1000,85 @@
             "sajda": false,
             "transliteration": "Lahoo mulkus samaawaati wal ardi yuhyee wa yumeetu wa Huwa 'alaa kulli shai'in Qadeer",
             "tajweed_text": "لَهُ[n[ۥ] مُلْكُ [h:555[ٱ][l[ل]سَّمَ[n[ـٰ]و[n[َٲ]تِ وَ[h:177[ٱ]لْأَرْضِ‌ۖ يُحْى[n[ِۦ] وَيُمِيتُ‌ۖ وَهُوَ عَلَىٰ كُلِّ ش[f:81[َىْءٍ ق]َد[p[ِي]رٌ",
-            "surah": {
-                "name": "سُورَةُ الحَدِيدِ",
-                "englishName": "Al-Hadid",
-                "englishNameTranslation": "The Iron",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "For Him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 2,
+                    "arabic": "مُلْكُ",
+                    "transliteration": "mul'ku",
+                    "translation": "(is the) dominion",
+                    "analysis_id": 1516
+                },
+                {
+                    "position": 3,
+                    "arabic": "السَّمٰوٰتِ",
+                    "transliteration": "l-samāwāti",
+                    "translation": "(of) the heavens",
+                    "analysis_id": 1517
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَالْاَرْضِۚ",
+                    "transliteration": "wal-arḍi",
+                    "translation": "and the earth",
+                    "analysis_id": 1650
+                },
+                {
+                    "position": 5,
+                    "arabic": "يُحْيٖ",
+                    "transliteration": "yuḥ'yī",
+                    "translation": "He gives life",
+                    "analysis_id": 3982
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَيُمِيْتُۚ",
+                    "transliteration": "wayumītu",
+                    "translation": "and causes death",
+                    "analysis_id": 13621
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَهُوَ",
+                    "transliteration": "wahuwa",
+                    "translation": "and He",
+                    "analysis_id": 8451
+                },
+                {
+                    "position": 8,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "(is) over",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 9,
+                    "arabic": "كُلِّ",
+                    "transliteration": "kulli",
+                    "translation": "all",
+                    "analysis_id": 2225
+                },
+                {
+                    "position": 10,
+                    "arabic": "شَيْءٍ",
+                    "transliteration": "shayin",
+                    "translation": "things",
+                    "analysis_id": 4783
+                },
+                {
+                    "position": 11,
+                    "arabic": "قَدِيْرٌ",
+                    "transliteration": "qadīrun",
+                    "translation": "All-Powerful",
+                    "analysis_id": 6317
+                }
+            ]
         },
         {
             "aya_id": 5078,
@@ -431,12 +1092,71 @@
             "sajda": false,
             "transliteration": "Huwal Awwalu wal'Aakhiru waz Zaahiru wal Baatinu wa huwa bikulli shai'in Aleem",
             "tajweed_text": "هُوَ [h:13307[ٱ]لْأَوَّلُ وَ[h:13308[ٱ]لْأَخِرُ وَ[h:13309[ٱ][l[ل]ظَّ[n[ـٰ]هِرُ وَ[h:13310[ٱ]لْبَاطِنُ‌ۖ وَهُوَ بِكُلِّ شَىْءٍ عَل[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ الحَدِيدِ",
-                "englishName": "Al-Hadid",
-                "englishNameTranslation": "The Iron",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "He",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْاَوَّلُ",
+                    "transliteration": "l-awalu",
+                    "translation": "(is) the First",
+                    "analysis_id": 26835
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَالْاٰخِرُ",
+                    "transliteration": "wal-ākhiru",
+                    "translation": "and the Last",
+                    "analysis_id": 26836
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَالظَّاهِرُ",
+                    "transliteration": "wal-ẓāhiru",
+                    "translation": "and the Apparent",
+                    "analysis_id": 26837
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَالْبَاطِنُۚ",
+                    "transliteration": "wal-bāṭinu",
+                    "translation": "and the Unapparent",
+                    "analysis_id": 26838
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَهُوَ",
+                    "transliteration": "wahuwa",
+                    "translation": "and He",
+                    "analysis_id": 8451
+                },
+                {
+                    "position": 7,
+                    "arabic": "بِكُلِّ",
+                    "transliteration": "bikulli",
+                    "translation": "(is) of every",
+                    "analysis_id": 2024
+                },
+                {
+                    "position": 8,
+                    "arabic": "شَيْءٍ",
+                    "transliteration": "shayin",
+                    "translation": "thing",
+                    "analysis_id": 4783
+                },
+                {
+                    "position": 9,
+                    "arabic": "عَلِيْمٌ",
+                    "transliteration": "ʿalīmun",
+                    "translation": "All-Knower",
+                    "analysis_id": 3265
+                }
+            ]
         }
     ]
 }

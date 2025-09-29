@@ -13,12 +13,22 @@
             "sajda": false,
             "transliteration": "Yaw ayyuhal muzzammil",
             "tajweed_text": "يَ[o[ـٰٓ]أَيُّهَا [h:14020[ٱ]لْمُزَّ[g[مّ]ِلُ",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يٰٓاَيُّهَا",
+                    "transliteration": "yāayyuhā",
+                    "translation": "O you",
+                    "analysis_id": 1470
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمُزَّمِّلُۙ",
+                    "transliteration": "l-muzamilu",
+                    "translation": "who wraps himself",
+                    "analysis_id": 28161
+                }
+            ]
         },
         {
             "aya_id": 5477,
@@ -32,12 +42,36 @@
             "sajda": false,
             "transliteration": "Qumil laila illaa qaleelaa",
             "tajweed_text": "قُمِ [h:14021[ٱ]لَّيْلَ إِلَّا قَلِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُمِ",
+                    "transliteration": "qumi",
+                    "translation": "Stand",
+                    "analysis_id": 28162
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّيْلَ",
+                    "transliteration": "al-layla",
+                    "translation": "(in) the night",
+                    "analysis_id": 4765
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 469
+                },
+                {
+                    "position": 4,
+                    "arabic": "قَلِيْلًاۙ",
+                    "transliteration": "qalīlan",
+                    "translation": "a little",
+                    "analysis_id": 8206
+                }
+            ]
         },
         {
             "aya_id": 5478,
@@ -51,12 +85,43 @@
             "sajda": false,
             "transliteration": "Nisfahooo awinqus minhu qaleelaa",
             "tajweed_text": "نِّصْفَهُ[o[ۥٓ] أَوِ [h:14022[ٱ][f:14023[نق]ُصْ مِنْهُ قَلِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "نِّصْفَهٗٓ",
+                    "transliteration": "niṣ'fahu",
+                    "translation": "Half of it",
+                    "analysis_id": 28163
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَوِ",
+                    "transliteration": "awi",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 3,
+                    "arabic": "انْقُصْ",
+                    "transliteration": "unquṣ",
+                    "translation": "lessen",
+                    "analysis_id": 28164
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْهُ",
+                    "transliteration": "min'hu",
+                    "translation": "from it",
+                    "analysis_id": 3747
+                },
+                {
+                    "position": 5,
+                    "arabic": "قَلِيْلًاۙ",
+                    "transliteration": "qalīlan",
+                    "translation": "a little",
+                    "analysis_id": 8206
+                }
+            ]
         },
         {
             "aya_id": 5479,
@@ -70,12 +135,50 @@
             "sajda": false,
             "transliteration": "Aw zid 'alaihi wa rattilil Qur'aana tarteela",
             "tajweed_text": "أَوْ زِ[q:14024[دْ] عَلَيْهِ وَرَتِّلِ [h:14025[ٱ]لْقُرْءَانَ تَرْتِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "Or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 2,
+                    "arabic": "زِدْ",
+                    "transliteration": "zid",
+                    "translation": "add",
+                    "analysis_id": 28165
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَلَيْهِ",
+                    "transliteration": "ʿalayhi",
+                    "translation": "to it",
+                    "analysis_id": 544
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَرَتِّلِ",
+                    "transliteration": "warattili",
+                    "translation": "and recite",
+                    "analysis_id": 28166
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْقُرْاٰنَ",
+                    "transliteration": "l-qur'āna",
+                    "translation": "the Quran",
+                    "analysis_id": 7491
+                },
+                {
+                    "position": 6,
+                    "arabic": "تَرْتِيْلًاۗ",
+                    "transliteration": "tartīlan",
+                    "translation": "(with) measured rhythmic recitation",
+                    "analysis_id": 28167
+                }
+            ]
         },
         {
             "aya_id": 5480,
@@ -89,12 +192,43 @@
             "sajda": false,
             "transliteration": "Innaa sanulqee 'alika qawalan saqeelaa",
             "tajweed_text": "إِ[g[نّ]َا سَنُلْقِى عَلَيْكَ قَوْل[f:14026[اً ث]َقِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّا",
+                    "transliteration": "innā",
+                    "translation": "Indeed, We",
+                    "analysis_id": 8304
+                },
+                {
+                    "position": 2,
+                    "arabic": "سَنُلْقِيْ",
+                    "transliteration": "sanul'qī",
+                    "translation": "will cast",
+                    "analysis_id": 5830
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَلَيْكَ",
+                    "transliteration": "ʿalayka",
+                    "translation": "upon you",
+                    "analysis_id": 3830
+                },
+                {
+                    "position": 4,
+                    "arabic": "قَوْلًا",
+                    "transliteration": "qawlan",
+                    "translation": "a Word",
+                    "analysis_id": 761
+                },
+                {
+                    "position": 5,
+                    "arabic": "ثَقِيْلًا",
+                    "transliteration": "thaqīlan",
+                    "translation": "heavy",
+                    "analysis_id": 28168
+                }
+            ]
         },
         {
             "aya_id": 5481,
@@ -108,12 +242,64 @@
             "sajda": false,
             "transliteration": "Inn naashi'atal laili hiya ashadddu wat anw wa aqwamu qeelaa",
             "tajweed_text": "إِ[g[نّ]َ نَاشِئَةَ [h:14027[ٱ]لَّيْلِ هِىَ أَشَدُّ وَ[q:14028[طْ]ـ[a:14029[ـًٔا و]َأَ[q:1684[قْ]وَمُ قِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَاشِئَةَ",
+                    "transliteration": "nāshi-ata",
+                    "translation": "(the) rising",
+                    "analysis_id": 28169
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّيْلِ",
+                    "transliteration": "al-layli",
+                    "translation": "(at) the night",
+                    "analysis_id": 2213
+                },
+                {
+                    "position": 4,
+                    "arabic": "هِيَ",
+                    "transliteration": "hiya",
+                    "translation": "it",
+                    "analysis_id": 917
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَشَدُّ",
+                    "transliteration": "ashaddu",
+                    "translation": "(is) very hard",
+                    "analysis_id": 987
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَطْـًٔا",
+                    "transliteration": "waṭan",
+                    "translation": "and most potent",
+                    "analysis_id": 28170
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَّاَقْوَمُ",
+                    "transliteration": "wa-aqwamu",
+                    "translation": "and more suitable",
+                    "analysis_id": 28171
+                },
+                {
+                    "position": 8,
+                    "arabic": "قِيْلًاۗ",
+                    "transliteration": "qīlan",
+                    "translation": "(for) Word",
+                    "analysis_id": 28172
+                }
+            ]
         },
         {
             "aya_id": 5482,
@@ -127,12 +313,50 @@
             "sajda": false,
             "transliteration": "Inna laka fin nahaari sabhan taweelaa",
             "tajweed_text": "إِ[g[نّ]َ لَكَ فِى [h:1829[ٱ][l[ل][g[نّ]َهَارِ سَ[q:14030[بْ][f:14031[حًا ط]َوِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَكَ",
+                    "transliteration": "laka",
+                    "translation": "for you",
+                    "analysis_id": 719
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 4,
+                    "arabic": "النَّهَارِ",
+                    "transliteration": "l-nahāri",
+                    "translation": "the day",
+                    "analysis_id": 4766
+                },
+                {
+                    "position": 5,
+                    "arabic": "سَبْحًا",
+                    "transliteration": "sabḥan",
+                    "translation": "(is) occupation",
+                    "analysis_id": 28173
+                },
+                {
+                    "position": 6,
+                    "arabic": "طَوِيْلًاۗ",
+                    "transliteration": "ṭawīlan",
+                    "translation": "prolonged",
+                    "analysis_id": 28174
+                }
+            ]
         },
         {
             "aya_id": 5483,
@@ -146,12 +370,50 @@
             "sajda": false,
             "transliteration": "Wazkuris ma rabbika wa tabattal ilaihi tabteelaa",
             "tajweed_text": "وَ[h:9999[ٱ]ذْكُرِ [h:14032[ٱ]سْمَ رَبِّكَ وَتَبَتَّلْ إِلَيْهِ تَ[q:14033[بْ]تِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاذْكُرِ",
+                    "transliteration": "wa-udh'kuri",
+                    "translation": "And remember",
+                    "analysis_id": 12345
+                },
+                {
+                    "position": 2,
+                    "arabic": "اسْمَ",
+                    "transliteration": "is'ma",
+                    "translation": "(the) name",
+                    "analysis_id": 10754
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَتَبَتَّلْ",
+                    "transliteration": "watabattal",
+                    "translation": "and devote yourself",
+                    "analysis_id": 28175
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِلَيْهِ",
+                    "transliteration": "ilayhi",
+                    "translation": "to Him",
+                    "analysis_id": 638
+                },
+                {
+                    "position": 6,
+                    "arabic": "تَبْتِيْلًاۗ",
+                    "transliteration": "tabtīlan",
+                    "translation": "(with) devotion",
+                    "analysis_id": 28176
+                }
+            ]
         },
         {
             "aya_id": 5484,
@@ -165,12 +427,71 @@
             "sajda": false,
             "transliteration": "Rabbul mashriqi wal maghriibi laaa ilaaha illaa Huwa fattakhizhu wakeelaa",
             "tajweed_text": "رَّبُّ [h:9739[ٱ]لْمَشْرِقِ وَ[h:904[ٱ]لْمَغْرِبِ ل[o[َآ] إِلَ[n[ـٰ]هَ إِلَّا هُوَ فَ[h:14034[ٱ]تَّخِذْهُ وَكِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "رَبُّ",
+                    "transliteration": "rabbu",
+                    "translation": "(The) Lord",
+                    "analysis_id": 11002
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمَشْرِقِ",
+                    "transliteration": "l-mashriqi",
+                    "translation": "(of) the east",
+                    "analysis_id": 2379
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَالْمَغْرِبِ",
+                    "transliteration": "wal-maghribi",
+                    "translation": "and the west",
+                    "analysis_id": 2380
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَآ",
+                    "transliteration": "lā",
+                    "translation": "(there is) no",
+                    "analysis_id": 3867
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِلٰهَ",
+                    "transliteration": "ilāha",
+                    "translation": "god",
+                    "analysis_id": 3868
+                },
+                {
+                    "position": 6,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 469
+                },
+                {
+                    "position": 7,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "Him",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 8,
+                    "arabic": "فَاتَّخِذْهُ",
+                    "transliteration": "fa-ittakhidh'hu",
+                    "translation": "so take Him",
+                    "analysis_id": 28177
+                },
+                {
+                    "position": 9,
+                    "arabic": "وَكِيْلًا",
+                    "transliteration": "wakīlan",
+                    "translation": "(as) Disposer of Affairs",
+                    "analysis_id": 7910
+                }
+            ]
         },
         {
             "aya_id": 5485,
@@ -184,12 +505,57 @@
             "sajda": false,
             "transliteration": "Wasbir 'alaa maa yaqoo loona wahjurhum hajran jameelaa",
             "tajweed_text": "وَ[h:9999[ٱ]صْبِرْ عَلَىٰ مَا يَقُولُونَ وَ[h:14035[ٱ]هْجُرْهُمْ هَ[q:14036[جْ][f:14037[رًا ج]َمِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاصْبِرْ",
+                    "transliteration": "wa-iṣ'bir",
+                    "translation": "And be patient",
+                    "analysis_id": 14293
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "over",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَقُوْلُوْنَ",
+                    "transliteration": "yaqūlūna",
+                    "translation": "they say",
+                    "analysis_id": 1065
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَاهْجُرْهُمْ",
+                    "transliteration": "wa-uh'jur'hum",
+                    "translation": "and avoid them",
+                    "analysis_id": 28178
+                },
+                {
+                    "position": 6,
+                    "arabic": "هَجْرًا",
+                    "transliteration": "hajran",
+                    "translation": "an avoidance",
+                    "analysis_id": 28179
+                },
+                {
+                    "position": 7,
+                    "arabic": "جَمِيْلًا",
+                    "transliteration": "jamīlan",
+                    "translation": "gracious",
+                    "analysis_id": 22678
+                }
+            ]
         },
         {
             "aya_id": 5486,
@@ -203,12 +569,50 @@
             "sajda": false,
             "transliteration": "Wa zarnee walmukaz zibeena ulin na'mati wa mahhilhum qaleelaa",
             "tajweed_text": "وَذَرْنِى وَ[h:14038[ٱ]لْمُكَذِّبِينَ أُ[s[وْ]لِى [h:14039[ٱ][l[ل][g[نّ]َعْمَةِ وَمَهِّلْهُمْ قَلِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَذَرْنِيْ",
+                    "transliteration": "wadharnī",
+                    "translation": "And leave Me",
+                    "analysis_id": 28180
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَالْمُكَذِّبِيْنَ",
+                    "transliteration": "wal-mukadhibīna",
+                    "translation": "and the deniers",
+                    "analysis_id": 28181
+                },
+                {
+                    "position": 3,
+                    "arabic": "اُولِى",
+                    "transliteration": "ulī",
+                    "translation": "possessors",
+                    "analysis_id": 20287
+                },
+                {
+                    "position": 4,
+                    "arabic": "النَّعْمَةِ",
+                    "transliteration": "l-naʿmati",
+                    "translation": "(of) the ease",
+                    "analysis_id": 28182
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَمَهِّلْهُمْ",
+                    "transliteration": "wamahhil'hum",
+                    "translation": "and allow them respite ",
+                    "analysis_id": 28183
+                },
+                {
+                    "position": 6,
+                    "arabic": "قَلِيْلًا",
+                    "transliteration": "qalīlan",
+                    "translation": "a little",
+                    "analysis_id": 1070
+                }
+            ]
         },
         {
             "aya_id": 5487,
@@ -222,12 +626,36 @@
             "sajda": false,
             "transliteration": "Inna ladainaaa ankaalanw wa jaheemaa",
             "tajweed_text": "إِ[g[نّ]َ لَدَيْن[o[َآ] أَ[f:14040[نك]َال[a:14041[اً و]َجَحِيمًا",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَدَيْنَآ",
+                    "transliteration": "ladaynā",
+                    "translation": "with Us",
+                    "analysis_id": 28184
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنْكَالًا",
+                    "transliteration": "ankālan",
+                    "translation": "(are) shackles",
+                    "analysis_id": 28185
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَّجَحِيْمًاۙ",
+                    "transliteration": "wajaḥīman",
+                    "translation": "and burning fire",
+                    "analysis_id": 28186
+                }
+            ]
         },
         {
             "aya_id": 5488,
@@ -241,12 +669,43 @@
             "sajda": false,
             "transliteration": "Wa ta'aaman zaa ghussa tinw wa'azaaban aleemaa",
             "tajweed_text": "وَطَعَا[f:14042[مًا ذ]َا غُصَّ[a:14043[ةٍ و]َعَذَابًا أَلِيمًا",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّطَعَامًا",
+                    "transliteration": "waṭaʿāman",
+                    "translation": "And food",
+                    "analysis_id": 28187
+                },
+                {
+                    "position": 2,
+                    "arabic": "ذَا",
+                    "transliteration": "dhā",
+                    "translation": "that",
+                    "analysis_id": 9549
+                },
+                {
+                    "position": 3,
+                    "arabic": "غُصَّةٍ",
+                    "transliteration": "ghuṣṣatin",
+                    "translation": "chokes",
+                    "analysis_id": 28188
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَّعَذَابًا",
+                    "transliteration": "waʿadhāban",
+                    "translation": "and a punishment",
+                    "analysis_id": 28189
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَلِيْمًا",
+                    "transliteration": "alīman",
+                    "translation": "painful",
+                    "analysis_id": 8334
+                }
+            ]
         },
         {
             "aya_id": 5489,
@@ -260,12 +719,64 @@
             "sajda": false,
             "transliteration": "Yawma tarjuful ardu waljibaalu wa kaanatil jibaalu kaseebam maheelaa",
             "tajweed_text": "يَوْمَ تَرْجُفُ [h:14044[ٱ]لْأَرْضُ وَ[h:8957[ٱ]لْجِبَالُ وَكَانَتِ [h:14045[ٱ]لْجِبَالُ كَثِي[a:14046[بًا م]َّهِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "yawma",
+                    "translation": "(On the) Day",
+                    "analysis_id": 2352
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَرْجُفُ",
+                    "transliteration": "tarjufu",
+                    "translation": "will quake",
+                    "analysis_id": 28190
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاَرْضُ",
+                    "transliteration": "l-arḍu",
+                    "translation": "the earth",
+                    "analysis_id": 806
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَالْجِبَالُ",
+                    "transliteration": "wal-jibālu",
+                    "translation": "and the mountains",
+                    "analysis_id": 19620
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَكَانَتِ",
+                    "transliteration": "wakānati",
+                    "translation": "and will become",
+                    "analysis_id": 18312
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْجِبَالُ",
+                    "transliteration": "l-jibālu",
+                    "translation": "the mountains",
+                    "analysis_id": 15957
+                },
+                {
+                    "position": 7,
+                    "arabic": "كَثِيْبًا",
+                    "transliteration": "kathīban",
+                    "translation": "a heap of sand",
+                    "analysis_id": 28191
+                },
+                {
+                    "position": 8,
+                    "arabic": "مَّهِيْلًا",
+                    "transliteration": "mahīlan",
+                    "translation": "pouring down",
+                    "analysis_id": 28192
+                }
+            ]
         },
         {
             "aya_id": 5490,
@@ -279,12 +790,99 @@
             "sajda": false,
             "transliteration": "Innaa arsalnaaa ilaikum rasoolan shahidan 'alikum kamaaa arsalnaaa ilaa Fir'awna Rasoolna",
             "tajweed_text": "إِ[g[نّ][o[َآ] أَرْسَلْن[o[َآ] إِلَيْكُمْ رَسُول[f:14047[اً ش]َ[n[ـٰ]هِدًا عَلَيْكُمْ كَم[o[َآ] أَرْسَلْن[o[َآ] إِلَىٰ فِرْعَوْنَ رَسُولاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّآ",
+                    "transliteration": "innā",
+                    "translation": "Indeed, We",
+                    "analysis_id": 1677
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَرْسَلْنَآ",
+                    "transliteration": "arsalnā",
+                    "translation": "[We] have sent",
+                    "analysis_id": 9990
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِلَيْكُمْ",
+                    "transliteration": "ilaykum",
+                    "translation": "to you",
+                    "analysis_id": 6408
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَسُوْلًا",
+                    "transliteration": "rasūlan",
+                    "translation": "a Messenger",
+                    "analysis_id": 1794
+                },
+                {
+                    "position": 5,
+                    "arabic": "ەۙ",
+                    "transliteration": "shāhidan",
+                    "translation": "(as) a witness",
+                    "analysis_id": 28193
+                },
+                {
+                    "position": 6,
+                    "arabic": "شَاهِدًا",
+                    "transliteration": "ʿalaykum",
+                    "translation": "upon you",
+                    "analysis_id": 28194
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَلَيْكُمْ",
+                    "transliteration": "kamā",
+                    "translation": "as",
+                    "analysis_id": 28195
+                },
+                {
+                    "position": 8,
+                    "arabic": "كَمَآ",
+                    "transliteration": "arsalnā",
+                    "translation": "We sent",
+                    "analysis_id": 28196
+                },
+                {
+                    "position": 9,
+                    "arabic": "اَرْسَلْنَآ",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 28197
+                },
+                {
+                    "position": 10,
+                    "arabic": "اِلٰى",
+                    "transliteration": "fir'ʿawna",
+                    "translation": "Firaun",
+                    "analysis_id": 21703
+                },
+                {
+                    "position": 11,
+                    "arabic": "فِرْعَوْنَ",
+                    "transliteration": "rasūlan",
+                    "translation": "a Messenger",
+                    "analysis_id": 28198
+                },
+                {
+                    "position": 12,
+                    "arabic": "رَسُوْلًا",
+                    "transliteration": null,
+                    "translation": "(15)",
+                    "analysis_id": 28199
+                },
+                {
+                    "position": 13,
+                    "arabic": "ۗ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 5491,
@@ -298,12 +896,50 @@
             "sajda": false,
             "transliteration": "Fa'asaa Fir'awnur Rasoola fa akhaznaahu akhzanw wabeelaa",
             "tajweed_text": "فَعَصَىٰ فِرْعَوْنُ [h:14048[ٱ][l[ل]رَّسُولَ فَأَخَذْنَ[n[ـٰ]هُ أَخْ[a:14049[ذًا و]َبِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَعَصٰى",
+                    "transliteration": "faʿaṣā",
+                    "translation": "But disobeyed",
+                    "analysis_id": 28200
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِرْعَوْنُ",
+                    "transliteration": "fir'ʿawnu",
+                    "translation": "Firaun",
+                    "analysis_id": 11707
+                },
+                {
+                    "position": 3,
+                    "arabic": "الرَّسُوْلَ",
+                    "transliteration": "l-rasūla",
+                    "translation": "the Messenger",
+                    "analysis_id": 5062
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَاَخَذْنٰهُ",
+                    "transliteration": "fa-akhadhnāhu",
+                    "translation": "so We seized him",
+                    "analysis_id": 28201
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَخْذًا",
+                    "transliteration": "akhdhan",
+                    "translation": "(with) a seizure",
+                    "analysis_id": 28202
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَّبِيْلًاۚ",
+                    "transliteration": "wabīlan",
+                    "translation": "ruinous",
+                    "analysis_id": 28203
+                }
+            ]
         },
         {
             "aya_id": 5492,
@@ -317,12 +953,64 @@
             "sajda": false,
             "transliteration": "Fakaifa tattaqoona in kafartum yawmany yaj'alul wildaana sheeba",
             "tajweed_text": "فَكَيْفَ تَتَّقُونَ إِ[f:14050[ن ك]َفَرْتُمْ يَوْ[a:14051[مًا ي]َ[q:4388[جْ]عَلُ [h:14052[ٱ]لْوِلْد[n[َٲ]نَ شِيبًا",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَكَيْفَ",
+                    "transliteration": "fakayfa",
+                    "translation": "Then how",
+                    "analysis_id": 4748
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَتَّقُوْنَ",
+                    "transliteration": "tattaqūna",
+                    "translation": "will you guard yourselves",
+                    "analysis_id": 872
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 4,
+                    "arabic": "كَفَرْتُمْ",
+                    "transliteration": "kafartum",
+                    "translation": "you disbelieve",
+                    "analysis_id": 13257
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَوْمًا",
+                    "transliteration": "yawman",
+                    "translation": "a Day",
+                    "analysis_id": 644
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَّجْعَلُ",
+                    "transliteration": "yajʿalu",
+                    "translation": "(that) will make",
+                    "analysis_id": 28152
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْوِلْدَانَ",
+                    "transliteration": "l-wil'dāna",
+                    "translation": "the children",
+                    "analysis_id": 28204
+                },
+                {
+                    "position": 8,
+                    "arabic": "شِيْبًاۖ",
+                    "transliteration": "shīban",
+                    "translation": "gray-haired",
+                    "analysis_id": 28205
+                }
+            ]
         },
         {
             "aya_id": 5493,
@@ -336,12 +1024,50 @@
             "sajda": false,
             "transliteration": "Assamaaa'u munfatirum bih; kaana wa'duhoo maf'oola",
             "tajweed_text": "ٱ[l[ل]سَّم[o[َا]ٓءُ مُ[f:14053[نف]َطِ[i:14054[رُۢ ب]ِه[n[ِۦ]‌ۚ كَانَ وَعْدُهُ[n[ۥ] مَفْعُولاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 2,
+                    "arabic": "ۨالسَّمَاۤءُ",
+                    "transliteration": "munfaṭirun",
+                    "translation": "(will) break apart",
+                    "analysis_id": 28206
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُنْفَطِرٌۢ",
+                    "transliteration": "bihi",
+                    "translation": "therefrom",
+                    "analysis_id": 28207
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِهٖۗ",
+                    "transliteration": "kāna",
+                    "translation": "is",
+                    "analysis_id": 1865
+                },
+                {
+                    "position": 5,
+                    "arabic": "كَانَ",
+                    "transliteration": "waʿduhu",
+                    "translation": "His Promise",
+                    "analysis_id": 28208
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَعْدُهٗ",
+                    "transliteration": "mafʿūlan",
+                    "translation": "to be fulfilled",
+                    "analysis_id": 28209
+                },
+                {
+                    "position": 7,
+                    "arabic": "مَفْعُوْلًا",
+                    "transliteration": null,
+                    "translation": "(18)",
+                    "analysis_id": 7152
+                }
+            ]
         },
         {
             "aya_id": 5494,
@@ -355,12 +1081,85 @@
             "sajda": false,
             "transliteration": "Inna haazihee tazkiratun fa man shaaa'at takhaza ilaa Rabbihee sabeelaa",
             "tajweed_text": "إِ[g[نّ]َ هَ[n[ـٰ]ذِه[n[ِۦ] تَذْكِرَ[f:14055[ةٌ‌ۖ ف]َمَ[f:8041[ن ش][o[َا]ٓءَ [h:14056[ٱ]تَّخَذَ إِلَىٰ رَبِّه[n[ِۦ] سَبِيلاً",
-            "surah": {
-                "name": "سُورَةُ المُزَّمِّلِ",
-                "englishName": "Al-Muzzammil",
-                "englishNameTranslation": "The Enshrouded One",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "هٰذِهٖ",
+                    "transliteration": "hādhihi",
+                    "translation": "this",
+                    "analysis_id": 11475
+                },
+                {
+                    "position": 3,
+                    "arabic": "تَذْكِرَةٌ",
+                    "transliteration": "tadhkiratun",
+                    "translation": "(is) a Reminder",
+                    "analysis_id": 28210
+                },
+                {
+                    "position": 4,
+                    "arabic": "ۚ",
+                    "transliteration": "faman",
+                    "translation": "then whoever",
+                    "analysis_id": 2334
+                },
+                {
+                    "position": 5,
+                    "arabic": "فَمَنْ",
+                    "transliteration": "shāa",
+                    "translation": "wills",
+                    "analysis_id": 3171
+                },
+                {
+                    "position": 6,
+                    "arabic": "شَاۤءَ",
+                    "transliteration": "ittakhadha",
+                    "translation": "(let him) take",
+                    "analysis_id": 28211
+                },
+                {
+                    "position": 7,
+                    "arabic": "اتَّخَذَ",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 28212
+                },
+                {
+                    "position": 8,
+                    "arabic": "اِلٰى",
+                    "transliteration": "rabbihi",
+                    "translation": "his Lord",
+                    "analysis_id": 28213
+                },
+                {
+                    "position": 9,
+                    "arabic": "رَبِّهٖ",
+                    "transliteration": "sabīlan",
+                    "translation": "a way",
+                    "analysis_id": 28214
+                },
+                {
+                    "position": 10,
+                    "arabic": "سَبِيْلًا",
+                    "transliteration": null,
+                    "translation": "(19)",
+                    "analysis_id": 6731
+                },
+                {
+                    "position": 11,
+                    "arabic": "ࣖ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 31
+                }
+            ]
         }
     ]
 }

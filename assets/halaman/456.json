@@ -13,12 +13,78 @@
             "sajda": false,
             "transliteration": "Wa wahabnaa lahoo ahlahoo wa mislahum ma'ahum rahmatam minna wa zikraa li ulil albaab",
             "tajweed_text": "وَوَهَ[q:4212[بْ]نَا لَهُ[o[ۥٓ] أَهْلَهُ[n[ۥ] وَمِثْلَه[w:8834[ُم م]َّعَهُمْ رَحْمَ[a:11254[ةً م]ِّ[g[نّ]َا وَذِكْرَىٰ لِأُ[s[وْ]لِى [h:11555[ٱ]لْأَلْبَ[p[ـٰ][q[ب]ِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَوَهَبْنَا",
+                    "transliteration": "wawahabnā",
+                    "translation": "And We granted",
+                    "analysis_id": 10305
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَهٗٓ",
+                    "transliteration": "lahu",
+                    "translation": "[to] him",
+                    "analysis_id": 3643
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَهْلَهٗ",
+                    "transliteration": "ahlahu",
+                    "translation": "his family",
+                    "analysis_id": 1759
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَمِثْلَهُمْ",
+                    "transliteration": "wamith'lahum",
+                    "translation": "and a like of them",
+                    "analysis_id": 19445
+                },
+                {
+                    "position": 5,
+                    "arabic": "مَّعَهُمْ",
+                    "transliteration": "maʿahum",
+                    "translation": "with them",
+                    "analysis_id": 7343
+                },
+                {
+                    "position": 6,
+                    "arabic": "رَحْمَةً",
+                    "transliteration": "raḥmatan",
+                    "translation": "a Mercy",
+                    "analysis_id": 4588
+                },
+                {
+                    "position": 7,
+                    "arabic": "مِّنَّا",
+                    "transliteration": "minnā",
+                    "translation": "from Us",
+                    "analysis_id": 1777
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَذِكْرٰى",
+                    "transliteration": "wadhik'rā",
+                    "translation": "and a Reminder",
+                    "analysis_id": 14984
+                },
+                {
+                    "position": 9,
+                    "arabic": "لِاُولِى",
+                    "transliteration": "li-ulī",
+                    "translation": "for those of understanding",
+                    "analysis_id": 6319
+                },
+                {
+                    "position": 10,
+                    "arabic": "الْاَلْبَابِ",
+                    "transliteration": "l-albābi",
+                    "translation": "for those of understanding",
+                    "analysis_id": 2449
+                }
+            ]
         },
         {
             "aya_id": 4014,
@@ -32,12 +98,106 @@
             "sajda": false,
             "transliteration": "Wa khuz biyadika dighsan fadrib bihee wa laa tahnas, innaa wajadnaahu saabiraa; ni'mal 'abd; innahooo awwaab",
             "tajweed_text": "وَخُذْ بِيَدِكَ ضِغْ[f:11556[ثًا ف]َ[h:8556[ٱ]ضْرِب بِّه[n[ِۦ] وَلَا تَحْنَثْ‌ۗ إِ[g[نّ]َا وَجَ[q:11557[دْ]نَ[n[ـٰ]هُ صَابِ[a:11558[رًا‌ۚ ن]ِّعْمَ [h:11534[ٱ]لْعَ[q:11535[بْ]دُ‌ۖ إِ[g[نّ]َهُ[o[ۥٓ] أَوّ[p[َا][q[ب]ٌ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَخُذْ",
+                    "transliteration": "wakhudh",
+                    "translation": "And take",
+                    "analysis_id": 23896
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِيَدِكَ",
+                    "transliteration": "biyadika",
+                    "translation": "in your hand",
+                    "analysis_id": 23897
+                },
+                {
+                    "position": 3,
+                    "arabic": "ضِغْثًا",
+                    "transliteration": "ḍigh'than",
+                    "translation": "a bunch",
+                    "analysis_id": 23898
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَاضْرِبْ",
+                    "transliteration": "fa-iḍ'rib",
+                    "translation": "and strike",
+                    "analysis_id": 18924
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِّهٖ",
+                    "transliteration": "bihi",
+                    "translation": "with it",
+                    "analysis_id": 375
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "and (do) not",
+                    "analysis_id": 514
+                },
+                {
+                    "position": 7,
+                    "arabic": "تَحْنَثْ",
+                    "transliteration": "taḥnath",
+                    "translation": "break (your) oath",
+                    "analysis_id": 23899
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۗاِنَّا",
+                    "transliteration": "innā",
+                    "translation": "Indeed, We",
+                    "analysis_id": 155
+                },
+                {
+                    "position": 9,
+                    "arabic": "وَجَدْنٰهُ",
+                    "transliteration": "wajadnāhu",
+                    "translation": "[We] found him",
+                    "analysis_id": 23900
+                },
+                {
+                    "position": 10,
+                    "arabic": "صَابِرًا",
+                    "transliteration": "ṣābiran",
+                    "translation": "patient",
+                    "analysis_id": 18084
+                },
+                {
+                    "position": 11,
+                    "arabic": "ۗنِعْمَ",
+                    "transliteration": "niʿ'ma",
+                    "translation": "an excellent",
+                    "analysis_id": 12550
+                },
+                {
+                    "position": 12,
+                    "arabic": "الْعَبْدُ",
+                    "transliteration": "l-ʿabdu",
+                    "translation": "slave",
+                    "analysis_id": 23861
+                },
+                {
+                    "position": 13,
+                    "arabic": "ۗاِنَّهٗٓ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, he",
+                    "analysis_id": 545
+                },
+                {
+                    "position": 14,
+                    "arabic": "اَوَّابٌ",
+                    "transliteration": "awwābun",
+                    "translation": "repeatedly turned",
+                    "analysis_id": 23806
+                }
+            ]
         },
         {
             "aya_id": 4015,
@@ -51,12 +211,64 @@
             "sajda": false,
             "transliteration": "Wazkur 'ibaadanaaa Ibraaheema wa Is-haaqa wa Ya'qooba ulil-aydee walabsaar",
             "tajweed_text": "وَ[h:9999[ٱ]ذْكُرْ عِبَ[n[ـٰ]دَن[o[َآ] إِ[q:1860[بْ]ر[n[َٲ]هِيمَ وَإِسْحَ[n[ـٰ]قَ وَيَعْقُوبَ أُ[s[وْ]لِى [h:11559[ٱ]لْأَيْدِى وَ[h:11560[ٱ]لْأَ[q:11560[بْ]صَ[p[ـٰ]رِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاذْكُرْ",
+                    "transliteration": "wa-udh'kur",
+                    "translation": "And remember",
+                    "analysis_id": 12345
+                },
+                {
+                    "position": 2,
+                    "arabic": "عِبٰدَنَآ",
+                    "transliteration": "ʿibādanā",
+                    "translation": "Our slaves",
+                    "analysis_id": 23901
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِبْرٰهِيْمَ",
+                    "transliteration": "ib'rāhīma",
+                    "translation": "Ibrahim",
+                    "analysis_id": 8032
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَاِسْحٰقَ",
+                    "transliteration": "wa-is'ḥāqa",
+                    "translation": "and Isaac",
+                    "analysis_id": 1840
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَيَعْقُوْبَ",
+                    "transliteration": "wayaʿqūba",
+                    "translation": "and Ayyub",
+                    "analysis_id": 1872
+                },
+                {
+                    "position": 6,
+                    "arabic": "اُولِى",
+                    "transliteration": "ulī",
+                    "translation": "possessors",
+                    "analysis_id": 23902
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْاَيْدِيْ",
+                    "transliteration": "l-aydī",
+                    "translation": "(of) strength",
+                    "analysis_id": 23903
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَالْاَبْصَارِ",
+                    "transliteration": "wal-abṣāri",
+                    "translation": "and vision",
+                    "analysis_id": 23904
+                }
+            ]
         },
         {
             "aya_id": 4016,
@@ -70,12 +282,43 @@
             "sajda": false,
             "transliteration": "Innaaa akhlasnaahum bi khaalisatin zikrad daar",
             "tajweed_text": "إِ[g[نّ][o[َآ] أَخْلَصْنَ[n[ـٰ]ه[c:11561[ُم ب]ِخَالِصَ[f:11562[ةٍ ذ]ِكْرَى [h:11563[ٱ][l[ل]دّ[p[َا]رِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّآ",
+                    "transliteration": "innā",
+                    "translation": "Indeed, We",
+                    "analysis_id": 1677
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَخْلَصْنٰهُمْ",
+                    "transliteration": "akhlaṣnāhum",
+                    "translation": "[We] chose them",
+                    "analysis_id": 23905
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِخَالِصَةٍ",
+                    "transliteration": "bikhāliṣatin",
+                    "translation": "for an exclusive (quality)",
+                    "analysis_id": 23906
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذِكْرَى",
+                    "transliteration": "dhik'rā",
+                    "translation": "remembrance",
+                    "analysis_id": 23907
+                },
+                {
+                    "position": 5,
+                    "arabic": "الدَّارِۚ",
+                    "transliteration": "l-dāri",
+                    "translation": "(of) the Home",
+                    "analysis_id": 10725
+                }
+            ]
         },
         {
             "aya_id": 4017,
@@ -89,12 +332,43 @@
             "sajda": false,
             "transliteration": "Wa innahum 'indanaa laminal mustafainal akhyaar",
             "tajweed_text": "وَإِ[g[نّ]َهُمْ عِ[f:2359[ند]َنَا لَمِنَ [h:11564[ٱ]لْمُصْطَفَيْنَ [h:11565[ٱ]لْأَخْي[p[َا]رِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِنَّهُمْ",
+                    "transliteration": "wa-innahum",
+                    "translation": "And indeed, they",
+                    "analysis_id": 14761
+                },
+                {
+                    "position": 2,
+                    "arabic": "عِنْدَنَا",
+                    "transliteration": "ʿindanā",
+                    "translation": "to Us",
+                    "analysis_id": 5971
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَمِنَ",
+                    "transliteration": "lamina",
+                    "translation": "(are) from",
+                    "analysis_id": 1812
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمُصْطَفَيْنَ",
+                    "transliteration": "l-muṣ'ṭafayna",
+                    "translation": "the chosen ones",
+                    "analysis_id": 23908
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْاَخْيَارِۗ",
+                    "transliteration": "l-akhyāri",
+                    "translation": "the best",
+                    "analysis_id": 23909
+                }
+            ]
         },
         {
             "aya_id": 4018,
@@ -108,12 +382,64 @@
             "sajda": false,
             "transliteration": "Wazkur Ismaa'eela wal Yasa'a wa Zal-Kifli wa kullum minal akhyaar",
             "tajweed_text": "وَ[h:9999[ٱ]ذْكُرْ إِسْمَ[n[ـٰ]عِيلَ وَ[h:4217[ٱ]لْيَسَعَ وَذَا [h:8836[ٱ]لْكِفْلِ‌ۖ وَكُ[a:11566[لٌّ م]ِّنَ [h:11567[ٱ]لْأَخْي[p[َا]رِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاذْكُرْ",
+                    "transliteration": "wa-udh'kur",
+                    "translation": "And remember",
+                    "analysis_id": 12345
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِسْمٰعِيْلَ",
+                    "transliteration": "is'māʿīla",
+                    "translation": "Ishmael",
+                    "analysis_id": 16289
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَالْيَسَعَ",
+                    "transliteration": "wal-yasaʿa",
+                    "translation": "and Elisha",
+                    "analysis_id": 10328
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَذَا",
+                    "transliteration": "wadhā",
+                    "translation": "and Dhul-kifl",
+                    "analysis_id": 19448
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْكِفْلِ",
+                    "transliteration": "l-kif'li",
+                    "translation": "and Dhul-kifl",
+                    "analysis_id": 23910
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۗوَكُلٌّ",
+                    "transliteration": "wakullun",
+                    "translation": "and all",
+                    "analysis_id": 21482
+                },
+                {
+                    "position": 7,
+                    "arabic": "مِّنَ",
+                    "transliteration": "mina",
+                    "translation": "(are) from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْاَخْيَارِۗ",
+                    "transliteration": "l-akhyāri",
+                    "translation": "the best",
+                    "analysis_id": 23911
+                }
+            ]
         },
         {
             "aya_id": 4019,
@@ -127,12 +453,50 @@
             "sajda": false,
             "transliteration": "Haazaa zikr; wa inna lilmuttaqeena lahusna ma aab",
             "tajweed_text": "هَ[n[ـٰ]ذَا ذِكْ[a:11568[رٌ‌ۚ و]َإِ[g[نّ]َ لِلْمُتَّقِينَ لَحُسْنَ مَــٔ[p[َا][q[ب]ٍ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "This",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 2,
+                    "arabic": "ذِكْرٌ",
+                    "transliteration": "dhik'run",
+                    "translation": "(is) a Reminder",
+                    "analysis_id": 11404
+                },
+                {
+                    "position": 3,
+                    "arabic": "ۗوَاِنَّ",
+                    "transliteration": "wa-inna",
+                    "translation": "And indeed",
+                    "analysis_id": 10606
+                },
+                {
+                    "position": 4,
+                    "arabic": "لِلْمُتَّقِيْنَ",
+                    "transliteration": "lil'muttaqīna",
+                    "translation": "for the righteous",
+                    "analysis_id": 5742
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَحُسْنَ",
+                    "transliteration": "laḥus'na",
+                    "translation": "surely, is a good",
+                    "analysis_id": 23912
+                },
+                {
+                    "position": 6,
+                    "arabic": "مَاٰبٍۙ",
+                    "transliteration": "maābin",
+                    "translation": "place of return",
+                    "analysis_id": 23913
+                }
+            ]
         },
         {
             "aya_id": 4020,
@@ -146,12 +510,43 @@
             "sajda": false,
             "transliteration": "Jannaati 'adnim mufat tahatal lahumul abwaab",
             "tajweed_text": "جَ[g[نّ]َ[n[ـٰ]تِ عَ[q:5720[دْ][a:11569[نٍ م]ُّفَتَّحَ[u:11570[ةً ل]َّهُمُ [h:11571[ٱ]لْأَ[q:11572[بْ]و[p[َٲ][q[ب]ُ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "جَنّٰتِ",
+                    "transliteration": "jannāti",
+                    "translation": "Gardens",
+                    "analysis_id": 9231
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَدْنٍ",
+                    "transliteration": "ʿadnin",
+                    "translation": "(of) Eternity",
+                    "analysis_id": 13308
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُّفَتَّحَةً",
+                    "transliteration": "mufattaḥatan",
+                    "translation": "(will be) opened",
+                    "analysis_id": 23914
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَّهُمُ",
+                    "transliteration": "lahumu",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْاَبْوَابُۚ",
+                    "transliteration": "l-abwābu",
+                    "translation": "the gates",
+                    "analysis_id": 23915
+                }
+            ]
         },
         {
             "aya_id": 4021,
@@ -165,12 +560,57 @@
             "sajda": false,
             "transliteration": "Muttaki'eena feehaa yad'oona feehaa bifaakihatin kaseeratinw wa sharaab",
             "tajweed_text": "مُتَّكِــِٔينَ فِيهَا يَ[q:1240[دْ]عُونَ فِيهَا بِفَ[n[ـٰ]كِهَ[f:11573[ةٍ ك]َثِيرَ[a:11574[ةٍ و]َشَر[p[َا][q[ب]ٍ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مُتَّكِـِٕيْنَ",
+                    "transliteration": "muttakiīna",
+                    "translation": "Reclining",
+                    "analysis_id": 23916
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَدْعُوْنَ",
+                    "transliteration": "yadʿūna",
+                    "translation": "they will call",
+                    "analysis_id": 5483
+                },
+                {
+                    "position": 4,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِفَاكِهَةٍ",
+                    "transliteration": "bifākihatin",
+                    "translation": "for fruit",
+                    "analysis_id": 23917
+                },
+                {
+                    "position": 6,
+                    "arabic": "كَثِيْرَةٍ",
+                    "transliteration": "kathīratin",
+                    "translation": "many",
+                    "analysis_id": 23918
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَّشَرَابٍ",
+                    "transliteration": "washarābin",
+                    "translation": "and drink",
+                    "analysis_id": 23919
+                }
+            ]
         },
         {
             "aya_id": 4022,
@@ -184,12 +624,36 @@
             "sajda": false,
             "transliteration": "Wa 'indahum qaasiraatut tarfi atraab",
             "tajweed_text": "۞ وَعِ[f:11364[ند]َهُمْ قَ[n[ـٰ]صِر[n[َٲ]تُ [h:11365[ٱ][l[ل]طَّرْفِ أَتْر[p[َا][q[ب]ٌ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَعِنْدَهُمْ",
+                    "transliteration": "waʿindahum",
+                    "translation": "And with them",
+                    "analysis_id": 23592
+                },
+                {
+                    "position": 2,
+                    "arabic": "قٰصِرٰتُ",
+                    "transliteration": "qāṣirātu",
+                    "translation": "(will be) companions of modest gaze",
+                    "analysis_id": 23593
+                },
+                {
+                    "position": 3,
+                    "arabic": "الطَّرْفِ",
+                    "transliteration": "l-ṭarfi",
+                    "translation": "(will be) companions of modest gaze",
+                    "analysis_id": 23594
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَتْرَابٌ",
+                    "transliteration": "atrābun",
+                    "translation": "well-matched",
+                    "analysis_id": 23920
+                }
+            ]
         },
         {
             "aya_id": 4023,
@@ -203,12 +667,43 @@
             "sajda": false,
             "transliteration": "Haaza maa too'odoona li Yawmil Hisaab",
             "tajweed_text": "هَ[n[ـٰ]ذَا مَا تُوعَدُونَ لِيَوْمِ [h:11575[ٱ]لْحِس[p[َا][q[ب]ِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "This",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "(is) what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 3,
+                    "arabic": "تُوْعَدُوْنَ",
+                    "transliteration": "tūʿadūna",
+                    "translation": "you are promised",
+                    "analysis_id": 10718
+                },
+                {
+                    "position": 4,
+                    "arabic": "لِيَوْمِ",
+                    "transliteration": "liyawmi",
+                    "translation": "for (the) Day",
+                    "analysis_id": 19328
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْحِسَابِ",
+                    "transliteration": "l-ḥisābi",
+                    "translation": "(of) Account",
+                    "analysis_id": 15911
+                }
+            ]
         },
         {
             "aya_id": 4024,
@@ -222,12 +717,57 @@
             "sajda": false,
             "transliteration": "Inna haazaa larizqunaa maa lahoo min nafaad",
             "tajweed_text": "إِ[g[نّ]َ هَ[n[ـٰ]ذَا لَرِزْقُنَا مَا لَهُ[n[ۥ] م[a:11576[ِن ن]َّف[p[َا][q[د]ٍ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "this",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَرِزْقُنَا",
+                    "transliteration": "lariz'qunā",
+                    "translation": "(is) surely Our provision",
+                    "analysis_id": 23921
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "not",
+                    "analysis_id": 1478
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "for it",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 6,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "any",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 7,
+                    "arabic": "نَّفَادٍۚ",
+                    "transliteration": "nafādin",
+                    "translation": "depletion",
+                    "analysis_id": 23922
+                }
+            ]
         },
         {
             "aya_id": 4025,
@@ -241,12 +781,43 @@
             "sajda": false,
             "transliteration": "Haazaa; wa inna littaagheena lasharra ma-aab",
             "tajweed_text": "هَ[n[ـٰ]ذَا‌ۚ وَإِ[g[نّ]َ لِلطَّ[n[ـٰ]غِينَ لَشَرَّ مَــٔ[p[َا][q[ب]ٍ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "This (is so)",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 2,
+                    "arabic": "ۗوَاِنَّ",
+                    "transliteration": "wa-inna",
+                    "translation": "And indeed",
+                    "analysis_id": 10606
+                },
+                {
+                    "position": 3,
+                    "arabic": "لِلطّٰغِيْنَ",
+                    "transliteration": "lilṭṭāghīna",
+                    "translation": "for the transgressors",
+                    "analysis_id": 23923
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَشَرَّ",
+                    "transliteration": "lasharra",
+                    "translation": "surely (is) an evil",
+                    "analysis_id": 23924
+                },
+                {
+                    "position": 5,
+                    "arabic": "مَاٰبٍۙ",
+                    "transliteration": "maābin",
+                    "translation": "place of return",
+                    "analysis_id": 23913
+                }
+            ]
         },
         {
             "aya_id": 4026,
@@ -260,12 +831,36 @@
             "sajda": false,
             "transliteration": "Jahannama yaslawnahaa fai'sal mihaad",
             "tajweed_text": "جَهَ[g[نّ]َمَ يَصْلَوْنَهَا فَبِئْسَ [h:11577[ٱ]لْمِه[p[َا][q[د]ُ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "جَهَنَّمَۚ",
+                    "transliteration": "jahannama",
+                    "translation": "Hell",
+                    "analysis_id": 12540
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَصْلَوْنَهَاۚ",
+                    "transliteration": "yaṣlawnahā",
+                    "translation": "they will burn therein",
+                    "analysis_id": 16245
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَبِئْسَ",
+                    "transliteration": "fabi'sa",
+                    "translation": "and wretched (is)",
+                    "analysis_id": 23925
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمِهَادُ",
+                    "transliteration": "l-mihādu",
+                    "translation": "the resting place",
+                    "analysis_id": 23926
+                }
+            ]
         },
         {
             "aya_id": 4027,
@@ -279,12 +874,36 @@
             "sajda": false,
             "transliteration": "Haazaa falyazooqoohu hameemunw wa ghassaaq",
             "tajweed_text": "هَ[n[ـٰ]ذَا فَلْيَذُوقُوهُ حَمِي[a:11578[مٌ و]َغَسّ[p[َا][q[ق]ٌ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذَاۙ",
+                    "transliteration": "hādhā",
+                    "translation": "This (is so)",
+                    "analysis_id": 322
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَلْيَذُوْقُوْهُ",
+                    "transliteration": "falyadhūqūhu",
+                    "translation": "Then let them taste it",
+                    "analysis_id": 23927
+                },
+                {
+                    "position": 3,
+                    "arabic": "حَمِيْمٌ",
+                    "transliteration": "ḥamīmun",
+                    "translation": "boiling fluid",
+                    "analysis_id": 23928
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَّغَسَّاقٌۙ",
+                    "transliteration": "waghassāqun",
+                    "translation": "and purulence",
+                    "analysis_id": 23929
+                }
+            ]
         },
         {
             "aya_id": 4028,
@@ -298,12 +917,36 @@
             "sajda": false,
             "transliteration": "Wa aakharu min shak liheee azwaaj",
             "tajweed_text": "وَءَاخَرُ مِ[f:11579[ن ش]َكْلِه[o[ِۦٓ] أَزْو[p[َٲ][q[ج]ٌ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّاٰخَرُ",
+                    "transliteration": "waākharu",
+                    "translation": "And other",
+                    "analysis_id": 23930
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 3,
+                    "arabic": "شَكْلِهٖٓ",
+                    "transliteration": "shaklihi",
+                    "translation": "its type",
+                    "analysis_id": 23931
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَزْوَاجٌۗ",
+                    "transliteration": "azwājun",
+                    "translation": "(of various) kinds",
+                    "analysis_id": 23932
+                }
+            ]
         },
         {
             "aya_id": 4029,
@@ -317,12 +960,85 @@
             "sajda": false,
             "transliteration": "Haazaa fawjum muqtahimum ma'akum laa marhabam bihim; innahum saalun Naar",
             "tajweed_text": "هَ[n[ـٰ]ذَا فَوْ[a:11580[جٌ م]ُّ[q:11581[قْ]تَحِ[a:11582[مٌ م]َّعَكُمْ‌ۖ لَا مَرْحَب[i:11583[َۢا ب]ِهِمْ‌ۚ إِ[g[نّ]َهُمْ صَالُو[s[اْ] [h:11584[ٱ][l[ل][g[نّ][p[َا]رِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "This",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَوْجٌ",
+                    "transliteration": "fawjun",
+                    "translation": "(is) a company",
+                    "analysis_id": 23933
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُّقْتَحِمٌ",
+                    "transliteration": "muq'taḥimun",
+                    "translation": "bursting",
+                    "analysis_id": 23934
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَّعَكُمْۚ",
+                    "transliteration": "maʿakum",
+                    "translation": "(in) with you",
+                    "analysis_id": 13113
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَا",
+                    "transliteration": "marḥaban",
+                    "translation": "welcome",
+                    "analysis_id": 23935
+                },
+                {
+                    "position": 7,
+                    "arabic": "مَرْحَبًا",
+                    "transliteration": "bihim",
+                    "translation": "for them",
+                    "analysis_id": 23936
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۢبِهِمْ",
+                    "transliteration": "innahum",
+                    "translation": "Indeed, they",
+                    "analysis_id": 23937
+                },
+                {
+                    "position": 9,
+                    "arabic": "ۗ",
+                    "transliteration": "ṣālū",
+                    "translation": "(will) burn",
+                    "analysis_id": 23938
+                },
+                {
+                    "position": 10,
+                    "arabic": "اِنَّهُمْ",
+                    "transliteration": "l-nāri",
+                    "translation": "(in) the Fire",
+                    "analysis_id": 23939
+                },
+                {
+                    "position": 11,
+                    "arabic": "صَالُوا",
+                    "transliteration": null,
+                    "translation": "(59)",
+                    "analysis_id": 23940
+                },
+                {
+                    "position": 12,
+                    "arabic": "النَّارِ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 2286
+                }
+            ]
         },
         {
             "aya_id": 4030,
@@ -336,12 +1052,92 @@
             "sajda": false,
             "transliteration": "Qaaloo bal antum laa marhabam bikum; antum qaddamtumoohu lanaa fabi'sal qaraar",
             "tajweed_text": "قَالُو[s[اْ] بَلْ أَ[f:428[نت]ُمْ لَا مَرْحَب[i:11585[َۢا ب]ِكُمْ‌ۖ أَ[f:428[نت]ُمْ قَدَّمْتُمُوهُ لَنَا‌ۖ فَبِئْسَ [h:11586[ٱ]لْقَر[p[َا]رُ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَالُوْا",
+                    "transliteration": "qālū",
+                    "translation": "They say",
+                    "analysis_id": 465
+                },
+                {
+                    "position": 2,
+                    "arabic": "بَلْ",
+                    "transliteration": "bal",
+                    "translation": "Nay",
+                    "analysis_id": 2300
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنْتُمْ",
+                    "transliteration": "antum",
+                    "translation": "You ",
+                    "analysis_id": 1133
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "no",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 5,
+                    "arabic": "مَرْحَبًاۢ",
+                    "transliteration": "marḥaban",
+                    "translation": "welcome",
+                    "analysis_id": 23941
+                },
+                {
+                    "position": 6,
+                    "arabic": "بِكُمْ",
+                    "transliteration": "bikum",
+                    "translation": "for you",
+                    "analysis_id": 675
+                },
+                {
+                    "position": 7,
+                    "arabic": "ۗ",
+                    "transliteration": "antum",
+                    "translation": "You",
+                    "analysis_id": 8730
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَنْتُمْ",
+                    "transliteration": "qaddamtumūhu",
+                    "translation": "brought this",
+                    "analysis_id": 23942
+                },
+                {
+                    "position": 9,
+                    "arabic": "قَدَّمْتُمُوْهُ",
+                    "transliteration": "lanā",
+                    "translation": "upon us",
+                    "analysis_id": 23943
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَنَاۚ",
+                    "transliteration": "fabi'sa",
+                    "translation": "So wretched (is)",
+                    "analysis_id": 6304
+                },
+                {
+                    "position": 11,
+                    "arabic": "فَبِئْسَ",
+                    "transliteration": "l-qarāru",
+                    "translation": "the settlement",
+                    "analysis_id": 23944
+                },
+                {
+                    "position": 12,
+                    "arabic": "الْقَرَارُ",
+                    "transliteration": null,
+                    "translation": "(60)",
+                    "analysis_id": 23945
+                }
+            ]
         },
         {
             "aya_id": 4031,
@@ -355,12 +1151,85 @@
             "sajda": false,
             "transliteration": "Qaaloo Rabbanaa man qaddama lanaa haaza fazidhu 'azaaban di'fan fin Naar",
             "tajweed_text": "قَالُو[s[اْ] رَبَّنَا مَ[f:11587[ن ق]َدَّمَ لَنَا هَ[n[ـٰ]ذَا فَزِ[q:11588[دْ]هُ عَذَا[f:4678[بًا ض]ِعْ[f:11589[فًا ف]ِى [h:4674[ٱ][l[ل][g[نّ][p[َا]رِ",
-            "surah": {
-                "name": "سُورَةُ صٓ",
-                "englishName": "Saad",
-                "englishNameTranslation": "The letter Saad",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَالُوْا",
+                    "transliteration": "qālū",
+                    "translation": "They will say",
+                    "analysis_id": 465
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبَّنَا",
+                    "transliteration": "rabbanā",
+                    "translation": "Our Lord",
+                    "analysis_id": 1775
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "whoever",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 4,
+                    "arabic": "قَدَّمَ",
+                    "transliteration": "qaddama",
+                    "translation": "brought",
+                    "analysis_id": 23946
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَنَا",
+                    "transliteration": "lanā",
+                    "translation": "upon us",
+                    "analysis_id": 802
+                },
+                {
+                    "position": 6,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "this",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 7,
+                    "arabic": "فَزِدْهُ",
+                    "transliteration": "fazid'hu",
+                    "translation": "increase for him",
+                    "analysis_id": 23947
+                },
+                {
+                    "position": 8,
+                    "arabic": "عَذَابًا",
+                    "transliteration": "ʿadhāban",
+                    "translation": "a punishment",
+                    "analysis_id": 5088
+                },
+                {
+                    "position": 9,
+                    "arabic": "ضِعْفًا",
+                    "transliteration": "ḍiʿ'fan",
+                    "translation": "double",
+                    "analysis_id": 11242
+                },
+                {
+                    "position": 10,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 11,
+                    "arabic": "النَّارِ",
+                    "transliteration": "l-nāri",
+                    "translation": "the Fire",
+                    "analysis_id": 569
+                }
+            ]
         }
     ]
 }

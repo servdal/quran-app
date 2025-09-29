@@ -13,12 +13,36 @@
             "sajda": false,
             "transliteration": "Qul huwal laahu ahad",
             "tajweed_text": "قُلْ هُوَ [h:8078[ٱ]للَّهُ أَحَ[q[د]ٌ",
-            "surah": {
-                "name": "سُورَةُ الإِخۡلَاصِ",
-                "englishName": "Al-Ikhlaas",
-                "englishNameTranslation": "Sincerity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "He",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 3,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "(is) Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَحَدٌۚ",
+                    "transliteration": "aḥadun",
+                    "translation": "the One",
+                    "analysis_id": 29083
+                }
+            ]
         },
         {
             "aya_id": 6223,
@@ -32,12 +56,22 @@
             "sajda": false,
             "transliteration": "Allah hus-samad",
             "tajweed_text": "ٱللَّهُ [h:14675[ٱ][l[ل]صَّمَ[q[د]ُ",
-            "surah": {
-                "name": "سُورَةُ الإِخۡلَاصِ",
-                "englishName": "Al-Ikhlaas",
-                "englishNameTranslation": "Sincerity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَللّٰهُ",
+                    "transliteration": "al-lahu",
+                    "translation": "Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 2,
+                    "arabic": "الصَّمَدُۚ",
+                    "transliteration": "l-ṣamadu",
+                    "translation": "the Eternal, the Absolute",
+                    "analysis_id": 29388
+                }
+            ]
         },
         {
             "aya_id": 6224,
@@ -51,12 +85,36 @@
             "sajda": false,
             "transliteration": "Lam yalid wa lam yoolad",
             "tajweed_text": "لَمْ يَلِ[q:14676[دْ] وَلَمْ يُولَ[q:14677[دْ]",
-            "surah": {
-                "name": "سُورَةُ الإِخۡلَاصِ",
-                "englishName": "Al-Ikhlaas",
-                "englishNameTranslation": "Sincerity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "Not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَلِدْ",
+                    "transliteration": "yalid",
+                    "translation": "He begets",
+                    "analysis_id": 29389
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَلَمْ",
+                    "transliteration": "walam",
+                    "translation": "and not",
+                    "analysis_id": 8257
+                },
+                {
+                    "position": 4,
+                    "arabic": "يُوْلَدْۙ",
+                    "transliteration": "yūlad",
+                    "translation": "He is begotten",
+                    "analysis_id": 29390
+                }
+            ]
         },
         {
             "aya_id": 6225,
@@ -70,12 +128,50 @@
             "sajda": false,
             "transliteration": "Wa lam yakul-lahu kufuwan ahad",
             "tajweed_text": "وَلَمْ يَك[u:2596[ُن ل]َّهُ[n[ۥ] كُفُوًا أَحَ[q[د]ُۢ",
-            "surah": {
-                "name": "سُورَةُ الإِخۡلَاصِ",
-                "englishName": "Al-Ikhlaas",
-                "englishNameTranslation": "Sincerity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَمْ",
+                    "transliteration": "walam",
+                    "translation": "And not",
+                    "analysis_id": 8257
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَكُنْ",
+                    "transliteration": "yakun",
+                    "translation": "is",
+                    "analysis_id": 7543
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَّهٗ",
+                    "transliteration": "lahu",
+                    "translation": "for Him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 4,
+                    "arabic": "كُفُوًا",
+                    "transliteration": "kufuwan",
+                    "translation": "equivalent",
+                    "analysis_id": 29391
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَحَدٌ",
+                    "transliteration": "aḥadun",
+                    "translation": "any [one]",
+                    "analysis_id": 7105
+                },
+                {
+                    "position": 6,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(4)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 6226,
@@ -89,12 +185,36 @@
             "sajda": false,
             "transliteration": "Qul a'uzoo bi rabbil-falaq",
             "tajweed_text": "قُلْ أَعُوذُ بِرَبِّ [h:14678[ٱ]لْفَلَ[q[ق]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَلَقِ",
-                "englishName": "Al-Falaq",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَعُوْذُ",
+                    "transliteration": "aʿūdhu",
+                    "translation": "I seek refuge",
+                    "analysis_id": 14595
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِرَبِّ",
+                    "transliteration": "birabbi",
+                    "translation": "in (the) Lord",
+                    "analysis_id": 11705
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْفَلَقِۙ",
+                    "transliteration": "l-falaqi",
+                    "translation": "(of) the dawn",
+                    "analysis_id": 29392
+                }
+            ]
         },
         {
             "aya_id": 6227,
@@ -108,12 +228,36 @@
             "sajda": false,
             "transliteration": "Min sharri ma khalaq",
             "tajweed_text": "مِ[f:14679[ن ش]َرِّ مَا خَلَ[q[ق]َ",
-            "surah": {
-                "name": "سُورَةُ الفَلَقِ",
-                "englishName": "Al-Falaq",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "From",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 2,
+                    "arabic": "شَرِّ",
+                    "transliteration": "sharri",
+                    "translation": "(the) evil",
+                    "analysis_id": 29393
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "(of) what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 4,
+                    "arabic": "خَلَقَۙ",
+                    "transliteration": "khalaqa",
+                    "translation": "He created",
+                    "analysis_id": 27698
+                }
+            ]
         },
         {
             "aya_id": 6228,
@@ -127,12 +271,43 @@
             "sajda": false,
             "transliteration": "Wa min sharri ghasiqin iza waqab",
             "tajweed_text": "وَمِ[f:14680[ن ش]َرِّ غَاسِقٍ إِذَا وَقَ[q[ب]َ",
-            "surah": {
-                "name": "سُورَةُ الفَلَقِ",
-                "englishName": "Al-Falaq",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمِنْ",
+                    "transliteration": "wamin",
+                    "translation": "And from",
+                    "analysis_id": 1783
+                },
+                {
+                    "position": 2,
+                    "arabic": "شَرِّ",
+                    "transliteration": "sharri",
+                    "translation": "(the) evil",
+                    "analysis_id": 29393
+                },
+                {
+                    "position": 3,
+                    "arabic": "غَاسِقٍ",
+                    "transliteration": "ghāsiqin",
+                    "translation": "(of) darkness",
+                    "analysis_id": 29394
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَقَبَۙ",
+                    "transliteration": "waqaba",
+                    "translation": "it spreads",
+                    "analysis_id": 29395
+                }
+            ]
         },
         {
             "aya_id": 6229,
@@ -146,12 +321,43 @@
             "sajda": false,
             "transliteration": "Wa min sharrin-naffaa-thaati fil 'uqad",
             "tajweed_text": "وَمِ[f:14680[ن ش]َرِّ [h:14681[ٱ][l[ل][g[نّ]َفَّ[n[ـٰ]ثَ[n[ـٰ]تِ فِى [h:14682[ٱ]لْعُقَ[q[د]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَلَقِ",
-                "englishName": "Al-Falaq",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمِنْ",
+                    "transliteration": "wamin",
+                    "translation": "And from",
+                    "analysis_id": 1783
+                },
+                {
+                    "position": 2,
+                    "arabic": "شَرِّ",
+                    "transliteration": "sharri",
+                    "translation": "(the) evil",
+                    "analysis_id": 29393
+                },
+                {
+                    "position": 3,
+                    "arabic": "النَّفّٰثٰتِ",
+                    "transliteration": "l-nafāthāti",
+                    "translation": "(of) the blowers",
+                    "analysis_id": 29396
+                },
+                {
+                    "position": 4,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْعُقَدِۙ",
+                    "transliteration": "l-ʿuqadi",
+                    "translation": "the knots",
+                    "analysis_id": 29397
+                }
+            ]
         },
         {
             "aya_id": 6230,
@@ -165,12 +371,50 @@
             "sajda": false,
             "transliteration": "Wa min shar ri haasidin iza hasad",
             "tajweed_text": "وَمِ[f:14680[ن ش]َرِّ حَاسِدٍ إِذَا حَسَ[q[د]َ",
-            "surah": {
-                "name": "سُورَةُ الفَلَقِ",
-                "englishName": "Al-Falaq",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمِنْ",
+                    "transliteration": "wamin",
+                    "translation": "And from",
+                    "analysis_id": 1783
+                },
+                {
+                    "position": 2,
+                    "arabic": "شَرِّ",
+                    "transliteration": "sharri",
+                    "translation": "(the) evil",
+                    "analysis_id": 29393
+                },
+                {
+                    "position": 3,
+                    "arabic": "حَاسِدٍ",
+                    "transliteration": "ḥāsidin",
+                    "translation": "(of) an envier",
+                    "analysis_id": 29398
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 5,
+                    "arabic": "حَسَدَ",
+                    "transliteration": "ḥasada",
+                    "translation": "he envies",
+                    "analysis_id": 29399
+                },
+                {
+                    "position": 6,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(5)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 6231,
@@ -184,12 +428,36 @@
             "sajda": false,
             "transliteration": "Qul a'uzu birabbin naas",
             "tajweed_text": "قُلْ أَعُوذُ بِرَبِّ [h:14683[ٱ][l[ل][g[نّ][p[َا]سِ",
-            "surah": {
-                "name": "سُورَةُ النَّاسِ",
-                "englishName": "An-Naas",
-                "englishNameTranslation": "Mankind",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَعُوْذُ",
+                    "transliteration": "aʿūdhu",
+                    "translation": "I seek refuge",
+                    "analysis_id": 14595
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِرَبِّ",
+                    "transliteration": "birabbi",
+                    "translation": "in (the) Lord",
+                    "analysis_id": 11705
+                },
+                {
+                    "position": 4,
+                    "arabic": "النَّاسِۙ",
+                    "transliteration": "l-nāsi",
+                    "translation": "(of) mankind",
+                    "analysis_id": 3263
+                }
+            ]
         },
         {
             "aya_id": 6232,
@@ -203,12 +471,22 @@
             "sajda": false,
             "transliteration": "Malikin naas",
             "tajweed_text": "مَلِكِ [h:14684[ٱ][l[ل][g[نّ][p[َا]سِ",
-            "surah": {
-                "name": "سُورَةُ النَّاسِ",
-                "englishName": "An-Naas",
-                "englishNameTranslation": "Mankind",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَلِكِ",
+                    "transliteration": "maliki",
+                    "translation": "(The) King",
+                    "analysis_id": 29400
+                },
+                {
+                    "position": 2,
+                    "arabic": "النَّاسِۙ",
+                    "transliteration": "l-nāsi",
+                    "translation": "(of) mankind",
+                    "analysis_id": 3263
+                }
+            ]
         },
         {
             "aya_id": 6233,
@@ -222,12 +500,22 @@
             "sajda": false,
             "transliteration": "Ilaahin naas",
             "tajweed_text": "إِلَ[n[ـٰ]هِ [h:14685[ٱ][l[ل][g[نّ][p[َا]سِ",
-            "surah": {
-                "name": "سُورَةُ النَّاسِ",
-                "englishName": "An-Naas",
-                "englishNameTranslation": "Mankind",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلٰهِ",
+                    "transliteration": "ilāhi",
+                    "translation": "(The) God",
+                    "analysis_id": 21738
+                },
+                {
+                    "position": 2,
+                    "arabic": "النَّاسِۙ",
+                    "transliteration": "l-nāsi",
+                    "translation": "(of) mankind",
+                    "analysis_id": 3263
+                }
+            ]
         },
         {
             "aya_id": 6234,
@@ -241,12 +529,43 @@
             "sajda": false,
             "transliteration": "Min sharril was waasil khannaas",
             "tajweed_text": "مِ[f:14679[ن ش]َرِّ [h:14686[ٱ]لْوَسْوَاسِ [h:14687[ٱ]لْخَ[g[نّ][p[َا]سِ",
-            "surah": {
-                "name": "سُورَةُ النَّاسِ",
-                "englishName": "An-Naas",
-                "englishNameTranslation": "Mankind",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "From",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 2,
+                    "arabic": "شَرِّ",
+                    "transliteration": "sharri",
+                    "translation": "(the) evil",
+                    "analysis_id": 29393
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْوَسْوَاسِ",
+                    "transliteration": "l-waswāsi",
+                    "translation": "(of) the whisperer",
+                    "analysis_id": 29401
+                },
+                {
+                    "position": 4,
+                    "arabic": "ەۙ",
+                    "transliteration": "l-khanāsi",
+                    "translation": "the one who withdraws",
+                    "analysis_id": 29402
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْخَنَّاسِۖ",
+                    "transliteration": null,
+                    "translation": "(4)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 6235,
@@ -260,12 +579,43 @@
             "sajda": false,
             "transliteration": "Al lazee yuwas wisu fee sudoorin naas",
             "tajweed_text": "ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ [h:14688[ٱ][l[ل][g[نّ][p[َا]سِ",
-            "surah": {
-                "name": "سُورَةُ النَّاسِ",
-                "englishName": "An-Naas",
-                "englishNameTranslation": "Mankind",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "The one who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُوَسْوِسُ",
+                    "transliteration": "yuwaswisu",
+                    "translation": "whispers",
+                    "analysis_id": 29403
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 4,
+                    "arabic": "صُدُوْرِ",
+                    "transliteration": "ṣudūri",
+                    "translation": "(the) breasts",
+                    "analysis_id": 21949
+                },
+                {
+                    "position": 5,
+                    "arabic": "النَّاسِۙ",
+                    "transliteration": "l-nāsi",
+                    "translation": "(of) mankind",
+                    "analysis_id": 3263
+                }
+            ]
         },
         {
             "aya_id": 6236,
@@ -279,12 +629,36 @@
             "sajda": false,
             "transliteration": "Minal jinnati wan naas",
             "tajweed_text": "مِنَ [h:6531[ٱ]لْجِ[g[نّ]َةِ وَ[h:824[ٱ][l[ل][g[نّ][p[َا]سِ",
-            "surah": {
-                "name": "سُورَةُ النَّاسِ",
-                "englishName": "An-Naas",
-                "englishNameTranslation": "Mankind",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مِنَ",
+                    "transliteration": "mina",
+                    "translation": "From",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْجِنَّةِ",
+                    "transliteration": "l-jinati",
+                    "translation": "the jinn",
+                    "analysis_id": 14980
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَالنَّاسِ",
+                    "transliteration": "wal-nāsi",
+                    "translation": "and men",
+                    "analysis_id": 2195
+                },
+                {
+                    "position": 4,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(6)",
+                    "analysis_id": 31
+                }
+            ]
         }
     ]
 }

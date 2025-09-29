@@ -13,12 +13,50 @@
             "sajda": false,
             "transliteration": "Afasihrun haazaaaa am antum laa tubsiroon",
             "tajweed_text": "أَفَسِحْرٌ هَ[n[ـٰ]ذ[o[َآ] أَمْ أَ[f:428[نت]ُمْ لَا تُ[q:8674[بْ]صِر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَفَسِحْرٌ",
+                    "transliteration": "afasiḥ'run",
+                    "translation": "Then is this magic",
+                    "analysis_id": 26250
+                },
+                {
+                    "position": 2,
+                    "arabic": "هٰذَآ",
+                    "transliteration": "hādhā",
+                    "translation": "Then is this magic",
+                    "analysis_id": 9755
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَمْ",
+                    "transliteration": "am",
+                    "translation": "or",
+                    "analysis_id": 70
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَنْتُمْ",
+                    "transliteration": "antum",
+                    "translation": "you",
+                    "analysis_id": 1133
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "(do) not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 6,
+                    "arabic": "تُبْصِرُوْنَ",
+                    "transliteration": "tub'ṣirūna",
+                    "translation": "see",
+                    "analysis_id": 19191
+                }
+            ]
         },
         {
             "aya_id": 4751,
@@ -32,12 +70,92 @@
             "sajda": false,
             "transliteration": "Islawhaa fasbirooo aw laa tasbiroo sawaaa'un 'alaikum innamaa tujzawna maa kuntum ta'maloon",
             "tajweed_text": "ٱصْلَوْهَا فَ[h:4855[ٱ]صْبِر[o[ُوٓ][s[اْ] أَوْ لَا تَصْبِرُو[s[اْ] سَو[o[َا]ٓءٌ عَلَيْكُمْ‌ۖ إِ[g[نّ]َمَا تُ[q:4248[جْ]زَوْنَ مَا كُ[f:100[نت]ُمْ تَعْمَل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِصْلَوْهَا",
+                    "transliteration": "iṣ'lawhā",
+                    "translation": "Burn in it",
+                    "analysis_id": 23477
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَاصْبِرُوْٓا",
+                    "transliteration": "fa-iṣ'birū",
+                    "translation": "then be patient",
+                    "analysis_id": 26251
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "(do) not",
+                    "analysis_id": 121
+                },
+                {
+                    "position": 5,
+                    "arabic": "تَصْبِرُوْاۚ",
+                    "transliteration": "taṣbirū",
+                    "translation": "be patient",
+                    "analysis_id": 6291
+                },
+                {
+                    "position": 6,
+                    "arabic": "سَوَاۤءٌ",
+                    "transliteration": "sawāon",
+                    "translation": "(it is) same",
+                    "analysis_id": 68
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَلَيْكُمْۗ",
+                    "transliteration": "ʿalaykum",
+                    "translation": "for you",
+                    "analysis_id": 14466
+                },
+                {
+                    "position": 9,
+                    "arabic": "اِنَّمَا",
+                    "transliteration": "tuj'zawna",
+                    "translation": "you are being recompensed",
+                    "analysis_id": 26252
+                },
+                {
+                    "position": 10,
+                    "arabic": "تُجْزَوْنَ",
+                    "transliteration": "mā",
+                    "translation": "(for) what",
+                    "analysis_id": 26253
+                },
+                {
+                    "position": 11,
+                    "arabic": "مَا",
+                    "transliteration": "kuntum",
+                    "translation": "you used to",
+                    "analysis_id": 492
+                },
+                {
+                    "position": 12,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "taʿmalūna",
+                    "translation": "do",
+                    "analysis_id": 11281
+                },
+                {
+                    "position": 13,
+                    "arabic": "تَعْمَلُوْنَ",
+                    "transliteration": null,
+                    "translation": "(16)",
+                    "analysis_id": 1014
+                }
+            ]
         },
         {
             "aya_id": 4752,
@@ -51,12 +169,43 @@
             "sajda": false,
             "transliteration": "Innal muttaqeena fee jannaatinw wa na'eem",
             "tajweed_text": "إِ[g[نّ]َ [h:7256[ٱ]لْمُتَّقِينَ فِى جَ[g[نّ]َ[n[ـٰ][a:12906[تٍ و]َنَع[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمُتَّقِيْنَ",
+                    "transliteration": "l-mutaqīna",
+                    "translation": "the righteous",
+                    "analysis_id": 5267
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "(will be) in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 4,
+                    "arabic": "جَنّٰتٍ",
+                    "transliteration": "jannātin",
+                    "translation": "Gardens",
+                    "analysis_id": 13304
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَّنَعِيْمٍۙ",
+                    "transliteration": "wanaʿīmin",
+                    "translation": "and pleasure",
+                    "analysis_id": 26254
+                }
+            ]
         },
         {
             "aya_id": 4753,
@@ -70,12 +219,64 @@
             "sajda": false,
             "transliteration": "Faakiheena bimaaa aataahum rabbuhum wa waqaahum rabbuhum 'azaabal jaheem",
             "tajweed_text": "فَ[n[ـٰ]كِهِينَ بِم[o[َآ] ءَاتَ[n[ـٰ]هُمْ رَبُّهُمْ وَوَقَ[n[ـٰ]هُمْ رَبُّهُمْ عَذَابَ [h:11780[ٱ]لْجَح[p[ِي]مِ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاكِهِيْنَ",
+                    "transliteration": "fākihīna",
+                    "translation": "Enjoying",
+                    "analysis_id": 26255
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِمَآ",
+                    "transliteration": "bimā",
+                    "translation": "in what",
+                    "analysis_id": 587
+                },
+                {
+                    "position": 3,
+                    "arabic": "اٰتٰىهُمْ",
+                    "transliteration": "ātāhum",
+                    "translation": "has given them",
+                    "analysis_id": 6110
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَبُّهُمْۚ",
+                    "transliteration": "rabbuhum",
+                    "translation": "their Lord",
+                    "analysis_id": 26256
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَوَقٰىهُمْ",
+                    "transliteration": "wawaqāhum",
+                    "translation": "and protected them",
+                    "analysis_id": 25285
+                },
+                {
+                    "position": 6,
+                    "arabic": "رَبُّهُمْ",
+                    "transliteration": "rabbuhum",
+                    "translation": "their Lord",
+                    "analysis_id": 6355
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَذَابَ",
+                    "transliteration": "ʿadhāba",
+                    "translation": "(from the) punishment",
+                    "analysis_id": 2855
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْجَحِيْمِ",
+                    "transliteration": "l-jaḥīmi",
+                    "translation": "(of) Hellfire",
+                    "analysis_id": 1683
+                }
+            ]
         },
         {
             "aya_id": 4754,
@@ -89,12 +290,50 @@
             "sajda": false,
             "transliteration": "Kuloo washraboo haneee 'am bimaa kuntum ta'maloon",
             "tajweed_text": "كُلُو[s[اْ] وَ[h:300[ٱ]شْرَبُو[s[اْ] هَنِ[o[يٓـ]ـ[i:12907[ـَٔۢا ب]ِمَا كُ[f:100[نت]ُمْ تَعْمَل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كُلُوْا",
+                    "transliteration": "kulū",
+                    "translation": "Eat",
+                    "analysis_id": 2287
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَاشْرَبُوْا",
+                    "transliteration": "wa-ish'rabū",
+                    "translation": "and drink",
+                    "analysis_id": 26257
+                },
+                {
+                    "position": 3,
+                    "arabic": "هَنِيْۤئًا",
+                    "transliteration": "hanīan",
+                    "translation": "(in) satisfaction",
+                    "analysis_id": 26258
+                },
+                {
+                    "position": 4,
+                    "arabic": "ۢبِمَا",
+                    "transliteration": "bimā",
+                    "translation": "for what",
+                    "analysis_id": 7268
+                },
+                {
+                    "position": 5,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you used to",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 6,
+                    "arabic": "تَعْمَلُوْنَۙ",
+                    "transliteration": "taʿmalūna",
+                    "translation": "do",
+                    "analysis_id": 5983
+                }
+            ]
         },
         {
             "aya_id": 4755,
@@ -108,12 +347,57 @@
             "sajda": false,
             "transliteration": "Muttaki'eena 'alaa sururim masfoofatinw wa zawwaj naahum bihoorin 'een",
             "tajweed_text": "مُتَّكِــِٔينَ عَلَىٰ سُرُ[a:12908[رٍ م]َّصْفُوفَ[a:12909[ةٍ‌ۖ و]َزَوَّ[q:12381[جْ]نَ[n[ـٰ]ه[c:12382[ُم ب]ِحُورٍ ع[p[ِي]نٍ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مُتَّكِـِٕيْنَ",
+                    "transliteration": "muttakiīna",
+                    "translation": "Reclining",
+                    "analysis_id": 23916
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "on",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 3,
+                    "arabic": "سُرُرٍ",
+                    "transliteration": "sururin",
+                    "translation": "thrones",
+                    "analysis_id": 16455
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَّصْفُوْفَةٍۚ",
+                    "transliteration": "maṣfūfatin",
+                    "translation": "lined up",
+                    "analysis_id": 26259
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَزَوَّجْنٰهُمْ",
+                    "transliteration": "wazawwajnāhum",
+                    "translation": "and We will marry them",
+                    "analysis_id": 25277
+                },
+                {
+                    "position": 6,
+                    "arabic": "بِحُوْرٍ",
+                    "transliteration": "biḥūrin",
+                    "translation": "to fair ones",
+                    "analysis_id": 25278
+                },
+                {
+                    "position": 7,
+                    "arabic": "عِيْنٍ",
+                    "transliteration": "ʿīnin",
+                    "translation": "(with) large eyes",
+                    "analysis_id": 26260
+                }
+            ]
         },
         {
             "aya_id": 4756,
@@ -127,12 +411,141 @@
             "sajda": false,
             "transliteration": "Wallazeena aamanoo wattaba'at hum zurriyyatuhum bieemaanin alhaqnaa bihim zurriyyatahum wa maaa alatnaahum min 'amalihim min shai'; kullum ri'im bimaa kasaba raheen",
             "tajweed_text": "وَ[h:9999[ٱ]لَّذِينَ ءَامَنُو[s[اْ] وَ[h:12910[ٱ]تَّبَعَتْهُمْ ذُرِّيَّتُه[c:12911[ُم ب]ِإِيمَ[n[ـٰ]نٍ أَلْحَ[q:12912[قْ]نَا بِهِمْ ذُرِّيَّتَهُمْ وَم[o[َآ] أَلَتْنَ[n[ـٰ]ه[w:12913[ُم م]ِّنْ عَمَلِه[w:12914[ِم م]ِّ[f:2103[ن ش][f:12915[َىْءٍ‌ۚ ك]ُلُّ [h:12916[ٱ]مْرِى[i:12917[ِٕۭ ب]ِمَا كَسَبَ رَه[p[ِي]نٌ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالَّذِيْنَ",
+                    "transliteration": "wa-alladhīna",
+                    "translation": "And those who",
+                    "analysis_id": 48
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰمَنُوْا",
+                    "transliteration": "āmanū",
+                    "translation": "believed",
+                    "analysis_id": 99
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَاتَّبَعَتْهُمْ",
+                    "transliteration": "wa-ittabaʿathum",
+                    "translation": "and followed them",
+                    "analysis_id": 26261
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذُرِّيَّتُهُمْ",
+                    "transliteration": "dhurriyyatuhum",
+                    "translation": "their offspring",
+                    "analysis_id": 26262
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِاِيْمَانٍ",
+                    "transliteration": "biīmānin",
+                    "translation": "in faith",
+                    "analysis_id": 26263
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَلْحَقْنَا",
+                    "transliteration": "alḥaqnā",
+                    "translation": "We will join",
+                    "analysis_id": 26264
+                },
+                {
+                    "position": 7,
+                    "arabic": "بِهِمْ",
+                    "transliteration": "bihim",
+                    "translation": "with them",
+                    "analysis_id": 2267
+                },
+                {
+                    "position": 8,
+                    "arabic": "ذُرِّيَّتَهُمْ",
+                    "transliteration": "dhurriyyatahum",
+                    "translation": "their offspring",
+                    "analysis_id": 12127
+                },
+                {
+                    "position": 9,
+                    "arabic": "وَمَآ",
+                    "transliteration": "wamā",
+                    "translation": "and not",
+                    "analysis_id": 12997
+                },
+                {
+                    "position": 10,
+                    "arabic": "اَلَتْنٰهُمْ",
+                    "transliteration": "alatnāhum",
+                    "translation": "We will deprive them",
+                    "analysis_id": 26265
+                },
+                {
+                    "position": 11,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 12,
+                    "arabic": "عَمَلِهِمْ",
+                    "transliteration": "ʿamalihim",
+                    "translation": "their deeds",
+                    "analysis_id": 26266
+                },
+                {
+                    "position": 13,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "(in) any",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 14,
+                    "arabic": "شَيْءٍۚ",
+                    "transliteration": "shayin",
+                    "translation": "thing",
+                    "analysis_id": 1591
+                },
+                {
+                    "position": 16,
+                    "arabic": "كُلُّ",
+                    "transliteration": "im'ri-in",
+                    "translation": "person",
+                    "analysis_id": 20235
+                },
+                {
+                    "position": 17,
+                    "arabic": "امْرِئٍ",
+                    "transliteration": "bimā",
+                    "translation": "for what",
+                    "analysis_id": 26267
+                },
+                {
+                    "position": 18,
+                    "arabic": "ۢبِمَا",
+                    "transliteration": "kasaba",
+                    "translation": "he earned",
+                    "analysis_id": 26268
+                },
+                {
+                    "position": 19,
+                    "arabic": "كَسَبَ",
+                    "transliteration": "rahīnun",
+                    "translation": "(is) pledged",
+                    "analysis_id": 26269
+                },
+                {
+                    "position": 20,
+                    "arabic": "رَهِيْنٌ",
+                    "transliteration": null,
+                    "translation": "(21)",
+                    "analysis_id": 26270
+                }
+            ]
         },
         {
             "aya_id": 4757,
@@ -146,12 +559,43 @@
             "sajda": false,
             "transliteration": "Wa amdadnaahum bifaa kihatinw wa lahmim mimmaa yashtahoon",
             "tajweed_text": "وَأَمْدَ[q:12918[دْ]نَ[n[ـٰ]ه[c:12919[ُم ب]ِفَ[n[ـٰ]كِهَ[a:12920[ةٍ و]َلَحْ[a:12921[مٍ م]ِّ[g[مّ]َا يَشْتَه[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَمْدَدْنٰهُمْ",
+                    "transliteration": "wa-amdadnāhum",
+                    "translation": "And We will provide them",
+                    "analysis_id": 26271
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِفَاكِهَةٍ",
+                    "transliteration": "bifākihatin",
+                    "translation": "with fruit",
+                    "analysis_id": 26272
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَّلَحْمٍ",
+                    "transliteration": "walaḥmin",
+                    "translation": "and meat",
+                    "analysis_id": 26273
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِّمَّا",
+                    "transliteration": "mimmā",
+                    "translation": "from what",
+                    "analysis_id": 282
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَشْتَهُوْنَ",
+                    "transliteration": "yashtahūna",
+                    "translation": "they desire",
+                    "analysis_id": 16772
+                }
+            ]
         },
         {
             "aya_id": 4758,
@@ -165,12 +609,64 @@
             "sajda": false,
             "transliteration": "Yatanaaza'oona feehaa kaasal laa laghwun feehaa wa laa taaseem",
             "tajweed_text": "يَتَنَ[n[ـٰ]زَعُونَ فِيهَا كَأْ[u:12922[سًا ل]َّا لَغْ[f:12923[وٌ ف]ِيهَا وَلَا تَأْث[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَتَنَازَعُوْنَ",
+                    "transliteration": "yatanāzaʿūna",
+                    "translation": "They will pass to one another",
+                    "analysis_id": 17773
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَأْسًا",
+                    "transliteration": "kasan",
+                    "translation": "a cup",
+                    "analysis_id": 26274
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَّا",
+                    "transliteration": "lā",
+                    "translation": "no",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَغْوٌ",
+                    "transliteration": "laghwun",
+                    "translation": "ill speech",
+                    "analysis_id": 26275
+                },
+                {
+                    "position": 6,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "and no",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 8,
+                    "arabic": "تَأْثِيْمٌ",
+                    "transliteration": "tathīmun",
+                    "translation": "sin",
+                    "analysis_id": 26276
+                }
+            ]
         },
         {
             "aya_id": 4759,
@@ -184,12 +680,57 @@
             "sajda": false,
             "transliteration": "Wa yatoofu 'alaihim ghilmaanul lahum ka annahum lu'lu'um maknoon",
             "tajweed_text": "۞ وَيَطُوفُ عَلَيْهِمْ غِلْمَا[u:12924[نٌ ل]َّهُمْ كَأَ[g[نّ]َهُمْ لُؤْلُ[a:12925[ؤٌ م]َّكْن[p[ُو]نٌ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيَطُوْفُ",
+                    "transliteration": "wayaṭūfu",
+                    "translation": "And will circulate",
+                    "analysis_id": 26277
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلَيْهِمْ",
+                    "transliteration": "ʿalayhim",
+                    "translation": "among them",
+                    "analysis_id": 24
+                },
+                {
+                    "position": 3,
+                    "arabic": "غِلْمَانٌ",
+                    "transliteration": "ghil'mānun",
+                    "translation": "boys",
+                    "analysis_id": 26278
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَّهُمْ",
+                    "transliteration": "lahum",
+                    "translation": "for them",
+                    "analysis_id": 120
+                },
+                {
+                    "position": 5,
+                    "arabic": "كَاَنَّهُمْ",
+                    "transliteration": "ka-annahum",
+                    "translation": "as if they (were)",
+                    "analysis_id": 26279
+                },
+                {
+                    "position": 6,
+                    "arabic": "لُؤْلُؤٌ",
+                    "transliteration": "lu'lu-on",
+                    "translation": "pearls",
+                    "analysis_id": 26280
+                },
+                {
+                    "position": 7,
+                    "arabic": "مَّكْنُوْنٌۚ",
+                    "transliteration": "maknūnun",
+                    "translation": "well-protected",
+                    "analysis_id": 26281
+                }
+            ]
         },
         {
             "aya_id": 4760,
@@ -203,12 +744,43 @@
             "sajda": false,
             "transliteration": "Wa aqbala ba'duhum 'alaa ba'diny yatasaaa'aloon",
             "tajweed_text": "وَأَ[q:11343[قْ]بَلَ بَعْضُهُمْ عَلَىٰ بَعْ[a:11344[ضٍ ي]َتَس[o[َا]ٓءَل[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَقْبَلَ",
+                    "transliteration": "wa-aqbala",
+                    "translation": "And will approach",
+                    "analysis_id": 23562
+                },
+                {
+                    "position": 2,
+                    "arabic": "بَعْضُهُمْ",
+                    "transliteration": "baʿḍuhum",
+                    "translation": "some of them",
+                    "analysis_id": 1036
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 4,
+                    "arabic": "بَعْضٍ",
+                    "transliteration": "baʿḍin",
+                    "translation": "others",
+                    "analysis_id": 1037
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَّتَسَاۤءَلُوْنَ",
+                    "transliteration": "yatasāalūna",
+                    "translation": "inquiring",
+                    "analysis_id": 20160
+                }
+            ]
         },
         {
             "aya_id": 4761,
@@ -222,12 +794,57 @@
             "sajda": false,
             "transliteration": "Qaalooo innaa kunnaa qablu feee ahlinaa mushfiqeen",
             "tajweed_text": "قَال[o[ُوٓ][s[اْ] إِ[g[نّ]َا كُ[g[نّ]َا قَ[q:129[بْ]لُ ف[o[ِىٓ] أَهْلِنَا مُشْفِق[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَالُوْٓا",
+                    "transliteration": "qālū",
+                    "translation": "They will say",
+                    "analysis_id": 125
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنَّا",
+                    "transliteration": "innā",
+                    "translation": "Indeed, we",
+                    "analysis_id": 8304
+                },
+                {
+                    "position": 3,
+                    "arabic": "كُنَّا",
+                    "transliteration": "kunnā",
+                    "translation": "[we] were",
+                    "analysis_id": 9870
+                },
+                {
+                    "position": 4,
+                    "arabic": "قَبْلُ",
+                    "transliteration": "qablu",
+                    "translation": "before",
+                    "analysis_id": 8320
+                },
+                {
+                    "position": 5,
+                    "arabic": "فِيْٓ",
+                    "transliteration": "fī",
+                    "translation": "among",
+                    "analysis_id": 210
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَهْلِنَا",
+                    "transliteration": "ahlinā",
+                    "translation": "our families",
+                    "analysis_id": 26282
+                },
+                {
+                    "position": 7,
+                    "arabic": "مُشْفِقِيْنَ",
+                    "transliteration": "mush'fiqīna",
+                    "translation": "fearful",
+                    "analysis_id": 17978
+                }
+            ]
         },
         {
             "aya_id": 4762,
@@ -241,12 +858,50 @@
             "sajda": false,
             "transliteration": "Famannnal laahu 'alainaa wa waqaanaa 'azaabas samoom",
             "tajweed_text": "فَمَ[g[نّ]َ [h:3045[ٱ]للَّهُ عَلَيْنَا وَوَقَ[n[ـٰ]نَا عَذَابَ [h:12926[ٱ][l[ل]سَّم[p[ُو]مِ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَمَنَّ",
+                    "transliteration": "famanna",
+                    "translation": "But Allah conferred favor",
+                    "analysis_id": 26283
+                },
+                {
+                    "position": 2,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "But Allah conferred favor",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَلَيْنَا",
+                    "transliteration": "ʿalaynā",
+                    "translation": "upon us",
+                    "analysis_id": 1260
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَوَقٰىنَا",
+                    "transliteration": "wawaqānā",
+                    "translation": "and protected us",
+                    "analysis_id": 26284
+                },
+                {
+                    "position": 5,
+                    "arabic": "عَذَابَ",
+                    "transliteration": "ʿadhāba",
+                    "translation": "(from the) punishment",
+                    "analysis_id": 2855
+                },
+                {
+                    "position": 6,
+                    "arabic": "السَّمُوْمِ",
+                    "transliteration": "l-samūmi",
+                    "translation": "(of) the Scorching Fire",
+                    "analysis_id": 16420
+                }
+            ]
         },
         {
             "aya_id": 4763,
@@ -260,12 +915,71 @@
             "sajda": false,
             "transliteration": "Innaa kunnaa min qablu nad'oohu innahoo huwal barrur raheem",
             "tajweed_text": "إِ[g[نّ]َا كُ[g[نّ]َا مِ[f:128[ن ق]َ[q:129[بْ]لُ نَ[q:12927[دْ]عُوهُ‌ۖ إِ[g[نّ]َهُ[n[ۥ] هُوَ [h:12928[ٱ]لْبَرُّ [h:12929[ٱ][l[ل]رَّح[p[ِي]مُ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّا",
+                    "transliteration": "innā",
+                    "translation": "Indeed, we",
+                    "analysis_id": 8304
+                },
+                {
+                    "position": 2,
+                    "arabic": "كُنَّا",
+                    "transliteration": "kunnā",
+                    "translation": "[we] used to",
+                    "analysis_id": 9870
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "before",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "قَبْلُ",
+                    "transliteration": "qablu",
+                    "translation": "before",
+                    "analysis_id": 1225
+                },
+                {
+                    "position": 5,
+                    "arabic": "نَدْعُوْهُۗ",
+                    "transliteration": "nadʿūhu",
+                    "translation": "call Him",
+                    "analysis_id": 26285
+                },
+                {
+                    "position": 6,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, He",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 7,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "[He]",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْبَرُّ",
+                    "transliteration": "l-baru",
+                    "translation": "(is) the Most Kind",
+                    "analysis_id": 26286
+                },
+                {
+                    "position": 9,
+                    "arabic": "الرَّحِيْمُ",
+                    "transliteration": "l-raḥīmu",
+                    "translation": "the Most Merciful",
+                    "analysis_id": 2210
+                }
+            ]
         },
         {
             "aya_id": 4764,
@@ -279,12 +993,64 @@
             "sajda": false,
             "transliteration": "Fazakkir famaaa anta bini'mati rabbika bikaahininw wa laa majnoon",
             "tajweed_text": "فَذَكِّرْ فَم[o[َآ] أَ[f:169[نت]َ بِنِعْمَتِ رَبِّكَ بِكَاهِ[a:12930[نٍ و]َلَا مَ[q:11350[جْ]ن[p[ُو]نٍ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَذَكِّرْ",
+                    "transliteration": "fadhakkir",
+                    "translation": "Therefore remind",
+                    "analysis_id": 26147
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَمَآ",
+                    "transliteration": "famā",
+                    "translation": "for not",
+                    "analysis_id": 14899
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنْتَ",
+                    "transliteration": "anta",
+                    "translation": "you",
+                    "analysis_id": 472
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِنِعْمَتِ",
+                    "transliteration": "biniʿ'mati",
+                    "translation": "(are) by (the) grace",
+                    "analysis_id": 22399
+                },
+                {
+                    "position": 5,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 6,
+                    "arabic": "بِكَاهِنٍ",
+                    "transliteration": "bikāhinin",
+                    "translation": "a soothsayer",
+                    "analysis_id": 26287
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَّلَا",
+                    "transliteration": "walā",
+                    "translation": "and not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 8,
+                    "arabic": "مَجْنُوْنٍۗ",
+                    "transliteration": "majnūnin",
+                    "translation": "a madman",
+                    "analysis_id": 26288
+                }
+            ]
         },
         {
             "aya_id": 4765,
@@ -298,12 +1064,57 @@
             "sajda": false,
             "transliteration": "Am yaqooloona shaa'irun natarabbasu bihee raibal manoon",
             "tajweed_text": "أَمْ يَقُولُونَ شَاعِ[a:12931[رٌ ن]َّتَرَبَّصُ بِه[n[ِۦ] رَيْبَ [h:12932[ٱ]لْمَن[p[ُو]نِ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَمْ",
+                    "transliteration": "am",
+                    "translation": "Or",
+                    "analysis_id": 70
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَقُوْلُوْنَ",
+                    "transliteration": "yaqūlūna",
+                    "translation": "(do) they say",
+                    "analysis_id": 1065
+                },
+                {
+                    "position": 3,
+                    "arabic": "شَاعِرٌ",
+                    "transliteration": "shāʿirun",
+                    "translation": "A poet",
+                    "analysis_id": 26289
+                },
+                {
+                    "position": 4,
+                    "arabic": "نَّتَرَبَّصُ",
+                    "transliteration": "natarabbaṣu",
+                    "translation": "we wait",
+                    "analysis_id": 13176
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِهٖ",
+                    "transliteration": "bihi",
+                    "translation": "for him",
+                    "analysis_id": 375
+                },
+                {
+                    "position": 6,
+                    "arabic": "رَيْبَ",
+                    "transliteration": "rayba",
+                    "translation": "a misfortune of time",
+                    "analysis_id": 36
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْمَنُوْنِ",
+                    "transliteration": "l-manūni",
+                    "translation": "a misfortune of time",
+                    "analysis_id": 26290
+                }
+            ]
         },
         {
             "aya_id": 4766,
@@ -317,12 +1128,50 @@
             "sajda": false,
             "transliteration": "Qul tarabbasoo fa innee ma'akum minal mutarabbiseen",
             "tajweed_text": "قُلْ تَرَبَّصُو[s[اْ] فَإِ[g[نّ]ِى مَعَك[w:2068[ُم م]ِّنَ [h:12933[ٱ]لْمُتَرَبِّص[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ الطُّورِ",
-                "englishName": "At-Tur",
-                "englishNameTranslation": "The Mount",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَرَبَّصُوْا",
+                    "transliteration": "tarabbaṣū",
+                    "translation": "Wait",
+                    "analysis_id": 26291
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَاِنِّيْ",
+                    "transliteration": "fa-innī",
+                    "translation": "for indeed I am",
+                    "analysis_id": 18065
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَعَكُمْ",
+                    "transliteration": "maʿakum",
+                    "translation": "with you",
+                    "analysis_id": 5313
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِّنَ",
+                    "transliteration": "mina",
+                    "translation": "among",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْمُتَرَبِّصِيْنَۗ",
+                    "transliteration": "l-mutarabiṣīna",
+                    "translation": "those who wait",
+                    "analysis_id": 26292
+                }
+            ]
         }
     ]
 }

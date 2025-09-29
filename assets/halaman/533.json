@@ -13,12 +13,50 @@
             "sajda": false,
             "transliteration": "Yu'raful mujrimoona biseemaahum fa'yu'khazu binna waasi wal aqdaam",
             "tajweed_text": "يُعْرَفُ [h:13172[ٱ]لْمُ[q:5255[جْ]رِمُونَ بِسِيمَ[n[ـٰ]هُمْ فَيُؤْخَذُ بِ[h:13173[ٱ][l[ل][g[نّ]َو[n[َٲ]صِى وَ[h:13174[ٱ]لْأَ[q:13174[قْ]د[p[َا]مِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يُعْرَفُ",
+                    "transliteration": "yuʿ'rafu",
+                    "translation": "Will be known",
+                    "analysis_id": 26638
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمُجْرِمُوْنَ",
+                    "transliteration": "l-muj'rimūna",
+                    "translation": "the criminals",
+                    "analysis_id": 13817
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِسِيْمٰهُمْ",
+                    "transliteration": "bisīmāhum",
+                    "translation": "by their marks",
+                    "analysis_id": 25679
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَيُؤْخَذُ",
+                    "transliteration": "fayu'khadhu",
+                    "translation": "and will be seized",
+                    "analysis_id": 26639
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِالنَّوَاصِيْ",
+                    "transliteration": "bil-nawāṣī",
+                    "translation": "by the forelocks",
+                    "analysis_id": 26640
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَالْاَقْدَامِۚ",
+                    "transliteration": "wal-aqdāmi",
+                    "translation": "and the feet",
+                    "analysis_id": 26641
+                }
+            ]
         },
         {
             "aya_id": 4943,
@@ -32,12 +70,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                }
+            ]
         },
         {
             "aya_id": 4944,
@@ -51,12 +113,50 @@
             "sajda": false,
             "transliteration": "Haazihee jahannamul latee yukazzibu bihal mujrimoon",
             "tajweed_text": "هَ[n[ـٰ]ذِه[n[ِۦ] جَهَ[g[نّ]َمُ [h:11279[ٱ]لَّتِى يُكَذِّبُ بِهَا [h:13175[ٱ]لْمُ[q:5255[جْ]رِم[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هٰذِهٖ",
+                    "transliteration": "hādhihi",
+                    "translation": "This",
+                    "analysis_id": 11475
+                },
+                {
+                    "position": 2,
+                    "arabic": "جَهَنَّمُ",
+                    "transliteration": "jahannamu",
+                    "translation": "(is) Hell",
+                    "analysis_id": 2910
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّتِيْ",
+                    "transliteration": "allatī",
+                    "translation": "which",
+                    "analysis_id": 303
+                },
+                {
+                    "position": 4,
+                    "arabic": "يُكَذِّبُ",
+                    "transliteration": "yukadhibu",
+                    "translation": "deny",
+                    "analysis_id": 21474
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِهَا",
+                    "transliteration": "bihā",
+                    "translation": "[of it]",
+                    "analysis_id": 5632
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْمُجْرِمُوْنَۘ",
+                    "transliteration": "l-muj'rimūna",
+                    "translation": "the criminals",
+                    "analysis_id": 12397
+                }
+            ]
         },
         {
             "aya_id": 4945,
@@ -70,12 +170,43 @@
             "sajda": false,
             "transliteration": "Yatoofoona bainahaa wa baina hameemim aan",
             "tajweed_text": "يَطُوفُونَ بَيْنَهَا وَبَيْنَ حَمِيمٍ ء[p[َا]نٍ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَطُوْفُوْنَ",
+                    "transliteration": "yaṭūfūna",
+                    "translation": "They will go around",
+                    "analysis_id": 26642
+                },
+                {
+                    "position": 2,
+                    "arabic": "بَيْنَهَا",
+                    "transliteration": "baynahā",
+                    "translation": "between it",
+                    "analysis_id": 26643
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَبَيْنَ",
+                    "transliteration": "wabayna",
+                    "translation": "and between",
+                    "analysis_id": 8791
+                },
+                {
+                    "position": 4,
+                    "arabic": "حَمِيْمٍ",
+                    "transliteration": "ḥamīmin",
+                    "translation": "scalding water",
+                    "analysis_id": 13734
+                },
+                {
+                    "position": 5,
+                    "arabic": "اٰنٍۚ",
+                    "transliteration": "ānin",
+                    "translation": "heated",
+                    "analysis_id": 26644
+                }
+            ]
         },
         {
             "aya_id": 4946,
@@ -89,12 +220,43 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 12213
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                },
+                {
+                    "position": 5,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(45)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 4947,
@@ -108,12 +270,43 @@
             "sajda": false,
             "transliteration": "Wa liman khaafa maqaama rabbihee jannataan",
             "tajweed_text": "وَلِمَنْ خَافَ مَقَامَ رَبِّه[n[ِۦ] جَ[g[نّ]َت[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلِمَنْ",
+                    "transliteration": "waliman",
+                    "translation": "But for (him) who",
+                    "analysis_id": 15491
+                },
+                {
+                    "position": 2,
+                    "arabic": "خَافَ",
+                    "transliteration": "khāfa",
+                    "translation": "fears",
+                    "analysis_id": 2471
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَقَامَ",
+                    "transliteration": "maqāma",
+                    "translation": "(the) standing",
+                    "analysis_id": 26645
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَبِّهٖ",
+                    "transliteration": "rabbihi",
+                    "translation": "(before) his Lord",
+                    "analysis_id": 541
+                },
+                {
+                    "position": 5,
+                    "arabic": "جَنَّتٰنِۚ",
+                    "transliteration": "jannatāni",
+                    "translation": "(are) two gardens",
+                    "analysis_id": 26646
+                }
+            ]
         },
         {
             "aya_id": 4948,
@@ -127,12 +320,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 12213
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِۙ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26647
+                }
+            ]
         },
         {
             "aya_id": 4949,
@@ -146,12 +363,22 @@
             "sajda": false,
             "transliteration": "Zawaataaa afnaan",
             "tajweed_text": "ذَوَات[o[َآ] أَفْن[p[َا]نٍ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ذَوَاتَآ",
+                    "transliteration": "dhawātā",
+                    "translation": "Having",
+                    "analysis_id": 26648
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَفْنَانٍۚ",
+                    "transliteration": "afnānin",
+                    "translation": "branches",
+                    "analysis_id": 26649
+                }
+            ]
         },
         {
             "aya_id": 4950,
@@ -165,12 +392,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                }
+            ]
         },
         {
             "aya_id": 4951,
@@ -184,12 +435,29 @@
             "sajda": false,
             "transliteration": "Feehimaa 'aynaani tajriyaan",
             "tajweed_text": "فِيهِمَا عَيْنَانِ تَ[q:13176[جْ]رِي[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فِيْهِمَا",
+                    "transliteration": "fīhimā",
+                    "translation": "In both of them",
+                    "analysis_id": 23058
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَيْنٰنِ",
+                    "transliteration": "ʿaynāni",
+                    "translation": "(are) two springs",
+                    "analysis_id": 26650
+                },
+                {
+                    "position": 3,
+                    "arabic": "تَجْرِيٰنِۚ",
+                    "transliteration": "tajriyāni",
+                    "translation": "flowing",
+                    "analysis_id": 26651
+                }
+            ]
         },
         {
             "aya_id": 4952,
@@ -203,12 +471,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 12213
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                }
+            ]
         },
         {
             "aya_id": 4953,
@@ -222,12 +514,43 @@
             "sajda": false,
             "transliteration": "Feehimaa min kulli faakihatin zawjaan",
             "tajweed_text": "فِيهِمَا مِ[f:843[ن ك]ُلِّ فَ[n[ـٰ]كِهَ[f:13177[ةٍ ز]َوْج[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فِيْهِمَا",
+                    "transliteration": "fīhimā",
+                    "translation": "In both of them",
+                    "analysis_id": 23058
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "[of]",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 3,
+                    "arabic": "كُلِّ",
+                    "transliteration": "kulli",
+                    "translation": "(are) every",
+                    "analysis_id": 2225
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَاكِهَةٍ",
+                    "transliteration": "fākihatin",
+                    "translation": "fruits",
+                    "analysis_id": 26652
+                },
+                {
+                    "position": 5,
+                    "arabic": "زَوْجٰنِۚ",
+                    "transliteration": "zawjāni",
+                    "translation": "(in) pairs",
+                    "analysis_id": 26653
+                }
+            ]
         },
         {
             "aya_id": 4954,
@@ -241,12 +564,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 12213
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِۚ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26647
+                }
+            ]
         },
         {
             "aya_id": 4955,
@@ -260,12 +607,71 @@
             "sajda": false,
             "transliteration": "Muttaki'eena 'alaa furushim bataaa'inuhaa min istabraq; wajanal jannataini daan",
             "tajweed_text": "مُتَّكِــِٔينَ عَلَىٰ فُرُ[i:13178[شِۭ ب]َط[o[َا]ٓئِنُهَا مِنْ إِسْتَ[q:13179[بْ]رَ[a:13180[قٍ‌ۚ و]َجَنَى [h:13181[ٱ]لْجَ[g[نّ]َتَيْنِ د[p[َا]نٍ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مُتَّكِـِٕيْنَ",
+                    "transliteration": "muttakiīna",
+                    "translation": "Reclining",
+                    "analysis_id": 23916
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "on",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 3,
+                    "arabic": "فُرُشٍۢ",
+                    "transliteration": "furushin",
+                    "translation": "couches",
+                    "analysis_id": 26654
+                },
+                {
+                    "position": 4,
+                    "arabic": "بَطَاۤىِٕنُهَا",
+                    "transliteration": "baṭāinuhā",
+                    "translation": "(whose) inner linings",
+                    "analysis_id": 26655
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "(are) of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 6,
+                    "arabic": "اِسْتَبْرَقٍۗ",
+                    "transliteration": "is'tabraqin",
+                    "translation": "brocade",
+                    "analysis_id": 26656
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَجَنَا",
+                    "transliteration": "wajanā",
+                    "translation": "and (the) fruit",
+                    "analysis_id": 26657
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْجَنَّتَيْنِ",
+                    "transliteration": "l-janatayni",
+                    "translation": "(of) both the gardens",
+                    "analysis_id": 26658
+                },
+                {
+                    "position": 9,
+                    "arabic": "دَانٍۚ",
+                    "transliteration": "dānin",
+                    "translation": "(is) near",
+                    "analysis_id": 26659
+                }
+            ]
         },
         {
             "aya_id": 4956,
@@ -279,12 +685,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 12213
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                }
+            ]
         },
         {
             "aya_id": 4957,
@@ -298,12 +728,71 @@
             "sajda": false,
             "transliteration": "Feehinna qaasiratut tarfi lam yatmishunna insun qablahum wa laa jaaann",
             "tajweed_text": "فِيهِ[g[نّ]َ قَ[n[ـٰ]صِر[n[َٲ]تُ [h:11365[ٱ][l[ل]طَّرْفِ لَمْ يَ[q:13182[طْ]مِثْهُ[g[نّ]َ إِ[f:13183[نس][f:13184[ٌ ق]َ[q:8394[بْ]لَهُمْ وَلَا ج[m[َا]ٓ[g[نّ]ٌ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فِيْهِنَّ",
+                    "transliteration": "fīhinna",
+                    "translation": "In them",
+                    "analysis_id": 9707
+                },
+                {
+                    "position": 2,
+                    "arabic": "قٰصِرٰتُ",
+                    "transliteration": "qāṣirātu",
+                    "translation": "(will be) companions of modest gaze",
+                    "analysis_id": 26660
+                },
+                {
+                    "position": 3,
+                    "arabic": "الطَّرْفِۙ",
+                    "transliteration": "l-ṭarfi",
+                    "translation": "(will be) companions of modest gaze",
+                    "analysis_id": 26661
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَطْمِثْهُنَّ",
+                    "transliteration": "yaṭmith'hunna",
+                    "translation": "has touched them",
+                    "analysis_id": 26662
+                },
+                {
+                    "position": 6,
+                    "arabic": "اِنْسٌ",
+                    "transliteration": "insun",
+                    "translation": "any man",
+                    "analysis_id": 26636
+                },
+                {
+                    "position": 7,
+                    "arabic": "قَبْلَهُمْ",
+                    "transliteration": "qablahum",
+                    "translation": "before them",
+                    "analysis_id": 18581
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "and not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 9,
+                    "arabic": "جَاۤنٌّۚ",
+                    "transliteration": "jānnun",
+                    "translation": "any jinn",
+                    "analysis_id": 26637
+                }
+            ]
         },
         {
             "aya_id": 4958,
@@ -317,12 +806,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِۚ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26647
+                }
+            ]
         },
         {
             "aya_id": 4959,
@@ -336,12 +849,29 @@
             "sajda": false,
             "transliteration": "ka annahunnal yaaqootu wal marjaan",
             "tajweed_text": "كَأَ[g[نّ]َهُ[g[نّ]َ [h:13185[ٱ]لْيَاقُوتُ وَ[h:13145[ٱ]لْمَرْج[p[َا]نُ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَاَنَّهُنَّ",
+                    "transliteration": "ka-annahunna",
+                    "translation": "As if they were",
+                    "analysis_id": 23596
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْيَاقُوْتُ",
+                    "transliteration": "l-yāqūtu",
+                    "translation": "rubies",
+                    "analysis_id": 26663
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَالْمَرْجَانُۚ",
+                    "transliteration": "wal-marjānu",
+                    "translation": "and coral",
+                    "analysis_id": 26602
+                }
+            ]
         },
         {
             "aya_id": 4960,
@@ -355,12 +885,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                }
+            ]
         },
         {
             "aya_id": 4961,
@@ -374,12 +928,43 @@
             "sajda": false,
             "transliteration": "Hal jazaaa'ul ihsaani illal ihsaan",
             "tajweed_text": "هَلْ جَز[o[َا]ٓءُ [h:13186[ٱ]لْإِحْسَ[n[ـٰ]نِ إِلَّا [h:13187[ٱ]لْإِحْسَ[p[ـٰ]نُ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هَلْ",
+                    "transliteration": "hal",
+                    "translation": "Is",
+                    "analysis_id": 2935
+                },
+                {
+                    "position": 2,
+                    "arabic": "جَزَاۤءُ",
+                    "transliteration": "jazāu",
+                    "translation": "(the) reward",
+                    "analysis_id": 9379
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاِحْسَانِ",
+                    "transliteration": "l-iḥ'sāni",
+                    "translation": "for the good",
+                    "analysis_id": 26664
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "but",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْاِحْسَانُۚ",
+                    "transliteration": "l-iḥ'sānu",
+                    "translation": "good",
+                    "analysis_id": 26665
+                }
+            ]
         },
         {
             "aya_id": 4962,
@@ -393,12 +978,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                }
+            ]
         },
         {
             "aya_id": 4963,
@@ -412,12 +1021,29 @@
             "sajda": false,
             "transliteration": "Wa min doonihimaa jannataan",
             "tajweed_text": "وَمِ[f:13188[ن د]ُونِهِمَا جَ[g[نّ]َت[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمِنْ",
+                    "transliteration": "wamin",
+                    "translation": "Besides these two",
+                    "analysis_id": 1783
+                },
+                {
+                    "position": 2,
+                    "arabic": "دُوْنِهِمَا",
+                    "transliteration": "dūnihimā",
+                    "translation": "Besides these two",
+                    "analysis_id": 18214
+                },
+                {
+                    "position": 3,
+                    "arabic": "جَنَّتٰنِۚ",
+                    "transliteration": "jannatāni",
+                    "translation": "(are) two gardens",
+                    "analysis_id": 26646
+                }
+            ]
         },
         {
             "aya_id": 4964,
@@ -431,12 +1057,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِۙ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26647
+                }
+            ]
         },
         {
             "aya_id": 4965,
@@ -450,12 +1100,15 @@
             "sajda": false,
             "transliteration": "Mudhaaammataan",
             "tajweed_text": "مُ[q:13189[دْ]ه[m[َا]ٓ[g[مّ]َت[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مُدْهَاۤمَّتٰنِۚ",
+                    "transliteration": "mud'hāmmatāni",
+                    "translation": "Dark green",
+                    "analysis_id": 26666
+                }
+            ]
         },
         {
             "aya_id": 4966,
@@ -469,12 +1122,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26591
+                }
+            ]
         },
         {
             "aya_id": 4967,
@@ -488,12 +1165,29 @@
             "sajda": false,
             "transliteration": "Feehimaa 'aynaani nad daakhataan",
             "tajweed_text": "فِيهِمَا عَيْنَانِ نَضَّاخَت[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فِيْهِمَا",
+                    "transliteration": "fīhimā",
+                    "translation": "In both of them",
+                    "analysis_id": 23058
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَيْنٰنِ",
+                    "transliteration": "ʿaynāni",
+                    "translation": "(are) two springs",
+                    "analysis_id": 26650
+                },
+                {
+                    "position": 3,
+                    "arabic": "نَضَّاخَتٰنِۚ",
+                    "transliteration": "naḍḍākhatāni",
+                    "translation": "gushing forth",
+                    "analysis_id": 26667
+                }
+            ]
         },
         {
             "aya_id": 4968,
@@ -507,12 +1201,36 @@
             "sajda": false,
             "transliteration": "Fabi ayyi aalaaa'i Rabbikumaa tukazzibaan.",
             "tajweed_text": "فَبِأَىِّ ءَال[o[َا]ٓءِ رَبِّكُمَا تُكَذِّب[p[َا]نِ",
-            "surah": {
-                "name": "سُورَةُ الرَّحۡمَٰن",
-                "englishName": "Ar-Rahmaan",
-                "englishNameTranslation": "The Beneficent",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَبِاَيِّ",
+                    "transliteration": "fabi-ayyi",
+                    "translation": "So which",
+                    "analysis_id": 26606
+                },
+                {
+                    "position": 2,
+                    "arabic": "اٰلَاۤءِ",
+                    "transliteration": "ālāi",
+                    "translation": "(of the) favors",
+                    "analysis_id": 26423
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكُمَا",
+                    "transliteration": "rabbikumā",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 26590
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكَذِّبٰنِۚ",
+                    "transliteration": "tukadhibāni",
+                    "translation": "will you both deny",
+                    "analysis_id": 26647
+                }
+            ]
         }
     ]
 }

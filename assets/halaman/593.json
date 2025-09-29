@@ -13,12 +13,15 @@
             "sajda": false,
             "transliteration": "Wal-Fajr",
             "tajweed_text": "وَ[h:9999[ٱ]لْفَ[q:14468[جْ]رِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالْفَجْرِۙ",
+                    "transliteration": "wal-fajri",
+                    "translation": "By the dawn",
+                    "analysis_id": 29011
+                }
+            ]
         },
         {
             "aya_id": 5995,
@@ -32,12 +35,22 @@
             "sajda": false,
             "transliteration": "Wa layaalin 'ashr",
             "tajweed_text": "وَلَيَالٍ عَشْرٍ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَيَالٍ",
+                    "transliteration": "walayālin",
+                    "translation": "And the nights",
+                    "analysis_id": 29012
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَشْرٍۙ",
+                    "transliteration": "ʿashrin",
+                    "translation": "ten",
+                    "analysis_id": 29013
+                }
+            ]
         },
         {
             "aya_id": 5996,
@@ -51,12 +64,22 @@
             "sajda": false,
             "transliteration": "Wash shaf'i wal watr",
             "tajweed_text": "وَ[h:9999[ٱ][l[ل]شَّفْعِ وَ[h:14469[ٱ]لْوَتْرِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّالشَّفْعِ",
+                    "transliteration": "wal-shafʿi",
+                    "translation": "And the even",
+                    "analysis_id": 29014
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَالْوَتْرِۙ",
+                    "transliteration": "wal-watri",
+                    "translation": "and the odd",
+                    "analysis_id": 29015
+                }
+            ]
         },
         {
             "aya_id": 5997,
@@ -70,12 +93,29 @@
             "sajda": false,
             "transliteration": "Wallaili izaa yasr",
             "tajweed_text": "وَ[h:9999[ٱ]لَّيْلِ إِذَا يَسْرِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالَّيْلِ",
+                    "transliteration": "wa-al-layli",
+                    "translation": "And the night",
+                    "analysis_id": 28333
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَسْرِۚ",
+                    "transliteration": "yasri",
+                    "translation": "it passes",
+                    "analysis_id": 29016
+                }
+            ]
         },
         {
             "aya_id": 5998,
@@ -89,12 +129,50 @@
             "sajda": false,
             "transliteration": "Hal fee zaalika qasamul lizee hijr",
             "tajweed_text": "هَلْ فِى ذ[n[َٲ]لِكَ قَسَ[u:14470[مٌ ل]ِّذِى حِ[q:14471[جْ]رٍ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هَلْ",
+                    "transliteration": "hal",
+                    "translation": "Is",
+                    "analysis_id": 2935
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 3,
+                    "arabic": "ذٰلِكَ",
+                    "transliteration": "dhālika",
+                    "translation": "that",
+                    "analysis_id": 33
+                },
+                {
+                    "position": 4,
+                    "arabic": "قَسَمٌ",
+                    "transliteration": "qasamun",
+                    "translation": "(not) an oath",
+                    "analysis_id": 29017
+                },
+                {
+                    "position": 5,
+                    "arabic": "لِّذِيْ",
+                    "transliteration": "lidhī",
+                    "translation": "for those",
+                    "analysis_id": 29018
+                },
+                {
+                    "position": 6,
+                    "arabic": "حِجْرٍۗ",
+                    "transliteration": "ḥij'rin",
+                    "translation": "who understand",
+                    "analysis_id": 29019
+                }
+            ]
         },
         {
             "aya_id": 5999,
@@ -108,12 +186,50 @@
             "sajda": false,
             "transliteration": "Alam tara kaifa fa'ala rabbuka bi'aad",
             "tajweed_text": "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِع[p[َا][q[د]ٍ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلَمْ",
+                    "transliteration": "alam",
+                    "translation": "Did not",
+                    "analysis_id": 1513
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَرَ",
+                    "transliteration": "tara",
+                    "translation": "you see",
+                    "analysis_id": 3650
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَيْفَ",
+                    "transliteration": "kayfa",
+                    "translation": "how",
+                    "analysis_id": 396
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَعَلَ",
+                    "transliteration": "faʿala",
+                    "translation": "dealt",
+                    "analysis_id": 11958
+                },
+                {
+                    "position": 5,
+                    "arabic": "رَبُّكَ",
+                    "transliteration": "rabbuka",
+                    "translation": "your Lord",
+                    "analysis_id": 428
+                },
+                {
+                    "position": 6,
+                    "arabic": "بِعَادٍۖ",
+                    "transliteration": "biʿādin",
+                    "translation": "with Aad",
+                    "analysis_id": 29020
+                }
+            ]
         },
         {
             "aya_id": 6000,
@@ -127,12 +243,29 @@
             "sajda": false,
             "transliteration": "Iramaa zaatil 'imaad",
             "tajweed_text": "إِرَمَ ذَاتِ [h:14472[ٱ]لْعِم[p[َا][q[د]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِرَمَ",
+                    "transliteration": "irama",
+                    "translation": "Iram",
+                    "analysis_id": 29021
+                },
+                {
+                    "position": 2,
+                    "arabic": "ذَاتِ",
+                    "transliteration": "dhāti",
+                    "translation": "possessors (of)",
+                    "analysis_id": 12387
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْعِمَادِۖ",
+                    "transliteration": "l-ʿimādi",
+                    "translation": "lofty pillars",
+                    "analysis_id": 29022
+                }
+            ]
         },
         {
             "aya_id": 6001,
@@ -146,12 +279,50 @@
             "sajda": false,
             "transliteration": "Allatee lam yukhlaq misluhaa fil bilaad",
             "tajweed_text": "ٱلَّتِى لَمْ يُخْلَ[q:14473[قْ] مِثْلُهَا فِى [h:2519[ٱ]لْبِلَ[p[ـٰ][q[د]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّتِيْ",
+                    "transliteration": "allatī",
+                    "translation": "Which",
+                    "analysis_id": 303
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 3,
+                    "arabic": "يُخْلَقْ",
+                    "transliteration": "yukh'laq",
+                    "translation": "had been created",
+                    "analysis_id": 29023
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِثْلُهَا",
+                    "transliteration": "mith'luhā",
+                    "translation": "like them",
+                    "analysis_id": 24960
+                },
+                {
+                    "position": 5,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْبِلَادِۖ",
+                    "transliteration": "l-bilādi",
+                    "translation": "the cities",
+                    "analysis_id": 6390
+                }
+            ]
         },
         {
             "aya_id": 6002,
@@ -165,12 +336,43 @@
             "sajda": false,
             "transliteration": "Wa samoodal lazeena jaabus sakhra bil waad",
             "tajweed_text": "وَثَمُودَ [h:14474[ٱ]لَّذِينَ جَابُو[s[اْ] [h:14475[ٱ][l[ل]صَّخْرَ بِ[h:8451[ٱ]لْو[p[َا][q[د]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَثَمُوْدَ",
+                    "transliteration": "wathamūda",
+                    "translation": "And Thamud",
+                    "analysis_id": 13290
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "جَابُوا",
+                    "transliteration": "jābū",
+                    "translation": "carved out",
+                    "analysis_id": 29024
+                },
+                {
+                    "position": 4,
+                    "arabic": "الصَّخْرَ",
+                    "transliteration": "l-ṣakhra",
+                    "translation": "the rocks",
+                    "analysis_id": 29025
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِالْوَادِۖ",
+                    "transliteration": "bil-wādi",
+                    "translation": "in the valley",
+                    "analysis_id": 29026
+                }
+            ]
         },
         {
             "aya_id": 6003,
@@ -184,12 +386,29 @@
             "sajda": false,
             "transliteration": "Wa fir'awna zil awtaad",
             "tajweed_text": "وَفِرْعَوْنَ ذِى [h:14476[ٱ]لْأَوْت[p[َا][q[د]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَفِرْعَوْنَ",
+                    "transliteration": "wafir'ʿawna",
+                    "translation": "And Firaun",
+                    "analysis_id": 29027
+                },
+                {
+                    "position": 2,
+                    "arabic": "ذِى",
+                    "transliteration": "dhī",
+                    "translation": "owner of",
+                    "analysis_id": 18175
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاَوْتَادِۖ",
+                    "transliteration": "l-awtādi",
+                    "translation": "stakes",
+                    "analysis_id": 23796
+                }
+            ]
         },
         {
             "aya_id": 6004,
@@ -203,12 +422,36 @@
             "sajda": false,
             "transliteration": "Allazeena taghaw fil bilaad",
             "tajweed_text": "ٱلَّذِينَ طَغَوْ[s[اْ] فِى [h:2519[ٱ]لْبِلَ[p[ـٰ][q[د]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "Who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 2,
+                    "arabic": "طَغَوْا",
+                    "transliteration": "ṭaghaw",
+                    "translation": "transgressed",
+                    "analysis_id": 29028
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْبِلَادِۖ",
+                    "transliteration": "l-bilādi",
+                    "translation": "the lands",
+                    "analysis_id": 6390
+                }
+            ]
         },
         {
             "aya_id": 6005,
@@ -222,12 +465,29 @@
             "sajda": false,
             "transliteration": "Fa aksaroo feehal fasaad",
             "tajweed_text": "فَأَكْثَرُو[s[اْ] فِيهَا [h:14477[ٱ]لْفَس[p[َا][q[د]َ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاَكْثَرُوْا",
+                    "transliteration": "fa-aktharū",
+                    "translation": "And (made) much",
+                    "analysis_id": 29029
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْفَسَادَۖ",
+                    "transliteration": "l-fasāda",
+                    "translation": "corruption",
+                    "analysis_id": 29030
+                }
+            ]
         },
         {
             "aya_id": 6006,
@@ -241,12 +501,43 @@
             "sajda": false,
             "transliteration": "Fasabba 'alaihim Rabbuka sawta 'azaab",
             "tajweed_text": "فَصَبَّ عَلَيْهِمْ رَبُّكَ سَوْطَ عَذ[p[َا][q[ب]ٍ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَصَبَّ",
+                    "transliteration": "faṣabba",
+                    "translation": "So poured",
+                    "analysis_id": 29031
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلَيْهِمْ",
+                    "transliteration": "ʿalayhim",
+                    "translation": "on them",
+                    "analysis_id": 24
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبُّكَ",
+                    "transliteration": "rabbuka",
+                    "translation": "your Lord",
+                    "analysis_id": 428
+                },
+                {
+                    "position": 4,
+                    "arabic": "سَوْطَ",
+                    "transliteration": "sawṭa",
+                    "translation": "scourge",
+                    "analysis_id": 29032
+                },
+                {
+                    "position": 5,
+                    "arabic": "عَذَابٍۖ",
+                    "transliteration": "ʿadhābin",
+                    "translation": "(of) punishment",
+                    "analysis_id": 29033
+                }
+            ]
         },
         {
             "aya_id": 6007,
@@ -260,12 +551,29 @@
             "sajda": false,
             "transliteration": "Inna Rabbaka labil mirsaad",
             "tajweed_text": "إِ[g[نّ]َ رَبَّكَ لَبِ[h:14478[ٱ]لْمِرْص[p[َا][q[د]ِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبَّكَ",
+                    "transliteration": "rabbaka",
+                    "translation": "your Lord",
+                    "analysis_id": 803
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَبِالْمِرْصَادِۗ",
+                    "transliteration": "labil-mir'ṣādi",
+                    "translation": "(is) surely Ever Watchful",
+                    "analysis_id": 29034
+                }
+            ]
         },
         {
             "aya_id": 6008,
@@ -279,12 +587,85 @@
             "sajda": false,
             "transliteration": "Fa ammal insaanu izaa mab talaahu Rabbuhoo fa akramahoo wa na' 'amahoo fa yaqoolu Rabbeee akraman",
             "tajweed_text": "فَأَ[g[مّ]َا [h:14479[ٱ]لْإِ[f:2732[نس]َ[n[ـٰ]نُ إِذَا مَا [h:14480[ٱ][q:14481[بْ]تَلَ[n[ـٰ]هُ رَبُّهُ[n[ۥ] فَأَكْرَمَهُ[n[ۥ] وَنَعَّمَهُ[n[ۥ] فَيَقُولُ رَبّ[o[ِىٓ] أَكْرَمَنِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاَمَّا",
+                    "transliteration": "fa-ammā",
+                    "translation": "And as for",
+                    "analysis_id": 5085
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْاِنْسَانُ",
+                    "transliteration": "l-insānu",
+                    "translation": "man",
+                    "analysis_id": 17144
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "does",
+                    "analysis_id": 2062
+                },
+                {
+                    "position": 5,
+                    "arabic": "ابْتَلٰىهُ",
+                    "transliteration": "ib'talāhu",
+                    "translation": "try him",
+                    "analysis_id": 29035
+                },
+                {
+                    "position": 6,
+                    "arabic": "رَبُّهٗ",
+                    "transliteration": "rabbuhu",
+                    "translation": "his Lord",
+                    "analysis_id": 11852
+                },
+                {
+                    "position": 7,
+                    "arabic": "فَاَكْرَمَهٗ",
+                    "transliteration": "fa-akramahu",
+                    "translation": "and is generous to him",
+                    "analysis_id": 29036
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَنَعَّمَهٗۙ",
+                    "transliteration": "wanaʿʿamahu",
+                    "translation": "and favors him",
+                    "analysis_id": 29037
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَيَقُوْلُ",
+                    "transliteration": "fayaqūlu",
+                    "translation": "he says",
+                    "analysis_id": 27868
+                },
+                {
+                    "position": 10,
+                    "arabic": "رَبِّيْٓ",
+                    "transliteration": "rabbī",
+                    "translation": "My Lord",
+                    "analysis_id": 10985
+                },
+                {
+                    "position": 11,
+                    "arabic": "اَكْرَمَنِۗ",
+                    "transliteration": "akramani",
+                    "translation": "has honored me",
+                    "analysis_id": 29038
+                }
+            ]
         },
         {
             "aya_id": 6009,
@@ -298,12 +679,85 @@
             "sajda": false,
             "transliteration": "Wa ammaaa izaa mabtalaahu faqadara 'alaihi rizqahoo fa yaqoolu Rabbeee ahaanan",
             "tajweed_text": "وَأَ[g[مّ][o[َآ] إِذَا مَا [h:14480[ٱ][q:14481[بْ]تَلَ[n[ـٰ]هُ فَقَدَرَ عَلَيْهِ رِزْقَهُ[n[ۥ] فَيَقُولُ رَبّ[o[ِىٓ] أَهَ[n[ـٰ]نَنِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَمَّآ",
+                    "transliteration": "wa-ammā",
+                    "translation": "But",
+                    "analysis_id": 29039
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "does",
+                    "analysis_id": 2062
+                },
+                {
+                    "position": 4,
+                    "arabic": "ابْتَلٰىهُ",
+                    "transliteration": "ib'talāhu",
+                    "translation": "He try him",
+                    "analysis_id": 29035
+                },
+                {
+                    "position": 5,
+                    "arabic": "فَقَدَرَ",
+                    "transliteration": "faqadara",
+                    "translation": "and restricts",
+                    "analysis_id": 29040
+                },
+                {
+                    "position": 6,
+                    "arabic": "عَلَيْهِ",
+                    "transliteration": "ʿalayhi",
+                    "translation": "for him",
+                    "analysis_id": 544
+                },
+                {
+                    "position": 7,
+                    "arabic": "رِزْقَهٗ",
+                    "transliteration": "riz'qahu",
+                    "translation": "his provision",
+                    "analysis_id": 27714
+                },
+                {
+                    "position": 8,
+                    "arabic": "ەۙ",
+                    "transliteration": "fayaqūlu",
+                    "translation": "then he says",
+                    "analysis_id": 27887
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَيَقُوْلُ",
+                    "transliteration": "rabbī",
+                    "translation": "My Lord",
+                    "analysis_id": 29041
+                },
+                {
+                    "position": 10,
+                    "arabic": "رَبِّيْٓ",
+                    "transliteration": "ahānani",
+                    "translation": "(has) humiliated me",
+                    "analysis_id": 29042
+                },
+                {
+                    "position": 11,
+                    "arabic": "اَهَانَنِۚ",
+                    "transliteration": null,
+                    "translation": "(16)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 6010,
@@ -317,12 +771,43 @@
             "sajda": false,
             "transliteration": "Kalla bal laa tukrimooo nal yateem",
             "tajweed_text": "كَلَّا‌ۖ بَل لَّا تُكْرِمُونَ [h:14482[ٱ]لْيَت[p[ِي]مَ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَلَّا",
+                    "transliteration": "kallā",
+                    "translation": "Nay",
+                    "analysis_id": 18614
+                },
+                {
+                    "position": 2,
+                    "arabic": "بَلْ",
+                    "transliteration": "bal",
+                    "translation": "But",
+                    "analysis_id": 2300
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَّا",
+                    "transliteration": "lā",
+                    "translation": "not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُكْرِمُوْنَ",
+                    "transliteration": "tuk'rimūna",
+                    "translation": "you honor",
+                    "analysis_id": 29043
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْيَتِيْمَۙ",
+                    "transliteration": "l-yatīma",
+                    "translation": "the orphan",
+                    "analysis_id": 29044
+                }
+            ]
         },
         {
             "aya_id": 6011,
@@ -336,12 +821,43 @@
             "sajda": false,
             "transliteration": "Wa laa tahaaaddoona 'alaata'aamil miskeen",
             "tajweed_text": "وَلَا تَحَ[m[ـٰٓ]ضُّونَ عَلَىٰ طَعَامِ [h:13901[ٱ]لْمِسْك[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "And not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 2,
+                    "arabic": "تَحٰۤضُّوْنَ",
+                    "transliteration": "taḥāḍḍūna",
+                    "translation": "you feel the urge",
+                    "analysis_id": 29045
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 4,
+                    "arabic": "طَعَامِ",
+                    "transliteration": "ṭaʿāmi",
+                    "translation": "feed",
+                    "analysis_id": 27907
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمِسْكِيْنِۙ",
+                    "transliteration": "l-mis'kīni",
+                    "translation": "the poor",
+                    "analysis_id": 29046
+                }
+            ]
         },
         {
             "aya_id": 6012,
@@ -355,12 +871,36 @@
             "sajda": false,
             "transliteration": "Wa taakuloonat turaasa aklal lammaa",
             "tajweed_text": "وَتَأْكُلُونَ [h:14483[ٱ][l[ل]تُّرَاثَ أَكْل[u:14484[اً ل]َّ[g[مّ]ًا",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَتَأْكُلُوْنَ",
+                    "transliteration": "watakulūna",
+                    "translation": "And you consume",
+                    "analysis_id": 29047
+                },
+                {
+                    "position": 2,
+                    "arabic": "التُّرَاثَ",
+                    "transliteration": "l-turātha",
+                    "translation": "the inheritance",
+                    "analysis_id": 29048
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَكْلًا",
+                    "transliteration": "aklan",
+                    "translation": "devouring",
+                    "analysis_id": 29049
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَّمًّاۙ",
+                    "transliteration": "lamman",
+                    "translation": "altogether",
+                    "analysis_id": 29050
+                }
+            ]
         },
         {
             "aya_id": 6013,
@@ -374,12 +914,36 @@
             "sajda": false,
             "transliteration": "Wa tuhibboonal maala hubban jammaa",
             "tajweed_text": "وَتُحِبُّونَ [h:14485[ٱ]لْمَالَ حُب[f:14486[ًّا ج]َ[g[مّ]ًا",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّتُحِبُّوْنَ",
+                    "transliteration": "watuḥibbūna",
+                    "translation": "And you love",
+                    "analysis_id": 29051
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْمَالَ",
+                    "transliteration": "l-māla",
+                    "translation": "wealth",
+                    "analysis_id": 29052
+                },
+                {
+                    "position": 3,
+                    "arabic": "حُبًّا",
+                    "transliteration": "ḥubban",
+                    "translation": "(with) love",
+                    "analysis_id": 29053
+                },
+                {
+                    "position": 4,
+                    "arabic": "جَمًّاۗ",
+                    "transliteration": "jamman",
+                    "translation": "immense",
+                    "analysis_id": 29054
+                }
+            ]
         },
         {
             "aya_id": 6014,
@@ -393,12 +957,50 @@
             "sajda": false,
             "transliteration": "Kallaaa izaaa dukkatil ardu dakkan dakka",
             "tajweed_text": "كَلّ[o[َآ] إِذَا دُكَّتِ [h:14487[ٱ]لْأَرْضُ دَك[f:14488[ًّا د]َكًّا",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَلَّآ",
+                    "transliteration": "kallā",
+                    "translation": "Nay",
+                    "analysis_id": 28363
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "When",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 3,
+                    "arabic": "دُكَّتِ",
+                    "transliteration": "dukkati",
+                    "translation": "is leveled",
+                    "analysis_id": 29055
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْاَرْضُ",
+                    "transliteration": "l-arḍu",
+                    "translation": "the earth",
+                    "analysis_id": 806
+                },
+                {
+                    "position": 5,
+                    "arabic": "دَكًّا",
+                    "transliteration": "dakkan",
+                    "translation": "pounded",
+                    "analysis_id": 11855
+                },
+                {
+                    "position": 6,
+                    "arabic": "دَكًّاۙ",
+                    "transliteration": "dakkan",
+                    "translation": "(and) crushed",
+                    "analysis_id": 29056
+                }
+            ]
         },
         {
             "aya_id": 6015,
@@ -412,12 +1014,43 @@
             "sajda": false,
             "transliteration": "Wa jaaa'a Rabbuka wal malaku saffan saffaa",
             "tajweed_text": "وَج[o[َا]ٓءَ رَبُّكَ وَ[h:14489[ٱ]لْمَلَكُ صَف[f:14490[ًّا ص]َفًّا",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّجَآءَ",
+                    "transliteration": "wajāa",
+                    "translation": "And comes",
+                    "analysis_id": 29057
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبُّكَ",
+                    "transliteration": "rabbuka",
+                    "translation": "your Lord",
+                    "analysis_id": 428
+                },
+                {
+                    "position": 3,
+                    "arabic": "وَالْمَلَكُ",
+                    "transliteration": "wal-malaku",
+                    "translation": "and the Angels",
+                    "analysis_id": 29058
+                },
+                {
+                    "position": 4,
+                    "arabic": "صَفًّا",
+                    "transliteration": "ṣaffan",
+                    "translation": "rank",
+                    "analysis_id": 27352
+                },
+                {
+                    "position": 5,
+                    "arabic": "صَفًّاۚ",
+                    "transliteration": "ṣaffan",
+                    "translation": "(upon) rank",
+                    "analysis_id": 17964
+                }
+            ]
         },
         {
             "aya_id": 6016,
@@ -431,12 +1064,71 @@
             "sajda": false,
             "transliteration": "Wa jeee'a yawma'izim bi jahannnam; Yawma 'iziny yatazakkarul insaanu wa annaa lahuz zikraa",
             "tajweed_text": "وَجِ[s[اْ][o[ىٓ]ءَ يَوْمَئِ[i:14491[ذِۭ ب]ِجَهَ[g[نّ]َمَ‌ۚ يَوْمَئِ[a:14492[ذٍ ي]َتَذَكَّرُ [h:14286[ٱ]لْإِ[f:2732[نس]َ[n[ـٰ]نُ وَأَ[g[نّ]َىٰ لَهُ [h:14493[ٱ][l[ل]ذِّكْرَىٰ",
-            "surah": {
-                "name": "سُورَةُ الفَجۡرِ",
-                "englishName": "Al-Fajr",
-                "englishNameTranslation": "The Dawn",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَجِايْۤءَ",
+                    "transliteration": "wajīa",
+                    "translation": "And is brought",
+                    "analysis_id": 24254
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَوْمَىِٕذٍۢ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 25165
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِجَهَنَّمَۙ",
+                    "transliteration": "bijahannama",
+                    "translation": "Hell",
+                    "analysis_id": 29059
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "That Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَّتَذَكَّرُ",
+                    "transliteration": "yatadhakkaru",
+                    "translation": "will remember",
+                    "analysis_id": 18795
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْاِنْسَانُ",
+                    "transliteration": "l-insānu",
+                    "translation": "man",
+                    "analysis_id": 17144
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَاَنّٰى",
+                    "transliteration": "wa-annā",
+                    "translation": "but how",
+                    "analysis_id": 23152
+                },
+                {
+                    "position": 8,
+                    "arabic": "لَهُ",
+                    "transliteration": "lahu",
+                    "translation": "(will be) for him",
+                    "analysis_id": 2905
+                },
+                {
+                    "position": 9,
+                    "arabic": "الذِّكْرٰىۗ",
+                    "transliteration": "l-dhik'rā",
+                    "translation": "the remembrance",
+                    "analysis_id": 28714
+                }
+            ]
         }
     ]
 }

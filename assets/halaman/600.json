@@ -13,12 +13,36 @@
             "sajda": false,
             "transliteration": "Wa hussila maa fis sudoor",
             "tajweed_text": "وَحُصِّلَ مَا فِى [h:6095[ٱ][l[ل]صُّد[p[ُو]رِ",
-            "surah": {
-                "name": "سُورَةُ العَادِيَاتِ",
-                "englishName": "Al-Aadiyaat",
-                "englishNameTranslation": "The Chargers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَحُصِّلَ",
+                    "transliteration": "waḥuṣṣila",
+                    "translation": "And is made apparent",
+                    "analysis_id": 29284
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "(is) in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 4,
+                    "arabic": "الصُّدُوْرِۙ",
+                    "transliteration": "l-ṣudūri",
+                    "translation": "the breasts",
+                    "analysis_id": 14045
+                }
+            ]
         },
         {
             "aya_id": 6157,
@@ -32,12 +56,50 @@
             "sajda": false,
             "transliteration": "Inna rabbahum bihim yauma 'izil la khabeer",
             "tajweed_text": "إِ[g[نّ]َ رَبَّه[c:14617[ُم ب]ِهِمْ يَوْمَئِ[u:14618[ذٍ ل]َّخَب[p[ِي]رُۢ",
-            "surah": {
-                "name": "سُورَةُ العَادِيَاتِ",
-                "englishName": "Al-Aadiyaat",
-                "englishNameTranslation": "The Chargers",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَبَّهُمْ",
+                    "transliteration": "rabbahum",
+                    "translation": "their Lord",
+                    "analysis_id": 6398
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِهِمْ",
+                    "transliteration": "bihim",
+                    "translation": "about them",
+                    "analysis_id": 2267
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَّخَبِيْرٌ",
+                    "transliteration": "lakhabīrun",
+                    "translation": "(is) surely All-Aware",
+                    "analysis_id": 29285
+                },
+                {
+                    "position": 6,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(11)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 6158,
@@ -51,12 +113,15 @@
             "sajda": false,
             "transliteration": "Al qaari'ah",
             "tajweed_text": "ٱلْقَارِعَةُ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلْقَارِعَةُۙ",
+                    "transliteration": "al-qāriʿatu",
+                    "translation": "The Striking Calamity",
+                    "analysis_id": 29286
+                }
+            ]
         },
         {
             "aya_id": 6159,
@@ -70,12 +135,29 @@
             "sajda": false,
             "transliteration": "Mal qaariah",
             "tajweed_text": "مَا [h:14619[ٱ]لْقَارِعَةُ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "What",
+                    "analysis_id": 916
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْقَارِعَةُ",
+                    "transliteration": "l-qāriʿatu",
+                    "translation": "(is) the Striking Calamity",
+                    "analysis_id": 29287
+                },
+                {
+                    "position": 3,
+                    "arabic": "ۚ",
+                    "transliteration": null,
+                    "translation": "(2)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 6160,
@@ -89,12 +171,43 @@
             "sajda": false,
             "transliteration": "Wa maa adraaka mal qaari'ah",
             "tajweed_text": "وَم[o[َآ] أَ[q:13858[دْ]رَ[n[ٮٰ]كَ مَا [h:14619[ٱ]لْقَارِعَةُ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمَآ",
+                    "transliteration": "wamā",
+                    "translation": "And what",
+                    "analysis_id": 27821
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَدْرٰىكَ",
+                    "transliteration": "adrāka",
+                    "translation": "will make you know",
+                    "analysis_id": 27822
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 916
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْقَارِعَةُ",
+                    "transliteration": "l-qāriʿatu",
+                    "translation": "(is) the Striking Calamity",
+                    "analysis_id": 29287
+                },
+                {
+                    "position": 5,
+                    "arabic": "ۗ",
+                    "transliteration": null,
+                    "translation": "(3)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 6161,
@@ -108,12 +221,43 @@
             "sajda": false,
             "transliteration": "Yauma ya koonun naasu kal farashil mabthooth",
             "tajweed_text": "يَوْمَ يَكُونُ [h:14620[ٱ][l[ل][g[نّ]َاسُ كَ[h:14621[ٱ]لْفَرَاشِ [h:14622[ٱ]لْمَ[q:14623[بْ]ث[p[ُو]ثِ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "yawma",
+                    "translation": "(The) Day",
+                    "analysis_id": 2352
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَكُوْنُ",
+                    "transliteration": "yakūnu",
+                    "translation": "will be",
+                    "analysis_id": 4920
+                },
+                {
+                    "position": 3,
+                    "arabic": "النَّاسُ",
+                    "transliteration": "l-nāsu",
+                    "translation": "the mankind",
+                    "analysis_id": 138
+                },
+                {
+                    "position": 4,
+                    "arabic": "كَالْفَرَاشِ",
+                    "transliteration": "kal-farāshi",
+                    "translation": "like moths",
+                    "analysis_id": 29288
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْمَبْثُوْثِۙ",
+                    "transliteration": "l-mabthūthi",
+                    "translation": "scattered",
+                    "analysis_id": 29289
+                }
+            ]
         },
         {
             "aya_id": 6162,
@@ -127,12 +271,36 @@
             "sajda": false,
             "transliteration": "Wa ta koonul jibalu kal 'ihnil manfoosh",
             "tajweed_text": "وَتَكُونُ [h:13919[ٱ]لْجِبَالُ كَ[h:13920[ٱ]لْعِهْنِ [h:14624[ٱ]لْمَ[f:14625[نف][p[ُو]شِ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَتَكُوْنُ",
+                    "transliteration": "watakūnu",
+                    "translation": "And will be",
+                    "analysis_id": 27945
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْجِبَالُ",
+                    "transliteration": "l-jibālu",
+                    "translation": "the mountains",
+                    "analysis_id": 15957
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَالْعِهْنِ",
+                    "transliteration": "kal-ʿih'ni",
+                    "translation": "like wool",
+                    "analysis_id": 29290
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْمَنْفُوْشِۗ",
+                    "transliteration": "l-manfūshi",
+                    "translation": "fluffed up",
+                    "analysis_id": 29291
+                }
+            ]
         },
         {
             "aya_id": 6163,
@@ -146,12 +314,36 @@
             "sajda": false,
             "transliteration": "Fa-amma man thaqulat mawa zeenuh",
             "tajweed_text": "فَأَ[g[مّ]َا مَ[f:14626[ن ث]َقُلَتْ مَو[n[َٲ]زِينُهُۥ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاَمَّا",
+                    "transliteration": "fa-ammā",
+                    "translation": "Then as for",
+                    "analysis_id": 5085
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(him) whose",
+                    "analysis_id": 854
+                },
+                {
+                    "position": 3,
+                    "arabic": "ثَقُلَتْ",
+                    "transliteration": "thaqulat",
+                    "translation": "(are) heavy",
+                    "analysis_id": 11037
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَوَازِينُهٗۙ",
+                    "transliteration": "mawāzīnuhu",
+                    "translation": "his scales",
+                    "analysis_id": 29292
+                }
+            ]
         },
         {
             "aya_id": 6164,
@@ -165,12 +357,36 @@
             "sajda": false,
             "transliteration": "Fahuwa fee 'ishatir raadiyah",
             "tajweed_text": "فَهُوَ فِى عِيشَ[u:13890[ةٍ ر]َّاضِيَةٍ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَهُوَ",
+                    "transliteration": "fahuwa",
+                    "translation": "Then he",
+                    "analysis_id": 4209
+                },
+                {
+                    "position": 2,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "(will be) in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 3,
+                    "arabic": "عِيْشَةٍ",
+                    "transliteration": "ʿīshatin",
+                    "translation": "a life",
+                    "analysis_id": 27875
+                },
+                {
+                    "position": 4,
+                    "arabic": "رَّاضِيَةٍۗ",
+                    "transliteration": "rāḍiyatin",
+                    "translation": "pleasant",
+                    "analysis_id": 27876
+                }
+            ]
         },
         {
             "aya_id": 6165,
@@ -184,12 +400,36 @@
             "sajda": false,
             "transliteration": "Wa amma man khaffat mawa zeenuh",
             "tajweed_text": "وَأَ[g[مّ]َا مَنْ خَفَّتْ مَو[n[َٲ]زِينُهُۥ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَمَّا",
+                    "transliteration": "wa-ammā",
+                    "translation": "But as for",
+                    "analysis_id": 5092
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(him) whose",
+                    "analysis_id": 854
+                },
+                {
+                    "position": 3,
+                    "arabic": "خَفَّتْ",
+                    "transliteration": "khaffat",
+                    "translation": "(are) light",
+                    "analysis_id": 11040
+                },
+                {
+                    "position": 4,
+                    "arabic": "مَوَازِيْنُهٗۙ",
+                    "transliteration": "mawāzīnuhu",
+                    "translation": "his scales",
+                    "analysis_id": 29292
+                }
+            ]
         },
         {
             "aya_id": 6166,
@@ -203,12 +443,29 @@
             "sajda": false,
             "transliteration": "Fa-ummuhu haawiyah",
             "tajweed_text": "فَأُ[g[مّ]ُهُ[n[ۥ] هَاوِيَةٌ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَاُمُّهُ",
+                    "transliteration": "fa-ummuhu",
+                    "translation": "His abode",
+                    "analysis_id": 29293
+                },
+                {
+                    "position": 2,
+                    "arabic": "هَاوِيَةٌ",
+                    "transliteration": "hāwiyatun",
+                    "translation": "(will be the) Pit",
+                    "analysis_id": 29294
+                },
+                {
+                    "position": 4,
+                    "arabic": "ۗ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 6167,
@@ -222,12 +479,36 @@
             "sajda": false,
             "transliteration": "Wa maa adraaka maa hiyah",
             "tajweed_text": "وَم[o[َآ] أَ[q:13858[دْ]رَ[n[ٮٰ]كَ مَا هِيَهْ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمَآ",
+                    "transliteration": "wamā",
+                    "translation": "And what",
+                    "analysis_id": 27821
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَدْرٰىكَ",
+                    "transliteration": "adrāka",
+                    "translation": "will make you know",
+                    "analysis_id": 27822
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 916
+                },
+                {
+                    "position": 4,
+                    "arabic": "هِيَهْۗ",
+                    "transliteration": "hiyah",
+                    "translation": "it is",
+                    "analysis_id": 940
+                }
+            ]
         },
         {
             "aya_id": 6168,
@@ -241,12 +522,29 @@
             "sajda": false,
             "transliteration": "Naarun hamiyah",
             "tajweed_text": "نَارٌ حَامِيَةُۢ",
-            "surah": {
-                "name": "سُورَةُ القَارِعَةِ",
-                "englishName": "Al-Qaari'a",
-                "englishNameTranslation": "The Calamity",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "نَارٌ",
+                    "transliteration": "nārun",
+                    "translation": "A Fire",
+                    "analysis_id": 29103
+                },
+                {
+                    "position": 2,
+                    "arabic": "حَامِيَةٌ",
+                    "transliteration": "ḥāmiyatun",
+                    "translation": "intensely hot",
+                    "analysis_id": 29295
+                },
+                {
+                    "position": 3,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(11)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 6169,
@@ -260,12 +558,22 @@
             "sajda": false,
             "transliteration": "Al haaku mut takathur",
             "tajweed_text": "أَلْهَ[n[ـٰ]كُمُ [h:14627[ٱ][l[ل]تَّكَاثُرُ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلْهٰىكُمُ",
+                    "transliteration": "alhākumu",
+                    "translation": "Diverts you",
+                    "analysis_id": 29296
+                },
+                {
+                    "position": 2,
+                    "arabic": "التَّكَاثُرُۙ",
+                    "transliteration": "l-takāthuru",
+                    "translation": "the competition to increase",
+                    "analysis_id": 29297
+                }
+            ]
         },
         {
             "aya_id": 6170,
@@ -279,12 +587,29 @@
             "sajda": false,
             "transliteration": "Hatta zurtumul-maqaabir",
             "tajweed_text": "حَتَّىٰ زُرْتُمُ [h:14628[ٱ]لْمَقَابِرَ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "حَتّٰى",
+                    "transliteration": "ḥattā",
+                    "translation": "Until",
+                    "analysis_id": 11593
+                },
+                {
+                    "position": 2,
+                    "arabic": "زُرْتُمُ",
+                    "transliteration": "zur'tumu",
+                    "translation": "you visit",
+                    "analysis_id": 29298
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْمَقَابِرَۗ",
+                    "transliteration": "l-maqābira",
+                    "translation": "the graves",
+                    "analysis_id": 29299
+                }
+            ]
         },
         {
             "aya_id": 6171,
@@ -298,12 +623,29 @@
             "sajda": false,
             "transliteration": "Kalla sawfa ta'lamoon",
             "tajweed_text": "كَلَّا سَوْفَ تَعْلَم[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَلَّا",
+                    "transliteration": "kallā",
+                    "translation": "Nay",
+                    "analysis_id": 18614
+                },
+                {
+                    "position": 2,
+                    "arabic": "سَوْفَ",
+                    "transliteration": "sawfa",
+                    "translation": "Soon",
+                    "analysis_id": 7192
+                },
+                {
+                    "position": 3,
+                    "arabic": "تَعْلَمُوْنَۙ",
+                    "transliteration": "taʿlamūna",
+                    "translation": "you will know",
+                    "analysis_id": 2111
+                }
+            ]
         },
         {
             "aya_id": 6172,
@@ -317,12 +659,36 @@
             "sajda": false,
             "transliteration": "Thumma kalla sawfa ta'lamoon",
             "tajweed_text": "ثُ[g[مّ]َ كَلَّا سَوْفَ تَعْلَم[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَلَّا",
+                    "transliteration": "kallā",
+                    "translation": "nay",
+                    "analysis_id": 18614
+                },
+                {
+                    "position": 3,
+                    "arabic": "سَوْفَ",
+                    "transliteration": "sawfa",
+                    "translation": "Soon",
+                    "analysis_id": 7192
+                },
+                {
+                    "position": 4,
+                    "arabic": "تَعْلَمُوْنَ",
+                    "transliteration": "taʿlamūna",
+                    "translation": "you will know",
+                    "analysis_id": 607
+                }
+            ]
         },
         {
             "aya_id": 6173,
@@ -336,12 +702,43 @@
             "sajda": false,
             "transliteration": "Kalla law ta'lamoona 'ilmal yaqeen",
             "tajweed_text": "كَلَّا لَوْ تَعْلَمُونَ عِلْمَ [h:14629[ٱ]لْيَق[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَلَّا",
+                    "transliteration": "kallā",
+                    "translation": "Nay",
+                    "analysis_id": 18614
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَوْ",
+                    "transliteration": "law",
+                    "translation": "If",
+                    "analysis_id": 2269
+                },
+                {
+                    "position": 3,
+                    "arabic": "تَعْلَمُوْنَ",
+                    "transliteration": "taʿlamūna",
+                    "translation": "you know",
+                    "analysis_id": 607
+                },
+                {
+                    "position": 4,
+                    "arabic": "عِلْمَ",
+                    "transliteration": "ʿil'ma",
+                    "translation": "(with) a knowledge",
+                    "analysis_id": 467
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْيَقِيْنِۗ",
+                    "transliteration": "l-yaqīni",
+                    "translation": "(of) certainty",
+                    "analysis_id": 29300
+                }
+            ]
         },
         {
             "aya_id": 6174,
@@ -355,12 +752,22 @@
             "sajda": false,
             "transliteration": "Latara-wun nal jaheem",
             "tajweed_text": "لَتَرَوُ[g[نّ]َ [h:14630[ٱ]لْجَح[p[ِي]مَ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَتَرَوُنَّ",
+                    "transliteration": "latarawunna",
+                    "translation": "Surely you will see",
+                    "analysis_id": 29301
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْجَحِيْمَۙ",
+                    "transliteration": "l-jaḥīma",
+                    "translation": "the Hellfire",
+                    "analysis_id": 29302
+                }
+            ]
         },
         {
             "aya_id": 6175,
@@ -374,12 +781,36 @@
             "sajda": false,
             "transliteration": "Thumma latara wunnaha 'ainal yaqeen",
             "tajweed_text": "ثُ[g[مّ]َ لَتَرَوُ[g[نّ]َهَا عَيْنَ [h:14631[ٱ]لْيَق[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَتَرَوُنَّهَا",
+                    "transliteration": "latarawunnahā",
+                    "translation": "surely you will see it",
+                    "analysis_id": 29303
+                },
+                {
+                    "position": 3,
+                    "arabic": "عَيْنَ",
+                    "transliteration": "ʿayna",
+                    "translation": "(with the) eye",
+                    "analysis_id": 22994
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْيَقِيْنِۙ",
+                    "transliteration": "l-yaqīni",
+                    "translation": "(of) certainty",
+                    "analysis_id": 29300
+                }
+            ]
         },
         {
             "aya_id": 6176,
@@ -393,12 +824,50 @@
             "sajda": false,
             "transliteration": "Thumma latus alunna yauma-izin 'anin na'eem",
             "tajweed_text": "ثُ[g[مّ]َ لَتُسْــَٔلُ[g[نّ]َ يَوْمَئِذٍ عَنِ [h:14632[ٱ][l[ل][g[نّ]َع[p[ِي]مِ",
-            "surah": {
-                "name": "سُورَةُ التَّكَاثُرِ",
-                "englishName": "At-Takaathur",
-                "englishNameTranslation": "Competition",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَتُسْـَٔلُنَّ",
+                    "transliteration": "latus'alunna",
+                    "translation": "surely you will be asked",
+                    "analysis_id": 16768
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَوْمَىِٕذٍ",
+                    "transliteration": "yawma-idhin",
+                    "translation": "that Day",
+                    "analysis_id": 7091
+                },
+                {
+                    "position": 4,
+                    "arabic": "عَنِ",
+                    "transliteration": "ʿani",
+                    "translation": "about",
+                    "analysis_id": 647
+                },
+                {
+                    "position": 5,
+                    "arabic": "النَّعِيْمِ",
+                    "transliteration": "l-naʿīmi",
+                    "translation": "the pleasures",
+                    "analysis_id": 9232
+                },
+                {
+                    "position": 6,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(8)",
+                    "analysis_id": 31
+                }
+            ]
         }
     ]
 }

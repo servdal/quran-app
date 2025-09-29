@@ -13,12 +13,22 @@
             "sajda": false,
             "transliteration": "Wassamaaa'i wattaariq",
             "tajweed_text": "وَ[h:9999[ٱ][l[ل]سَّم[o[َا]ٓءِ وَ[h:14418[ٱ][l[ل]طَّارِ[q[ق]ِ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالسَّمَاۤءِ",
+                    "transliteration": "wal-samāi",
+                    "translation": "By the sky",
+                    "analysis_id": 28897
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَالطَّارِقِۙ",
+                    "transliteration": "wal-ṭāriqi",
+                    "translation": "and the night comer",
+                    "analysis_id": 28927
+                }
+            ]
         },
         {
             "aya_id": 5933,
@@ -32,12 +42,36 @@
             "sajda": false,
             "transliteration": "Wa maaa adraaka mattaariq",
             "tajweed_text": "وَم[o[َآ] أَ[q:13858[دْ]رَ[n[ٮٰ]كَ مَا [h:14419[ٱ][l[ل]طَّارِ[q[ق]ُ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَمَآ",
+                    "transliteration": "wamā",
+                    "translation": "And what",
+                    "analysis_id": 27821
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَدْرٰىكَ",
+                    "transliteration": "adrāka",
+                    "translation": "can make you know",
+                    "analysis_id": 27822
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 916
+                },
+                {
+                    "position": 4,
+                    "arabic": "الطَّارِقُۙ",
+                    "transliteration": "l-ṭāriqu",
+                    "translation": "the night comer (is)",
+                    "analysis_id": 28928
+                }
+            ]
         },
         {
             "aya_id": 5934,
@@ -51,12 +85,22 @@
             "sajda": false,
             "transliteration": "Annajmus saaqib",
             "tajweed_text": "ٱ[l[ل][g[نّ]َ[q:14420[جْ]مُ [h:14421[ٱ][l[ل]ثَّاقِ[q[ب]ُ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "النَّجْمُ",
+                    "transliteration": "al-najmu",
+                    "translation": "(It is) the star",
+                    "analysis_id": 28929
+                },
+                {
+                    "position": 2,
+                    "arabic": "الثَّاقِبُۙ",
+                    "transliteration": "l-thāqibu",
+                    "translation": "the piercing",
+                    "analysis_id": 28930
+                }
+            ]
         },
         {
             "aya_id": 5935,
@@ -70,12 +114,50 @@
             "sajda": false,
             "transliteration": "In kullu nafsil lammaa 'alaihaa haafiz",
             "tajweed_text": "إِ[f:8426[ن ك]ُلُّ نَفْ[u:14422[سٍ ل]َّ[g[مّ]َا عَلَيْهَا حَافِظٌ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "Not",
+                    "analysis_id": 7973
+                },
+                {
+                    "position": 2,
+                    "arabic": "كُلُّ",
+                    "transliteration": "kullu",
+                    "translation": "(is) every",
+                    "analysis_id": 4314
+                },
+                {
+                    "position": 3,
+                    "arabic": "نَفْسٍ",
+                    "transliteration": "nafsin",
+                    "translation": "soul",
+                    "analysis_id": 648
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَّمَّا",
+                    "transliteration": "lammā",
+                    "translation": "but",
+                    "analysis_id": 25103
+                },
+                {
+                    "position": 5,
+                    "arabic": "عَلَيْهَا",
+                    "transliteration": "ʿalayhā",
+                    "translation": "over it",
+                    "analysis_id": 9644
+                },
+                {
+                    "position": 6,
+                    "arabic": "حَافِظٌۗ",
+                    "transliteration": "ḥāfiẓun",
+                    "translation": "(is) a protector",
+                    "analysis_id": 28931
+                }
+            ]
         },
         {
             "aya_id": 5936,
@@ -89,12 +171,36 @@
             "sajda": false,
             "transliteration": "Fal yanzuril insaanu mimma khuliq",
             "tajweed_text": "فَلْيَ[f:14313[نظ]ُرِ [h:14314[ٱ]لْإِ[f:2732[نس]َ[n[ـٰ]نُ مِ[g[مّ]َ خُلِ[q[ق]َ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلْيَنْظُرِ",
+                    "transliteration": "falyanẓuri",
+                    "translation": "So let see",
+                    "analysis_id": 17759
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْاِنْسَانُ",
+                    "transliteration": "l-insānu",
+                    "translation": "man",
+                    "analysis_id": 17144
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِمَّ",
+                    "transliteration": "mimma",
+                    "translation": "from what",
+                    "analysis_id": 28932
+                },
+                {
+                    "position": 4,
+                    "arabic": "خُلِقَ",
+                    "transliteration": "khuliqa",
+                    "translation": "he is created",
+                    "analysis_id": 19293
+                }
+            ]
         },
         {
             "aya_id": 5937,
@@ -108,12 +214,36 @@
             "sajda": false,
             "transliteration": "Khuliqa mim maaa'in daafiq",
             "tajweed_text": "خُلِقَ م[a:840[ِن م]ّ[o[َا]ٓ[f:14423[ءٍ د]َافِ[q[ق]ٍ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "خُلِقَ",
+                    "transliteration": "khuliqa",
+                    "translation": "He is created",
+                    "analysis_id": 19293
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَّاۤءٍ",
+                    "transliteration": "māin",
+                    "translation": "a water",
+                    "analysis_id": 2219
+                },
+                {
+                    "position": 4,
+                    "arabic": "دَافِقٍۙ",
+                    "transliteration": "dāfiqin",
+                    "translation": "ejected",
+                    "analysis_id": 28933
+                }
+            ]
         },
         {
             "aya_id": 5938,
@@ -127,12 +257,43 @@
             "sajda": false,
             "transliteration": "Yakhruju mim bainissulbi wat taraaa'ib",
             "tajweed_text": "يَخْرُجُ م[i:4612[ِنۢ ب]َيْنِ [h:14424[ٱ][l[ل]صُّلْبِ وَ[h:14425[ٱ][l[ل]تَّر[o[َا]ٓئِ[q[ب]ِ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَّخْرُجُ",
+                    "transliteration": "yakhruju",
+                    "translation": "Coming forth",
+                    "analysis_id": 11383
+                },
+                {
+                    "position": 2,
+                    "arabic": "مِنْۢ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 384
+                },
+                {
+                    "position": 3,
+                    "arabic": "بَيْنِ",
+                    "transliteration": "bayni",
+                    "translation": "between",
+                    "analysis_id": 11068
+                },
+                {
+                    "position": 4,
+                    "arabic": "الصُّلْبِ",
+                    "transliteration": "l-ṣul'bi",
+                    "translation": "the backbone",
+                    "analysis_id": 28934
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَالتَّرَاۤىِٕبِۗ",
+                    "transliteration": "wal-tarāibi",
+                    "translation": "and the ribs",
+                    "analysis_id": 28935
+                }
+            ]
         },
         {
             "aya_id": 5939,
@@ -146,12 +307,36 @@
             "sajda": false,
             "transliteration": "Innahoo 'alaa raj'ihee laqaadir",
             "tajweed_text": "إِ[g[نّ]َهُ[n[ۥ] عَلَىٰ رَ[q:14426[جْ]عِه[n[ِۦ] لَقَادِرٌ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, He",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَجْعِهٖ",
+                    "transliteration": "rajʿihi",
+                    "translation": "return him",
+                    "analysis_id": 28936
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَقَادِرٌۗ",
+                    "transliteration": "laqādirun",
+                    "translation": "(is) Able",
+                    "analysis_id": 28937
+                }
+            ]
         },
         {
             "aya_id": 5940,
@@ -165,12 +350,29 @@
             "sajda": false,
             "transliteration": "Yawma tublas saraaa'ir",
             "tajweed_text": "يَوْمَ تُ[q:14427[بْ]لَى [h:14428[ٱ][l[ل]سَّر[o[َا]ٓئِرُ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "yawma",
+                    "translation": "(The) Day",
+                    "analysis_id": 2352
+                },
+                {
+                    "position": 2,
+                    "arabic": "تُبْلَى",
+                    "transliteration": "tub'lā",
+                    "translation": "will be tested",
+                    "analysis_id": 28938
+                },
+                {
+                    "position": 3,
+                    "arabic": "السَّرَاۤىِٕرُۙ",
+                    "transliteration": "l-sarāiru",
+                    "translation": "the secrets",
+                    "analysis_id": 28939
+                }
+            ]
         },
         {
             "aya_id": 5941,
@@ -184,12 +386,50 @@
             "sajda": false,
             "transliteration": "Famaa lahoo min quwwatinw wa laa naasir",
             "tajweed_text": "فَمَا لَهُ[n[ۥ] مِ[f:5395[ن ق]ُوَّ[a:14429[ةٍ و]َلَا نَاصِرٍ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَمَا",
+                    "transliteration": "famā",
+                    "translation": "Then not",
+                    "analysis_id": 5808
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَهٗ",
+                    "transliteration": "lahu",
+                    "translation": "(is) for him",
+                    "analysis_id": 1515
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "any",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "قُوَّةٍ",
+                    "transliteration": "quwwatin",
+                    "translation": "power",
+                    "analysis_id": 12676
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَّلَا",
+                    "transliteration": "walā",
+                    "translation": "and not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 6,
+                    "arabic": "نَاصِرٍۗ",
+                    "transliteration": "nāṣirin",
+                    "translation": "any helper",
+                    "analysis_id": 28940
+                }
+            ]
         },
         {
             "aya_id": 5942,
@@ -203,12 +443,29 @@
             "sajda": false,
             "transliteration": "Wassamaaa'i zaatir raj'",
             "tajweed_text": "وَ[h:9999[ٱ][l[ل]سَّم[o[َا]ٓءِ ذَاتِ [h:14430[ٱ][l[ل]رَّ[q:14431[جْ]عِ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالسَّمَاۤءِ",
+                    "transliteration": "wal-samāi",
+                    "translation": "By the sky",
+                    "analysis_id": 28897
+                },
+                {
+                    "position": 2,
+                    "arabic": "ذَاتِ",
+                    "transliteration": "dhāti",
+                    "translation": "which",
+                    "analysis_id": 12387
+                },
+                {
+                    "position": 3,
+                    "arabic": "الرَّجْعِۙ",
+                    "transliteration": "l-rajʿi",
+                    "translation": "returns",
+                    "analysis_id": 28941
+                }
+            ]
         },
         {
             "aya_id": 5943,
@@ -222,12 +479,29 @@
             "sajda": false,
             "transliteration": "Wal ardi zaatis sad'",
             "tajweed_text": "وَ[h:9999[ٱ]لْأَرْضِ ذَاتِ [h:14432[ٱ][l[ل]صَّ[q:14433[دْ]عِ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالْاَرْضِ",
+                    "transliteration": "wal-arḍi",
+                    "translation": "And the earth",
+                    "analysis_id": 1518
+                },
+                {
+                    "position": 2,
+                    "arabic": "ذَاتِ",
+                    "transliteration": "dhāti",
+                    "translation": "which",
+                    "analysis_id": 12387
+                },
+                {
+                    "position": 3,
+                    "arabic": "الصَّدْعِۙ",
+                    "transliteration": "l-ṣadʿi",
+                    "translation": "cracks open",
+                    "analysis_id": 28942
+                }
+            ]
         },
         {
             "aya_id": 5944,
@@ -241,12 +515,29 @@
             "sajda": false,
             "transliteration": "Innahoo laqawlun fasl",
             "tajweed_text": "إِ[g[نّ]َهُ[n[ۥ] لَقَوْ[f:14434[لٌ ف]َصْلٌ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, it",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَقَوْلٌ",
+                    "transliteration": "laqawlun",
+                    "translation": "(is) surely a Word",
+                    "analysis_id": 28943
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَصْلٌۙ",
+                    "transliteration": "faṣlun",
+                    "translation": "decisive",
+                    "analysis_id": 28944
+                }
+            ]
         },
         {
             "aya_id": 5945,
@@ -260,12 +551,29 @@
             "sajda": false,
             "transliteration": "Wa maa huwa bil hazl",
             "tajweed_text": "وَمَا هُوَ بِ[h:14435[ٱ]لْهَزْلِ",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّمَا",
+                    "transliteration": "wamā",
+                    "translation": "And not",
+                    "analysis_id": 10707
+                },
+                {
+                    "position": 2,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "it",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِالْهَزْلِۗ",
+                    "transliteration": "bil-hazli",
+                    "translation": "(is) for amusement",
+                    "analysis_id": 28945
+                }
+            ]
         },
         {
             "aya_id": 5946,
@@ -279,12 +587,29 @@
             "sajda": false,
             "transliteration": "Innahum yakeedoona kaidaa",
             "tajweed_text": "إِ[g[نّ]َهُمْ يَكِيدُونَ كَيْدًا",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّهُمْ",
+                    "transliteration": "innahum",
+                    "translation": "Indeed, they",
+                    "analysis_id": 130
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَكِيْدُوْنَ",
+                    "transliteration": "yakīdūna",
+                    "translation": "are plotting",
+                    "analysis_id": 28946
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَيْدًاۙ",
+                    "transliteration": "kaydan",
+                    "translation": "a plot",
+                    "analysis_id": 26314
+                }
+            ]
         },
         {
             "aya_id": 5947,
@@ -298,12 +623,22 @@
             "sajda": false,
             "transliteration": "Wa akeedu kaidaa",
             "tajweed_text": "وَأَكِيدُ كَيْدًا",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَّاَكِيْدُ",
+                    "transliteration": "wa-akīdu",
+                    "translation": "But I am planning",
+                    "analysis_id": 28947
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَيْدًاۖ",
+                    "transliteration": "kaydan",
+                    "translation": "a plan",
+                    "analysis_id": 26314
+                }
+            ]
         },
         {
             "aya_id": 5948,
@@ -317,12 +652,43 @@
             "sajda": false,
             "transliteration": "Famahhilil kaafireena amhilhum ruwaidaa",
             "tajweed_text": "فَمَهِّلِ [h:14436[ٱ]لْكَ[n[ـٰ]فِرِينَ أَمْهِلْهُمْ رُوَيْدَۢا",
-            "surah": {
-                "name": "سُورَةُ الطَّارِقِ",
-                "englishName": "At-Taariq",
-                "englishNameTranslation": "The Morning Star",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَمَهِّلِ",
+                    "transliteration": "famahhili",
+                    "translation": "So give respite",
+                    "analysis_id": 28948
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْكٰفِرِيْنَ",
+                    "transliteration": "l-kāfirīna",
+                    "translation": "(to) the disbelievers",
+                    "analysis_id": 4779
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَمْهِلْهُمْ",
+                    "transliteration": "amhil'hum",
+                    "translation": "Give respite to them ",
+                    "analysis_id": 28949
+                },
+                {
+                    "position": 4,
+                    "arabic": "رُوَيْدًا",
+                    "transliteration": "ruwaydan",
+                    "translation": "little",
+                    "analysis_id": 28950
+                },
+                {
+                    "position": 5,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(17)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 5949,
@@ -336,12 +702,36 @@
             "sajda": false,
             "transliteration": "Sabbihisma Rabbikal A'laa",
             "tajweed_text": "سَبِّحِ [h:14437[ٱ]سْمَ رَبِّكَ [h:14438[ٱ]لْأَعْلَى",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "سَبِّحِ",
+                    "transliteration": "sabbiḥi",
+                    "translation": "Glorify",
+                    "analysis_id": 28951
+                },
+                {
+                    "position": 2,
+                    "arabic": "اسْمَ",
+                    "transliteration": "is'ma",
+                    "translation": "(the) name",
+                    "analysis_id": 10754
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْاَعْلَىۙ",
+                    "transliteration": "l-aʿlā",
+                    "translation": "the Most High",
+                    "analysis_id": 28952
+                }
+            ]
         },
         {
             "aya_id": 5950,
@@ -355,12 +745,29 @@
             "sajda": false,
             "transliteration": "Allazee khalaqa fasawwaa",
             "tajweed_text": "ٱلَّذِى خَلَقَ فَسَوَّىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "The One Who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 2,
+                    "arabic": "خَلَقَ",
+                    "transliteration": "khalaqa",
+                    "translation": "created",
+                    "analysis_id": 410
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَسَوّٰىۖ",
+                    "transliteration": "fasawwā",
+                    "translation": "then proportioned",
+                    "analysis_id": 28421
+                }
+            ]
         },
         {
             "aya_id": 5951,
@@ -374,12 +781,29 @@
             "sajda": false,
             "transliteration": "Wallazee qaddara fahadaa",
             "tajweed_text": "وَ[h:9999[ٱ]لَّذِى قَدَّرَ فَهَدَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالَّذِيْ",
+                    "transliteration": "wa-alladhī",
+                    "translation": "And the One Who",
+                    "analysis_id": 11385
+                },
+                {
+                    "position": 2,
+                    "arabic": "قَدَّرَ",
+                    "transliteration": "qaddara",
+                    "translation": "measured",
+                    "analysis_id": 28953
+                },
+                {
+                    "position": 3,
+                    "arabic": "فَهَدٰىۖ",
+                    "transliteration": "fahadā",
+                    "translation": "then guided",
+                    "analysis_id": 28954
+                }
+            ]
         },
         {
             "aya_id": 5952,
@@ -393,12 +817,29 @@
             "sajda": false,
             "transliteration": "Wallazeee akhrajal mar'aa",
             "tajweed_text": "وَ[h:9999[ٱ]لَّذ[o[ِىٓ] أَخْرَجَ [h:14439[ٱ]لْمَرْعَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالَّذِيْٓ",
+                    "transliteration": "wa-alladhī",
+                    "translation": "And the One Who",
+                    "analysis_id": 15722
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَخْرَجَ",
+                    "transliteration": "akhraja",
+                    "translation": "brings forth",
+                    "analysis_id": 11147
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْمَرْعٰىۖ",
+                    "transliteration": "l-marʿā",
+                    "translation": "the pasture",
+                    "analysis_id": 28955
+                }
+            ]
         },
         {
             "aya_id": 5953,
@@ -412,12 +853,29 @@
             "sajda": false,
             "transliteration": "Faja'alahoo ghusaaa'an ahwaa",
             "tajweed_text": "فَجَعَلَهُ[n[ۥ] غُث[o[َا]ٓءً أَحْوَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَجَعَلَهٗ",
+                    "transliteration": "fajaʿalahu",
+                    "translation": "And then makes it",
+                    "analysis_id": 20798
+                },
+                {
+                    "position": 2,
+                    "arabic": "غُثَاۤءً",
+                    "transliteration": "ghuthāan",
+                    "translation": "stubble",
+                    "analysis_id": 28956
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَحْوٰىۖ",
+                    "transliteration": "aḥwā",
+                    "translation": "dark",
+                    "analysis_id": 28957
+                }
+            ]
         },
         {
             "aya_id": 5954,
@@ -431,12 +889,36 @@
             "sajda": false,
             "transliteration": "Sanuqri'uka falaa tansaaa",
             "tajweed_text": "سَنُ[q:14440[قْ]رِئُكَ فَلَا تَ[f:14441[نس]َىٰٓ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "سَنُقْرِئُكَ",
+                    "transliteration": "sanuq'ri-uka",
+                    "translation": "We will make you recite",
+                    "analysis_id": 28958
+                },
+                {
+                    "position": 2,
+                    "arabic": "فَلَا",
+                    "transliteration": "falā",
+                    "translation": "so not",
+                    "analysis_id": 1827
+                },
+                {
+                    "position": 3,
+                    "arabic": "تَنْسٰىٓ",
+                    "transliteration": "tansā",
+                    "translation": "you will forget",
+                    "analysis_id": 28959
+                },
+                {
+                    "position": 5,
+                    "arabic": "ۖ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 5955,
@@ -450,12 +932,71 @@
             "sajda": false,
             "transliteration": "Illaa maa shaaa'al laah; innahoo ya'lamul jahra wa maa yakhfaa",
             "tajweed_text": "إِلَّا مَا ش[o[َا]ٓءَ [h:78[ٱ]للَّهُ‌ۚ إِ[g[نّ]َهُ[n[ۥ] يَعْلَمُ [h:8891[ٱ]لْجَهْرَ وَمَا يَخْفَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "Except",
+                    "analysis_id": 469
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 3,
+                    "arabic": "شَاۤءَ",
+                    "transliteration": "shāa",
+                    "translation": "wills",
+                    "analysis_id": 945
+                },
+                {
+                    "position": 4,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 5,
+                    "arabic": "ۗاِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, He",
+                    "analysis_id": 545
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَعْلَمُ",
+                    "transliteration": "yaʿlamu",
+                    "translation": "knows",
+                    "analysis_id": 1047
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْجَهْرَ",
+                    "transliteration": "l-jahra",
+                    "translation": "the manifest",
+                    "analysis_id": 19531
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَمَا",
+                    "transliteration": "wamā",
+                    "translation": "and what",
+                    "analysis_id": 1049
+                },
+                {
+                    "position": 9,
+                    "arabic": "يَخْفٰىۗ",
+                    "transliteration": "yakhfā",
+                    "translation": "is hidden",
+                    "analysis_id": 28960
+                }
+            ]
         },
         {
             "aya_id": 5956,
@@ -469,12 +1010,22 @@
             "sajda": false,
             "transliteration": "Wa nu-yassiruka lilyusraa",
             "tajweed_text": "وَنُيَسِّرُكَ لِلْيُسْرَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَنُيَسِّرُكَ",
+                    "transliteration": "wanuyassiruka",
+                    "translation": "And We will ease you",
+                    "analysis_id": 28961
+                },
+                {
+                    "position": 2,
+                    "arabic": "لِلْيُسْرٰىۖ",
+                    "transliteration": "lil'yus'rā",
+                    "translation": "to the ease",
+                    "analysis_id": 28962
+                }
+            ]
         },
         {
             "aya_id": 5957,
@@ -488,12 +1039,36 @@
             "sajda": false,
             "transliteration": "Fazakkir in nafa'atizzikraa",
             "tajweed_text": "فَذَكِّرْ إ[a:14442[ِن ن]َّفَعَتِ [h:14443[ٱ][l[ل]ذِّكْرَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَذَكِّرْ",
+                    "transliteration": "fadhakkir",
+                    "translation": "So remind",
+                    "analysis_id": 26147
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "نَّفَعَتِ",
+                    "transliteration": "nafaʿati",
+                    "translation": "benefits",
+                    "analysis_id": 28963
+                },
+                {
+                    "position": 4,
+                    "arabic": "الذِّكْرٰىۗ",
+                    "transliteration": "l-dhik'rā",
+                    "translation": "the reminder",
+                    "analysis_id": 28714
+                }
+            ]
         },
         {
             "aya_id": 5958,
@@ -507,12 +1082,29 @@
             "sajda": false,
             "transliteration": "Sa yazzakkaru maiyakhshaa",
             "tajweed_text": "سَيَذَّكَّرُ م[a:14444[َن ي]َخْشَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "سَيَذَّكَّرُ",
+                    "transliteration": "sayadhakkaru",
+                    "translation": "He will pay heed ",
+                    "analysis_id": 28964
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(one) who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَّخْشٰىۙ",
+                    "transliteration": "yakhshā",
+                    "translation": "fears (Allah)",
+                    "analysis_id": 28720
+                }
+            ]
         },
         {
             "aya_id": 5959,
@@ -526,12 +1118,22 @@
             "sajda": false,
             "transliteration": "Wa yatajannabuhal ashqaa",
             "tajweed_text": "وَيَتَجَ[g[نّ]َبُهَا [h:14445[ٱ]لْأَشْقَى",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيَتَجَنَّبُهَا",
+                    "transliteration": "wayatajannabuhā",
+                    "translation": "And will avoid it",
+                    "analysis_id": 28965
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْاَشْقَىۙ",
+                    "transliteration": "l-ashqā",
+                    "translation": "the wretched one",
+                    "analysis_id": 28966
+                }
+            ]
         },
         {
             "aya_id": 5960,
@@ -545,12 +1147,36 @@
             "sajda": false,
             "transliteration": "Allazee yaslan Naaral kubraa",
             "tajweed_text": "ٱلَّذِى يَصْلَى [h:14446[ٱ][l[ل][g[نّ]َارَ [h:14447[ٱ]لْكُ[q:8463[بْ]رَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "The one who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَصْلَى",
+                    "transliteration": "yaṣlā",
+                    "translation": "will burn",
+                    "analysis_id": 28967
+                },
+                {
+                    "position": 3,
+                    "arabic": "النَّارَ",
+                    "transliteration": "l-nāra",
+                    "translation": "(in) the Fire",
+                    "analysis_id": 302
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْكُبْرٰىۚ",
+                    "transliteration": "l-kub'rā",
+                    "translation": "[the] great",
+                    "analysis_id": 25225
+                }
+            ]
         },
         {
             "aya_id": 5961,
@@ -564,12 +1190,50 @@
             "sajda": false,
             "transliteration": "Summa laa yamootu feehaa wa laa yahyaa",
             "tajweed_text": "ثُ[g[مّ]َ لَا يَمُوتُ فِيهَا وَلَا يَحْيَىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَا",
+                    "transliteration": "lā",
+                    "translation": "not",
+                    "analysis_id": 73
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَمُوْتُ",
+                    "transliteration": "yamūtu",
+                    "translation": "he will die",
+                    "analysis_id": 18353
+                },
+                {
+                    "position": 4,
+                    "arabic": "فِيْهَا",
+                    "transliteration": "fīhā",
+                    "translation": "therein",
+                    "analysis_id": 969
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَلَا",
+                    "transliteration": "walā",
+                    "translation": "and not",
+                    "analysis_id": 650
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَحْيٰىۗ",
+                    "transliteration": "yaḥyā",
+                    "translation": "will live",
+                    "analysis_id": 28968
+                }
+            ]
         },
         {
             "aya_id": 5962,
@@ -583,12 +1247,36 @@
             "sajda": false,
             "transliteration": "Qad aflaha man tazakkaa",
             "tajweed_text": "قَ[q:298[دْ] أَفْلَحَ مَ[f:8555[ن ت]َزَكَّىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قَدْ",
+                    "transliteration": "qad",
+                    "translation": "Certainly",
+                    "analysis_id": 1846
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَفْلَحَ",
+                    "transliteration": "aflaḥa",
+                    "translation": "has succeeded",
+                    "analysis_id": 18873
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(one) who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 4,
+                    "arabic": "تَزَكّٰىۙ",
+                    "transliteration": "tazakkā",
+                    "translation": "purifies (himself)",
+                    "analysis_id": 28969
+                }
+            ]
         },
         {
             "aya_id": 5963,
@@ -602,12 +1290,36 @@
             "sajda": false,
             "transliteration": "Wa zakaras ma Rabbihee fasallaa",
             "tajweed_text": "وَذَكَرَ [h:14448[ٱ]سْمَ رَبِّه[n[ِۦ] فَصَلَّىٰ",
-            "surah": {
-                "name": "سُورَةُ الأَعۡلَىٰ",
-                "englishName": "Al-A'laa",
-                "englishNameTranslation": "The Most High",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَذَكَرَ",
+                    "transliteration": "wadhakara",
+                    "translation": "And remembers",
+                    "analysis_id": 22639
+                },
+                {
+                    "position": 2,
+                    "arabic": "اسْمَ",
+                    "transliteration": "is'ma",
+                    "translation": "(the) name",
+                    "analysis_id": 10754
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّهٖ",
+                    "transliteration": "rabbihi",
+                    "translation": "(of) his Lord",
+                    "analysis_id": 541
+                },
+                {
+                    "position": 4,
+                    "arabic": "فَصَلّٰىۗ",
+                    "transliteration": "faṣallā",
+                    "translation": "and prays",
+                    "analysis_id": 28970
+                }
+            ]
         }
     ]
 }

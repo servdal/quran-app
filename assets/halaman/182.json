@@ -13,12 +13,246 @@
             "sajda": false,
             "transliteration": "Wa'lamooo annamaa ghanimtum min sha'in fa anna lillaahi khumusahoo wa lir Rasooli wa lizil qurba walyataamaa walmasaakeeni wabnis sabeeli in kuntum aamantum billaahi wa maaa anzalnaa 'ala 'abdinaa yawmal Furqaani yawmaltaqal jam'aan; wal laahu 'alaa kulli shai'in Qadeer",
             "tajweed_text": "۞ وَ[h:9999[ٱ]عْلَم[o[ُوٓ][s[اْ] أَ[g[نّ]َمَا غَنِمْت[w:5338[ُم م]ِّ[f:2103[ن ش][f:5339[َىْءٍ ف]َأَ[g[نّ]َ لِلَّهِ خُمُسَهُ[n[ۥ] وَلِلرَّسُولِ وَلِذِى [h:5340[ٱ]لْقُرْبَىٰ وَ[h:420[ٱ]لْيَتَ[n[ـٰ]مَىٰ وَ[h:421[ٱ]لْمَسَ[n[ـٰ]كِينِ وَ[h:1189[ٱ][q:1189[بْ]نِ [h:1190[ٱ][l[ل]سَّبِيلِ إِ[f:109[ن ك]ُ[f:100[نت]ُمْ ءَامَ[f:703[نت][c:5341[ُم ب]ِ[h:32[ٱ]للَّهِ وَم[o[َآ] أَ[f:515[نز]َلْنَا عَلَىٰ عَ[q:102[بْ]دِنَا يَوْمَ [h:5342[ٱ]لْفُرْقَانِ يَوْمَ [h:2353[ٱ][l[ل]ْتَقَى [h:2354[ٱ]لْجَمْعَانِ‌ۗ وَ[h:72[ٱ]للَّهُ عَلَىٰ كُلِّ ش[f:81[َىْءٍ ق]َد[p[ِي]رٌ",
-            "surah": {
-                "name": "سُورَةُ الأَنفَالِ",
-                "englishName": "Al-Anfaal",
-                "englishNameTranslation": "The Spoils of War",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "۞",
+                    "transliteration": "wa-iʿ'lamū",
+                    "translation": "And know",
+                    "analysis_id": 12554
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَاعْلَمُوْٓا",
+                    "transliteration": "annamā",
+                    "translation": "that what",
+                    "analysis_id": 12555
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَنَّمَا",
+                    "transliteration": "ghanim'tum",
+                    "translation": "you obtain (as) spoils of war",
+                    "analysis_id": 12556
+                },
+                {
+                    "position": 4,
+                    "arabic": "غَنِمْتُمْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 12557
+                },
+                {
+                    "position": 5,
+                    "arabic": "مِّنْ",
+                    "transliteration": "shayin",
+                    "translation": "anything",
+                    "analysis_id": 12558
+                },
+                {
+                    "position": 6,
+                    "arabic": "شَيْءٍ",
+                    "transliteration": "fa-anna",
+                    "translation": "then that",
+                    "analysis_id": 12559
+                },
+                {
+                    "position": 7,
+                    "arabic": "فَاَنَّ",
+                    "transliteration": "lillahi",
+                    "translation": "for Allah",
+                    "analysis_id": 5923
+                },
+                {
+                    "position": 8,
+                    "arabic": "لِلّٰهِ",
+                    "transliteration": "khumusahu",
+                    "translation": "(is) one fifth of it",
+                    "analysis_id": 12560
+                },
+                {
+                    "position": 9,
+                    "arabic": "خُمُسَهٗ",
+                    "transliteration": "walilrrasūli",
+                    "translation": "and for the Messenger",
+                    "analysis_id": 12561
+                },
+                {
+                    "position": 10,
+                    "arabic": "وَلِلرَّسُوْلِ",
+                    "transliteration": "walidhī",
+                    "translation": "and for the",
+                    "analysis_id": 12562
+                },
+                {
+                    "position": 11,
+                    "arabic": "وَلِذِى",
+                    "transliteration": "l-qur'bā",
+                    "translation": "near relatives",
+                    "analysis_id": 7033
+                },
+                {
+                    "position": 12,
+                    "arabic": "الْقُرْبٰى",
+                    "transliteration": "wal-yatāmā",
+                    "translation": "and the orphans",
+                    "analysis_id": 7034
+                },
+                {
+                    "position": 13,
+                    "arabic": "وَالْيَتٰمٰى",
+                    "transliteration": "wal-masākīni",
+                    "translation": "and the needy",
+                    "analysis_id": 3053
+                },
+                {
+                    "position": 14,
+                    "arabic": "وَالْمَسٰكِيْنِ",
+                    "transliteration": "wa-ib'ni",
+                    "translation": "and the",
+                    "analysis_id": 3054
+                },
+                {
+                    "position": 15,
+                    "arabic": "وَابْنِ",
+                    "transliteration": "l-sabīli",
+                    "translation": "wayfarer",
+                    "analysis_id": 2394
+                },
+                {
+                    "position": 16,
+                    "arabic": "السَّبِيْلِ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 12563
+                },
+                {
+                    "position": 17,
+                    "arabic": "اِنْ",
+                    "transliteration": "kuntum",
+                    "translation": "you",
+                    "analysis_id": 294
+                },
+                {
+                    "position": 18,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "āmantum",
+                    "translation": "believe",
+                    "analysis_id": 12564
+                },
+                {
+                    "position": 19,
+                    "arabic": "اٰمَنْتُمْ",
+                    "transliteration": "bil-lahi",
+                    "translation": "in Allah",
+                    "analysis_id": 12565
+                },
+                {
+                    "position": 20,
+                    "arabic": "بِاللّٰهِ",
+                    "transliteration": "wamā",
+                    "translation": "and (in) what",
+                    "analysis_id": 12566
+                },
+                {
+                    "position": 21,
+                    "arabic": "وَمَآ",
+                    "transliteration": "anzalnā",
+                    "translation": "We sent down",
+                    "analysis_id": 12567
+                },
+                {
+                    "position": 22,
+                    "arabic": "اَنْزَلْنَا",
+                    "transliteration": "ʿalā",
+                    "translation": "to",
+                    "analysis_id": 1411
+                },
+                {
+                    "position": 23,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿabdinā",
+                    "translation": "Our slave",
+                    "analysis_id": 12568
+                },
+                {
+                    "position": 24,
+                    "arabic": "عَبْدِنَا",
+                    "transliteration": "yawma",
+                    "translation": "(on the) day",
+                    "analysis_id": 12569
+                },
+                {
+                    "position": 25,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "l-fur'qāni",
+                    "translation": "(of) the criterion",
+                    "analysis_id": 12570
+                },
+                {
+                    "position": 26,
+                    "arabic": "الْفُرْقَانِ",
+                    "transliteration": "yawma",
+                    "translation": "(the) day",
+                    "analysis_id": 12571
+                },
+                {
+                    "position": 27,
+                    "arabic": "يَوْمَ",
+                    "transliteration": "l-taqā",
+                    "translation": "(when) met",
+                    "analysis_id": 12572
+                },
+                {
+                    "position": 28,
+                    "arabic": "الْتَقَى",
+                    "transliteration": "l-jamʿāni",
+                    "translation": "the two forces",
+                    "analysis_id": 12573
+                },
+                {
+                    "position": 29,
+                    "arabic": "الْجَمْعٰنِۗ",
+                    "transliteration": "wal-lahu",
+                    "translation": "And Allah",
+                    "analysis_id": 970
+                },
+                {
+                    "position": 30,
+                    "arabic": "وَاللّٰهُ",
+                    "transliteration": "ʿalā",
+                    "translation": "(is) on",
+                    "analysis_id": 1231
+                },
+                {
+                    "position": 31,
+                    "arabic": "عَلٰى",
+                    "transliteration": "kulli",
+                    "translation": "every",
+                    "analysis_id": 2066
+                },
+                {
+                    "position": 32,
+                    "arabic": "كُلِّ",
+                    "transliteration": "shayin",
+                    "translation": "thing",
+                    "analysis_id": 423
+                },
+                {
+                    "position": 33,
+                    "arabic": "شَيْءٍ",
+                    "transliteration": "qadīrun",
+                    "translation": "All-Powerful",
+                    "analysis_id": 2067
+                },
+                {
+                    "position": 34,
+                    "arabic": "قَدِيْرٌ",
+                    "transliteration": null,
+                    "translation": "(41)",
+                    "analysis_id": 245
+                }
+            ]
         },
         {
             "aya_id": 1202,
@@ -32,12 +266,260 @@
             "sajda": false,
             "transliteration": "Iz antum bil'udwatid dunyaa wa hum bil'udwatil quswaa warrakbu asfala minkum; wa law tawaa'attum lakhtalaftum fil mee'aadi wa laakil liyaqdiyal laahu amran kaana maf'oolal liyahlika man halaka 'am baiyinatinw wa yahyaa man haiya 'am baiyinah; wa innal laaha la Samee'un 'Aleem",
             "tajweed_text": "إِذْ أَ[f:428[نت][c:5343[ُم ب]ِ[h:5344[ٱ]لْعُ[q:5344[دْ]وَةِ [h:5345[ٱ][l[ل]دُّنْيَا وَه[c:5346[ُم ب]ِ[h:5344[ٱ]لْعُ[q:5344[دْ]وَةِ [h:5347[ٱ]لْقُصْوَىٰ وَ[h:5348[ٱ][l[ل]رَّكْبُ أَسْفَلَ مِ[f:344[نك]ُمْ‌ۚ وَلَوْ تَوَاعَ[d:5349[د]تُّمْ لَ[h:5350[ٱ]خْتَلَفْتُمْ فِى [h:5351[ٱ]لْمِيعَ[n[ـٰ]دِ‌ۙ وَلَ[n[ـٰ]ك[u:5352[ِن ل]ِّيَ[q:5353[قْ]ضِىَ [h:5354[ٱ]للَّهُ أَمْ[f:5355[رًا ك]َانَ مَفْعُول[u:5356[اً ل]ِّيَهْلِكَ مَنْ هَلَكَ ع[i:5357[َنۢ ب]َيِّنَ[a:5358[ةٍ و]َيَحْيَىٰ مَنْ حَىَّ ع[i:5357[َنۢ ب]َيِّنَ[a:5359[ةٍ‌ۗ و]َإِ[g[نّ]َ [h:1986[ٱ]للَّهَ لَسَمِيعٌ عَل[p[ِي]مٌ",
-            "surah": {
-                "name": "سُورَةُ الأَنفَالِ",
-                "englishName": "Al-Anfaal",
-                "englishNameTranslation": "The Spoils of War",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِذْ",
+                    "transliteration": "idh",
+                    "translation": "When",
+                    "analysis_id": 1814
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَنْتُمْ",
+                    "transliteration": "antum",
+                    "translation": "you (were)",
+                    "analysis_id": 1133
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِالْعُدْوَةِ",
+                    "transliteration": "bil-ʿud'wati",
+                    "translation": "on side of the valley",
+                    "analysis_id": 12574
+                },
+                {
+                    "position": 4,
+                    "arabic": "الدُّنْيَا",
+                    "transliteration": "l-dun'yā",
+                    "translation": "the nearer",
+                    "analysis_id": 2888
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَهُمْ",
+                    "transliteration": "wahum",
+                    "translation": "and they",
+                    "analysis_id": 9179
+                },
+                {
+                    "position": 6,
+                    "arabic": "بِالْعُدْوَةِ",
+                    "transliteration": "bil-ʿud'wati",
+                    "translation": "(were) on the side",
+                    "analysis_id": 12574
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْقُصْوٰى",
+                    "transliteration": "l-quṣ'wā",
+                    "translation": "the farther",
+                    "analysis_id": 12575
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَالرَّكْبُ",
+                    "transliteration": "wal-rakbu",
+                    "translation": "and the caravan",
+                    "analysis_id": 12576
+                },
+                {
+                    "position": 9,
+                    "arabic": "اَسْفَلَ",
+                    "transliteration": "asfala",
+                    "translation": "(was) lower",
+                    "analysis_id": 12577
+                },
+                {
+                    "position": 10,
+                    "arabic": "مِنْكُمْۗ",
+                    "transliteration": "minkum",
+                    "translation": "than you",
+                    "analysis_id": 7238
+                },
+                {
+                    "position": 11,
+                    "arabic": "وَلَوْ",
+                    "transliteration": "walaw",
+                    "translation": "And if",
+                    "analysis_id": 1465
+                },
+                {
+                    "position": 12,
+                    "arabic": "تَوَاعَدْتُّمْ",
+                    "transliteration": "tawāʿadttum",
+                    "translation": "you (had) made an appointment",
+                    "analysis_id": 12578
+                },
+                {
+                    "position": 13,
+                    "arabic": "لَاخْتَلَفْتُمْ",
+                    "transliteration": "la-ikh'talaftum",
+                    "translation": "certainly you would have failed",
+                    "analysis_id": 12579
+                },
+                {
+                    "position": 14,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 15,
+                    "arabic": "الْمِيْعٰدِۙ",
+                    "transliteration": "l-mīʿādi",
+                    "translation": "the appointment",
+                    "analysis_id": 12580
+                },
+                {
+                    "position": 16,
+                    "arabic": "وَلٰكِنْ",
+                    "transliteration": "walākin",
+                    "translation": "But",
+                    "analysis_id": 4040
+                },
+                {
+                    "position": 17,
+                    "arabic": "لِّيَقْضِيَ",
+                    "transliteration": "liyaqḍiya",
+                    "translation": "that might accomplish",
+                    "analysis_id": 12581
+                },
+                {
+                    "position": 18,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 19,
+                    "arabic": "اَمْرًا",
+                    "transliteration": "amran",
+                    "translation": "a matter",
+                    "analysis_id": 1652
+                },
+                {
+                    "position": 20,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "(that) was",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 21,
+                    "arabic": "مَفْعُوْلًا",
+                    "transliteration": "mafʿūlan",
+                    "translation": "destined",
+                    "analysis_id": 12582
+                },
+                {
+                    "position": 22,
+                    "arabic": "ەۙ",
+                    "transliteration": "liyahlika",
+                    "translation": "that (might be) destroyed",
+                    "analysis_id": 12583
+                },
+                {
+                    "position": 23,
+                    "arabic": "لِّيَهْلِكَ",
+                    "transliteration": "man",
+                    "translation": "(those) who",
+                    "analysis_id": 12584
+                },
+                {
+                    "position": 24,
+                    "arabic": "مَنْ",
+                    "transliteration": "halaka",
+                    "translation": "(were to be) destroyed",
+                    "analysis_id": 12585
+                },
+                {
+                    "position": 25,
+                    "arabic": "هَلَكَ",
+                    "transliteration": "ʿan",
+                    "translation": "on",
+                    "analysis_id": 12586
+                },
+                {
+                    "position": 26,
+                    "arabic": "عَنْۢ",
+                    "transliteration": "bayyinatin",
+                    "translation": "a clear evidence",
+                    "analysis_id": 12587
+                },
+                {
+                    "position": 27,
+                    "arabic": "بَيِّنَةٍ",
+                    "transliteration": "wayaḥyā",
+                    "translation": "and (might) live",
+                    "analysis_id": 12588
+                },
+                {
+                    "position": 28,
+                    "arabic": "وَّيَحْيٰى",
+                    "transliteration": "man",
+                    "translation": "(those) who",
+                    "analysis_id": 12589
+                },
+                {
+                    "position": 29,
+                    "arabic": "مَنْ",
+                    "transliteration": "ḥayya",
+                    "translation": "(were to) live",
+                    "analysis_id": 12590
+                },
+                {
+                    "position": 30,
+                    "arabic": "حَيَّ",
+                    "transliteration": "ʿan",
+                    "translation": "on",
+                    "analysis_id": 12591
+                },
+                {
+                    "position": 31,
+                    "arabic": "عَنْۢ",
+                    "transliteration": "bayyinatin",
+                    "translation": "a clear evidence",
+                    "analysis_id": 12587
+                },
+                {
+                    "position": 32,
+                    "arabic": "بَيِّنَةٍۗ",
+                    "transliteration": "wa-inna",
+                    "translation": "And indeed",
+                    "analysis_id": 989
+                },
+                {
+                    "position": 33,
+                    "arabic": "وَاِنَّ",
+                    "transliteration": "l-laha",
+                    "translation": "Allah",
+                    "analysis_id": 340
+                },
+                {
+                    "position": 34,
+                    "arabic": "اللّٰهَ",
+                    "transliteration": "lasamīʿun",
+                    "translation": "(is) All-Hearing",
+                    "analysis_id": 12592
+                },
+                {
+                    "position": 35,
+                    "arabic": "لَسَمِيْعٌ",
+                    "transliteration": "ʿalīmun",
+                    "translation": "All-Knowing",
+                    "analysis_id": 2470
+                },
+                {
+                    "position": 36,
+                    "arabic": "عَلِيْمٌۙ",
+                    "transliteration": null,
+                    "translation": "(42)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 1203,
@@ -51,12 +533,148 @@
             "sajda": false,
             "transliteration": "Iz yureekahumul laahu fee manaamika qaleela; wa law araakahum kaseeral lafashiltum wa latanaaza'tum fil amri wa laakinnal laaha sallam; innahoo 'aleemum bizaatis sudoor",
             "tajweed_text": "إِذْ يُرِيكَهُمُ [h:5360[ٱ]للَّهُ فِى مَنَامِكَ قَلِيل[a:5361[اً‌ۖ و]َلَوْ أَرَ[n[ٮٰ]كَهُمْ كَثِي[u:5362[رًا ل]َّفَشِلْتُمْ وَلَتَنَ[n[ـٰ]زَعْتُمْ فِى [h:2319[ٱ]لْأَمْرِ وَلَ[n[ـٰ]كِ[g[نّ]َ [h:1441[ٱ]للَّهَ سَلَّمَ‌ۗ إِ[g[نّ]َهُ[n[ۥ] عَلِي[i:2196[مُۢ ب]ِذَاتِ [h:2197[ٱ][l[ل]صُّد[p[ُو]رِ",
-            "surah": {
-                "name": "سُورَةُ الأَنفَالِ",
-                "englishName": "Al-Anfaal",
-                "englishNameTranslation": "The Spoils of War",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِذْ",
+                    "transliteration": "idh",
+                    "translation": "When",
+                    "analysis_id": 1814
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُرِيْكَهُمُ",
+                    "transliteration": "yurīkahumu",
+                    "translation": "you (where) shown them",
+                    "analysis_id": 12593
+                },
+                {
+                    "position": 3,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "(by) Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 4,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 5,
+                    "arabic": "مَنَامِكَ",
+                    "transliteration": "manāmika",
+                    "translation": "your dream",
+                    "analysis_id": 12594
+                },
+                {
+                    "position": 6,
+                    "arabic": "قَلِيْلًاۗ",
+                    "transliteration": "qalīlan",
+                    "translation": "(as) few",
+                    "analysis_id": 8206
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَلَوْ",
+                    "transliteration": "walaw",
+                    "translation": "and if",
+                    "analysis_id": 1465
+                },
+                {
+                    "position": 8,
+                    "arabic": "اَرٰىكَهُمْ",
+                    "transliteration": "arākahum",
+                    "translation": "He had shown them to you",
+                    "analysis_id": 12595
+                },
+                {
+                    "position": 9,
+                    "arabic": "كَثِيْرًا",
+                    "transliteration": "kathīran",
+                    "translation": "(as) many",
+                    "analysis_id": 8688
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَّفَشِلْتُمْ",
+                    "transliteration": "lafashil'tum",
+                    "translation": "surely you would have lost courage",
+                    "analysis_id": 12596
+                },
+                {
+                    "position": 11,
+                    "arabic": "وَلَتَنَازَعْتُمْ",
+                    "transliteration": "walatanāzaʿtum",
+                    "translation": "and surely you would have disputed",
+                    "analysis_id": 12597
+                },
+                {
+                    "position": 12,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 13,
+                    "arabic": "الْاَمْرِ",
+                    "transliteration": "l-amri",
+                    "translation": "the matter",
+                    "analysis_id": 5690
+                },
+                {
+                    "position": 14,
+                    "arabic": "وَلٰكِنَّ",
+                    "transliteration": "walākinna",
+                    "translation": "but",
+                    "analysis_id": 2381
+                },
+                {
+                    "position": 15,
+                    "arabic": "اللّٰهَ",
+                    "transliteration": "l-laha",
+                    "translation": "Allah",
+                    "analysis_id": 98
+                },
+                {
+                    "position": 16,
+                    "arabic": "سَلَّمَۗ",
+                    "transliteration": "sallama",
+                    "translation": "saved (you)",
+                    "analysis_id": 12598
+                },
+                {
+                    "position": 17,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, He",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 18,
+                    "arabic": "عَلِيْمٌۢ",
+                    "transliteration": "ʿalīmun",
+                    "translation": "(is) All-Knower",
+                    "analysis_id": 12599
+                },
+                {
+                    "position": 19,
+                    "arabic": "بِذَاتِ",
+                    "transliteration": "bidhāti",
+                    "translation": "of what is in",
+                    "analysis_id": 12600
+                },
+                {
+                    "position": 20,
+                    "arabic": "الصُّدُوْرِ",
+                    "transliteration": "l-ṣudūri",
+                    "translation": "the breasts",
+                    "analysis_id": 5956
+                }
+            ]
         },
         {
             "aya_id": 1204,
@@ -70,12 +688,148 @@
             "sajda": false,
             "transliteration": "Wa iz yureekumoohum izil taqaitum feee a'yunikum qaleelanw wa yuqallilukum feee a'yunihim liyaqdiyal laahu amran kaana maf'oolaa; wa ilal laahi turja'ul umoor",
             "tajweed_text": "وَإِذْ يُرِيكُمُوهُمْ إِذِ [h:5363[ٱ][l[ل]ْتَقَيْتُمْ ف[o[ِىٓ] أَعْيُنِكُمْ قَلِيل[a:5364[اً و]َيُقَلِّلُكُمْ ف[o[ِىٓ] أَعْيُنِهِمْ لِيَ[q:5353[قْ]ضِىَ [h:5354[ٱ]للَّهُ أَمْ[f:5355[رًا ك]َانَ مَفْعُول[a:5365[اً‌ۗ و]َإِلَى [h:1148[ٱ]للَّهِ تُرْجَعُ [h:1149[ٱ]لْأُم[p[ُو]رُ",
-            "surah": {
-                "name": "سُورَةُ الأَنفَالِ",
-                "englishName": "Al-Anfaal",
-                "englishNameTranslation": "The Spoils of War",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاِذْ",
+                    "transliteration": "wa-idh",
+                    "translation": "And when",
+                    "analysis_id": 657
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُرِيْكُمُوْهُمْ",
+                    "transliteration": "yurīkumūhum",
+                    "translation": "He showed them to you",
+                    "analysis_id": 12601
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِذِ",
+                    "transliteration": "idhi",
+                    "translation": "when",
+                    "analysis_id": 1814
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْتَقَيْتُمْ",
+                    "transliteration": "l-taqaytum",
+                    "translation": "you met ",
+                    "analysis_id": 12602
+                },
+                {
+                    "position": 5,
+                    "arabic": "فِيْٓ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 210
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَعْيُنِكُمْ",
+                    "transliteration": "aʿyunikum",
+                    "translation": "your eyes",
+                    "analysis_id": 12603
+                },
+                {
+                    "position": 7,
+                    "arabic": "قَلِيْلًا",
+                    "transliteration": "qalīlan",
+                    "translation": "(as) few",
+                    "analysis_id": 1765
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَّيُقَلِّلُكُمْ",
+                    "transliteration": "wayuqallilukum",
+                    "translation": "and He made you (appear) as few",
+                    "analysis_id": 12604
+                },
+                {
+                    "position": 9,
+                    "arabic": "فِيْٓ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 210
+                },
+                {
+                    "position": 10,
+                    "arabic": "اَعْيُنِهِمْ",
+                    "transliteration": "aʿyunihim",
+                    "translation": "their eyes",
+                    "analysis_id": 12605
+                },
+                {
+                    "position": 11,
+                    "arabic": "لِيَقْضِيَ",
+                    "transliteration": "liyaqḍiya",
+                    "translation": "that might accomplish",
+                    "analysis_id": 12581
+                },
+                {
+                    "position": 12,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "Allah might accomplish",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 13,
+                    "arabic": "اَمْرًا",
+                    "transliteration": "amran",
+                    "translation": "a matter",
+                    "analysis_id": 1652
+                },
+                {
+                    "position": 14,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "(that) was",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 15,
+                    "arabic": "مَفْعُوْلًا",
+                    "transliteration": "mafʿūlan",
+                    "translation": "(already) destined",
+                    "analysis_id": 12582
+                },
+                {
+                    "position": 16,
+                    "arabic": "ۗوَاِلَى",
+                    "transliteration": "wa-ilā",
+                    "translation": "And to",
+                    "analysis_id": 2944
+                },
+                {
+                    "position": 17,
+                    "arabic": "اللّٰهِ",
+                    "transliteration": "l-lahi",
+                    "translation": "Allah",
+                    "analysis_id": 2
+                },
+                {
+                    "position": 18,
+                    "arabic": "تُرْجَعُ",
+                    "transliteration": "tur'jaʿu",
+                    "translation": "return",
+                    "analysis_id": 5512
+                },
+                {
+                    "position": 19,
+                    "arabic": "الْاُمُوْرُ",
+                    "transliteration": "l-umūru",
+                    "translation": "(all) the matters",
+                    "analysis_id": 5513
+                },
+                {
+                    "position": 20,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(44)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 1205,
@@ -89,12 +843,92 @@
             "sajda": false,
             "transliteration": "Yaaa aiyuhal lazeena aamanooo izaa laqeetum fi'atan fasbutoo wazkurul laaha kaseeral la'allakum tuflihoon",
             "tajweed_text": "يَ[o[ـٰٓ]أَيُّهَا [h:541[ٱ]لَّذِينَ ءَامَن[o[ُوٓ][s[اْ] إِذَا لَقِيتُمْ فِئَ[f:5366[ةً ف]َ[h:5367[ٱ]ثْبُتُو[s[اْ] وَ[h:335[ٱ]ذْكُرُو[s[اْ] [h:1113[ٱ]للَّهَ كَثِي[u:5368[رًا ل]َّعَلَّكُمْ تُفْلِح[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ الأَنفَالِ",
-                "englishName": "Al-Anfaal",
-                "englishNameTranslation": "The Spoils of War",
-                "revelationType": "Medinan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "يٰٓاَيُّهَا",
+                    "transliteration": "yāayyuhā",
+                    "translation": "O you",
+                    "analysis_id": 1470
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "اٰمَنُوْٓا",
+                    "transliteration": "āmanū",
+                    "translation": "believe",
+                    "analysis_id": 3858
+                },
+                {
+                    "position": 4,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "When",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 5,
+                    "arabic": "لَقِيْتُمْ",
+                    "transliteration": "laqītum",
+                    "translation": "you meet",
+                    "analysis_id": 12423
+                },
+                {
+                    "position": 6,
+                    "arabic": "فِئَةً",
+                    "transliteration": "fi-atan",
+                    "translation": "a force",
+                    "analysis_id": 12606
+                },
+                {
+                    "position": 7,
+                    "arabic": "فَاثْبُتُوْا",
+                    "transliteration": "fa-uth'butū",
+                    "translation": "then be firm",
+                    "analysis_id": 12607
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَاذْكُرُوا",
+                    "transliteration": "wa-udh'kurū",
+                    "translation": "and remember",
+                    "analysis_id": 871
+                },
+                {
+                    "position": 9,
+                    "arabic": "اللّٰهَ",
+                    "transliteration": "l-laha",
+                    "translation": "Allah",
+                    "analysis_id": 98
+                },
+                {
+                    "position": 10,
+                    "arabic": "كَثِيْرًا",
+                    "transliteration": "kathīran",
+                    "translation": "much",
+                    "analysis_id": 6432
+                },
+                {
+                    "position": 11,
+                    "arabic": "لَّعَلَّكُمْ",
+                    "transliteration": "laʿallakum",
+                    "translation": "so that you may",
+                    "analysis_id": 691
+                },
+                {
+                    "position": 12,
+                    "arabic": "تُفْلِحُوْنَۚ",
+                    "transliteration": "tuf'liḥūna",
+                    "translation": "(be) successful",
+                    "analysis_id": 2653
+                }
+            ]
         }
     ]
 }

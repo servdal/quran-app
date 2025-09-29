@@ -1,6 +1,8 @@
+// lib/screens/surah_list_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/models/surah_model.dart';
+import 'package:quran_app/models/surah_index_model.dart'; // Ganti model
 import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 
@@ -16,12 +18,8 @@ class SurahListScreen extends ConsumerWidget {
         title: const Text('Daftar Surah'),
       ),
       body: allSurahsAsyncValue.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (error, stackTrace) => Center(
-          child: Text('Gagal memuat data: $error'),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => Center(child: Text('Gagal memuat data: $error')),
         data: (surahs) {
           return ListView.builder(
             itemCount: surahs.length,
@@ -39,24 +37,23 @@ class SurahListScreen extends ConsumerWidget {
 class _SurahListItem extends StatelessWidget {
   const _SurahListItem({required this.surah});
 
-  final Surah surah;
+  final SurahIndexInfo surah; // Ganti model
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SurahDetailScreen(surahId: surah.id),
+              builder: (context) => SurahDetailScreen(surahId: surah.suraId),
             ),
           );
         },
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
@@ -65,13 +62,12 @@ class _SurahListItem extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
+                  shape: BoxShape.circle,
                   color: theme.primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: theme.primaryColor, width: 1),
                 ),
                 child: Center(
                   child: Text(
-                    surah.id.toString(),
+                    surah.suraId.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: theme.primaryColor,
@@ -94,7 +90,7 @@ class _SurahListItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${surah.revelationType} • ${surah.ayahs.length} Ayat',
+                      '${surah.revelationType} • ${surah.numberOfAyahs} Ayat',
                       style: TextStyle(
                         fontSize: 12,
                         color: theme.textTheme.bodyMedium?.color,
@@ -118,4 +114,3 @@ class _SurahListItem extends StatelessWidget {
     );
   }
 }
-

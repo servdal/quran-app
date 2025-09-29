@@ -13,12 +13,71 @@
             "sajda": false,
             "transliteration": "Wa asirroo qawlakum awijharoo bihee innahoo 'aleemum bizaatis sudoor",
             "tajweed_text": "وَأَسِرُّو[s[اْ] قَوْلَكُمْ أَوِ [h:13782[ٱ][q:13783[جْ]هَرُو[s[اْ] بِه[o[ِۦٓ‌ۖ] إِ[g[نّ]َهُ[n[ۥ] عَلِي[i:2196[مُۢ ب]ِذَاتِ [h:2197[ٱ][l[ل]صُّد[p[ُو]رِ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَاَسِرُّوْا",
+                    "transliteration": "wa-asirrū",
+                    "translation": "And conceal",
+                    "analysis_id": 27695
+                },
+                {
+                    "position": 2,
+                    "arabic": "قَوْلَكُمْ",
+                    "transliteration": "qawlakum",
+                    "translation": "your speech",
+                    "analysis_id": 27696
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَوِ",
+                    "transliteration": "awi",
+                    "translation": "or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 4,
+                    "arabic": "اجْهَرُوْا",
+                    "transliteration": "ij'harū",
+                    "translation": "proclaim",
+                    "analysis_id": 27697
+                },
+                {
+                    "position": 5,
+                    "arabic": "بِهٖۗ",
+                    "transliteration": "bihi",
+                    "translation": "it",
+                    "analysis_id": 1437
+                },
+                {
+                    "position": 6,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, He",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 7,
+                    "arabic": "عَلِيْمٌ",
+                    "transliteration": "ʿalīmun",
+                    "translation": "(is the) All-Knower",
+                    "analysis_id": 5135
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۢبِذَاتِ",
+                    "transliteration": "bidhāti",
+                    "translation": "of what (is in)",
+                    "analysis_id": 8601
+                },
+                {
+                    "position": 9,
+                    "arabic": "الصُّدُوْرِ",
+                    "transliteration": "l-ṣudūri",
+                    "translation": "the breasts",
+                    "analysis_id": 5956
+                }
+            ]
         },
         {
             "aya_id": 5255,
@@ -32,12 +91,64 @@
             "sajda": false,
             "transliteration": "Alaa ya'lamu man khalaq wa huwal lateeful khabeer",
             "tajweed_text": "أَلَا يَعْلَمُ مَنْ خَلَقَ وَهُوَ [h:4309[ٱ][l[ل]لَّطِيفُ [h:4310[ٱ]لْخَب[p[ِي]رُ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلَا",
+                    "transliteration": "alā",
+                    "translation": "Does not",
+                    "analysis_id": 12868
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَعْلَمُ",
+                    "transliteration": "yaʿlamu",
+                    "translation": "know",
+                    "analysis_id": 1047
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَنْ",
+                    "transliteration": "man",
+                    "translation": "(the One) Who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 4,
+                    "arabic": "خَلَقَۗ",
+                    "transliteration": "khalaqa",
+                    "translation": "created",
+                    "analysis_id": 27698
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَهُوَ",
+                    "transliteration": "wahuwa",
+                    "translation": "And He",
+                    "analysis_id": 1144
+                },
+                {
+                    "position": 6,
+                    "arabic": "اللَّطِيْفُ",
+                    "transliteration": "l-laṭīfu",
+                    "translation": "(is) the Subtle",
+                    "analysis_id": 10502
+                },
+                {
+                    "position": 7,
+                    "arabic": "الْخَبِيْرُ",
+                    "transliteration": "l-khabīru",
+                    "translation": "the All-Aware",
+                    "analysis_id": 9821
+                },
+                {
+                    "position": 8,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(14)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 5256,
@@ -51,12 +162,106 @@
             "sajda": false,
             "transliteration": "Huwal lazee ja'ala lakumul arda zaloolan famshoo fee manaakibihaa wa kuloo mir rizqihee wa ilaihin nushoor",
             "tajweed_text": "هُوَ [h:153[ٱ]لَّذِى جَعَلَ لَكُمُ [h:87[ٱ]لْأَرْضَ ذَلُول[f:13784[اً ف]َ[h:13785[ٱ]مْشُو[s[اْ] فِى مَنَاكِبِهَا وَكُلُو[s[اْ] م[u:13786[ِن ر]ِّزْقِه[n[ِۦ]‌ۖ وَإِلَيْهِ [h:13787[ٱ][l[ل][g[نّ]ُش[p[ُو]رُ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "He",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "(is) the One Who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 3,
+                    "arabic": "جَعَلَ",
+                    "transliteration": "jaʿala",
+                    "translation": "made",
+                    "analysis_id": 6487
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَكُمُ",
+                    "transliteration": "lakumu",
+                    "translation": "for you",
+                    "analysis_id": 411
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْاَرْضَ",
+                    "transliteration": "l-arḍa",
+                    "translation": "the earth",
+                    "analysis_id": 952
+                },
+                {
+                    "position": 6,
+                    "arabic": "ذَلُوْلًا",
+                    "transliteration": "dhalūlan",
+                    "translation": "subservient",
+                    "analysis_id": 27699
+                },
+                {
+                    "position": 7,
+                    "arabic": "فَامْشُوْا",
+                    "transliteration": "fa-im'shū",
+                    "translation": "so walk",
+                    "analysis_id": 27700
+                },
+                {
+                    "position": 8,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 9,
+                    "arabic": "مَنَاكِبِهَا",
+                    "transliteration": "manākibihā",
+                    "translation": "(the) paths thereof",
+                    "analysis_id": 27701
+                },
+                {
+                    "position": 10,
+                    "arabic": "وَكُلُوْا",
+                    "transliteration": "wakulū",
+                    "translation": "and eat",
+                    "analysis_id": 12047
+                },
+                {
+                    "position": 11,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "of",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 12,
+                    "arabic": "رِّزْقِهٖۗ",
+                    "transliteration": "riz'qihi",
+                    "translation": "His provision",
+                    "analysis_id": 27702
+                },
+                {
+                    "position": 13,
+                    "arabic": "وَاِلَيْهِ",
+                    "transliteration": "wa-ilayhi",
+                    "translation": "and to Him",
+                    "analysis_id": 27459
+                },
+                {
+                    "position": 14,
+                    "arabic": "النُّشُوْرُ",
+                    "transliteration": "l-nushūru",
+                    "translation": "(is) the Resurrection",
+                    "analysis_id": 27703
+                }
+            ]
         },
         {
             "aya_id": 5257,
@@ -70,12 +275,85 @@
             "sajda": false,
             "transliteration": "'A-amintum man fissamaaa'i aiyakhsifa bi kumul arda fa izaa hiya tamoor",
             "tajweed_text": "ءَأَمِ[f:13788[نت][w:13789[ُم م]َّ[f:2074[ن ف]ِى [h:746[ٱ][l[ل]سَّم[o[َا]ٓءِ أ[a:7417[َن ي]َخْسِفَ بِكُمُ [h:13790[ٱ]لْأَرْضَ فَإِذَا هِىَ تَم[p[ُو]رُ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ءَاَمِنْتُمْ",
+                    "transliteration": "a-amintum",
+                    "translation": "Do you feel secure",
+                    "analysis_id": 27704
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَّنْ",
+                    "transliteration": "man",
+                    "translation": "(from Him) Who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 3,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "(is) in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 4,
+                    "arabic": "السَّمَاۤءِ",
+                    "transliteration": "l-samāi",
+                    "translation": "the heaven",
+                    "analysis_id": 203
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "not",
+                    "analysis_id": 391
+                },
+                {
+                    "position": 6,
+                    "arabic": "يَّخْسِفَ",
+                    "transliteration": "yakhsifa",
+                    "translation": "He will cause to swallow",
+                    "analysis_id": 16733
+                },
+                {
+                    "position": 7,
+                    "arabic": "بِكُمُ",
+                    "transliteration": "bikumu",
+                    "translation": "you",
+                    "analysis_id": 675
+                },
+                {
+                    "position": 8,
+                    "arabic": "الْاَرْضَ",
+                    "transliteration": "l-arḍa",
+                    "translation": "the earth",
+                    "analysis_id": 952
+                },
+                {
+                    "position": 9,
+                    "arabic": "فَاِذَا",
+                    "transliteration": "fa-idhā",
+                    "translation": "when",
+                    "analysis_id": 18707
+                },
+                {
+                    "position": 10,
+                    "arabic": "هِيَ",
+                    "transliteration": "hiya",
+                    "translation": "it",
+                    "analysis_id": 917
+                },
+                {
+                    "position": 11,
+                    "arabic": "تَمُوْرُۙ",
+                    "transliteration": "tamūru",
+                    "translation": "sways",
+                    "analysis_id": 27705
+                }
+            ]
         },
         {
             "aya_id": 5258,
@@ -89,12 +367,92 @@
             "sajda": false,
             "transliteration": "Am amintum man fissamaaa'i ai yursila 'alaikum haasiban fasata'lamoona kaifa nazeer",
             "tajweed_text": "أَمْ أَمِ[f:1062[نت][w:13791[ُم م]َّ[f:2074[ن ف]ِى [h:746[ٱ][l[ل]سَّم[o[َا]ٓءِ أ[a:10505[َن ي]ُرْسِلَ عَلَيْكُمْ حَاصِ[f:13792[بًا‌ۖ ف]َسَتَعْلَمُونَ كَيْفَ نَذ[p[ِي]رِ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَمْ",
+                    "transliteration": "am",
+                    "translation": "Or",
+                    "analysis_id": 70
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَمِنْتُمْ",
+                    "transliteration": "amintum",
+                    "translation": "do you feel secure",
+                    "analysis_id": 17427
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَّنْ",
+                    "transliteration": "man",
+                    "translation": "(from Him) Who",
+                    "analysis_id": 88
+                },
+                {
+                    "position": 4,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "(is) in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 5,
+                    "arabic": "السَّمَاۤءِ",
+                    "transliteration": "l-samāi",
+                    "translation": "the heaven",
+                    "analysis_id": 203
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "that",
+                    "analysis_id": 391
+                },
+                {
+                    "position": 7,
+                    "arabic": "يُّرْسِلَ",
+                    "transliteration": "yur'sila",
+                    "translation": "He will send",
+                    "analysis_id": 17425
+                },
+                {
+                    "position": 8,
+                    "arabic": "عَلَيْكُمْ",
+                    "transliteration": "ʿalaykum",
+                    "translation": "against you",
+                    "analysis_id": 579
+                },
+                {
+                    "position": 9,
+                    "arabic": "حَاصِبًاۗ",
+                    "transliteration": "ḥāṣiban",
+                    "translation": "a storm of stones",
+                    "analysis_id": 27706
+                },
+                {
+                    "position": 10,
+                    "arabic": "فَسَتَعْلَمُوْنَ",
+                    "transliteration": "fasataʿlamūna",
+                    "translation": "Then you would know",
+                    "analysis_id": 19179
+                },
+                {
+                    "position": 11,
+                    "arabic": "كَيْفَ",
+                    "transliteration": "kayfa",
+                    "translation": "how",
+                    "analysis_id": 396
+                },
+                {
+                    "position": 12,
+                    "arabic": "نَذِيْرِ",
+                    "transliteration": "nadhīri",
+                    "translation": "(was) My warning",
+                    "analysis_id": 27707
+                }
+            ]
         },
         {
             "aya_id": 5259,
@@ -108,12 +466,64 @@
             "sajda": false,
             "transliteration": "Wa laqad kazzabal lazeena min qablihim fakaifa kaana nakeer",
             "tajweed_text": "وَلَقَ[q:341[دْ] كَذَّبَ [h:4507[ٱ]لَّذِينَ مِ[f:617[ن ق]َ[q:618[بْ]لِهِمْ فَكَيْفَ كَانَ نَك[p[ِي]رِ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَلَقَدْ",
+                    "transliteration": "walaqad",
+                    "translation": "And indeed",
+                    "analysis_id": 1184
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَذَّبَ",
+                    "transliteration": "kadhaba",
+                    "translation": "denied",
+                    "analysis_id": 9857
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 4,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 5,
+                    "arabic": "قَبْلِهِمْ",
+                    "transliteration": "qablihim",
+                    "translation": "before them",
+                    "analysis_id": 9737
+                },
+                {
+                    "position": 6,
+                    "arabic": "فَكَيْفَ",
+                    "transliteration": "fakayfa",
+                    "translation": "and how",
+                    "analysis_id": 4748
+                },
+                {
+                    "position": 7,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "was",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 8,
+                    "arabic": "نَكِيْرِ",
+                    "transliteration": "nakīri",
+                    "translation": "My rejection",
+                    "analysis_id": 19790
+                }
+            ]
         },
         {
             "aya_id": 5260,
@@ -127,12 +537,113 @@
             "sajda": false,
             "transliteration": "Awalam yaraw ilat tairi fawqahum saaaffaatinw wa yaqbidn; maa yumsikuhunna illaar rahmaan; innahoo bikulli shai im baseer",
             "tajweed_text": "أَوَلَمْ يَرَوْ[s[اْ] إِلَى [h:7520[ٱ][l[ل]طَّيْرِ فَوْقَهُمْ صَ[m[ـٰٓ]فَّ[n[ـٰ][a:13793[تٍ و]َيَ[q:13794[قْ]بِضْنَ‌ۚ مَا يُمْسِكُهُ[g[نّ]َ إِلَّا [h:13795[ٱ][l[ل]رَّحْمَ[n[ـٰ]نُ‌ۚ إِ[g[نّ]َهُ[n[ۥ] بِكُلِّ شَىْ[i:13796[ءِۭ ب]َص[p[ِي]رٌ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَوَلَمْ",
+                    "transliteration": "awalam",
+                    "translation": "Do not",
+                    "analysis_id": 4038
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَرَوْا",
+                    "transliteration": "yaraw",
+                    "translation": "they see",
+                    "analysis_id": 9735
+                },
+                {
+                    "position": 3,
+                    "arabic": "اِلَى",
+                    "transliteration": "ilā",
+                    "translation": "[to]",
+                    "analysis_id": 417
+                },
+                {
+                    "position": 4,
+                    "arabic": "الطَّيْرِ",
+                    "transliteration": "l-ṭayri",
+                    "translation": "the birds",
+                    "analysis_id": 16897
+                },
+                {
+                    "position": 5,
+                    "arabic": "فَوْقَهُمْ",
+                    "transliteration": "fawqahum",
+                    "translation": "above them",
+                    "analysis_id": 8283
+                },
+                {
+                    "position": 6,
+                    "arabic": "صٰۤفّٰتٍ",
+                    "transliteration": "ṣāffātin",
+                    "translation": "spreading (their wings)",
+                    "analysis_id": 27708
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَّيَقْبِضْنَۘ",
+                    "transliteration": "wayaqbiḍ'na",
+                    "translation": "and folding",
+                    "analysis_id": 27709
+                },
+                {
+                    "position": 8,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "Not",
+                    "analysis_id": 1478
+                },
+                {
+                    "position": 9,
+                    "arabic": "يُمْسِكُهُنَّ",
+                    "transliteration": "yum'sikuhunna",
+                    "translation": "holds them",
+                    "analysis_id": 16900
+                },
+                {
+                    "position": 10,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "except",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 11,
+                    "arabic": "الرَّحْمٰنُۗ",
+                    "transliteration": "l-raḥmānu",
+                    "translation": "the Most Gracious",
+                    "analysis_id": 27710
+                },
+                {
+                    "position": 12,
+                    "arabic": "اِنَّهٗ",
+                    "transliteration": "innahu",
+                    "translation": "Indeed, He",
+                    "analysis_id": 947
+                },
+                {
+                    "position": 13,
+                    "arabic": "بِكُلِّ",
+                    "transliteration": "bikulli",
+                    "translation": "(is) of every",
+                    "analysis_id": 2024
+                },
+                {
+                    "position": 14,
+                    "arabic": "شَيْءٍۢ",
+                    "transliteration": "shayin",
+                    "translation": "thing",
+                    "analysis_id": 18119
+                },
+                {
+                    "position": 15,
+                    "arabic": "بَصِيْرٌ",
+                    "transliteration": "baṣīrun",
+                    "translation": "All-Seer",
+                    "analysis_id": 12549
+                }
+            ]
         },
         {
             "aya_id": 5261,
@@ -146,12 +657,113 @@
             "sajda": false,
             "transliteration": "Amman haazal lazee huwa jundul lakum yansurukum min doonir rahmaan; inilkaafiroona illaa fee ghuroor",
             "tajweed_text": "أَ[g[مّ]َنْ هَ[n[ـٰ]ذَا [h:126[ٱ]لَّذِى هُوَ جُن[u:13797[دٌ ل]َّكُمْ يَ[f:2381[نص]ُرُك[w:2382[ُم م]ِّ[f:107[ن د]ُونِ [h:12269[ٱ][l[ل]رَّحْمَ[n[ـٰ]نِ‌ۚ إِنِ [h:13798[ٱ]لْكَ[n[ـٰ]فِرُونَ إِلَّا فِى غُر[p[ُو]رٍ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَمَّنْ",
+                    "transliteration": "amman",
+                    "translation": "Who is",
+                    "analysis_id": 13921
+                },
+                {
+                    "position": 2,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "this",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "the one",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 4,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "he",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 5,
+                    "arabic": "جُنْدٌ",
+                    "transliteration": "jundun",
+                    "translation": "(is) an army",
+                    "analysis_id": 23502
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَّكُمْ",
+                    "transliteration": "lakum",
+                    "translation": "for you",
+                    "analysis_id": 411
+                },
+                {
+                    "position": 7,
+                    "arabic": "يَنْصُرُكُمْ",
+                    "transliteration": "yanṣurukum",
+                    "translation": "to help you",
+                    "analysis_id": 27711
+                },
+                {
+                    "position": 8,
+                    "arabic": "مِّنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 9,
+                    "arabic": "دُوْنِ",
+                    "transliteration": "dūni",
+                    "translation": "besides",
+                    "analysis_id": 2238
+                },
+                {
+                    "position": 10,
+                    "arabic": "الرَّحْمٰنِۗ",
+                    "transliteration": "l-raḥmāni",
+                    "translation": "the Most Gracious",
+                    "analysis_id": 19302
+                },
+                {
+                    "position": 11,
+                    "arabic": "اِنِ",
+                    "transliteration": "ini",
+                    "translation": "Not",
+                    "analysis_id": 7973
+                },
+                {
+                    "position": 12,
+                    "arabic": "الْكٰفِرُوْنَ",
+                    "transliteration": "l-kāfirūna",
+                    "translation": "(are) the disbelievers",
+                    "analysis_id": 8254
+                },
+                {
+                    "position": 13,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "but",
+                    "analysis_id": 1107
+                },
+                {
+                    "position": 14,
+                    "arabic": "فِيْ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 106
+                },
+                {
+                    "position": 15,
+                    "arabic": "غُرُوْرٍۚ",
+                    "transliteration": "ghurūrin",
+                    "translation": "delusion",
+                    "analysis_id": 27712
+                }
+            ]
         },
         {
             "aya_id": 5262,
@@ -165,12 +777,99 @@
             "sajda": false,
             "transliteration": "Amman haazal lazee yarzuqukum in amsaka rizqah; bal lajjoo fee 'utuwwinw wa nufoor",
             "tajweed_text": "أَ[g[مّ]َنْ هَ[n[ـٰ]ذَا [h:126[ٱ]لَّذِى يَرْزُقُكُمْ إِنْ أَمْسَكَ رِزْقَهُ[n[ۥ]‌ۚ بَل لَّجُّو[s[اْ] فِى عُتُ[a:13799[وٍّ و]َنُف[p[ُو]رٍ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَمَّنْ",
+                    "transliteration": "amman",
+                    "translation": "Who is",
+                    "analysis_id": 13921
+                },
+                {
+                    "position": 2,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "this",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "the one",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَرْزُقُكُمْ",
+                    "transliteration": "yarzuqukum",
+                    "translation": "to provide you",
+                    "analysis_id": 13920
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَمْسَكَ",
+                    "transliteration": "amsaka",
+                    "translation": "He withheld",
+                    "analysis_id": 27713
+                },
+                {
+                    "position": 7,
+                    "arabic": "رِزْقَهٗ",
+                    "transliteration": "riz'qahu",
+                    "translation": "His provision",
+                    "analysis_id": 27714
+                },
+                {
+                    "position": 8,
+                    "arabic": "ۚ",
+                    "transliteration": "bal",
+                    "translation": "Nay",
+                    "analysis_id": 1211
+                },
+                {
+                    "position": 9,
+                    "arabic": "بَلْ",
+                    "transliteration": "lajjū",
+                    "translation": "they persist",
+                    "analysis_id": 27715
+                },
+                {
+                    "position": 10,
+                    "arabic": "لَّجُّوْا",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 20124
+                },
+                {
+                    "position": 11,
+                    "arabic": "فِيْ",
+                    "transliteration": "ʿutuwwin",
+                    "translation": "pride",
+                    "analysis_id": 27716
+                },
+                {
+                    "position": 12,
+                    "arabic": "عُتُوٍّ",
+                    "transliteration": "wanufūrin",
+                    "translation": "and aversion",
+                    "analysis_id": 27717
+                },
+                {
+                    "position": 13,
+                    "arabic": "وَّنُفُوْرٍ",
+                    "transliteration": null,
+                    "translation": "(21)",
+                    "analysis_id": 19748
+                }
+            ]
         },
         {
             "aya_id": 5263,
@@ -184,12 +883,92 @@
             "sajda": false,
             "transliteration": "Afamai yamshee mukibban 'alaa wajhihee ahdaaa ammany yamshee sawiyyan 'alaa siratim mustaqeem",
             "tajweed_text": "أَفَم[a:13800[َن ي]َمْشِى مُكِبًّا عَلَىٰ وَ[q:6818[جْ]هِه[o[ِۦٓ] أَهْدَ[o[ىٰٓ] أَ[g[مّ][a:13801[َن ي]َمْشِى سَوِيًّا عَلَىٰ صِر[n[َٲ][a:726[طٍ م]ُّسْتَق[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَفَمَنْ",
+                    "transliteration": "afaman",
+                    "translation": "Then is he who",
+                    "analysis_id": 6042
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَّمْشِيْ",
+                    "transliteration": "yamshī",
+                    "translation": "walks",
+                    "analysis_id": 10630
+                },
+                {
+                    "position": 3,
+                    "arabic": "مُكِبًّا",
+                    "transliteration": "mukibban",
+                    "translation": "fallen",
+                    "analysis_id": 27718
+                },
+                {
+                    "position": 4,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "on",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَجْهِهٖٓ",
+                    "transliteration": "wajhihi",
+                    "translation": "his face",
+                    "analysis_id": 27719
+                },
+                {
+                    "position": 6,
+                    "arabic": "اَهْدٰىٓ",
+                    "transliteration": "ahdā",
+                    "translation": "better guided",
+                    "analysis_id": 27720
+                },
+                {
+                    "position": 7,
+                    "arabic": "اَمَّنْ",
+                    "transliteration": "amman",
+                    "translation": "or (he) who",
+                    "analysis_id": 13942
+                },
+                {
+                    "position": 8,
+                    "arabic": "يَّمْشِيْ",
+                    "transliteration": "yamshī",
+                    "translation": "walks",
+                    "analysis_id": 10630
+                },
+                {
+                    "position": 9,
+                    "arabic": "سَوِيًّا",
+                    "transliteration": "sawiyyan",
+                    "translation": "upright",
+                    "analysis_id": 18333
+                },
+                {
+                    "position": 10,
+                    "arabic": "عَلٰى",
+                    "transliteration": "ʿalā",
+                    "translation": "on",
+                    "analysis_id": 59
+                },
+                {
+                    "position": 11,
+                    "arabic": "صِرَاطٍ",
+                    "transliteration": "ṣirāṭin",
+                    "translation": "(the) Path",
+                    "analysis_id": 8700
+                },
+                {
+                    "position": 12,
+                    "arabic": "مُّسْتَقِيْمٍ",
+                    "transliteration": "mus'taqīmin",
+                    "translation": "Straight",
+                    "analysis_id": 8701
+                }
+            ]
         },
         {
             "aya_id": 5264,
@@ -203,12 +982,92 @@
             "sajda": false,
             "transliteration": "Qul huwal lazee ansha akum wa ja'ala lakumus sam'a wal absaara wal af'idata qaleelam maa tashkuroon",
             "tajweed_text": "قُلْ هُوَ [h:153[ٱ]لَّذ[o[ِىٓ] أَ[f:4272[نش]َأَكُمْ وَجَعَلَ لَكُمُ [h:7518[ٱ][l[ل]سَّمْعَ وَ[h:6037[ٱ]لْأَ[q:6037[بْ]صَ[n[ـٰ]رَ وَ[h:7519[ٱ]لْأَفْــِٔدَةَ‌ۖ قَلِيل[a:4583[اً م]َّا تَشْكُر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "He",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْٓ",
+                    "transliteration": "alladhī",
+                    "translation": "(is) the One Who",
+                    "analysis_id": 2509
+                },
+                {
+                    "position": 4,
+                    "arabic": "اَنْشَاَكُمْ",
+                    "transliteration": "ansha-akum",
+                    "translation": "produced you",
+                    "analysis_id": 10450
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَجَعَلَ",
+                    "transliteration": "wajaʿala",
+                    "translation": "and made",
+                    "analysis_id": 9168
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَكُمُ",
+                    "transliteration": "lakumu",
+                    "translation": "for you",
+                    "analysis_id": 411
+                },
+                {
+                    "position": 7,
+                    "arabic": "السَّمْعَ",
+                    "transliteration": "l-samʿa",
+                    "translation": "the hearing",
+                    "analysis_id": 13922
+                },
+                {
+                    "position": 8,
+                    "arabic": "وَالْاَبْصَارَ",
+                    "transliteration": "wal-abṣāra",
+                    "translation": "and the vision",
+                    "analysis_id": 13923
+                },
+                {
+                    "position": 9,
+                    "arabic": "وَالْاَفْـِٕدَةَۗ",
+                    "transliteration": "wal-afidata",
+                    "translation": "and the feelings",
+                    "analysis_id": 20126
+                },
+                {
+                    "position": 10,
+                    "arabic": "قَلِيْلًا",
+                    "transliteration": "qalīlan",
+                    "translation": "Little",
+                    "analysis_id": 1070
+                },
+                {
+                    "position": 11,
+                    "arabic": "مَّا",
+                    "transliteration": "mā",
+                    "translation": "(is) what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 12,
+                    "arabic": "تَشْكُرُوْنَ",
+                    "transliteration": "tashkurūna",
+                    "translation": "you give thanks",
+                    "analysis_id": 692
+                }
+            ]
         },
         {
             "aya_id": 5265,
@@ -222,12 +1081,64 @@
             "sajda": false,
             "transliteration": "Qul huwal lazee zara akum fil ardi wa ilaihi tuhsharoon",
             "tajweed_text": "قُلْ هُوَ [h:153[ٱ]لَّذِى ذَرَأَكُمْ فِى [h:44[ٱ]لْأَرْضِ وَإِلَيْهِ تُحْشَر[p[ُو]نَ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "هُوَ",
+                    "transliteration": "huwa",
+                    "translation": "He",
+                    "analysis_id": 408
+                },
+                {
+                    "position": 3,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "(is) the One Who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 4,
+                    "arabic": "ذَرَاَكُمْ",
+                    "transliteration": "dhara-akum",
+                    "translation": "multiplied you",
+                    "analysis_id": 20127
+                },
+                {
+                    "position": 5,
+                    "arabic": "فِى",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 123
+                },
+                {
+                    "position": 6,
+                    "arabic": "الْاَرْضِ",
+                    "transliteration": "l-arḍi",
+                    "translation": "the earth",
+                    "analysis_id": 413
+                },
+                {
+                    "position": 7,
+                    "arabic": "وَاِلَيْهِ",
+                    "transliteration": "wa-ilayhi",
+                    "translation": "and to Him",
+                    "analysis_id": 27459
+                },
+                {
+                    "position": 8,
+                    "arabic": "تُحْشَرُوْنَ",
+                    "transliteration": "tuḥ'sharūna",
+                    "translation": "you will be gathered",
+                    "analysis_id": 5990
+                }
+            ]
         },
         {
             "aya_id": 5266,
@@ -241,12 +1152,57 @@
             "sajda": false,
             "transliteration": "Wa yaqooloona mataa haazal wa'du in kuntum saadiqeen",
             "tajweed_text": "وَيَقُولُونَ مَتَىٰ هَ[n[ـٰ]ذَا [h:6081[ٱ]لْوَعْدُ إِ[f:109[ن ك]ُ[f:100[نت]ُمْ صَ[n[ـٰ]دِق[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَيَقُوْلُوْنَ",
+                    "transliteration": "wayaqūlūna",
+                    "translation": "And they say",
+                    "analysis_id": 7470
+                },
+                {
+                    "position": 2,
+                    "arabic": "مَتٰى",
+                    "transliteration": "matā",
+                    "translation": "When",
+                    "analysis_id": 13996
+                },
+                {
+                    "position": 3,
+                    "arabic": "هٰذَا",
+                    "transliteration": "hādhā",
+                    "translation": "(is) this",
+                    "analysis_id": 1066
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْوَعْدُ",
+                    "transliteration": "l-waʿdu",
+                    "translation": "promise",
+                    "analysis_id": 13997
+                },
+                {
+                    "position": 5,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 6,
+                    "arabic": "كُنْتُمْ",
+                    "transliteration": "kuntum",
+                    "translation": "you are",
+                    "analysis_id": 280
+                },
+                {
+                    "position": 7,
+                    "arabic": "صٰدِقِيْنَ",
+                    "transliteration": "ṣādiqīna",
+                    "translation": "truthful",
+                    "analysis_id": 464
+                }
+            ]
         },
         {
             "aya_id": 5267,
@@ -260,12 +1216,71 @@
             "sajda": false,
             "transliteration": "Qul innamal 'ilmu 'indallaahi wa innamaaa ana nazeerum mubeen",
             "tajweed_text": "قُلْ إِ[g[نّ]َمَا [h:12490[ٱ]لْعِلْمُ عِ[f:264[ند]َ [h:408[ٱ]للَّهِ وَإِ[g[نّ]َم[o[َآ] أَنَا۟ نَذِي[a:5164[رٌ م]ُّب[p[ِي]نٌ",
-            "surah": {
-                "name": "سُورَةُ المُلۡكِ",
-                "englishName": "Al-Mulk",
-                "englishNameTranslation": "The Sovereignty",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "قُلْ",
+                    "transliteration": "qul",
+                    "translation": "Say",
+                    "analysis_id": 1902
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنَّمَا",
+                    "transliteration": "innamā",
+                    "translation": "Only",
+                    "analysis_id": 126
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْعِلْمُ",
+                    "transliteration": "l-ʿil'mu",
+                    "translation": "the knowledge",
+                    "analysis_id": 14225
+                },
+                {
+                    "position": 4,
+                    "arabic": "عِنْدَ",
+                    "transliteration": "ʿinda",
+                    "translation": "(is) with",
+                    "analysis_id": 712
+                },
+                {
+                    "position": 5,
+                    "arabic": "اللّٰهِ",
+                    "transliteration": "l-lahi",
+                    "translation": "Allah",
+                    "analysis_id": 2
+                },
+                {
+                    "position": 6,
+                    "arabic": "ۖوَاِنَّمَآ",
+                    "transliteration": "wa-innamā",
+                    "translation": "and only",
+                    "analysis_id": 27721
+                },
+                {
+                    "position": 7,
+                    "arabic": "اَنَا۠",
+                    "transliteration": "anā",
+                    "translation": "I am",
+                    "analysis_id": 8827
+                },
+                {
+                    "position": 8,
+                    "arabic": "نَذِيْرٌ",
+                    "transliteration": "nadhīrun",
+                    "translation": "a warner",
+                    "analysis_id": 12207
+                },
+                {
+                    "position": 9,
+                    "arabic": "مُّبِيْنٌ",
+                    "transliteration": "mubīnun",
+                    "translation": "clear",
+                    "analysis_id": 2294
+                }
+            ]
         }
     ]
 }

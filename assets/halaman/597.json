@@ -13,12 +13,22 @@
             "sajda": false,
             "transliteration": "Wat teeni waz zaitoon",
             "tajweed_text": "وَ[h:9999[ٱ][l[ل]تِّينِ وَ[h:14553[ٱ][l[ل]زَّيْت[p[ُو]نِ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَالتِّيْنِ",
+                    "transliteration": "wal-tīni",
+                    "translation": "By the fig",
+                    "analysis_id": 29185
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَالزَّيْتُوْنِۙ",
+                    "transliteration": "wal-zaytūni",
+                    "translation": "and the olive",
+                    "analysis_id": 29186
+                }
+            ]
         },
         {
             "aya_id": 6100,
@@ -32,12 +42,22 @@
             "sajda": false,
             "transliteration": "Wa toori sineen",
             "tajweed_text": "وَطُورِ سِين[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَطُوْرِ",
+                    "transliteration": "waṭūri",
+                    "translation": "And (the) Mount",
+                    "analysis_id": 29187
+                },
+                {
+                    "position": 2,
+                    "arabic": "سِيْنِيْنَۙ",
+                    "transliteration": "sīnīna",
+                    "translation": "Sinai",
+                    "analysis_id": 29188
+                }
+            ]
         },
         {
             "aya_id": 6101,
@@ -51,12 +71,29 @@
             "sajda": false,
             "transliteration": "Wa haazal balad-il ameen",
             "tajweed_text": "وَهَ[n[ـٰ]ذَا [h:14554[ٱ]لْبَلَدِ [h:14555[ٱ]لْأَم[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "وَهٰذَا",
+                    "transliteration": "wahādhā",
+                    "translation": "And this",
+                    "analysis_id": 5185
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْبَلَدِ",
+                    "transliteration": "l-baladi",
+                    "translation": "[the] city",
+                    "analysis_id": 29189
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاَمِيْنِۙ",
+                    "transliteration": "l-amīni",
+                    "translation": "[the] secure",
+                    "analysis_id": 29190
+                }
+            ]
         },
         {
             "aya_id": 6102,
@@ -70,12 +107,50 @@
             "sajda": false,
             "transliteration": "Laqad khalaqnal insaana fee ahsani taqweem",
             "tajweed_text": "لَقَ[q:2389[دْ] خَلَ[q:5159[قْ]نَا [h:7228[ٱ]لْإِ[f:5969[نس]َ[n[ـٰ]نَ ف[o[ِىٓ] أَحْسَنِ تَ[q:14556[قْ]و[p[ِي]مٍ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "لَقَدْ",
+                    "transliteration": "laqad",
+                    "translation": "Indeed",
+                    "analysis_id": 6052
+                },
+                {
+                    "position": 2,
+                    "arabic": "خَلَقْنَا",
+                    "transliteration": "khalaqnā",
+                    "translation": "We created",
+                    "analysis_id": 16414
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاِنْسَانَ",
+                    "transliteration": "l-insāna",
+                    "translation": "man",
+                    "analysis_id": 13767
+                },
+                {
+                    "position": 4,
+                    "arabic": "فِيْٓ",
+                    "transliteration": "fī",
+                    "translation": "in",
+                    "analysis_id": 210
+                },
+                {
+                    "position": 5,
+                    "arabic": "اَحْسَنِ",
+                    "transliteration": "aḥsani",
+                    "translation": "(the) best",
+                    "analysis_id": 29191
+                },
+                {
+                    "position": 6,
+                    "arabic": "تَقْوِيْمٍۖ",
+                    "transliteration": "taqwīmin",
+                    "translation": "mould",
+                    "analysis_id": 29192
+                }
+            ]
         },
         {
             "aya_id": 6103,
@@ -89,12 +164,36 @@
             "sajda": false,
             "transliteration": "Thumma ra dad naahu asfala saafileen",
             "tajweed_text": "ثُ[g[مّ]َ رَدَ[q:14557[دْ]نَ[n[ـٰ]هُ أَسْفَلَ سَ[n[ـٰ]فِل[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "ثُمَّ",
+                    "transliteration": "thumma",
+                    "translation": "Then",
+                    "analysis_id": 415
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَدَدْنٰهُ",
+                    "transliteration": "radadnāhu",
+                    "translation": "We returned him",
+                    "analysis_id": 29193
+                },
+                {
+                    "position": 3,
+                    "arabic": "اَسْفَلَ",
+                    "transliteration": "asfala",
+                    "translation": "(to the) lowest",
+                    "analysis_id": 12577
+                },
+                {
+                    "position": 4,
+                    "arabic": "سَافِلِيْنَۙ",
+                    "transliteration": "sāfilīna",
+                    "translation": "(of the) low",
+                    "analysis_id": 29194
+                }
+            ]
         },
         {
             "aya_id": 6104,
@@ -108,12 +207,71 @@
             "sajda": false,
             "transliteration": "Ill-lal lazeena aamanoo wa 'amilus saalihaati; falahum ajrun ghairu mamnoon",
             "tajweed_text": "إِلَّا [h:778[ٱ]لَّذِينَ ءَامَنُو[s[اْ] وَعَمِلُو[s[اْ] [h:118[ٱ][l[ل]صَّ[n[ـٰ]لِحَ[n[ـٰ]تِ فَلَهُمْ أَ[q:2423[جْ]رٌ غَيْرُ مَمْن[p[ُو]نٍ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِلَّا",
+                    "transliteration": "illā",
+                    "translation": "Except",
+                    "analysis_id": 469
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْنَ",
+                    "transliteration": "alladhīna",
+                    "translation": "those who",
+                    "analysis_id": 22
+                },
+                {
+                    "position": 3,
+                    "arabic": "اٰمَنُوْا",
+                    "transliteration": "āmanū",
+                    "translation": "believe",
+                    "analysis_id": 99
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَعَمِلُوا",
+                    "transliteration": "waʿamilū",
+                    "translation": "and do",
+                    "analysis_id": 310
+                },
+                {
+                    "position": 5,
+                    "arabic": "الصّٰلِحٰتِ",
+                    "transliteration": "l-ṣāliḥāti",
+                    "translation": "righteous deeds",
+                    "analysis_id": 311
+                },
+                {
+                    "position": 6,
+                    "arabic": "فَلَهُمْ",
+                    "transliteration": "falahum",
+                    "translation": "then for them",
+                    "analysis_id": 22492
+                },
+                {
+                    "position": 7,
+                    "arabic": "اَجْرٌ",
+                    "transliteration": "ajrun",
+                    "translation": "(is a) reward",
+                    "analysis_id": 12929
+                },
+                {
+                    "position": 8,
+                    "arabic": "غَيْرُ",
+                    "transliteration": "ghayru",
+                    "translation": "never",
+                    "analysis_id": 10017
+                },
+                {
+                    "position": 9,
+                    "arabic": "مَمْنُوْنٍۗ",
+                    "transliteration": "mamnūnin",
+                    "translation": "ending",
+                    "analysis_id": 27737
+                }
+            ]
         },
         {
             "aya_id": 6105,
@@ -127,12 +285,36 @@
             "sajda": false,
             "transliteration": "Fama yu kaz zibuka b'adu bid deen",
             "tajweed_text": "فَمَا يُكَذِّبُكَ بَعْدُ بِ[h:14361[ٱ][l[ل]دّ[p[ِي]نِ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَمَا",
+                    "transliteration": "famā",
+                    "translation": "Then what",
+                    "analysis_id": 23641
+                },
+                {
+                    "position": 2,
+                    "arabic": "يُكَذِّبُكَ",
+                    "transliteration": "yukadhibuka",
+                    "translation": "causes you to deny",
+                    "analysis_id": 29195
+                },
+                {
+                    "position": 3,
+                    "arabic": "بَعْدُ",
+                    "transliteration": "baʿdu",
+                    "translation": "after (this)",
+                    "analysis_id": 21049
+                },
+                {
+                    "position": 4,
+                    "arabic": "بِالدِّيْنِۗ",
+                    "transliteration": "bil-dīni",
+                    "translation": "the judgment",
+                    "analysis_id": 28818
+                }
+            ]
         },
         {
             "aya_id": 6106,
@@ -146,12 +328,43 @@
             "sajda": false,
             "transliteration": "Alai sal laahu bi-ahkamil haakimeen",
             "tajweed_text": "أَلَيْسَ [h:4087[ٱ]للَّهُ بِأَحْكَمِ [h:14558[ٱ]لْحَ[n[ـٰ]كِم[p[ِي]نَ",
-            "surah": {
-                "name": "سُورَةُ التِّينِ",
-                "englishName": "At-Tin",
-                "englishNameTranslation": "The Fig",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلَيْسَ",
+                    "transliteration": "alaysa",
+                    "translation": "Is not",
+                    "analysis_id": 24131
+                },
+                {
+                    "position": 2,
+                    "arabic": "اللّٰهُ",
+                    "transliteration": "l-lahu",
+                    "translation": "Allah",
+                    "analysis_id": 75
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِاَحْكَمِ",
+                    "transliteration": "bi-aḥkami",
+                    "translation": "(the) Most Just",
+                    "analysis_id": 29196
+                },
+                {
+                    "position": 4,
+                    "arabic": "الْحٰكِمِيْنَ",
+                    "transliteration": "l-ḥākimīna",
+                    "translation": "(of) the Judges",
+                    "analysis_id": 11553
+                },
+                {
+                    "position": 5,
+                    "arabic": "ࣖ",
+                    "transliteration": null,
+                    "translation": "(8)",
+                    "analysis_id": 31
+                }
+            ]
         },
         {
             "aya_id": 6107,
@@ -165,12 +378,43 @@
             "sajda": false,
             "transliteration": "Iqra bismi rab bikal lazee khalaq",
             "tajweed_text": "ٱ[q:7699[قْ]رَأْ بِ[h:13285[ٱ]سْمِ رَبِّكَ [h:14559[ٱ]لَّذِى خَلَ[q[ق]َ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِقْرَأْ",
+                    "transliteration": "iq'ra",
+                    "translation": "Read",
+                    "analysis_id": 17164
+                },
+                {
+                    "position": 2,
+                    "arabic": "بِاسْمِ",
+                    "transliteration": "bi-is'mi",
+                    "translation": "in (the) name",
+                    "analysis_id": 26800
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "(of) your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "the One Who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 5,
+                    "arabic": "خَلَقَۚ",
+                    "transliteration": "khalaqa",
+                    "translation": "created ",
+                    "analysis_id": 27698
+                }
+            ]
         },
         {
             "aya_id": 6108,
@@ -184,12 +428,36 @@
             "sajda": false,
             "transliteration": "Khalaqal insaana min 'alaq",
             "tajweed_text": "خَلَقَ [h:7324[ٱ]لْإِ[f:5969[نس]َ[n[ـٰ]نَ مِنْ عَلَ[q[ق]ٍ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "خَلَقَ",
+                    "transliteration": "khalaqa",
+                    "translation": "He created",
+                    "analysis_id": 410
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْاِنْسَانَ",
+                    "transliteration": "l-insāna",
+                    "translation": "man",
+                    "analysis_id": 13767
+                },
+                {
+                    "position": 3,
+                    "arabic": "مِنْ",
+                    "transliteration": "min",
+                    "translation": "from",
+                    "analysis_id": 53
+                },
+                {
+                    "position": 4,
+                    "arabic": "عَلَقٍۚ",
+                    "transliteration": "ʿalaqin",
+                    "translation": "a clinging substance",
+                    "analysis_id": 29197
+                }
+            ]
         },
         {
             "aya_id": 6109,
@@ -203,12 +471,29 @@
             "sajda": false,
             "transliteration": "Iqra wa rab bukal akram",
             "tajweed_text": "ٱ[q:7699[قْ]رَأْ وَرَبُّكَ [h:14560[ٱ]لْأَكْرَمُ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِقْرَأْ",
+                    "transliteration": "iq'ra",
+                    "translation": "Read",
+                    "analysis_id": 17164
+                },
+                {
+                    "position": 2,
+                    "arabic": "وَرَبُّكَ",
+                    "transliteration": "warabbuka",
+                    "translation": "and your Lord",
+                    "analysis_id": 29198
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاَكْرَمُۙ",
+                    "transliteration": "l-akramu",
+                    "translation": "(is) the Most Generous",
+                    "analysis_id": 29199
+                }
+            ]
         },
         {
             "aya_id": 6110,
@@ -222,12 +507,29 @@
             "sajda": false,
             "transliteration": "Al lazee 'allama bil qalam",
             "tajweed_text": "ٱلَّذِى عَلَّمَ بِ[h:14561[ٱ]لْقَلَمِ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "The One Who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 2,
+                    "arabic": "عَلَّمَ",
+                    "transliteration": "ʿallama",
+                    "translation": "taught",
+                    "analysis_id": 26570
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِالْقَلَمِۙ",
+                    "transliteration": "bil-qalami",
+                    "translation": "by the pen",
+                    "analysis_id": 29200
+                }
+            ]
         },
         {
             "aya_id": 6111,
@@ -241,12 +543,43 @@
             "sajda": false,
             "transliteration": "'Al lamal insaana ma lam y'alam",
             "tajweed_text": "عَلَّمَ [h:14562[ٱ]لْإِ[f:5969[نس]َ[n[ـٰ]نَ مَا لَمْ يَعْلَمْ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "عَلَّمَ",
+                    "transliteration": "ʿallama",
+                    "translation": "Taught",
+                    "analysis_id": 26570
+                },
+                {
+                    "position": 2,
+                    "arabic": "الْاِنْسَانَ",
+                    "transliteration": "l-insāna",
+                    "translation": "man",
+                    "analysis_id": 13767
+                },
+                {
+                    "position": 3,
+                    "arabic": "مَا",
+                    "transliteration": "mā",
+                    "translation": "what",
+                    "analysis_id": 412
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَمْ",
+                    "transliteration": "lam",
+                    "translation": "not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَعْلَمْۗ",
+                    "transliteration": "yaʿlam",
+                    "translation": "he knew",
+                    "analysis_id": 29201
+                }
+            ]
         },
         {
             "aya_id": 6112,
@@ -260,12 +593,43 @@
             "sajda": false,
             "transliteration": "Kallaa innal insaana layatghaa",
             "tajweed_text": "كَلّ[o[َآ] إِ[g[نّ]َ [h:7137[ٱ]لْإِ[f:5969[نس]َ[n[ـٰ]نَ لَيَ[q:14563[طْ]غَىٰٓ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَلَّآ",
+                    "transliteration": "kallā",
+                    "translation": "Nay",
+                    "analysis_id": 28363
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 3,
+                    "arabic": "الْاِنْسَانَ",
+                    "transliteration": "l-insāna",
+                    "translation": "man",
+                    "analysis_id": 13767
+                },
+                {
+                    "position": 4,
+                    "arabic": "لَيَطْغٰىٓ",
+                    "transliteration": "layaṭghā",
+                    "translation": "surely transgresses",
+                    "analysis_id": 29202
+                },
+                {
+                    "position": 5,
+                    "arabic": "ۙ",
+                    "transliteration": null,
+                    "translation": "(6)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 6113,
@@ -279,12 +643,29 @@
             "sajda": false,
             "transliteration": "Ar-ra aahus taghnaa",
             "tajweed_text": "أ[u:14564[َن ر]َّءَاهُ [h:14565[ٱ]سْتَغْنَىٰٓ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَنْ",
+                    "transliteration": "an",
+                    "translation": "That",
+                    "analysis_id": 391
+                },
+                {
+                    "position": 2,
+                    "arabic": "رَّاٰهُ",
+                    "transliteration": "raāhu",
+                    "translation": "he sees himself",
+                    "analysis_id": 21320
+                },
+                {
+                    "position": 3,
+                    "arabic": "اسْتَغْنٰىۗ",
+                    "transliteration": "is'taghnā",
+                    "translation": "self-sufficient",
+                    "analysis_id": 28715
+                }
+            ]
         },
         {
             "aya_id": 6114,
@@ -298,12 +679,36 @@
             "sajda": false,
             "transliteration": "Innna ilaa rabbikar ruj'aa",
             "tajweed_text": "إِ[g[نّ]َ إِلَىٰ رَبِّكَ [h:14566[ٱ][l[ل]رُّ[q:14567[جْ]عَىٰٓ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اِنَّ",
+                    "transliteration": "inna",
+                    "translation": "Indeed",
+                    "analysis_id": 66
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِلٰى",
+                    "transliteration": "ilā",
+                    "translation": "to",
+                    "analysis_id": 706
+                },
+                {
+                    "position": 3,
+                    "arabic": "رَبِّكَ",
+                    "transliteration": "rabbika",
+                    "translation": "your Lord",
+                    "analysis_id": 2053
+                },
+                {
+                    "position": 4,
+                    "arabic": "الرُّجْعٰىۗ",
+                    "transliteration": "l-ruj'ʿā",
+                    "translation": "(is) the return",
+                    "analysis_id": 29203
+                }
+            ]
         },
         {
             "aya_id": 6115,
@@ -317,12 +722,29 @@
             "sajda": false,
             "transliteration": "Ara-aital lazee yanhaa",
             "tajweed_text": "أَرَءَيْتَ [h:14568[ٱ]لَّذِى يَنْهَىٰ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَرَاَيْتَ",
+                    "transliteration": "ara-ayta",
+                    "translation": "Have you seen",
+                    "analysis_id": 18062
+                },
+                {
+                    "position": 2,
+                    "arabic": "الَّذِيْ",
+                    "transliteration": "alladhī",
+                    "translation": "the one who",
+                    "analysis_id": 409
+                },
+                {
+                    "position": 3,
+                    "arabic": "يَنْهٰىۙ",
+                    "transliteration": "yanhā",
+                    "translation": "forbids",
+                    "analysis_id": 29204
+                }
+            ]
         },
         {
             "aya_id": 6116,
@@ -336,12 +758,29 @@
             "sajda": false,
             "transliteration": "'Abdan iza sallaa",
             "tajweed_text": "عَ[q:3317[بْ]دًا إِذَا صَلَّىٰٓ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "عَبْدًا",
+                    "transliteration": "ʿabdan",
+                    "translation": "A slave",
+                    "analysis_id": 8422
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِذَا",
+                    "transliteration": "idhā",
+                    "translation": "when",
+                    "analysis_id": 2450
+                },
+                {
+                    "position": 3,
+                    "arabic": "صَلّٰىۗ",
+                    "transliteration": "ṣallā",
+                    "translation": "he prays",
+                    "analysis_id": 28413
+                }
+            ]
         },
         {
             "aya_id": 6117,
@@ -355,12 +794,43 @@
             "sajda": false,
             "transliteration": "Ara-aita in kana 'alal hudaa",
             "tajweed_text": "أَرَءَيْتَ إِ[f:2594[ن ك]َانَ عَلَى [h:4019[ٱ]لْهُدَىٰٓ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَرَاَيْتَ",
+                    "transliteration": "ara-ayta",
+                    "translation": "Have you seen",
+                    "analysis_id": 18062
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَانَ",
+                    "transliteration": "kāna",
+                    "translation": "he is",
+                    "analysis_id": 1353
+                },
+                {
+                    "position": 4,
+                    "arabic": "عَلَى",
+                    "transliteration": "ʿalā",
+                    "translation": "upon",
+                    "analysis_id": 457
+                },
+                {
+                    "position": 5,
+                    "arabic": "الْهُدٰىٓۙ",
+                    "transliteration": "l-hudā",
+                    "translation": "[the] guidance",
+                    "analysis_id": 26369
+                }
+            ]
         },
         {
             "aya_id": 6118,
@@ -374,12 +844,29 @@
             "sajda": false,
             "transliteration": "Au amara bit taqwaa",
             "tajweed_text": "أَوْ أَمَرَ بِ[h:14569[ٱ][l[ل]تَّ[q:14569[قْ]وَىٰٓ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَوْ",
+                    "transliteration": "aw",
+                    "translation": "Or",
+                    "analysis_id": 201
+                },
+                {
+                    "position": 2,
+                    "arabic": "اَمَرَ",
+                    "transliteration": "amara",
+                    "translation": "he enjoins",
+                    "analysis_id": 389
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِالتَّقْوٰىۗ",
+                    "transliteration": "bil-taqwā",
+                    "translation": "[of the] righteousness",
+                    "analysis_id": 29205
+                }
+            ]
         },
         {
             "aya_id": 6119,
@@ -393,12 +880,36 @@
             "sajda": false,
             "transliteration": "Ara-aita in kaz zaba wa ta walla",
             "tajweed_text": "أَرَءَيْتَ إِ[f:14570[ن ك]َذَّبَ وَتَوَلَّىٰٓ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَرَاَيْتَ",
+                    "transliteration": "ara-ayta",
+                    "translation": "Have you seen",
+                    "analysis_id": 18062
+                },
+                {
+                    "position": 2,
+                    "arabic": "اِنْ",
+                    "transliteration": "in",
+                    "translation": "if",
+                    "analysis_id": 463
+                },
+                {
+                    "position": 3,
+                    "arabic": "كَذَّبَ",
+                    "transliteration": "kadhaba",
+                    "translation": "he denies",
+                    "analysis_id": 9857
+                },
+                {
+                    "position": 4,
+                    "arabic": "وَتَوَلّٰىۗ",
+                    "transliteration": "watawallā",
+                    "translation": "and turns away",
+                    "analysis_id": 27963
+                }
+            ]
         },
         {
             "aya_id": 6120,
@@ -412,12 +923,43 @@
             "sajda": false,
             "transliteration": "Alam y'alam bi-an nal lahaa yaraa",
             "tajweed_text": "أَلَمْ يَعْل[c:14571[َم ب]ِأَ[g[نّ]َ [h:897[ٱ]للَّهَ يَرَىٰ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "اَلَمْ",
+                    "transliteration": "alam",
+                    "translation": "Does not",
+                    "analysis_id": 1513
+                },
+                {
+                    "position": 2,
+                    "arabic": "يَعْلَمْ",
+                    "transliteration": "yaʿlam",
+                    "translation": "he know",
+                    "analysis_id": 5760
+                },
+                {
+                    "position": 3,
+                    "arabic": "بِاَنَّ",
+                    "transliteration": "bi-anna",
+                    "translation": "that",
+                    "analysis_id": 2363
+                },
+                {
+                    "position": 4,
+                    "arabic": "اللّٰهَ",
+                    "transliteration": "l-laha",
+                    "translation": "Allah",
+                    "analysis_id": 98
+                },
+                {
+                    "position": 5,
+                    "arabic": "يَرٰىۗ",
+                    "transliteration": "yarā",
+                    "translation": "sees",
+                    "analysis_id": 2248
+                }
+            ]
         },
         {
             "aya_id": 6121,
@@ -431,12 +973,57 @@
             "sajda": false,
             "transliteration": "Kalla la illam yantahi la nasfa'am bin nasiyah",
             "tajweed_text": "كَلَّا لَئ[u:4195[ِن ل]َّمْ يَ[f:10891[نت]َهِ لَنَسْفَع[i:14572[َۢا ب]ِ[h:14573[ٱ][l[ل][g[نّ]َاصِيَةِ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَلَّا",
+                    "transliteration": "kallā",
+                    "translation": "Nay",
+                    "analysis_id": 18614
+                },
+                {
+                    "position": 2,
+                    "arabic": "لَىِٕنْ",
+                    "transliteration": "la-in",
+                    "translation": "If",
+                    "analysis_id": 10265
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَّمْ",
+                    "transliteration": "lam",
+                    "translation": "not",
+                    "analysis_id": 71
+                },
+                {
+                    "position": 4,
+                    "arabic": "يَنْتَهِ",
+                    "transliteration": "yantahi",
+                    "translation": "he desists",
+                    "analysis_id": 29206
+                },
+                {
+                    "position": 5,
+                    "arabic": "ەۙ",
+                    "transliteration": "lanasfaʿan",
+                    "translation": "surely We will drag him",
+                    "analysis_id": 29207
+                },
+                {
+                    "position": 6,
+                    "arabic": "لَنَسْفَعًاۢ",
+                    "transliteration": "bil-nāṣiyati",
+                    "translation": "by the forelock",
+                    "analysis_id": 29208
+                },
+                {
+                    "position": 7,
+                    "arabic": "بِالنَّاصِيَةِۙ",
+                    "transliteration": null,
+                    "translation": "(15)",
+                    "analysis_id": 20
+                }
+            ]
         },
         {
             "aya_id": 6122,
@@ -450,12 +1037,29 @@
             "sajda": false,
             "transliteration": "Nasiyatin kazi batin khaatiyah",
             "tajweed_text": "نَاصِيَ[f:14574[ةٍ ك]َ[n[ـٰ]ذِبَةٍ خَاطِئَةٍ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "نَاصِيَةٍ",
+                    "transliteration": "nāṣiyatin",
+                    "translation": "A forelock",
+                    "analysis_id": 29209
+                },
+                {
+                    "position": 2,
+                    "arabic": "كَاذِبَةٍ",
+                    "transliteration": "kādhibatin",
+                    "translation": "lying",
+                    "analysis_id": 29210
+                },
+                {
+                    "position": 3,
+                    "arabic": "خَاطِئَةٍۚ",
+                    "transliteration": "khāṭi-atin",
+                    "translation": "sinful",
+                    "analysis_id": 29211
+                }
+            ]
         },
         {
             "aya_id": 6123,
@@ -469,12 +1073,22 @@
             "sajda": false,
             "transliteration": "Fal yad'u naadiyah",
             "tajweed_text": "فَلْيَ[q:14575[دْ]عُ نَادِيَهُۥ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "فَلْيَدْعُ",
+                    "transliteration": "falyadʿu",
+                    "translation": "Then let him call",
+                    "analysis_id": 29212
+                },
+                {
+                    "position": 2,
+                    "arabic": "نَادِيَهٗۙ",
+                    "transliteration": "nādiyahu",
+                    "translation": "his associates",
+                    "analysis_id": 29213
+                }
+            ]
         },
         {
             "aya_id": 6124,
@@ -488,12 +1102,22 @@
             "sajda": false,
             "transliteration": "Sanad 'uz zabaaniyah",
             "tajweed_text": "سَنَ[q:14576[دْ]عُ [h:14577[ٱ][l[ل]زَّبَانِيَةَ",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "سَنَدْعُ",
+                    "transliteration": "sanadʿu",
+                    "translation": "We will call",
+                    "analysis_id": 29214
+                },
+                {
+                    "position": 2,
+                    "arabic": "الزَّبَانِيَةَۙ",
+                    "transliteration": "l-zabāniyata",
+                    "translation": "the Angels of Hell",
+                    "analysis_id": 29215
+                }
+            ]
         },
         {
             "aya_id": 6125,
@@ -507,12 +1131,57 @@
             "sajda": true,
             "transliteration": "Kalla; la tuti'hu wasjud waqtarib",
             "tajweed_text": "كَلَّا لَا تُطِعْهُ وَ[h:14578[ٱ]سْجُ[q:14578[دْ] وَ[h:14579[ٱ][q:14579[قْ]تَرِ[q[ب] ۩",
-            "surah": {
-                "name": "سُورَةُ العَلَقِ",
-                "englishName": "Al-Alaq",
-                "englishNameTranslation": "The Clot",
-                "revelationType": "Meccan"
-            }
+            "words": [
+                {
+                    "position": 1,
+                    "arabic": "كَلَّاۗ",
+                    "transliteration": "kallā",
+                    "translation": "Nay",
+                    "analysis_id": 18604
+                },
+                {
+                    "position": 3,
+                    "arabic": "لَا",
+                    "transliteration": "tuṭiʿ'hu",
+                    "translation": "obey him",
+                    "analysis_id": 29216
+                },
+                {
+                    "position": 4,
+                    "arabic": "تُطِعْهُ",
+                    "transliteration": "wa-us'jud",
+                    "translation": "But prostrate",
+                    "analysis_id": 29217
+                },
+                {
+                    "position": 5,
+                    "arabic": "وَاسْجُدْ",
+                    "transliteration": "wa-iq'tarib",
+                    "translation": "and draw near (to Allah)",
+                    "analysis_id": 29218
+                },
+                {
+                    "position": 6,
+                    "arabic": "وَاقْتَرِبْ",
+                    "transliteration": "",
+                    "translation": "(19)",
+                    "analysis_id": 29219
+                },
+                {
+                    "position": 7,
+                    "arabic": "۩",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 12356
+                },
+                {
+                    "position": 8,
+                    "arabic": "ࣖ",
+                    "transliteration": "",
+                    "translation": "",
+                    "analysis_id": 31
+                }
+            ]
         }
     ]
 }

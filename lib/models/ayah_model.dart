@@ -1,7 +1,3 @@
-// lib/models/ayah_model.dart
-
-// ------------------- MODEL BARU UNTUK KAMUS ANALISIS -------------------
-
 class OccurrenceLocation {
   final int surahId;
   final int ayahNumber;

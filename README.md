@@ -63,6 +63,7 @@ Aplikasi ini tersedia di beberapa platform berikut:
 
 -   **Android**: [Google Play Store](https://play.google.com/store/apps/details?id=alquran.duidev.com)
 -   **Website**: [duidev-project.web.app](https://duidev-project.web.app)
+-   **Asset Kamus**: [Please Request](https://drive.google.com/file/d/1tCMC8OJXBu99KYGfcsMUaIXb8S5_8ybU/view?usp=sharing)
 
 ---
 

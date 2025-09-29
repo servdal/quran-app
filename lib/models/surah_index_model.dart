@@ -24,7 +24,7 @@ class SurahIndexInfo {
       englishName: json['englishName'],
       englishNameTranslation: json['englishNameTranslation'],
       revelationType: json['revelationType'],
-      numberOfAyahs: json['number_of_ayahs'] ?? 0, // Ambil dari JSON jika ada
+      numberOfAyahs: json['numberOfAyahs'] ?? 0,
     );
   }
 }

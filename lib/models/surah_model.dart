@@ -1,4 +1,3 @@
-// lib/models/surah_model.dart
 import 'package:quran_app/models/ayah_model.dart';
 
 class Surah {

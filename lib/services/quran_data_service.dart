@@ -104,7 +104,7 @@ class QuranDataService {
     return "Surah";
   }
   Future<Map<String, AnalysisDetail>> loadAnalysisDictionary() async {
-    final String response = await rootBundle.loadString('assets/kamus_analisis.json');
+    final String response = await rootBundle.loadString('kamus_analisis.json');
     final Map<String, dynamic> data = json.decode(response);
     return data.map((key, value) => MapEntry(key, AnalysisDetail.fromJson(value)));
   }
@@ -134,7 +134,7 @@ final pageAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, pageNumbe
 final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
   // Pastikan Anda memiliki file audio_paths.json di folder assets
   try {
-    final jsonString = await rootBundle.loadString('assets/audio_paths.json');
+    final jsonString = await rootBundle.loadString('audio_paths.json');
     final jsonMap = json.decode(jsonString);
     final List<dynamic> audioList = jsonMap['audio_mapping'];
     

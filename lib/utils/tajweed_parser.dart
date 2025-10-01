@@ -3,13 +3,10 @@ import 'package:quran_app/theme/app_theme.dart';
 
 class TajweedParser {
   static List<TextSpan> parse(String text, TextStyle baseStyle) {
-    // === PERBAIKAN UTAMA DI SINI ===
-    // Menggunakan solusi penggantian langsung yang Anda sarankan untuk
-    // menangani string tajwid yang tidak terbentuk dengan baik (malformed).
-    // Ini adalah solusi yang paling bersih dan langsung.
-    text = text.replaceAll('[o[َ[s[اْ]]', 'ا۟'); // Mengganti seluruh pola yang salah
-    text = text.replaceAll('[s[اْ]]', 'ا۟');   // Menangani kasus alif sukun standar
-
+    text = text.replaceAll('[o[َ[s[اْ]]', 'َا۟');
+    text = text.replaceAll('[s[اْ]]', 'ا۟');
+    text = text.replaceAll('[s[اْ]‌ۖ', 'اۖ');
+    
 
     final List<TextSpan> spans = [];
     final List<Color> colorStack = <Color>[baseStyle.color ?? Colors.black];

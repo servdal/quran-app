@@ -36,6 +36,7 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
   void _showSettingsModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (ctx) => SettingsModalContent(currentPage: _currentPage),
     );
   }
@@ -44,7 +45,7 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hal. $_currentPage'),
+        title: Text('Hal. $_currentPage dari 604'),
         actions: [
           IconButton(
             icon: const Icon(Icons.tune),
@@ -52,17 +53,68 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
           ),
         ],
       ),
-      body: PageView.builder(
-        controller: _pageController,
-        itemCount: 604,
-        onPageChanged: (page) {
-          setState(() {
-            _currentPage = page + 1;
-          });
-        },
-        itemBuilder: (context, index) {
-          return DeresanPage(pageNumber: index + 1);
-        },
+      body: Column( // Bungkus dengan Column
+        children: [
+          Expanded( // PageView harus di dalam Expanded
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: 604,
+              onPageChanged: (page) {
+                setState(() {
+                  _currentPage = page + 1;
+                });
+              },
+              itemBuilder: (context, index) {
+                return DeresanPage(pageNumber: index + 1);
+              },
+            ),
+          ),
+
+          // --- TOMBOL NAVIGASI DITAMBAHKAN DI SINI ---
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 5,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.arrow_back),
+                  label: const Text(' '),
+                  onPressed: _currentPage < 604
+                      ? () {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        }
+                      : null, // Tombol nonaktif di halaman terakhir
+                ),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.arrow_forward),
+                  label: const Text(' '),
+                  onPressed: _currentPage > 1
+                      ? () {
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        }
+                      : null, // Tombol nonaktif di halaman pertama
+                ),
+                
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

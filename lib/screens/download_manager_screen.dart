@@ -2,75 +2,73 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/services/download_service.dart';
-import 'package:quran_app/services/quran_data_service.dart';
+import 'package:quran_app/providers/download_provider.dart';
 
 class DownloadManagerScreen extends ConsumerWidget {
   const DownloadManagerScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final downloadService = ref.watch(downloadServiceProvider);
-    final audioPathsAsync = ref.watch(audioPathsProvider);
+    final downloadTasks = ref.watch(downloadProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Manajer Unduhan Audio"),
+        title: const Text('Unduh Audio per Surah'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.cloud_download_outlined, size: 80, color: Colors.teal),
-              const SizedBox(height: 20),
-              const Text(
-                "Unduh Semua File Audio Tafsir",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "File audio akan disimpan di perangkat Anda untuk bisa diputar secara offline. Total ukuran sekitar 500-600 MB. Pastikan Anda terhubung ke Wi-Fi.",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
-              const SizedBox(height: 30),
-              if (downloadService.isDownloading)
-                Column(
-                  children: [
-                    LinearProgressIndicator(value: downloadService.progress),
-                    const SizedBox(height: 10),
-                    Text(
-                      '${(downloadService.progress * 100).toStringAsFixed(1)}% - ${downloadService.statusMessage}',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                )
-              else
-                audioPathsAsync.when(
-                  data: (audioMap) {
-                    return ElevatedButton.icon(
-                      icon: const Icon(Icons.download_for_offline),
-                      label: const Text("Mulai Unduh Semua Audio"),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                        textStyle: const TextStyle(fontSize: 16),
-                      ),
-                      onPressed: () {
-                        final filenames = audioMap.values.toList();
-                        ref.read(downloadServiceProvider).downloadAllAudio(filenames);
-                      },
-                    );
-                  },
-                  loading: () => const CircularProgressIndicator(),
-                  error: (e, s) => Text("Gagal memuat daftar audio: $e"),
-                ),
-            ],
-          ),
-        ),
-      ),
+      body: downloadTasks.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: downloadTasks.length,
+              itemBuilder: (context, index) {
+                final task = downloadTasks[index];
+                return ListTile(
+                  leading: CircleAvatar(child: Text(task.surah.suraId.toString())),
+                  title: Text(task.surah.englishName),
+                  subtitle: _buildStatusWidget(task),
+                  trailing: _buildActionButton(ref, task),
+                );
+              },
+            ),
     );
+  }
+
+  Widget _buildStatusWidget(DownloadTask task) {
+    switch (task.status) {
+      case DownloadStatus.downloading:
+        return LinearProgressIndicator(value: task.progress);
+      case DownloadStatus.completed:
+        return const Text('Selesai', style: TextStyle(color: Colors.green));
+      case DownloadStatus.failed:
+        return const Text('Gagal', style: TextStyle(color: Colors.red));
+      default:
+        return Text('${task.surah.numberOfAyahs} Ayat');
+    }
+  }
+
+  Widget _buildActionButton(WidgetRef ref, DownloadTask task) {
+    switch (task.status) {
+      case DownloadStatus.downloading:
+        return const SizedBox(
+          width: 24,
+          height: 24,
+          child: CircularProgressIndicator(strokeWidth: 2),
+        );
+      case DownloadStatus.completed:
+        return const Icon(Icons.check_circle, color: Colors.green);
+      case DownloadStatus.failed:
+        return IconButton(
+          icon: const Icon(Icons.replay, color: Colors.red),
+          onPressed: () {
+            ref.read(downloadProvider.notifier).startDownload(task.surah.suraId);
+          },
+        );
+      default: // none
+        return IconButton(
+          icon: const Icon(Icons.download),
+          onPressed: () {
+            ref.read(downloadProvider.notifier).startDownload(task.surah.suraId);
+          },
+        );
+    }
   }
 }

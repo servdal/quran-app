@@ -6,8 +6,13 @@ class TajweedParser {
     text = text.replaceAll('[o[َ[s[اْ]]', 'َا۟');
     text = text.replaceAll('[s[اْ]]', 'ا۟');
     text = text.replaceAll('[s[اْ]‌ۖ', 'اۖ');
-    
-
+    text = text.replaceAll('[s[اْ]‌ۚ', 'اْ');
+    text = text.replaceAll('[s[اْ]ۗ', 'اۗ');
+    text = text.replaceAll('[s[اْ]ۘ', 'اۘ');
+    text = text.replaceAll('[s[اْ]ۙ', 'اۙ');
+    text = text.replaceAll('[s[اْ]ۚ', 'اۚ');
+    text = text.replaceAll('[s[اْ]ۛ', 'اۛ');
+    text = text.replaceAll('[s[اْ]ۜ', 'اۜ');
     final List<TextSpan> spans = [];
     final List<Color> colorStack = <Color>[baseStyle.color ?? Colors.black];
     final StringBuffer buf = StringBuffer();

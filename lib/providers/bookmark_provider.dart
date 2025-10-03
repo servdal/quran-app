@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-enum BookmarkViewType { surah, page, deresan }
+enum BookmarkViewType { surah, page, deresan, tafsir }
 
 class Bookmark {
   final String type;

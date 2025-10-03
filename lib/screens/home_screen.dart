@@ -8,6 +8,7 @@ import 'package:quran_app/screens/page_view_screen.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
+import 'package:quran_app/screens/tafsir_view_screen.dart';
 import 'package:quran_app/theme/app_theme.dart';
 import 'package:quran_app/screens/page_list_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -405,7 +406,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) => PageViewScreen(initialPage: bookmark.pageNumber!),
                 ));
-              } else if (bookmark.type == BookmarkViewType.deresan.name && bookmark.pageNumber != null) {
+              } else if (bookmark.type == BookmarkViewType.tafsir.name) {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => TafsirViewScreen(surahId: bookmark.surahId),
+                ));
+              }else if (bookmark.type == BookmarkViewType.deresan.name && bookmark.pageNumber != null) {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) => DeresanViewScreen(initialPage: bookmark.pageNumber!),
                 ));

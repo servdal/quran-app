@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/ayah_model.dart';
+import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
 import 'package:quran_app/widgets/analysis_popup.dart';
@@ -24,6 +25,37 @@ class TafsirViewScreen extends ConsumerWidget {
           loading: () => const Text("Memuat..."),
           error: (e, s) => const Text("Error"),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            tooltip: "Sebelumnya",
+            onPressed: surahId < 114
+                ? () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TafsirViewScreen(surahId: surahId + 1),
+                      ),
+                    );
+                  }
+                : null, 
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward_ios),
+            tooltip: "Berikutnya",
+            onPressed: surahId > 1
+                ? () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TafsirViewScreen(surahId: surahId - 1),
+                      ),
+                    );
+                  }
+                : null, 
+          ),
+          
+        ],
       ),
       body: surahAsync.when(
         data: (surah) => analysisDictAsync.when(
@@ -43,6 +75,8 @@ class TafsirViewScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    _AyahToolbar(ayah: ayah, surahName: surah.englishName),
+                    const SizedBox(height: 8),
                     RichText(
                       textAlign: TextAlign.right, textDirection: TextDirection.rtl,
                       text: TextSpan(style: baseTextStyle, children: textSpans),
@@ -108,3 +142,46 @@ class TafsirViewScreen extends ConsumerWidget {
     );
   }
 }
+class _AyahToolbar extends ConsumerWidget {
+  final Ayah ayah;
+  final String surahName;
+  const _AyahToolbar({required this.ayah, required this.surahName});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'QS ${ayah.suraId}:${ayah.ayaNumber}',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          IconButton(
+            icon: const Icon(Icons.bookmark_add_outlined),
+            tooltip: 'Tandai Ayat Ini',
+            onPressed: () {
+              ref.read(bookmarkProvider.notifier).setBookmark(
+                surahId: ayah.suraId,
+                surahName: surahName,
+                ayahNumber: ayah.ayaNumber,
+                pageNumber: ayah.pageNumber,
+                viewType: BookmarkViewType.tafsir,
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('QS ${ayah.suraId}:${ayah.ayaNumber} telah ditandai.')),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+

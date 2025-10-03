@@ -225,13 +225,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               showAboutDialog(
                 context: context,
                 applicationName: 'Tafsir Jalalayn dengan Audio Gus Baha',
-                applicationVersion: '3.0.3',
+                applicationVersion: '3.0.4',
                 applicationIcon: const Icon(Icons.mosque_rounded, size: 48),
                 applicationLegalese: '© 2025 Duidev Software House',
                 children: <Widget>[
                   const SizedBox(height: 24),
                   const Text(
-                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 20 September 2025',
+                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 3 Oktober 2025',
                     textAlign: TextAlign.justify,
                   ),
                   RichText(
@@ -242,7 +242,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         fontFamily: 'LPMQ',
                         fontSize: 14,
                       ),
-                      text: '(السبت، ٨٢ ربيع الأول ١٤٤٧ هـ)',
+                      text: 'الجمعة , ١١ رَبيع الثاني ١٤٤٧',
                     ),
                   ),
                 ],

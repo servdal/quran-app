@@ -60,13 +60,22 @@ class AnalysisDetail {
 class SurahInfo {
   final String name;
   final String englishName;
+  final String englishNameTranslation;
+  final String revelationType;
 
-  SurahInfo({required this.name, required this.englishName});
+  SurahInfo({
+    required this.name,
+    required this.englishName,
+    required this.englishNameTranslation,
+    required this.revelationType,
+  });
 
   factory SurahInfo.fromJson(Map<String, dynamic> json) {
     return SurahInfo(
       name: json['name'] ?? '',
       englishName: json['englishName'] ?? '',
+      englishNameTranslation: json['englishNameTranslation'] ?? '',
+      revelationType: json['revelationType'] ?? '',
     );
   }
 }
@@ -102,6 +111,7 @@ class Ayah {
   final int ayaNumber;
   final String ayaText;
   final int suraId;
+  final String suraName;
   final int pageNumber;
   final String translationAyaText;
   final String tafsirJalalayn;
@@ -111,12 +121,14 @@ class Ayah {
   final String tajweedText;
   final int juzId;
   final bool sajda;
+  String get audioKey => '${suraId.toString().padLeft(3, '0')}${ayaNumber.toString().padLeft(3, '0')}';
 
   Ayah({
     required this.ayaId,
     required this.ayaNumber,
     required this.ayaText,
     required this.suraId,
+    required this.suraName,
     required this.pageNumber,
     required this.translationAyaText,
     required this.tafsirJalalayn,
@@ -129,11 +141,16 @@ class Ayah {
   });
 
   factory Ayah.fromJson(Map<String, dynamic> json) {
+    String suraNameValue = '';
+    if (json['surah'] is Map<String, dynamic>) {
+      suraNameValue = json['surah']['englishName'] ?? '';
+    }
     return Ayah(
       ayaId: json['aya_id'],
       ayaNumber: json['aya_number'],
       ayaText: json['aya_text'],
       suraId: json['sura_id'],
+      suraName: suraNameValue,
       pageNumber: json['page_number'],
       translationAyaText: json['translation_aya_text'] ?? '',
       tafsirJalalayn: json['tafsir_jalalayn'] ?? '',

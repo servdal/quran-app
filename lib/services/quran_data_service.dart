@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math' show Random;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/page_index_model.dart';
@@ -10,18 +11,22 @@ import 'package:quran_app/models/ayah_model.dart';
 class QuranDataService {
   // Cache untuk data pencarian agar tidak dimuat berulang kali
   List<Surah>? _searchableSurahs;
+  List<SurahIndexInfo>? _surahIndexCache;
+  List<PageIndexInfo>? _halamanIndexCache;
 
-  // OPTIMIZED: Membaca dari index_surah.json
   Future<List<SurahIndexInfo>> getAllSurahIndex() async {
+    if (_surahIndexCache != null) return _surahIndexCache!;
     final String response = await rootBundle.loadString('assets/index_surah.json');
     final data = json.decode(response) as List;
-    return data.map((json) => SurahIndexInfo.fromJson(json)).toList();
+    _surahIndexCache = data.map((json) => SurahIndexInfo.fromJson(json)).toList();
+    return _surahIndexCache!;
   }
 
-  // OPTIMIZED: Membaca dari index_halaman.json
   Future<List<PageIndexInfo>> getAllPageIndex() async {
+    if (_halamanIndexCache != null) return _halamanIndexCache!;
     final String response = await rootBundle.loadString('assets/index_halaman.json');
     final data = json.decode(response) as List;
+    _halamanIndexCache = data.map((json) => PageIndexInfo.fromJson(json)).toList();
     return data.map((json) => PageIndexInfo.fromJson(json)).toList();
   }
 
@@ -38,7 +43,6 @@ class QuranDataService {
     return Surah.fromJson(data);
   }
 
-  // NEW: Metode khusus untuk memuat semua data yang dibutuhkan untuk search
   Future<void> loadAllDataForSearch() async {
     if (_searchableSurahs != null) return; // Hanya muat sekali
     List<Surah> allSurahs = [];
@@ -47,7 +51,7 @@ class QuranDataService {
       allSurahs.add(surah);
     }
     _searchableSurahs = allSurahs;
-    print("All surah data for search loaded successfully.");
+    print("All surah data loaded for search.");
   }
 
   // Search function (now uses the cached data)
@@ -75,8 +79,16 @@ class QuranDataService {
       var ayahsList = jsonMap['data'] as List;
       return ayahsList.map((i) => Ayah.fromJson(i)).toList();
     } catch (e) {
-      print('Error loading page $pageNumber: $e');
-      return [];
+      throw Exception("Error loading page $pageNumber: $e");
+    }
+  }
+  Future<List<Map<String, dynamic>>> getRawAyahsByPage(int pageNumber) async {
+    try {
+      String jsonString = await rootBundle.loadString('assets/halaman/$pageNumber.json');
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+      return (jsonMap['data'] as List).cast<Map<String, dynamic>>();
+    } catch (e) {
+      throw Exception("Error loading page $pageNumber: $e");
     }
   }
 
@@ -93,15 +105,17 @@ class QuranDataService {
       final randomAyah = surah.ayahs[random.nextInt(surah.ayahs.length)];
       return randomAyah;
     } catch (e) {
-      print('Error loading random ayah: $e');
-      return null;
+      throw Exception("Error loading random ayah: $e");
     }
   }
-  String getSurahNameById(int surahId) {
-    // This function is tricky without loading all data.
-    // We will leave it as is for now, but ideally it should also use the index.
-    // For simplicity, let's assume it's okay for now.
-    return "Surah";
+  Future<List<Map<String, dynamic>>> getSurahNameById(int pageNumber) async {
+    try {
+      String jsonString = await rootBundle.loadString('assets/halaman/$pageNumber.json');
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+      return (jsonMap['data'] as List).cast<Map<String, dynamic>>();
+    } catch (e) {
+      throw Exception("Error loading page $pageNumber: $e");
+    }
   }
   Future<Map<String, AnalysisDetail>> loadAnalysisDictionary() async {
     final String response = await rootBundle.loadString('assets/kamus_analisis.json');
@@ -128,7 +142,28 @@ final surahDetailProvider = FutureProvider.family<Surah, int>((ref, surahId) {
 });
 
 final pageAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, pageNumber) async {
-  return ref.watch(quranDataServiceProvider).getAyahsByPage(pageNumber);
+  final quranService = ref.watch(quranDataServiceProvider);
+  
+  // 1. Ambil data mentah ayat per halaman
+  final rawAyahsData = await quranService.getRawAyahsByPage(pageNumber);
+  
+  // 2. Ambil indeks semua surah (ini akan di-cache oleh provider)
+  final allSurahIndex = await ref.watch(allSurahsProvider.future);
+  
+  // 3. Buat peta (Map) untuk pencarian nama surah yang efisien
+  final surahNameMap = {for (var surah in allSurahIndex) surah.suraId: surah.englishName};
+
+  // 4. Proses setiap ayat, "suntikkan" nama surah, lalu buat objek Ayah
+  return rawAyahsData.map((ayahJson) {
+    final int surahId = ayahJson['sura_id'] ?? 0;
+    final String surahName = surahNameMap[surahId] ?? 'Unknown';
+
+    // Buat salinan data JSON dan tambahkan objek 'surah' yang berisi nama
+    final enrichedJson = Map<String, dynamic>.from(ayahJson);
+    enrichedJson['surah'] = {'englishName': surahName};
+
+    return Ayah.fromJson(enrichedJson);
+  }).toList();
 });
 
 final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
@@ -145,8 +180,7 @@ final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
     
     return audioPaths;
   } catch (e) {
-    print("Gagal memuat audio_paths.json: $e");
-    return {}; // Kembalikan map kosong jika file tidak ada
+    throw Exception("Gagal memuat audio_paths.json: $e");
   }
 });
 final analysisDictionaryProvider = FutureProvider<Map<String, AnalysisDetail>>((ref) {

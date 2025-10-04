@@ -210,7 +210,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
 
     final prayerAsync = ref.watch(prayerProvider);
-
+    final bookmarks = ref.watch(bookmarkProvider);
     return Scaffold(
       appBar: AppBar(
         title: const FittedBox(
@@ -332,18 +332,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                bookmarkAsync.when(
-                  data: (bookmark) {
-                    if (bookmark == null) return const SizedBox.shrink();
-                    return _buildBookmarkCard(context, ref, theme, bookmark);
-                  },
-                  loading: () => const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24.0),
-                    child: Center(child: CircularProgressIndicator()),
+                if (bookmarks.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tanda Baca Tersimpan',
+                        style: theme.textTheme.titleLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 12),
+                      ...bookmarks.entries.map((entry) {
+                        return _buildBookmarkCard(
+                            context, ref, theme, entry.key, entry.value);
+                      }).toList(),
+                      const SizedBox(height: 24),
+                    ],
                   ),
-                  error: (e, s) => const SizedBox.shrink(),
-                ),
 
+              
                 _buildMenuGrid(context),
                 const SizedBox(height: 32),
                 
@@ -372,54 +379,93 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       onChanged: _onSearchChanged,
     );
   }
-  Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme, Bookmark bookmark) {
-    final cardColor = theme.brightness == Brightness.light ? theme.primaryColor : theme.colorScheme.surface;
-    final onCardColor = theme.brightness == Brightness.light ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface;
+  Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme,
+      String name, Bookmark bookmark) {
+    final cardColor = theme.brightness == Brightness.light
+        ? theme.primaryColor
+        : theme.colorScheme.surface;
+    final onCardColor = theme.brightness == Brightness.light
+        ? theme.colorScheme.onPrimary
+        : theme.colorScheme.onSurface;
 
-    return Column(
-      children: [
-        Card(
-          color: cardColor,
-          child: ListTile(
-            leading: Icon(Icons.bookmark, color: onCardColor, size: 30),
-            title: Text('Lanjutkan Membaca', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: onCardColor)),
-            subtitle: Text('Ayah ${bookmark.ayahNumber} | ${bookmark.surahName} ', style: TextStyle(color: onCardColor.withOpacity(0.8))),
-            trailing: IconButton(
-              icon: Icon(Icons.delete_outline, color: onCardColor),
-              tooltip: 'Hapus Bookmark',
-              onPressed: () async {
-                await ref.read(bookmarkProvider.notifier).removeBookmark();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Bookmark telah dihapus.')),
-                );
-              },
-            ),
-            onTap: () {
-              if (bookmark.type == 'surah') {
-                Navigator.push(context, MaterialPageRoute(
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      color: cardColor,
+      child: ListTile(
+        leading: Icon(Icons.bookmark, color: onCardColor, size: 30),
+        title: Text(name,
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: onCardColor)),
+        subtitle: Text('Ayah ${bookmark.ayahNumber} | ${bookmark.surahName} ',
+            style: TextStyle(color: onCardColor.withOpacity(0.8))),
+        trailing: IconButton(
+          icon: Icon(Icons.delete_outline, color: onCardColor),
+          tooltip: 'Hapus Bookmark',
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (dialogContext) => AlertDialog(
+                title: const Text('Hapus Bookmark?'),
+                content: Text('Anda yakin ingin menghapus bookmark "$name"?'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                    child: const Text('Batal'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      ref.read(bookmarkProvider.notifier).removeBookmark(name);
+                      Navigator.of(dialogContext).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Bookmark "$name" telah dihapus.')),
+                      );
+                    },
+                    child: const Text('Hapus'),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        onTap: () {
+          if (bookmark.type == BookmarkViewType.surah.name) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => SurahDetailScreen(
                     surahId: bookmark.surahId,
                     initialScrollIndex: bookmark.ayahNumber - 1,
                   ),
                 ));
-              } else if (bookmark.type == 'page' && bookmark.pageNumber != null) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => PageViewScreen(initialPage: bookmark.pageNumber!),
+          } else if (bookmark.type == BookmarkViewType.page.name &&
+              bookmark.pageNumber != null) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PageViewScreen(initialPage: bookmark.pageNumber!),
                 ));
-              } else if (bookmark.type == BookmarkViewType.tafsir.name) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => TafsirViewScreen(surahId: bookmark.surahId),
+          } else if (bookmark.type == BookmarkViewType.tafsir.name) {
+             Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      TafsirViewScreen(surahId: bookmark.surahId),
                 ));
-              }else if (bookmark.type == BookmarkViewType.deresan.name && bookmark.pageNumber != null) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => DeresanViewScreen(initialPage: bookmark.pageNumber!),
+          } else if (bookmark.type == BookmarkViewType.deresan.name &&
+              bookmark.pageNumber != null) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      DeresanViewScreen(initialPage: bookmark.pageNumber!),
                 ));
-              }
-            },
-          ),
-        ),
-        const SizedBox(height: 24),
-      ],
+          }
+        },
+      ),
     );
   }
   Widget _buildMenuGrid(BuildContext context) {

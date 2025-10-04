@@ -134,7 +134,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (currentSurahId > 1)
+          if (currentSurahId < 114)
             ElevatedButton.icon(
               icon: const Icon(Icons.arrow_back),
               label: const Text(' '),
@@ -142,13 +142,13 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SurahDetailScreen(surahId: currentSurahId - 1),
+                    builder: (context) => SurahDetailScreen(surahId: currentSurahId + 1),
                   ),
                 );
               },
             ),
           const Spacer(),
-          if (currentSurahId < 114)
+          if (currentSurahId > 1)
             ElevatedButton.icon(
               icon: const Icon(Icons.arrow_forward),
               label: const Text(' '),
@@ -156,7 +156,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SurahDetailScreen(surahId: currentSurahId + 1),
+                    builder: (context) => SurahDetailScreen(surahId: currentSurahId - 1),
                   ),
                 );
               },

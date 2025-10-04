@@ -15,7 +15,6 @@ class TafsirViewScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final surahAsync = ref.watch(surahDetailProvider(surahId));
-    // Memuat kamus analisis
     final analysisDictAsync = ref.watch(analysisDictionaryProvider);
 
     return Scaffold(
@@ -28,7 +27,7 @@ class TafsirViewScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.arrow_back_ios_new),
-            tooltip: "Sebelumnya",
+            tooltip: "Berikutnya",
             onPressed: surahId < 114
                 ? () {
                     Navigator.pushReplacement(
@@ -38,11 +37,11 @@ class TafsirViewScreen extends ConsumerWidget {
                       ),
                     );
                   }
-                : null, 
+                : null,
           ),
           IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
-            tooltip: "Berikutnya",
+            tooltip: "Sebelumnya",
             onPressed: surahId > 1
                 ? () {
                     Navigator.pushReplacement(
@@ -52,14 +51,12 @@ class TafsirViewScreen extends ConsumerWidget {
                       ),
                     );
                   }
-                : null, 
+                : null,
           ),
-          
         ],
       ),
       body: surahAsync.when(
         data: (surah) => analysisDictAsync.when(
-          // Menunggu kamus dan surah selesai dimuat
           data: (dictionary) => ListView.builder(
             padding: const EdgeInsets.all(16.0),
             itemCount: surah.ayahs.length,
@@ -115,7 +112,6 @@ class TafsirViewScreen extends ConsumerWidget {
       children: significantWords.map((word) {
         return InkWell(
           onTap: () {
-            // Logika baru untuk mencari di kamus
             if (word.analysisId != null) {
               final analysisDetail = dictionary[word.analysisId.toString()];
               if (analysisDetail != null) {
@@ -147,6 +143,98 @@ class _AyahToolbar extends ConsumerWidget {
   final String surahName;
   const _AyahToolbar({required this.ayah, required this.surahName});
 
+  void _saveBookmark(WidgetRef ref, String name) {
+    final newBookmark = Bookmark(
+      type: BookmarkViewType.tafsir.name,
+      surahId: ayah.suraId,
+      surahName: surahName,
+      ayahNumber: ayah.ayaNumber,
+      pageNumber: ayah.pageNumber,
+    );
+    ref.read(bookmarkProvider.notifier).addOrUpdateBookmark(name, newBookmark);
+  }
+
+  void _showBookmarkDialog(BuildContext context, WidgetRef ref) {
+    final textController = TextEditingController();
+    final bookmarks = ref.read(bookmarkProvider);
+    final existingNames = bookmarks.keys.toList();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Simpan Bookmark Tafsir'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: textController,
+                  decoration: const InputDecoration(
+                    labelText: 'Nama Bookmark Baru',
+                    hintText: 'Contoh: Kajian Tafsir',
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'Atau timpa yang sudah ada:',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const Divider(),
+                if (existingNames.isEmpty)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Center(child: Text('Belum ada bookmark.')),
+                  )
+                else
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: existingNames.length,
+                      itemBuilder: (context, index) {
+                        final name = existingNames[index];
+                        return ListTile(
+                          title: Text(name),
+                          onTap: () {
+                            _saveBookmark(ref, name);
+                            Navigator.of(dialogContext).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Bookmark "$name" diperbarui.')),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Batal'),
+              onPressed: () => Navigator.of(dialogContext).pop(),
+            ),
+            ElevatedButton(
+              child: const Text('Simpan Baru'),
+              onPressed: () {
+                final newName = textController.text.trim();
+                if (newName.isNotEmpty) {
+                  _saveBookmark(ref, newName);
+                  Navigator.of(dialogContext).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Tafsir ditandai di "$newName".')),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
@@ -165,23 +253,10 @@ class _AyahToolbar extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.bookmark_add_outlined),
             tooltip: 'Tandai Ayat Ini',
-            onPressed: () {
-              ref.read(bookmarkProvider.notifier).setBookmark(
-                surahId: ayah.suraId,
-                surahName: surahName,
-                ayahNumber: ayah.ayaNumber,
-                pageNumber: ayah.pageNumber,
-                viewType: BookmarkViewType.tafsir,
-              );
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('QS ${ayah.suraId}:${ayah.ayaNumber} telah ditandai.')),
-              );
-            },
+            onPressed: () => _showBookmarkDialog(context, ref),
           ),
         ],
       ),
     );
   }
 }
-
-

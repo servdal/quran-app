@@ -37,56 +37,48 @@ class Bookmark {
       );
 }
 
-class BookmarkNotifier extends StateNotifier<AsyncValue<Bookmark?>> {
-  BookmarkNotifier() : super(const AsyncValue.loading()) {
-    _loadBookmark();
+class BookmarkNotifier extends StateNotifier<Map<String, Bookmark>> {
+  BookmarkNotifier() : super({}) {
+    _loadBookmarks();
   }
 
-  static const String _bookmarkKey = 'bookmark_key';
+  static const String _bookmarksKey = 'bookmarks_map';
 
-  Future<void> _loadBookmark() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final bookmarkJson = prefs.getString(_bookmarkKey);
-      if (bookmarkJson != null) {
-        final bookmarkData =
-            Bookmark.fromJson(Map<String, dynamic>.from(json.decode(bookmarkJson)));
-        state = AsyncValue.data(bookmarkData);
-      } else {
-        state = const AsyncValue.data(null);
+  Future<void> _loadBookmarks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(_bookmarksKey);
+    if (jsonString != null) {
+      final Map<String, dynamic> decodedMap = jsonDecode(jsonString);
+      final Map<String, Bookmark> bookmarks = decodedMap.map(
+        (key, value) => MapEntry(key, Bookmark.fromJson(value)),
+      );
+      if (mounted) {
+        state = bookmarks;
       }
-    } catch (e, s) {
-      state = AsyncValue.error(e, s);
     }
   }
-
-  Future<void> setBookmark({
-    required int surahId,
-    required String surahName,
-    required int ayahNumber,
-    required int? pageNumber,
-    required BookmarkViewType viewType,
-  }) async {
-    final bookmark = Bookmark(
-      type: viewType.name,
-      surahId: surahId,
-      surahName: surahName,
-      ayahNumber: ayahNumber,
-      pageNumber: pageNumber,
+  Future<void> _saveBookmarks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final encodableMap = state.map(
+      (key, value) => MapEntry(key, value.toJson()),
     );
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_bookmarkKey, json.encode(bookmark.toJson()));
-    state = AsyncValue.data(bookmark);
+    await prefs.setString(_bookmarksKey, jsonEncode(encodableMap));
   }
-
-  Future<void> removeBookmark() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_bookmarkKey);
-    state = const AsyncValue.data(null);
+  Future<void> addOrUpdateBookmark(String name, Bookmark bookmark) async {
+    final newState = {...state};
+    newState[name] = bookmark;
+    state = newState;
+    await _saveBookmarks();
+  }
+  Future<void> removeBookmark(String name) async {
+    final newState = {...state};
+    newState.remove(name);
+    state = newState;
+    await _saveBookmarks();
   }
 }
 
 final bookmarkProvider =
-    StateNotifierProvider<BookmarkNotifier, AsyncValue<Bookmark?>>((ref) {
+    StateNotifierProvider<BookmarkNotifier, Map<String, Bookmark>>((ref) {
   return BookmarkNotifier();
 });

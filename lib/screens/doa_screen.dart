@@ -17,11 +17,9 @@ class DoaUIData {
 
 final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
   final dataService = ref.watch(quranDataServiceProvider);
-  // HAPUS: await dataService.loadAllSurahData();
   
   List<DoaUIData> uiDataList = [];
   for (final doaItem in daftarDoaAlQuran) {
-    // getAyahsBySurahId sekarang sudah cukup
     final allAyahsInSurah = await dataService.getAyahsBySurahId(doaItem.surahId);
     
     List<Ayah> fetchedAyahs = [];
@@ -30,7 +28,7 @@ final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
         final foundAyah = allAyahsInSurah.firstWhere((a) => a.ayaNumber == ayahNum);
         fetchedAyahs.add(foundAyah);
       } catch (e) {
-        print("Ayat tidak ditemukan: Surah ${doaItem.surahId} Ayat $ayahNum");
+        throw Exception("Ayat tidak ditemukan: Surah ${doaItem.surahId} Ayat $ayahNum");
       }
     }
     if (fetchedAyahs.isNotEmpty) {

@@ -80,7 +80,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
           child: Column(
             children: [
-              Image.asset('assets/images/main_logo.png', height: screenSize.height * 0.15),
+              Image.asset('assets/images/mascot.png', height: screenSize.height * 0.15),
               const SizedBox(height: 16),
               
               Text(

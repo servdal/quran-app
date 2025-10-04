@@ -121,7 +121,7 @@ class _QuranPageWidget extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (isFirstAyahInSurah)
-                  _SurahHeader(surahName: ayah.surah?.name ?? ''),
+                  _SurahHeader(surahName: ayah.suraName),
                 AyahWidget(
                   ayah: ayah,
                   viewType: BookmarkViewType.page,

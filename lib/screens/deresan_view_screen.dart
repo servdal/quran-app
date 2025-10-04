@@ -182,7 +182,7 @@ class DeresanPage extends ConsumerWidget {
             child: _AyahNumberMarker(
               number: _convertToArabicNumber(ayah.ayaNumber),
               hasSajda: ayah.sajda,
-              fontSize: settings.arabicFontSize * 1,
+              fontSize: settings.arabicFontSize * 0.6, // Ukuran lebih kecil dari teks ayat
             ),
             alignment: PlaceholderAlignment.middle,
           ));

@@ -63,33 +63,35 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: surahDetailAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Center(child: Text('Gagal memuat surah: $error')),
-              data: (surah) {
-                
-                return ScrollablePositionedList.builder(
-                  itemCount: surah.ayahs.length,
-                  itemScrollController: itemScrollController,
-                  itemPositionsListener: itemPositionsListener,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: AyahWidget(
-                        ayah: surah.ayahs[index],
-                        viewType: BookmarkViewType.surah,
-                      ),
-                    );
-                  },
-                );
-              },
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: surahDetailAsync.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(child: Text('Gagal memuat surah: $error')),
+                data: (surah) {
+                  
+                  return ScrollablePositionedList.builder(
+                    itemCount: surah.ayahs.length,
+                    itemScrollController: itemScrollController,
+                    itemPositionsListener: itemPositionsListener,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: AyahWidget(
+                          ayah: surah.ayahs[index],
+                          viewType: BookmarkViewType.surah,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-          _buildSurahNavigation(context, widget.surahId),
-        ],
+            _buildSurahNavigation(context, widget.surahId),
+          ],
+        )
       ),
     );
   }

@@ -14,6 +14,7 @@ import 'package:quran_app/screens/page_list_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quran_app/screens/deresan_view_screen.dart';
@@ -23,6 +24,7 @@ import 'package:quran_app/screens/doa_screen.dart';
 import 'package:quran_app/screens/aqidah_screen.dart';
 import 'package:quran_app/screens/download_manager_screen.dart';
 import 'package:quran_app/screens/tafsir_surah_list_screen.dart';
+import 'package:quran_app/screens/qibla_screen.dart';
 
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
@@ -182,9 +184,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
+  void _handleQiblaTap() {
+    if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Fitur Tidak Tersedia"),
+          content: const Text("Petunjuk arah kiblat hanya tersedia di perangkat Android dan iOS."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const QiblaScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final bookmarkAsync = ref.watch(bookmarkProvider);
     final theme = Theme.of(context);
 
     ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
@@ -193,15 +214,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         final String? closestPrayer = prayerData['closestPrayer'];
 
         if (closestTime != null && closestPrayer != null) {
-          // Mulai countdown di UI
           _startCountdown(closestTime);
-
-          // Batalkan semua notifikasi sebelumnya untuk menghindari penumpukan
           NotificationService().cancelAllNotifications();
-
-          // Jadwalkan notifikasi baru untuk waktu sholat berikutnya
           NotificationService().scheduleAdzanNotification(
-            id: 0, // ID notifikasi (bisa dibuat dinamis jika perlu)
+            id: 0,
             prayerName: closestPrayer,
             scheduledTime: closestTime,
           );
@@ -215,9 +231,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: const FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text("Tafsir Jalalayn Audio KH. Bahauddin Nursalim"),
+          child: Text("Al Quran Digital"),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.explore_outlined),
+            tooltip: 'Arah Kiblat',
+            onPressed: _handleQiblaTap,
+          ),
           IconButton(
             icon: const Icon(Icons.info_outline),
             tooltip: 'Tentang Aplikasi',
@@ -494,17 +515,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           },
         ),
         _MenuTile(
-          icon: Icons.menu_book, // Ikon baru
-          title: 'Kitab Tafsir', // Judul baru
-          color: Colors.brown.shade400, // Warna baru
+          icon: Icons.menu_book,
+          title: 'Tafsir dan Terjemah Perkata',
+          color: Colors.brown.shade400,
           onTap: () {
-            // Mengarah ke TafsirSurahListScreen yang baru dibuat
             Navigator.push(context, MaterialPageRoute(builder: (context) => const TafsirSurahListScreen()));
           },
         ),
         _MenuTile(
           icon: Icons.menu_book_rounded,
-          title: 'Deresan AlQuran',
+          title: 'AlQuran Klasik',
           color: Colors.indigo.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen(mode: PageListViewMode.deresan)));

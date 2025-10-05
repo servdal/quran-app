@@ -192,7 +192,7 @@ class DeresanPage extends ConsumerWidget {
         return SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 80.0), 
           child: RichText(
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.justify,
             textDirection: TextDirection.rtl,
             text: TextSpan(children: textSpans),
           ),

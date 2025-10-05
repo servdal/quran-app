@@ -36,26 +36,28 @@ class _PageViewScreenState extends State<PageViewScreen> {
       appBar: AppBar(
         title: Text('$_currentPage dari 604'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 604, 
-              itemBuilder: (context, index) {
-                final pageNumber = index + 1;
-                return _QuranPageWidget(pageNumber: pageNumber);
-              },
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index + 1;
-                });
-              },
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 604, 
+                itemBuilder: (context, index) {
+                  final pageNumber = index + 1;
+                  return _QuranPageWidget(pageNumber: pageNumber);
+                },
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index + 1;
+                  });
+                },
+              ),
             ),
-          ),
-          _buildPageControls(),
-        ],
+            _buildPageControls(),
+          ],
+        )
       ),
     );
   }

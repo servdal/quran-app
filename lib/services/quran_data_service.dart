@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math' show Random;
+import 'package:drift/src/runtime/executor/executor.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'database_native.dart' if (dart.library.html) 'database_web.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -181,14 +182,15 @@ final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
     throw Exception("Gagal memuat audio_paths.json: $e");
   }
 });
-final databaseProvider = FutureProvider<AppDatabase>((ref) async { 
-  final executor = await constructDb();  
-  return AppDatabase(executor);
+
+final databaseProvider = Provider<AppDatabase>((ref) {
+  final executor = constructDb();
+  return AppDatabase(executor as QueryExecutor);
 });
 
 final ayahWordsProvider = FutureProvider.family<List<Grammar>, ({int surahId, int ayahNumber})>(
-  (ref, ids) async { 
-    final db = await ref.watch(databaseProvider.future); 
+  (ref, ids) {
+    final db = ref.watch(databaseProvider);
     return db.getWordsForAyah(ids.surahId, ids.ayahNumber);
   }
 );

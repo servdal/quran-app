@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
@@ -103,7 +104,34 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
       final prefs = await SharedPreferences.getInstance();
 
       await prefs.setString('last_prayer_data', response.body);
-      return _processPrayerData(response.body);
+      final data = _processPrayerData(response.body);
+      try {
+        List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+        if (placemarks.isNotEmpty) {
+          final p = placemarks.first;
+
+          String? city = p.locality;
+          String? subAdmin = p.subAdministrativeArea;
+          String? admin = p.administrativeArea;
+
+          // Pilih bagian yang tidak null
+          String shortAddress = [
+            city,
+            if (city == null || city.isEmpty) subAdmin,
+            admin,
+          ].where((e) => e != null && e!.isNotEmpty).map((e) => e!).toList().join(', ');
+
+          // Jika semua kosong, fallback
+          if (shortAddress.isEmpty) {
+            shortAddress = "Koordinat (${lat.toStringAsFixed(3)}, ${lng.toStringAsFixed(3)})";
+          }
+
+          data["location"] = shortAddress;
+        }
+      } catch (e) {
+        debugPrint("Gagal mendapatkan alamat GPS: $e dengan Latitude: $lat, Longitude: $lng");
+      }
+      return data;
     } else {
       throw Exception("Gagal terhubung ke server waktu sholat.");
     }

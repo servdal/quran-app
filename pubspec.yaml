@@ -3,7 +3,7 @@ description: "AlQuran Digital diLengkapi Dengan Tafsir Jalalain dan Audio Gus Ba
 
 publish_to: 'none'
 
-version: 3.0.4+21
+version: 3.0.4+25
 
 environment:
   sdk: ^3.7.2
@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  flutter_riverpod: ^3.0.0
+  flutter_riverpod: ^3.0.1
   shared_preferences: ^2.2.3
   scrollable_positioned_list: ^0.3.8
   screenshot: ^3.0.0
@@ -25,15 +25,19 @@ dependencies:
   provider: ^6.1.1
   url_launcher: ^6.2.6
   http: ^1.2.0
-  geolocator: 10.1.0
+  geolocator: 13.0.2
+  geocoding: ^3.0.0
   intl: ^0.20.2
   flutter_local_notifications: ^19.4.2
   timezone: ^0.10.1
   dio: ^5.4.3+1
   firebase_core: ^4.1.1
   cloud_firestore: ^6.0.2
-  flutter_qiblah: ^2.1.0
+  flutter_qiblah: ^3.1.0+1
   flutter_svg: ^2.0.7
+  drift: ^2.14.0
+  sqlite3_flutter_libs: ^0.5.0
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +45,8 @@ dev_dependencies:
 
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.4
+  drift_dev: ^2.14.0
+  build_runner: ^2.4.7
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -58,14 +64,12 @@ flutter:
     - assets/surah/
     - assets/halaman/
     - assets/images/
-    - assets/images/qibla.png
-    - assets/images/tool.png
     - assets/fonts/
     - assets/audio/
     - assets/audio_paths.json
     - assets/index_halaman.json
     - assets/index_surah.json
-    - assets/kamus_analisis.json
+    - assets/database/
   fonts:
     - family: Poppins
       fonts:
@@ -75,3 +79,6 @@ flutter:
     - family: LPMQ
       fonts:
         - asset: assets/fonts/LPMQ.ttf
+    - family: Uthmani
+      fonts:
+        - asset: assets/fonts/UthmanicHafs.otf

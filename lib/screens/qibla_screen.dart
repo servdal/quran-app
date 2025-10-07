@@ -86,7 +86,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                       Transform.rotate(
                         angle: (qiblahDirection.qiblah * (pi / 180) * -1),
                         child: SvgPicture.asset(
-                          'assets/qibla_compass.svg',
+                          'assets/images/qibla.svg',
                            height: 300,
                         ),
                       ),
@@ -94,7 +94,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                         angle: (qiblahDirection.offset * (pi / 180) * -1),
                         alignment: Alignment.center,
                         child: SvgPicture.asset(
-                          'assets/qibla_needle.svg',
+                          'assets/images/tool.svg',
                           height: 250,
                           colorFilter: ColorFilter.mode(
                             Theme.of(context).primaryColor, 

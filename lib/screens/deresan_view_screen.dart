@@ -44,7 +44,7 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Deresan - Halaman $_currentPage'),
+        title: Text('Halaman $_currentPage'),
         actions: [
           IconButton(
             icon: const Icon(Icons.tune),
@@ -138,63 +138,64 @@ class DeresanPage extends ConsumerWidget {
         
         final settings = ref.watch(settingsProvider);
         final theme = Theme.of(context);
-        
-        final List<InlineSpan> textSpans = [];
-        String currentSurah = ayahs.first.suraName; // Inisialisasi dengan surah pertama
-
-        // Loop melalui setiap ayat di halaman
+        final List<Widget> pageWidgets = [];
+        List<InlineSpan> currentSurahSpans = [];
         for (int i = 0; i < ayahs.length; i++) {
           final ayah = ayahs[i];
           
-          // Cek apakah ini adalah ayat pertama dari surah baru di halaman ini
-          // atau jika ini adalah ayat pertama di halaman (untuk surah yang berlanjut)
+          // Cek jika ini adalah surah baru
           if (i == 0 || ayah.suraId != ayahs[i - 1].suraId) {
-            currentSurah = ayah.suraName ?? 'Surah ${ayah.suraId}';
-            
-            // Tambahkan header nama surah sebagai pemisah
-            textSpans.add(WidgetSpan(
-              child: _SurahHeaderWidget(surahName: currentSurah),
-              alignment: PlaceholderAlignment.middle,
-            ));
+            // 1. Tambahkan RichText dari surah sebelumnya (jika ada) ke dalam list widget
+            if (currentSurahSpans.isNotEmpty) {
+              pageWidgets.add(
+                RichText(
+                  textAlign: TextAlign.justify,
+                  textDirection: TextDirection.rtl,
+                  text: TextSpan(children: currentSurahSpans),
+                ),
+              );
+              currentSurahSpans = []; // Kosongkan lagi untuk surah baru
+            }
 
-            // === PENAMBAHAN: Tambahkan Bismillah di awal surah ===
-            // Kecuali untuk Surah At-Tawbah (ID 9) dan Al-Fatihah (ID 1)
+            // 2. Tambahkan Header Nama Surah sebagai widget baru
+            pageWidgets.add(_SurahHeaderWidget(surahName: ayah.suraName ?? 'Surah ${ayah.suraId}'));
+
+            // 3. Tambahkan Bismillah sebagai widget baru jika perlu
             if (ayah.suraId != 9 && ayah.ayaNumber == 1) {
-              textSpans.add(WidgetSpan(
-                child: _BismillahWidget(fontSize: settings.arabicFontSize),
-                alignment: PlaceholderAlignment.middle,
-              ));
+              pageWidgets.add(_BismillahWidget(fontSize: settings.arabicFontSize));
             }
           }
-
-          // Menambahkan teks ayat dengan tajwid
           final baseTextStyle = TextStyle(
             fontFamily: 'LPMQ',
             fontSize: settings.arabicFontSize,
             height: 2.2,
             color: theme.colorScheme.onSurface,
           );
-          textSpans.addAll(TajweedParser.parse(ayah.tajweedText, baseTextStyle));
-          textSpans.add(const TextSpan(text: ' ')); // Spasi antar ayat
-
-          // Menambahkan penanda nomor ayat dan sajdah
-          textSpans.add(WidgetSpan(
+          currentSurahSpans.addAll(TajweedParser.parse(ayah.tajweedText, baseTextStyle));
+          currentSurahSpans.add(const TextSpan(text: ' '));
+          currentSurahSpans.add(WidgetSpan(
             child: _AyahNumberMarker(
               number: _convertToArabicNumber(ayah.ayaNumber),
-              hasSajda: ayah.sajda,
-              fontSize: settings.arabicFontSize * 0.6, // Ukuran lebih kecil dari teks ayat
+              hasSajda: false, 
+              fontSize: settings.arabicFontSize * 0.6,
             ),
             alignment: PlaceholderAlignment.middle,
           ));
-          textSpans.add(const TextSpan(text: ' '));
+          currentSurahSpans.add(const TextSpan(text: ' '));
         }
-
+        if (currentSurahSpans.isNotEmpty) {
+          pageWidgets.add(
+            RichText(
+              textAlign: TextAlign.justify,
+              textDirection: TextDirection.rtl,
+              text: TextSpan(children: currentSurahSpans),
+            ),
+          );
+        }
         return SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 80.0), 
-          child: RichText(
-            textAlign: TextAlign.justify,
-            textDirection: TextDirection.rtl,
-            text: TextSpan(children: textSpans),
+          child: Column(
+            children: pageWidgets,
           ),
         );
       },
@@ -236,7 +237,6 @@ class _SurahHeaderWidget extends StatelessWidget {
   }
 }
 
-// === WIDGET BARU: Untuk menampilkan teks Basmalah ===
 class _BismillahWidget extends StatelessWidget {
   final double fontSize;
   const _BismillahWidget({required this.fontSize});
@@ -244,11 +244,12 @@ class _BismillahWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Center(
+      // width: double.infinity, // Tidak wajib di dalam Column, tapi tidak masalah
+      padding: const EdgeInsets.only(bottom: 16.0, top: 8.0),
+      child: Center( // Center akan memastikan teks berada di tengah
         child: Text(
           "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'LPMQ',
             fontSize: fontSize * 1.1, // Sedikit lebih besar dari teks ayat

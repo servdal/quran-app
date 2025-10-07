@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:math' show Random;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'database_native.dart' if (dart.library.html) 'database_web.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/page_index_model.dart';
 import 'package:quran_app/models/surah_index_model.dart';
 import 'package:quran_app/models/surah_model.dart';
 import 'package:quran_app/models/ayah_model.dart';
+import 'package:quran_app/services/database.dart';
+
 
 class QuranDataService {
   // Cache untuk data pencarian agar tidak dimuat berulang kali
@@ -117,11 +119,7 @@ class QuranDataService {
       throw Exception("Error loading page $pageNumber: $e");
     }
   }
-  Future<Map<String, AnalysisDetail>> loadAnalysisDictionary() async {
-    final String response = await rootBundle.loadString('assets/kamus_analisis.json');
-    final Map<String, dynamic> data = json.decode(response);
-    return data.map((key, value) => MapEntry(key, AnalysisDetail.fromJson(value)));
-  }
+
 }
 
 
@@ -183,6 +181,14 @@ final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
     throw Exception("Gagal memuat audio_paths.json: $e");
   }
 });
-final analysisDictionaryProvider = FutureProvider<Map<String, AnalysisDetail>>((ref) {
-  return ref.watch(quranDataServiceProvider).loadAnalysisDictionary();
+final databaseProvider = FutureProvider<AppDatabase>((ref) async { 
+  final executor = await constructDb();  
+  return AppDatabase(executor);
 });
+
+final ayahWordsProvider = FutureProvider.family<List<Grammar>, ({int surahId, int ayahNumber})>(
+  (ref, ids) async { 
+    final db = await ref.watch(databaseProvider.future); 
+    return db.getWordsForAyah(ids.surahId, ids.ayahNumber);
+  }
+);

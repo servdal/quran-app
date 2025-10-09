@@ -11,19 +11,22 @@ class GrammarTable extends Table {
   @override
   String get tableName => 'grammar';
 
-  // Kolom-kolom ini WAJIB ADA (non-nullable)
-  TextColumn get rootAr => text().named('RootAr')();
-  TextColumn get rootCode => text().named('RootCode')();
-  TextColumn get rootEn => text().named('RootEn')();
-  IntColumn get rootWordId => integer().named('RootWordId')();
+  // Kolom Primary Key (TIDAK BOLEH NULL)
   IntColumn get chapterNo => integer().named('ChapterNo')();
-  TextColumn get meaningEn => text().named('MeaningEn')();
   IntColumn get verseNo => integer().named('VerseNo')();
-  TextColumn get wordAr => text().named('WordAr')();
   IntColumn get wordNo => integer().named('WordNo')();
-  TextColumn get grammarFormDesc => text().named('GrammarFormDesc')();  
-  TextColumn get meaningID => text().named('MeaningID')();
-  TextColumn get grammarFormDescID => text().named('GrammarFormDescID')();
+  
+  // --- SEMUA KOLOM LAIN DIJADIKAN NULLABLE ---
+  // Ini akan membuat aplikasi lebih tahan terhadap data yang hilang/kosong
+  TextColumn get rootAr => text().named('RootAr').nullable()();
+  TextColumn get rootCode => text().named('RootCode').nullable()();
+  TextColumn get rootEn => text().named('RootEn').nullable()();
+  IntColumn get rootWordId => integer().named('RootWordId').nullable()();
+  TextColumn get meaningEn => text().named('MeaningEn').nullable()();
+  TextColumn get wordAr => text().named('WordAr').nullable()();
+  TextColumn get grammarFormDesc => text().named('GrammarFormDesc').nullable()();
+  TextColumn get meaningID => text().named('MeaningID').nullable()();
+  TextColumn get grammarFormDescID => text().named('GrammarFormDescID').nullable()();
 
   @override
   Set<Column> get primaryKey => {chapterNo, verseNo, wordNo};

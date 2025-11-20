@@ -4,6 +4,7 @@ import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
+import 'package:quran_app/utils/auto_tajweed_parser.dart';
 
 // Layar utama yang mengelola navigasi halaman (PageView)
 class DeresanViewScreen extends StatefulWidget {
@@ -171,13 +172,13 @@ class DeresanPage extends ConsumerWidget {
             height: 2.2,
             color: theme.colorScheme.onSurface,
           );
-          currentSurahSpans.addAll(TajweedParser.parse(ayah.tajweedText, baseTextStyle));
+          currentSurahSpans.addAll(AutoTajweedParser.parse(ayah.ayaText, baseTextStyle));
           currentSurahSpans.add(const TextSpan(text: ' '));
           currentSurahSpans.add(WidgetSpan(
             child: _AyahNumberMarker(
               number: _convertToArabicNumber(ayah.ayaNumber),
               hasSajda: false, 
-              fontSize: settings.arabicFontSize * 0.6,
+              fontSize: settings.arabicFontSize * 1,
             ),
             alignment: PlaceholderAlignment.middle,
           ));

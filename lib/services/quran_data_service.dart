@@ -183,14 +183,19 @@ final audioPathsProvider = FutureProvider<Map<int, String>>((ref) async {
   }
 });
 
-final databaseProvider = Provider<AppDatabase>((ref) {
-  final executor = constructDb();
-  return AppDatabase(executor as QueryExecutor);
+final databaseProvider = FutureProvider<AppDatabase>((ref) async {
+  // `constructDb` akan secara otomatis memilih implementasi native atau web.
+  final executor = await constructDb(); // <-- Tambahkan 'await' di sini
+  return AppDatabase(executor);
 });
 
 final ayahWordsProvider = FutureProvider.family<List<Grammar>, ({int surahId, int ayahNumber})>(
-  (ref, ids) {
-    final db = ref.watch(databaseProvider);
+  (ref, ids) async { // <-- jadikan fungsinya async
+    
+    // Tunggu sampai databaseProvider selesai menyiapkan koneksi
+    final db = await ref.watch(databaseProvider.future); 
+    
+    // Setelah koneksi siap, panggil method query
     return db.getWordsForAyah(ids.surahId, ids.ayahNumber);
   }
 );

@@ -9,46 +9,6 @@ class $GrammarTableTable extends GrammarTable
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $GrammarTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _rootArMeta = const VerificationMeta('rootAr');
-  @override
-  late final GeneratedColumn<String> rootAr = GeneratedColumn<String>(
-    'RootAr',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _rootCodeMeta = const VerificationMeta(
-    'rootCode',
-  );
-  @override
-  late final GeneratedColumn<String> rootCode = GeneratedColumn<String>(
-    'RootCode',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _rootEnMeta = const VerificationMeta('rootEn');
-  @override
-  late final GeneratedColumn<String> rootEn = GeneratedColumn<String>(
-    'RootEn',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _rootWordIdMeta = const VerificationMeta(
-    'rootWordId',
-  );
-  @override
-  late final GeneratedColumn<int> rootWordId = GeneratedColumn<int>(
-    'RootWordId',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
   static const VerificationMeta _chapterNoMeta = const VerificationMeta(
     'chapterNo',
   );
@@ -58,17 +18,6 @@ class $GrammarTableTable extends GrammarTable
     aliasedName,
     false,
     type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _meaningEnMeta = const VerificationMeta(
-    'meaningEn',
-  );
-  @override
-  late final GeneratedColumn<String> meaningEn = GeneratedColumn<String>(
-    'MeaningEn',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _verseNoMeta = const VerificationMeta(
@@ -82,15 +31,6 @@ class $GrammarTableTable extends GrammarTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _wordArMeta = const VerificationMeta('wordAr');
-  @override
-  late final GeneratedColumn<String> wordAr = GeneratedColumn<String>(
-    'WordAr',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
   static const VerificationMeta _wordNoMeta = const VerificationMeta('wordNo');
   @override
   late final GeneratedColumn<int> wordNo = GeneratedColumn<int>(
@@ -100,6 +40,66 @@ class $GrammarTableTable extends GrammarTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _rootArMeta = const VerificationMeta('rootAr');
+  @override
+  late final GeneratedColumn<String> rootAr = GeneratedColumn<String>(
+    'RootAr',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rootCodeMeta = const VerificationMeta(
+    'rootCode',
+  );
+  @override
+  late final GeneratedColumn<String> rootCode = GeneratedColumn<String>(
+    'RootCode',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rootEnMeta = const VerificationMeta('rootEn');
+  @override
+  late final GeneratedColumn<String> rootEn = GeneratedColumn<String>(
+    'RootEn',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rootWordIdMeta = const VerificationMeta(
+    'rootWordId',
+  );
+  @override
+  late final GeneratedColumn<int> rootWordId = GeneratedColumn<int>(
+    'RootWordId',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _meaningEnMeta = const VerificationMeta(
+    'meaningEn',
+  );
+  @override
+  late final GeneratedColumn<String> meaningEn = GeneratedColumn<String>(
+    'MeaningEn',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _wordArMeta = const VerificationMeta('wordAr');
+  @override
+  late final GeneratedColumn<String> wordAr = GeneratedColumn<String>(
+    'WordAr',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _grammarFormDescMeta = const VerificationMeta(
     'grammarFormDesc',
   );
@@ -107,9 +107,9 @@ class $GrammarTableTable extends GrammarTable
   late final GeneratedColumn<String> grammarFormDesc = GeneratedColumn<String>(
     'GrammarFormDesc',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _meaningIDMeta = const VerificationMeta(
     'meaningID',
@@ -118,9 +118,9 @@ class $GrammarTableTable extends GrammarTable
   late final GeneratedColumn<String> meaningID = GeneratedColumn<String>(
     'MeaningID',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _grammarFormDescIDMeta = const VerificationMeta(
     'grammarFormDescID',
@@ -130,21 +130,21 @@ class $GrammarTableTable extends GrammarTable
       GeneratedColumn<String>(
         'GrammarFormDescID',
         aliasedName,
-        false,
+        true,
         type: DriftSqlType.string,
-        requiredDuringInsert: true,
+        requiredDuringInsert: false,
       );
   @override
   List<GeneratedColumn> get $columns => [
+    chapterNo,
+    verseNo,
+    wordNo,
     rootAr,
     rootCode,
     rootEn,
     rootWordId,
-    chapterNo,
     meaningEn,
-    verseNo,
     wordAr,
-    wordNo,
     grammarFormDesc,
     meaningID,
     grammarFormDescID,
@@ -161,38 +161,6 @@ class $GrammarTableTable extends GrammarTable
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('RootAr')) {
-      context.handle(
-        _rootArMeta,
-        rootAr.isAcceptableOrUnknown(data['RootAr']!, _rootArMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_rootArMeta);
-    }
-    if (data.containsKey('RootCode')) {
-      context.handle(
-        _rootCodeMeta,
-        rootCode.isAcceptableOrUnknown(data['RootCode']!, _rootCodeMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_rootCodeMeta);
-    }
-    if (data.containsKey('RootEn')) {
-      context.handle(
-        _rootEnMeta,
-        rootEn.isAcceptableOrUnknown(data['RootEn']!, _rootEnMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_rootEnMeta);
-    }
-    if (data.containsKey('RootWordId')) {
-      context.handle(
-        _rootWordIdMeta,
-        rootWordId.isAcceptableOrUnknown(data['RootWordId']!, _rootWordIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_rootWordIdMeta);
-    }
     if (data.containsKey('ChapterNo')) {
       context.handle(
         _chapterNoMeta,
@@ -200,14 +168,6 @@ class $GrammarTableTable extends GrammarTable
       );
     } else if (isInserting) {
       context.missing(_chapterNoMeta);
-    }
-    if (data.containsKey('MeaningEn')) {
-      context.handle(
-        _meaningEnMeta,
-        meaningEn.isAcceptableOrUnknown(data['MeaningEn']!, _meaningEnMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_meaningEnMeta);
     }
     if (data.containsKey('VerseNo')) {
       context.handle(
@@ -217,14 +177,6 @@ class $GrammarTableTable extends GrammarTable
     } else if (isInserting) {
       context.missing(_verseNoMeta);
     }
-    if (data.containsKey('WordAr')) {
-      context.handle(
-        _wordArMeta,
-        wordAr.isAcceptableOrUnknown(data['WordAr']!, _wordArMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_wordArMeta);
-    }
     if (data.containsKey('WordNo')) {
       context.handle(
         _wordNoMeta,
@@ -232,6 +184,42 @@ class $GrammarTableTable extends GrammarTable
       );
     } else if (isInserting) {
       context.missing(_wordNoMeta);
+    }
+    if (data.containsKey('RootAr')) {
+      context.handle(
+        _rootArMeta,
+        rootAr.isAcceptableOrUnknown(data['RootAr']!, _rootArMeta),
+      );
+    }
+    if (data.containsKey('RootCode')) {
+      context.handle(
+        _rootCodeMeta,
+        rootCode.isAcceptableOrUnknown(data['RootCode']!, _rootCodeMeta),
+      );
+    }
+    if (data.containsKey('RootEn')) {
+      context.handle(
+        _rootEnMeta,
+        rootEn.isAcceptableOrUnknown(data['RootEn']!, _rootEnMeta),
+      );
+    }
+    if (data.containsKey('RootWordId')) {
+      context.handle(
+        _rootWordIdMeta,
+        rootWordId.isAcceptableOrUnknown(data['RootWordId']!, _rootWordIdMeta),
+      );
+    }
+    if (data.containsKey('MeaningEn')) {
+      context.handle(
+        _meaningEnMeta,
+        meaningEn.isAcceptableOrUnknown(data['MeaningEn']!, _meaningEnMeta),
+      );
+    }
+    if (data.containsKey('WordAr')) {
+      context.handle(
+        _wordArMeta,
+        wordAr.isAcceptableOrUnknown(data['WordAr']!, _wordArMeta),
+      );
     }
     if (data.containsKey('GrammarFormDesc')) {
       context.handle(
@@ -241,16 +229,12 @@ class $GrammarTableTable extends GrammarTable
           _grammarFormDescMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_grammarFormDescMeta);
     }
     if (data.containsKey('MeaningID')) {
       context.handle(
         _meaningIDMeta,
         meaningID.isAcceptableOrUnknown(data['MeaningID']!, _meaningIDMeta),
       );
-    } else if (isInserting) {
-      context.missing(_meaningIDMeta);
     }
     if (data.containsKey('GrammarFormDescID')) {
       context.handle(
@@ -260,8 +244,6 @@ class $GrammarTableTable extends GrammarTable
           _grammarFormDescIDMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_grammarFormDescIDMeta);
     }
     return context;
   }
@@ -272,66 +254,57 @@ class $GrammarTableTable extends GrammarTable
   Grammar map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Grammar(
-      rootAr:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}RootAr'],
-          )!,
-      rootCode:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}RootCode'],
-          )!,
-      rootEn:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}RootEn'],
-          )!,
-      rootWordId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}RootWordId'],
-          )!,
       chapterNo:
           attachedDatabase.typeMapping.read(
             DriftSqlType.int,
             data['${effectivePrefix}ChapterNo'],
-          )!,
-      meaningEn:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}MeaningEn'],
           )!,
       verseNo:
           attachedDatabase.typeMapping.read(
             DriftSqlType.int,
             data['${effectivePrefix}VerseNo'],
           )!,
-      wordAr:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}WordAr'],
-          )!,
       wordNo:
           attachedDatabase.typeMapping.read(
             DriftSqlType.int,
             data['${effectivePrefix}WordNo'],
           )!,
-      grammarFormDesc:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}GrammarFormDesc'],
-          )!,
-      meaningID:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}MeaningID'],
-          )!,
-      grammarFormDescID:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}GrammarFormDescID'],
-          )!,
+      rootAr: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}RootAr'],
+      ),
+      rootCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}RootCode'],
+      ),
+      rootEn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}RootEn'],
+      ),
+      rootWordId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}RootWordId'],
+      ),
+      meaningEn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}MeaningEn'],
+      ),
+      wordAr: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}WordAr'],
+      ),
+      grammarFormDesc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}GrammarFormDesc'],
+      ),
+      meaningID: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}MeaningID'],
+      ),
+      grammarFormDescID: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}GrammarFormDescID'],
+      ),
     );
   }
 
@@ -342,64 +315,103 @@ class $GrammarTableTable extends GrammarTable
 }
 
 class Grammar extends DataClass implements Insertable<Grammar> {
-  final String rootAr;
-  final String rootCode;
-  final String rootEn;
-  final int rootWordId;
   final int chapterNo;
-  final String meaningEn;
   final int verseNo;
-  final String wordAr;
   final int wordNo;
-  final String grammarFormDesc;
-  final String meaningID;
-  final String grammarFormDescID;
+  final String? rootAr;
+  final String? rootCode;
+  final String? rootEn;
+  final int? rootWordId;
+  final String? meaningEn;
+  final String? wordAr;
+  final String? grammarFormDesc;
+  final String? meaningID;
+  final String? grammarFormDescID;
   const Grammar({
-    required this.rootAr,
-    required this.rootCode,
-    required this.rootEn,
-    required this.rootWordId,
     required this.chapterNo,
-    required this.meaningEn,
     required this.verseNo,
-    required this.wordAr,
     required this.wordNo,
-    required this.grammarFormDesc,
-    required this.meaningID,
-    required this.grammarFormDescID,
+    this.rootAr,
+    this.rootCode,
+    this.rootEn,
+    this.rootWordId,
+    this.meaningEn,
+    this.wordAr,
+    this.grammarFormDesc,
+    this.meaningID,
+    this.grammarFormDescID,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['RootAr'] = Variable<String>(rootAr);
-    map['RootCode'] = Variable<String>(rootCode);
-    map['RootEn'] = Variable<String>(rootEn);
-    map['RootWordId'] = Variable<int>(rootWordId);
     map['ChapterNo'] = Variable<int>(chapterNo);
-    map['MeaningEn'] = Variable<String>(meaningEn);
     map['VerseNo'] = Variable<int>(verseNo);
-    map['WordAr'] = Variable<String>(wordAr);
     map['WordNo'] = Variable<int>(wordNo);
-    map['GrammarFormDesc'] = Variable<String>(grammarFormDesc);
-    map['MeaningID'] = Variable<String>(meaningID);
-    map['GrammarFormDescID'] = Variable<String>(grammarFormDescID);
+    if (!nullToAbsent || rootAr != null) {
+      map['RootAr'] = Variable<String>(rootAr);
+    }
+    if (!nullToAbsent || rootCode != null) {
+      map['RootCode'] = Variable<String>(rootCode);
+    }
+    if (!nullToAbsent || rootEn != null) {
+      map['RootEn'] = Variable<String>(rootEn);
+    }
+    if (!nullToAbsent || rootWordId != null) {
+      map['RootWordId'] = Variable<int>(rootWordId);
+    }
+    if (!nullToAbsent || meaningEn != null) {
+      map['MeaningEn'] = Variable<String>(meaningEn);
+    }
+    if (!nullToAbsent || wordAr != null) {
+      map['WordAr'] = Variable<String>(wordAr);
+    }
+    if (!nullToAbsent || grammarFormDesc != null) {
+      map['GrammarFormDesc'] = Variable<String>(grammarFormDesc);
+    }
+    if (!nullToAbsent || meaningID != null) {
+      map['MeaningID'] = Variable<String>(meaningID);
+    }
+    if (!nullToAbsent || grammarFormDescID != null) {
+      map['GrammarFormDescID'] = Variable<String>(grammarFormDescID);
+    }
     return map;
   }
 
   GrammarTableCompanion toCompanion(bool nullToAbsent) {
     return GrammarTableCompanion(
-      rootAr: Value(rootAr),
-      rootCode: Value(rootCode),
-      rootEn: Value(rootEn),
-      rootWordId: Value(rootWordId),
       chapterNo: Value(chapterNo),
-      meaningEn: Value(meaningEn),
       verseNo: Value(verseNo),
-      wordAr: Value(wordAr),
       wordNo: Value(wordNo),
-      grammarFormDesc: Value(grammarFormDesc),
-      meaningID: Value(meaningID),
-      grammarFormDescID: Value(grammarFormDescID),
+      rootAr:
+          rootAr == null && nullToAbsent ? const Value.absent() : Value(rootAr),
+      rootCode:
+          rootCode == null && nullToAbsent
+              ? const Value.absent()
+              : Value(rootCode),
+      rootEn:
+          rootEn == null && nullToAbsent ? const Value.absent() : Value(rootEn),
+      rootWordId:
+          rootWordId == null && nullToAbsent
+              ? const Value.absent()
+              : Value(rootWordId),
+      meaningEn:
+          meaningEn == null && nullToAbsent
+              ? const Value.absent()
+              : Value(meaningEn),
+      wordAr:
+          wordAr == null && nullToAbsent ? const Value.absent() : Value(wordAr),
+      grammarFormDesc:
+          grammarFormDesc == null && nullToAbsent
+              ? const Value.absent()
+              : Value(grammarFormDesc),
+      meaningID:
+          meaningID == null && nullToAbsent
+              ? const Value.absent()
+              : Value(meaningID),
+      grammarFormDescID:
+          grammarFormDescID == null && nullToAbsent
+              ? const Value.absent()
+              : Value(grammarFormDescID),
     );
   }
 
@@ -409,78 +421,84 @@ class Grammar extends DataClass implements Insertable<Grammar> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Grammar(
-      rootAr: serializer.fromJson<String>(json['rootAr']),
-      rootCode: serializer.fromJson<String>(json['rootCode']),
-      rootEn: serializer.fromJson<String>(json['rootEn']),
-      rootWordId: serializer.fromJson<int>(json['rootWordId']),
       chapterNo: serializer.fromJson<int>(json['chapterNo']),
-      meaningEn: serializer.fromJson<String>(json['meaningEn']),
       verseNo: serializer.fromJson<int>(json['verseNo']),
-      wordAr: serializer.fromJson<String>(json['wordAr']),
       wordNo: serializer.fromJson<int>(json['wordNo']),
-      grammarFormDesc: serializer.fromJson<String>(json['grammarFormDesc']),
-      meaningID: serializer.fromJson<String>(json['meaningID']),
-      grammarFormDescID: serializer.fromJson<String>(json['grammarFormDescID']),
+      rootAr: serializer.fromJson<String?>(json['rootAr']),
+      rootCode: serializer.fromJson<String?>(json['rootCode']),
+      rootEn: serializer.fromJson<String?>(json['rootEn']),
+      rootWordId: serializer.fromJson<int?>(json['rootWordId']),
+      meaningEn: serializer.fromJson<String?>(json['meaningEn']),
+      wordAr: serializer.fromJson<String?>(json['wordAr']),
+      grammarFormDesc: serializer.fromJson<String?>(json['grammarFormDesc']),
+      meaningID: serializer.fromJson<String?>(json['meaningID']),
+      grammarFormDescID: serializer.fromJson<String?>(
+        json['grammarFormDescID'],
+      ),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'rootAr': serializer.toJson<String>(rootAr),
-      'rootCode': serializer.toJson<String>(rootCode),
-      'rootEn': serializer.toJson<String>(rootEn),
-      'rootWordId': serializer.toJson<int>(rootWordId),
       'chapterNo': serializer.toJson<int>(chapterNo),
-      'meaningEn': serializer.toJson<String>(meaningEn),
       'verseNo': serializer.toJson<int>(verseNo),
-      'wordAr': serializer.toJson<String>(wordAr),
       'wordNo': serializer.toJson<int>(wordNo),
-      'grammarFormDesc': serializer.toJson<String>(grammarFormDesc),
-      'meaningID': serializer.toJson<String>(meaningID),
-      'grammarFormDescID': serializer.toJson<String>(grammarFormDescID),
+      'rootAr': serializer.toJson<String?>(rootAr),
+      'rootCode': serializer.toJson<String?>(rootCode),
+      'rootEn': serializer.toJson<String?>(rootEn),
+      'rootWordId': serializer.toJson<int?>(rootWordId),
+      'meaningEn': serializer.toJson<String?>(meaningEn),
+      'wordAr': serializer.toJson<String?>(wordAr),
+      'grammarFormDesc': serializer.toJson<String?>(grammarFormDesc),
+      'meaningID': serializer.toJson<String?>(meaningID),
+      'grammarFormDescID': serializer.toJson<String?>(grammarFormDescID),
     };
   }
 
   Grammar copyWith({
-    String? rootAr,
-    String? rootCode,
-    String? rootEn,
-    int? rootWordId,
     int? chapterNo,
-    String? meaningEn,
     int? verseNo,
-    String? wordAr,
     int? wordNo,
-    String? grammarFormDesc,
-    String? meaningID,
-    String? grammarFormDescID,
+    Value<String?> rootAr = const Value.absent(),
+    Value<String?> rootCode = const Value.absent(),
+    Value<String?> rootEn = const Value.absent(),
+    Value<int?> rootWordId = const Value.absent(),
+    Value<String?> meaningEn = const Value.absent(),
+    Value<String?> wordAr = const Value.absent(),
+    Value<String?> grammarFormDesc = const Value.absent(),
+    Value<String?> meaningID = const Value.absent(),
+    Value<String?> grammarFormDescID = const Value.absent(),
   }) => Grammar(
-    rootAr: rootAr ?? this.rootAr,
-    rootCode: rootCode ?? this.rootCode,
-    rootEn: rootEn ?? this.rootEn,
-    rootWordId: rootWordId ?? this.rootWordId,
     chapterNo: chapterNo ?? this.chapterNo,
-    meaningEn: meaningEn ?? this.meaningEn,
     verseNo: verseNo ?? this.verseNo,
-    wordAr: wordAr ?? this.wordAr,
     wordNo: wordNo ?? this.wordNo,
-    grammarFormDesc: grammarFormDesc ?? this.grammarFormDesc,
-    meaningID: meaningID ?? this.meaningID,
-    grammarFormDescID: grammarFormDescID ?? this.grammarFormDescID,
+    rootAr: rootAr.present ? rootAr.value : this.rootAr,
+    rootCode: rootCode.present ? rootCode.value : this.rootCode,
+    rootEn: rootEn.present ? rootEn.value : this.rootEn,
+    rootWordId: rootWordId.present ? rootWordId.value : this.rootWordId,
+    meaningEn: meaningEn.present ? meaningEn.value : this.meaningEn,
+    wordAr: wordAr.present ? wordAr.value : this.wordAr,
+    grammarFormDesc:
+        grammarFormDesc.present ? grammarFormDesc.value : this.grammarFormDesc,
+    meaningID: meaningID.present ? meaningID.value : this.meaningID,
+    grammarFormDescID:
+        grammarFormDescID.present
+            ? grammarFormDescID.value
+            : this.grammarFormDescID,
   );
   Grammar copyWithCompanion(GrammarTableCompanion data) {
     return Grammar(
+      chapterNo: data.chapterNo.present ? data.chapterNo.value : this.chapterNo,
+      verseNo: data.verseNo.present ? data.verseNo.value : this.verseNo,
+      wordNo: data.wordNo.present ? data.wordNo.value : this.wordNo,
       rootAr: data.rootAr.present ? data.rootAr.value : this.rootAr,
       rootCode: data.rootCode.present ? data.rootCode.value : this.rootCode,
       rootEn: data.rootEn.present ? data.rootEn.value : this.rootEn,
       rootWordId:
           data.rootWordId.present ? data.rootWordId.value : this.rootWordId,
-      chapterNo: data.chapterNo.present ? data.chapterNo.value : this.chapterNo,
       meaningEn: data.meaningEn.present ? data.meaningEn.value : this.meaningEn,
-      verseNo: data.verseNo.present ? data.verseNo.value : this.verseNo,
       wordAr: data.wordAr.present ? data.wordAr.value : this.wordAr,
-      wordNo: data.wordNo.present ? data.wordNo.value : this.wordNo,
       grammarFormDesc:
           data.grammarFormDesc.present
               ? data.grammarFormDesc.value
@@ -496,15 +514,15 @@ class Grammar extends DataClass implements Insertable<Grammar> {
   @override
   String toString() {
     return (StringBuffer('Grammar(')
+          ..write('chapterNo: $chapterNo, ')
+          ..write('verseNo: $verseNo, ')
+          ..write('wordNo: $wordNo, ')
           ..write('rootAr: $rootAr, ')
           ..write('rootCode: $rootCode, ')
           ..write('rootEn: $rootEn, ')
           ..write('rootWordId: $rootWordId, ')
-          ..write('chapterNo: $chapterNo, ')
           ..write('meaningEn: $meaningEn, ')
-          ..write('verseNo: $verseNo, ')
           ..write('wordAr: $wordAr, ')
-          ..write('wordNo: $wordNo, ')
           ..write('grammarFormDesc: $grammarFormDesc, ')
           ..write('meaningID: $meaningID, ')
           ..write('grammarFormDescID: $grammarFormDescID')
@@ -514,15 +532,15 @@ class Grammar extends DataClass implements Insertable<Grammar> {
 
   @override
   int get hashCode => Object.hash(
+    chapterNo,
+    verseNo,
+    wordNo,
     rootAr,
     rootCode,
     rootEn,
     rootWordId,
-    chapterNo,
     meaningEn,
-    verseNo,
     wordAr,
-    wordNo,
     grammarFormDesc,
     meaningID,
     grammarFormDescID,
@@ -531,100 +549,91 @@ class Grammar extends DataClass implements Insertable<Grammar> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Grammar &&
+          other.chapterNo == this.chapterNo &&
+          other.verseNo == this.verseNo &&
+          other.wordNo == this.wordNo &&
           other.rootAr == this.rootAr &&
           other.rootCode == this.rootCode &&
           other.rootEn == this.rootEn &&
           other.rootWordId == this.rootWordId &&
-          other.chapterNo == this.chapterNo &&
           other.meaningEn == this.meaningEn &&
-          other.verseNo == this.verseNo &&
           other.wordAr == this.wordAr &&
-          other.wordNo == this.wordNo &&
           other.grammarFormDesc == this.grammarFormDesc &&
           other.meaningID == this.meaningID &&
           other.grammarFormDescID == this.grammarFormDescID);
 }
 
 class GrammarTableCompanion extends UpdateCompanion<Grammar> {
-  final Value<String> rootAr;
-  final Value<String> rootCode;
-  final Value<String> rootEn;
-  final Value<int> rootWordId;
   final Value<int> chapterNo;
-  final Value<String> meaningEn;
   final Value<int> verseNo;
-  final Value<String> wordAr;
   final Value<int> wordNo;
-  final Value<String> grammarFormDesc;
-  final Value<String> meaningID;
-  final Value<String> grammarFormDescID;
+  final Value<String?> rootAr;
+  final Value<String?> rootCode;
+  final Value<String?> rootEn;
+  final Value<int?> rootWordId;
+  final Value<String?> meaningEn;
+  final Value<String?> wordAr;
+  final Value<String?> grammarFormDesc;
+  final Value<String?> meaningID;
+  final Value<String?> grammarFormDescID;
   final Value<int> rowid;
   const GrammarTableCompanion({
+    this.chapterNo = const Value.absent(),
+    this.verseNo = const Value.absent(),
+    this.wordNo = const Value.absent(),
     this.rootAr = const Value.absent(),
     this.rootCode = const Value.absent(),
     this.rootEn = const Value.absent(),
     this.rootWordId = const Value.absent(),
-    this.chapterNo = const Value.absent(),
     this.meaningEn = const Value.absent(),
-    this.verseNo = const Value.absent(),
     this.wordAr = const Value.absent(),
-    this.wordNo = const Value.absent(),
     this.grammarFormDesc = const Value.absent(),
     this.meaningID = const Value.absent(),
     this.grammarFormDescID = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   GrammarTableCompanion.insert({
-    required String rootAr,
-    required String rootCode,
-    required String rootEn,
-    required int rootWordId,
     required int chapterNo,
-    required String meaningEn,
     required int verseNo,
-    required String wordAr,
     required int wordNo,
-    required String grammarFormDesc,
-    required String meaningID,
-    required String grammarFormDescID,
+    this.rootAr = const Value.absent(),
+    this.rootCode = const Value.absent(),
+    this.rootEn = const Value.absent(),
+    this.rootWordId = const Value.absent(),
+    this.meaningEn = const Value.absent(),
+    this.wordAr = const Value.absent(),
+    this.grammarFormDesc = const Value.absent(),
+    this.meaningID = const Value.absent(),
+    this.grammarFormDescID = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : rootAr = Value(rootAr),
-       rootCode = Value(rootCode),
-       rootEn = Value(rootEn),
-       rootWordId = Value(rootWordId),
-       chapterNo = Value(chapterNo),
-       meaningEn = Value(meaningEn),
+  }) : chapterNo = Value(chapterNo),
        verseNo = Value(verseNo),
-       wordAr = Value(wordAr),
-       wordNo = Value(wordNo),
-       grammarFormDesc = Value(grammarFormDesc),
-       meaningID = Value(meaningID),
-       grammarFormDescID = Value(grammarFormDescID);
+       wordNo = Value(wordNo);
   static Insertable<Grammar> custom({
+    Expression<int>? chapterNo,
+    Expression<int>? verseNo,
+    Expression<int>? wordNo,
     Expression<String>? rootAr,
     Expression<String>? rootCode,
     Expression<String>? rootEn,
     Expression<int>? rootWordId,
-    Expression<int>? chapterNo,
     Expression<String>? meaningEn,
-    Expression<int>? verseNo,
     Expression<String>? wordAr,
-    Expression<int>? wordNo,
     Expression<String>? grammarFormDesc,
     Expression<String>? meaningID,
     Expression<String>? grammarFormDescID,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
+      if (chapterNo != null) 'ChapterNo': chapterNo,
+      if (verseNo != null) 'VerseNo': verseNo,
+      if (wordNo != null) 'WordNo': wordNo,
       if (rootAr != null) 'RootAr': rootAr,
       if (rootCode != null) 'RootCode': rootCode,
       if (rootEn != null) 'RootEn': rootEn,
       if (rootWordId != null) 'RootWordId': rootWordId,
-      if (chapterNo != null) 'ChapterNo': chapterNo,
       if (meaningEn != null) 'MeaningEn': meaningEn,
-      if (verseNo != null) 'VerseNo': verseNo,
       if (wordAr != null) 'WordAr': wordAr,
-      if (wordNo != null) 'WordNo': wordNo,
       if (grammarFormDesc != null) 'GrammarFormDesc': grammarFormDesc,
       if (meaningID != null) 'MeaningID': meaningID,
       if (grammarFormDescID != null) 'GrammarFormDescID': grammarFormDescID,
@@ -633,30 +642,30 @@ class GrammarTableCompanion extends UpdateCompanion<Grammar> {
   }
 
   GrammarTableCompanion copyWith({
-    Value<String>? rootAr,
-    Value<String>? rootCode,
-    Value<String>? rootEn,
-    Value<int>? rootWordId,
     Value<int>? chapterNo,
-    Value<String>? meaningEn,
     Value<int>? verseNo,
-    Value<String>? wordAr,
     Value<int>? wordNo,
-    Value<String>? grammarFormDesc,
-    Value<String>? meaningID,
-    Value<String>? grammarFormDescID,
+    Value<String?>? rootAr,
+    Value<String?>? rootCode,
+    Value<String?>? rootEn,
+    Value<int?>? rootWordId,
+    Value<String?>? meaningEn,
+    Value<String?>? wordAr,
+    Value<String?>? grammarFormDesc,
+    Value<String?>? meaningID,
+    Value<String?>? grammarFormDescID,
     Value<int>? rowid,
   }) {
     return GrammarTableCompanion(
+      chapterNo: chapterNo ?? this.chapterNo,
+      verseNo: verseNo ?? this.verseNo,
+      wordNo: wordNo ?? this.wordNo,
       rootAr: rootAr ?? this.rootAr,
       rootCode: rootCode ?? this.rootCode,
       rootEn: rootEn ?? this.rootEn,
       rootWordId: rootWordId ?? this.rootWordId,
-      chapterNo: chapterNo ?? this.chapterNo,
       meaningEn: meaningEn ?? this.meaningEn,
-      verseNo: verseNo ?? this.verseNo,
       wordAr: wordAr ?? this.wordAr,
-      wordNo: wordNo ?? this.wordNo,
       grammarFormDesc: grammarFormDesc ?? this.grammarFormDesc,
       meaningID: meaningID ?? this.meaningID,
       grammarFormDescID: grammarFormDescID ?? this.grammarFormDescID,
@@ -667,6 +676,15 @@ class GrammarTableCompanion extends UpdateCompanion<Grammar> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (chapterNo.present) {
+      map['ChapterNo'] = Variable<int>(chapterNo.value);
+    }
+    if (verseNo.present) {
+      map['VerseNo'] = Variable<int>(verseNo.value);
+    }
+    if (wordNo.present) {
+      map['WordNo'] = Variable<int>(wordNo.value);
+    }
     if (rootAr.present) {
       map['RootAr'] = Variable<String>(rootAr.value);
     }
@@ -679,20 +697,11 @@ class GrammarTableCompanion extends UpdateCompanion<Grammar> {
     if (rootWordId.present) {
       map['RootWordId'] = Variable<int>(rootWordId.value);
     }
-    if (chapterNo.present) {
-      map['ChapterNo'] = Variable<int>(chapterNo.value);
-    }
     if (meaningEn.present) {
       map['MeaningEn'] = Variable<String>(meaningEn.value);
     }
-    if (verseNo.present) {
-      map['VerseNo'] = Variable<int>(verseNo.value);
-    }
     if (wordAr.present) {
       map['WordAr'] = Variable<String>(wordAr.value);
-    }
-    if (wordNo.present) {
-      map['WordNo'] = Variable<int>(wordNo.value);
     }
     if (grammarFormDesc.present) {
       map['GrammarFormDesc'] = Variable<String>(grammarFormDesc.value);
@@ -712,15 +721,15 @@ class GrammarTableCompanion extends UpdateCompanion<Grammar> {
   @override
   String toString() {
     return (StringBuffer('GrammarTableCompanion(')
+          ..write('chapterNo: $chapterNo, ')
+          ..write('verseNo: $verseNo, ')
+          ..write('wordNo: $wordNo, ')
           ..write('rootAr: $rootAr, ')
           ..write('rootCode: $rootCode, ')
           ..write('rootEn: $rootEn, ')
           ..write('rootWordId: $rootWordId, ')
-          ..write('chapterNo: $chapterNo, ')
           ..write('meaningEn: $meaningEn, ')
-          ..write('verseNo: $verseNo, ')
           ..write('wordAr: $wordAr, ')
-          ..write('wordNo: $wordNo, ')
           ..write('grammarFormDesc: $grammarFormDesc, ')
           ..write('meaningID: $meaningID, ')
           ..write('grammarFormDescID: $grammarFormDescID, ')
@@ -743,34 +752,34 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$GrammarTableTableCreateCompanionBuilder =
     GrammarTableCompanion Function({
-      required String rootAr,
-      required String rootCode,
-      required String rootEn,
-      required int rootWordId,
       required int chapterNo,
-      required String meaningEn,
       required int verseNo,
-      required String wordAr,
       required int wordNo,
-      required String grammarFormDesc,
-      required String meaningID,
-      required String grammarFormDescID,
+      Value<String?> rootAr,
+      Value<String?> rootCode,
+      Value<String?> rootEn,
+      Value<int?> rootWordId,
+      Value<String?> meaningEn,
+      Value<String?> wordAr,
+      Value<String?> grammarFormDesc,
+      Value<String?> meaningID,
+      Value<String?> grammarFormDescID,
       Value<int> rowid,
     });
 typedef $$GrammarTableTableUpdateCompanionBuilder =
     GrammarTableCompanion Function({
-      Value<String> rootAr,
-      Value<String> rootCode,
-      Value<String> rootEn,
-      Value<int> rootWordId,
       Value<int> chapterNo,
-      Value<String> meaningEn,
       Value<int> verseNo,
-      Value<String> wordAr,
       Value<int> wordNo,
-      Value<String> grammarFormDesc,
-      Value<String> meaningID,
-      Value<String> grammarFormDescID,
+      Value<String?> rootAr,
+      Value<String?> rootCode,
+      Value<String?> rootEn,
+      Value<int?> rootWordId,
+      Value<String?> meaningEn,
+      Value<String?> wordAr,
+      Value<String?> grammarFormDesc,
+      Value<String?> meaningID,
+      Value<String?> grammarFormDescID,
       Value<int> rowid,
     });
 
@@ -783,6 +792,21 @@ class $$GrammarTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<int> get chapterNo => $composableBuilder(
+    column: $table.chapterNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get verseNo => $composableBuilder(
+    column: $table.verseNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get wordNo => $composableBuilder(
+    column: $table.wordNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get rootAr => $composableBuilder(
     column: $table.rootAr,
     builder: (column) => ColumnFilters(column),
@@ -803,28 +827,13 @@ class $$GrammarTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get chapterNo => $composableBuilder(
-    column: $table.chapterNo,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get meaningEn => $composableBuilder(
     column: $table.meaningEn,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get verseNo => $composableBuilder(
-    column: $table.verseNo,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get wordAr => $composableBuilder(
     column: $table.wordAr,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get wordNo => $composableBuilder(
-    column: $table.wordNo,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -853,6 +862,21 @@ class $$GrammarTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<int> get chapterNo => $composableBuilder(
+    column: $table.chapterNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get verseNo => $composableBuilder(
+    column: $table.verseNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get wordNo => $composableBuilder(
+    column: $table.wordNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get rootAr => $composableBuilder(
     column: $table.rootAr,
     builder: (column) => ColumnOrderings(column),
@@ -873,28 +897,13 @@ class $$GrammarTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get chapterNo => $composableBuilder(
-    column: $table.chapterNo,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get meaningEn => $composableBuilder(
     column: $table.meaningEn,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get verseNo => $composableBuilder(
-    column: $table.verseNo,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get wordAr => $composableBuilder(
     column: $table.wordAr,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get wordNo => $composableBuilder(
-    column: $table.wordNo,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -923,6 +932,15 @@ class $$GrammarTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<int> get chapterNo =>
+      $composableBuilder(column: $table.chapterNo, builder: (column) => column);
+
+  GeneratedColumn<int> get verseNo =>
+      $composableBuilder(column: $table.verseNo, builder: (column) => column);
+
+  GeneratedColumn<int> get wordNo =>
+      $composableBuilder(column: $table.wordNo, builder: (column) => column);
+
   GeneratedColumn<String> get rootAr =>
       $composableBuilder(column: $table.rootAr, builder: (column) => column);
 
@@ -937,20 +955,11 @@ class $$GrammarTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get chapterNo =>
-      $composableBuilder(column: $table.chapterNo, builder: (column) => column);
-
   GeneratedColumn<String> get meaningEn =>
       $composableBuilder(column: $table.meaningEn, builder: (column) => column);
 
-  GeneratedColumn<int> get verseNo =>
-      $composableBuilder(column: $table.verseNo, builder: (column) => column);
-
   GeneratedColumn<String> get wordAr =>
       $composableBuilder(column: $table.wordAr, builder: (column) => column);
-
-  GeneratedColumn<int> get wordNo =>
-      $composableBuilder(column: $table.wordNo, builder: (column) => column);
 
   GeneratedColumn<String> get grammarFormDesc => $composableBuilder(
     column: $table.grammarFormDesc,
@@ -995,29 +1004,29 @@ class $$GrammarTableTableTableManager
                   $$GrammarTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> rootAr = const Value.absent(),
-                Value<String> rootCode = const Value.absent(),
-                Value<String> rootEn = const Value.absent(),
-                Value<int> rootWordId = const Value.absent(),
                 Value<int> chapterNo = const Value.absent(),
-                Value<String> meaningEn = const Value.absent(),
                 Value<int> verseNo = const Value.absent(),
-                Value<String> wordAr = const Value.absent(),
                 Value<int> wordNo = const Value.absent(),
-                Value<String> grammarFormDesc = const Value.absent(),
-                Value<String> meaningID = const Value.absent(),
-                Value<String> grammarFormDescID = const Value.absent(),
+                Value<String?> rootAr = const Value.absent(),
+                Value<String?> rootCode = const Value.absent(),
+                Value<String?> rootEn = const Value.absent(),
+                Value<int?> rootWordId = const Value.absent(),
+                Value<String?> meaningEn = const Value.absent(),
+                Value<String?> wordAr = const Value.absent(),
+                Value<String?> grammarFormDesc = const Value.absent(),
+                Value<String?> meaningID = const Value.absent(),
+                Value<String?> grammarFormDescID = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GrammarTableCompanion(
+                chapterNo: chapterNo,
+                verseNo: verseNo,
+                wordNo: wordNo,
                 rootAr: rootAr,
                 rootCode: rootCode,
                 rootEn: rootEn,
                 rootWordId: rootWordId,
-                chapterNo: chapterNo,
                 meaningEn: meaningEn,
-                verseNo: verseNo,
                 wordAr: wordAr,
-                wordNo: wordNo,
                 grammarFormDesc: grammarFormDesc,
                 meaningID: meaningID,
                 grammarFormDescID: grammarFormDescID,
@@ -1025,29 +1034,29 @@ class $$GrammarTableTableTableManager
               ),
           createCompanionCallback:
               ({
-                required String rootAr,
-                required String rootCode,
-                required String rootEn,
-                required int rootWordId,
                 required int chapterNo,
-                required String meaningEn,
                 required int verseNo,
-                required String wordAr,
                 required int wordNo,
-                required String grammarFormDesc,
-                required String meaningID,
-                required String grammarFormDescID,
+                Value<String?> rootAr = const Value.absent(),
+                Value<String?> rootCode = const Value.absent(),
+                Value<String?> rootEn = const Value.absent(),
+                Value<int?> rootWordId = const Value.absent(),
+                Value<String?> meaningEn = const Value.absent(),
+                Value<String?> wordAr = const Value.absent(),
+                Value<String?> grammarFormDesc = const Value.absent(),
+                Value<String?> meaningID = const Value.absent(),
+                Value<String?> grammarFormDescID = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GrammarTableCompanion.insert(
+                chapterNo: chapterNo,
+                verseNo: verseNo,
+                wordNo: wordNo,
                 rootAr: rootAr,
                 rootCode: rootCode,
                 rootEn: rootEn,
                 rootWordId: rootWordId,
-                chapterNo: chapterNo,
                 meaningEn: meaningEn,
-                verseNo: verseNo,
                 wordAr: wordAr,
-                wordNo: wordNo,
                 grammarFormDesc: grammarFormDesc,
                 meaningID: meaningID,
                 grammarFormDescID: grammarFormDescID,

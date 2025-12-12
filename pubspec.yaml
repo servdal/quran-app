@@ -3,7 +3,7 @@ description: "AlQuran Digital diLengkapi Dengan Tafsir Jalalain dan Audio Gus Ba
 
 publish_to: 'none'
 
-version: 3.0.4+25
+version: 3.0.5+25
 
 environment:
   sdk: ^3.7.2
@@ -38,6 +38,7 @@ dependencies:
   drift: ^2.14.0
   sqlite3_flutter_libs: ^0.5.0
   path: ^1.8.3
+  sqflite: ^2.4.2
 
 dev_dependencies:
   flutter_test:
@@ -61,15 +62,11 @@ flutter:
 
   uses-material-design: true
   assets:
-    - assets/surah/
-    - assets/halaman/
     - assets/images/
     - assets/fonts/
     - assets/audio/
     - assets/audio_paths.json
-    - assets/index_halaman.json
-    - assets/index_surah.json
-    - assets/database/grammar_final.json
+    - assets/database/quran.db
   fonts:
     - family: Poppins
       fonts:

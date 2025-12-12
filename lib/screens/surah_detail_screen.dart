@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/models/surah_model.dart';
-import 'package:quran_app/providers/bookmark_provider.dart';
-import 'package:quran_app/providers/settings_provider.dart';
-import 'package:quran_app/services/quran_data_service.dart';
-import 'package:quran_app/widgets/ayah_widget.dart';
+import '../models/surah_detail_data.dart';
+import '../providers/bookmark_provider.dart';
+import '../providers/settings_provider.dart';
+import '../services/quran_data_service.dart';
+import '../widgets/ayah_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-final surahDetailProvider = FutureProvider.family<Surah, int>((ref, surahId) {
-  final service = ref.watch(quranDataServiceProvider);
-  return service.getSurahDetailById(surahId);
+final surahDetailProvider =
+    FutureProvider.family<SurahDetailData, int>((ref, surahId) {
+  return ref.watch(quranDataServiceProvider).getSurahDetail(surahId);
 });
 
 class SurahDetailScreen extends ConsumerStatefulWidget {
@@ -52,7 +52,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: surahDetailAsync.when(
-          data: (surah) => Text(surah.englishName),
+          data: (surah) => Text(surah.surahName),
           loading: () => const Text('Memuat...'),
           error: (e, s) => const Text('Error'),
         ),

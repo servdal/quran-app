@@ -1,30 +1,17 @@
-// lib/models/surah_index_model.dart
-
 class SurahIndexInfo {
   final int suraId;
-  final String name;
-  final String englishName;
-  final String englishNameTranslation;
+  final String name;          // Nama Latin sesuai bahasa
+  final String arabicName;    // Arabic fixed
+  final String translation;   // Terjemahan Latin sesuai bahasa
   final String revelationType;
-  final int numberOfAyahs; // Kita tambahkan ini agar tidak error di UI
+  final int numberOfAyahs;
 
   SurahIndexInfo({
     required this.suraId,
     required this.name,
-    required this.englishName,
-    required this.englishNameTranslation,
+    required this.arabicName,
+    required this.translation,
     required this.revelationType,
     required this.numberOfAyahs,
   });
-
-  factory SurahIndexInfo.fromJson(Map<String, dynamic> json) {
-    return SurahIndexInfo(
-      suraId: json['sura_id'],
-      name: json['name'],
-      englishName: json['englishName'],
-      englishNameTranslation: json['englishNameTranslation'],
-      revelationType: json['revelationType'],
-      numberOfAyahs: json['numberOfAyahs'] ?? 0,
-    );
-  }
 }

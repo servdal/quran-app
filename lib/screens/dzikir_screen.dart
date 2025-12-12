@@ -8,6 +8,7 @@ import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum DzikrType { pagi, petang }
 
@@ -17,7 +18,7 @@ class DzikrProviderParams {
   final bool isLengkap;
 
   DzikrProviderParams({required this.type, required this.isLengkap});
-
+  
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -49,7 +50,10 @@ class DzikrUIData {
 final dzikrProvider =
     FutureProvider.family<List<DzikrUIData>, DzikrProviderParams>((ref, params) async {
   final dataService = ref.watch(quranDataServiceProvider);
-  
+  Future<String> _getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('selected_language') ?? 'id';
+  }
   // Pilih list berdasarkan parameter
   List<DzikrItem> dzikrItems;
   if (params.type == DzikrType.pagi) {
@@ -57,10 +61,8 @@ final dzikrProvider =
   } else {
     dzikrItems = params.isLengkap ? dzikirPetangLengkapList : dzikirPetangList;
   }
-  
   final allSurahIndex = await ref.watch(allSurahsProvider.future);
-  final surahNameMap = {for (var surah in allSurahIndex) surah.suraId: surah.englishName};
-
+  
   List<DzikrUIData> uiDataList = [];
   for (final item in dzikrItems) {
     List<Ayah> fetchedAyahs = [];
@@ -78,6 +80,10 @@ final dzikrProvider =
       }
       
       arabicText = fetchedAyahs.map((a) => a.tajweedText).join(' ');
+      final lang = await _getLanguage();
+      var surahNameMap = lang == 'en'
+          ? {for (var surah in allSurahIndex) surah.suraId: surah.translationEn}
+          : {for (var surah in allSurahIndex) surah.suraId: surah.translationId};
       surahName = surahNameMap[item.surahId] ?? "QS. ${item.surahId}";
     } 
     // Jika dzikir dari Hadits (punya arabicText)

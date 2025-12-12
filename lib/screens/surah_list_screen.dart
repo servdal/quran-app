@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/models/surah_index_model.dart'; // Ganti model
-import 'package:quran_app/screens/surah_detail_screen.dart';
-import 'package:quran_app/services/quran_data_service.dart';
+import '../models/surah_index_model.dart';
+import '../screens/surah_detail_screen.dart';
+import '../services/quran_data_service.dart';
 
 class SurahListScreen extends ConsumerWidget {
   const SurahListScreen({super.key});
@@ -81,7 +81,7 @@ class _SurahListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      surah.englishName,
+                      surah.nameEn,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

@@ -6,8 +6,6 @@ import 'package:quran_app/screens/surah_detail_screen.dart';
 final searchResultsProvider = FutureProvider.family<List<Map<String, dynamic>>, String>((ref, query) async {
   if (query.length < 3) return [];
   final service = ref.read(quranDataServiceProvider);
-  // Ganti ke metode baru yang lebih eksplisit
-  await service.loadAllDataForSearch();
   return service.searchAyahs(query);
 });
 

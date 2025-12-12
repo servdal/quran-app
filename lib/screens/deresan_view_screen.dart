@@ -121,7 +121,7 @@ class DeresanPage extends ConsumerWidget {
   const DeresanPage({super.key, required this.pageNumber});
   
   // Fungsi untuk mengubah angka latin ke angka Arab
-  String _convertToArabicNumber(int number) {
+  String _convertToArabicNumber(int number, TextStyle baseNumberStyle) {
     const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
     return number.toString().split('').map((digit) => arabicDigits[int.parse(digit)]).join();
   }
@@ -172,13 +172,18 @@ class DeresanPage extends ConsumerWidget {
             height: 2.2,
             color: theme.colorScheme.onSurface,
           );
+          final baseNumberStyle = TextStyle(
+            fontFamily: 'Uthmani',
+            fontSize: settings.arabicFontSize,
+            height: 2.2,
+            color: theme.colorScheme.onSurface,
+          );
           currentSurahSpans.addAll(AutoTajweedParser.parse(ayah.ayaText, baseTextStyle));
           currentSurahSpans.add(const TextSpan(text: ' '));
           currentSurahSpans.add(WidgetSpan(
             child: _AyahNumberMarker(
-              number: _convertToArabicNumber(ayah.ayaNumber),
+              number: _convertToArabicNumber(ayah.ayaNumber, baseNumberStyle),
               hasSajda: false, 
-              fontSize: settings.arabicFontSize * 1,
             ),
             alignment: PlaceholderAlignment.middle,
           ));
@@ -266,19 +271,15 @@ class _BismillahWidget extends StatelessWidget {
 class _AyahNumberMarker extends StatelessWidget {
   final String number;
   final bool hasSajda;
-  final double fontSize;
 
   const _AyahNumberMarker({
     required this.number,
     required this.hasSajda,
-    required this.fontSize,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: fontSize * 2.2, 
-      height: fontSize * 2.2,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -289,7 +290,6 @@ class _AyahNumberMarker extends StatelessWidget {
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'LPMQ', 
-          fontSize: fontSize,
           fontWeight: FontWeight.bold,
           height: 1.1,
         ),

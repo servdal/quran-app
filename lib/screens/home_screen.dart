@@ -120,7 +120,7 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
             city,
             if (city == null || city.isEmpty) subAdmin,
             admin,
-          ].where((e) => e != null && e!.isNotEmpty).map((e) => e!).toList().join(', ');
+          ].where((e) => e != null && e.isNotEmpty).map((e) => e!).toList().join(', ');
 
           // Jika semua kosong, fallback
           if (shortAddress.isEmpty) {

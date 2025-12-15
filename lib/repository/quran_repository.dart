@@ -1,4 +1,3 @@
-import 'package:quran_app/models/surah_meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import '../database/db_helper.dart';

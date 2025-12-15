@@ -240,7 +240,6 @@ class _GrammarToolbar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ui = ref.watch(grammarUiProvider);
     final n = ref.read(grammarUiProvider.notifier);
-    final isId = ref.watch(settingsProvider).language == 'id';
     return Wrap(
       alignment: WrapAlignment.end,
       spacing: 8,

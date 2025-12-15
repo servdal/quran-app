@@ -67,8 +67,7 @@ class QuranDataService {
   ///  AYAT per SURAH (bahasa fleksibel)
   /// ===============================
   Future<List<Ayah>> getAyahsBySurahId(int surahId, WidgetRef ref) async {
-    final lang = await _getLanguage();
-    final rows = await _repo.getAyahBySurah(surahId, lang);
+    final rows = await _repo.getAyahRowsBySurah(surahId);
     return rows.map((r) => Ayah.fromDb(r)).toList();
   }
 
@@ -77,7 +76,7 @@ class QuranDataService {
   ///  AYAT per HALAMAN
   /// ===============================
   Future<List<Ayah>> getAyahsByPage(int page) async {
-    final rows = await _repo.getAyahByPage(page);
+    final rows = await _repo.getAyahRowsByPage(page);
     return rows.map((r) => Ayah.fromDb(r)).toList();
   }
 
@@ -128,8 +127,7 @@ class QuranDataService {
     );
   }
   Future<Surah> getSurahDetailById(int surahId, WidgetRef ref) async {
-    final lang = await _getLanguage();
-    final rows = await _repo.getAyahBySurah(surahId, lang);
+    final rows = await _repo.getAyahRowsBySurah(surahId);
 
     if (rows.isEmpty) {
       throw Exception("Surah tidak ditemukan di database");
@@ -144,12 +142,21 @@ class QuranDataService {
       ayahs: rows.map((r) => Ayah.fromDb(r)).toList(),
     );
   }
+  Future<List<Grammar>> getAyahWords(
+    int surahId,
+    int ayahNumber,
+  ) {
+    return _repo.getGrammarByAyah(
+      surahId: surahId,
+      ayahNumber: ayahNumber,
+    );
+  }
 }
 
 final quranDataServiceProvider = Provider((ref) => QuranDataService());
 
 final allSurahsProvider = FutureProvider((ref) {
-  return ref.read(quranDataServiceProvider).getAllSurahIndexProvider(ref);
+  return ref.read(quranDataServiceProvider).getAllSurahIndexProvider(ref as WidgetRef);
 });
 
 final allPagesProvider = FutureProvider((ref) {
@@ -161,7 +168,7 @@ final pageAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, page) {
 });
 
 final surahAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, surahId) {
-  return ref.read(quranDataServiceProvider).getAyahsBySurahId(surahId, ref);
+  return ref.read(quranDataServiceProvider).getAyahsBySurahId(surahId, ref as WidgetRef);
 });
 
 final surahDetailProvider =
@@ -169,3 +176,9 @@ final surahDetailProvider =
   return ref.watch(quranDataServiceProvider).getSurahDetail(surahId);
 });
 
+final ayahWordsProvider = FutureProvider.family<
+    List<Grammar>,
+    ({int surahId, int ayahNumber})>((ref, param) {
+  final service = ref.read(quranDataServiceProvider);
+  return service.getAyahWords(param.surahId, param.ayahNumber);
+});

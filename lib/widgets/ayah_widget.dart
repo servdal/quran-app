@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:quran_app/models/ayah_model.dart';
-import 'package:quran_app/providers/bookmark_provider.dart';
-import 'package:quran_app/providers/settings_provider.dart';
-import 'package:quran_app/utils/tajweed_parser.dart';
-import 'package:quran_app/services/quran_data_service.dart';
+import 'package:path/path.dart';
+import 'package:quran_app/providers/audio_provider.dart';
+import 'package:quran_app/screens/download_manager_screen.dart';
+import '../../models/ayah_model.dart';
+import '../../providers/bookmark_provider.dart';
+import '../../providers/settings_provider.dart';
+import '../../utils/tajweed_parser.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
@@ -37,11 +39,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     });
   }
 
-  Future<String> get _localAudioPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return '${directory.path}/audio';
-  }
-
+  
   @override
   void dispose() {
     _audioPlayer.dispose();
@@ -49,39 +47,37 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
   
   Future<void> _playAudio() async {
-    final audioMapAsyncValue = ref.read(audioPathsProvider);
+  final audioIndexAsync = ref.read(audioIndexProvider);
 
-    audioMapAsyncValue.when(
-      data: (audioMap) async {
-        final filename = audioMap[widget.ayah.ayaId];
-        if (filename != null) {
-          final localPath = await _localAudioPath;
-          final localFilePath = '$localPath/$filename';
-          final audioFile = File(localFilePath);
+  audioIndexAsync.when(
+    data: (audioList) async {
+      final match = audioList.firstWhere(
+        (e) => (e['surah_ids'] as List).contains(widget.ayah.suraId),
+        orElse: () => {},
+      );
 
-          if (await audioFile.exists()) {
-            // Jika file ada, putar dari penyimpanan lokal
-            await _audioPlayer.play(DeviceFileSource(localFilePath));
-          } else {
-            // Jika file tidak ada, beri tahu pengguna
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('File audio belum diunduh. Silakan unduh melalui menu utama.')),
-            );
-          }
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('File audio untuk ayat ini tidak ditemukan.')),
-          );
-        }
-      },
-      loading: () => ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Memuat data audio...')),
-      ),
-      error: (e, s) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gagal memuat data audio: $e')),
-      ),
-    );
-  }
+      if (match.isEmpty) {
+        _showNoAudio();
+        return;
+      }
+
+      final filename = match['file'];
+      final dir = await getApplicationDocumentsDirectory();
+      final path = '${dir.path}/audio/$filename';
+      final file = File(path);
+
+      if (!await file.exists()) {
+        _showNeedDownload();
+        return;
+      }
+
+      await _audioPlayer.play(DeviceFileSource(path));
+    },
+    loading: () => _snack('Memuat indeks audio...'),
+    error: (e, _) => _snack('Gagal baca audio index'),
+  );
+}
+
 
   Future<void> _pauseAudio() async {
     await _audioPlayer.pause();
@@ -100,7 +96,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       pageNumber: widget.ayah.pageNumber,
     );
     ref.read(bookmarkProvider.notifier).addOrUpdateBookmark(name, newBookmark);
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
       SnackBar(content: Text('Ayat ditandai di "$name".')),
     );
   }
@@ -123,7 +119,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     """;
 
     await Clipboard.setData(ClipboardData(text: fullAyahText.trim()));
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
       const SnackBar(
         content: Text('Informasi lengkap ayat telah disalin ke clipboard.'),
       ),
@@ -306,7 +302,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
         fontFamily: 'LPMQ',
         fontSize: fontSize,
         height: 2.0,
-        color: Theme.of(context).colorScheme.onSurface);
+        color: Theme.of(context as BuildContext).colorScheme.onSurface);
         
     final textToParse = widget.ayah.tajweedText;
     final textSpans = TajweedParser.parse(textToParse, baseTextStyle);
@@ -333,7 +329,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
             style: TextStyle(
               fontSize: fontSize * 0.6,
               fontStyle: FontStyle.italic,
-              color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+              color: Theme.of(context as BuildContext).textTheme.bodyMedium?.color?.withOpacity(0.7),
             ),
           ),
         ],
@@ -368,7 +364,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
               IconButton(
                 icon: Icon(_playerState == PlayerState.playing ? Icons.pause_circle_filled : Icons.play_circle_filled),
                 iconSize: 50,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context as BuildContext).primaryColor,
                 onPressed: _playerState == PlayerState.playing ? _pauseAudio : _playAudio,
               ),
               IconButton(
@@ -382,5 +378,33 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       ),
     );
   }
+}
+
+void _showNeedDownload() {
+  ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+    SnackBar(
+      content: const Text('Audio belum diunduh'),
+      action: SnackBarAction(
+        label: 'Unduh',
+        onPressed: () {
+          Navigator.push(
+            context as BuildContext,
+            MaterialPageRoute(
+              builder: (_) => const DownloadManagerScreen(),
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
+
+void _showNoAudio() {
+  _snack('Audio untuk surah ini belum tersedia');
+}
+
+void _snack(String msg) {
+  ScaffoldMessenger.of(context as BuildContext)
+      .showSnackBar(SnackBar(content: Text(msg)));
 }
 

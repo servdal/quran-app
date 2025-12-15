@@ -64,8 +64,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
-    - assets/audio/
-    - assets/audio_paths.json
+    - assets/audio/audio_index.json
     - assets/database/quran.db
   fonts:
     - family: Poppins

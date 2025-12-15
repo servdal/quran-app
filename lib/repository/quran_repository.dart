@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import '../database/db_helper.dart';
-import 'package:quran_app/models/page_index_model.dart';
+import '../../models/page_index_model.dart';
+import '../../models/ayah_model.dart';
 
 class QuranRepository {
   Future<String> _getLanguage() async {
@@ -180,4 +183,66 @@ class QuranRepository {
 
     return rows.isNotEmpty ? rows.first : {};
   }
+  // Ambil arabic_words (JSON) dari merged_aya
+  Future<List<String>> getArabicWords(
+    int surahId,
+    int ayahNumber,
+  ) async {
+    final db = await _db;
+
+    final result = await db.rawQuery('''
+      SELECT arabic_words
+      FROM merged_aya
+      WHERE sura_id = ? AND aya_number = ?
+      LIMIT 1
+    ''', [surahId, ayahNumber]);
+
+    if (result.isEmpty || result.first['arabic_words'] == null) {
+      return [];
+    }
+
+    final raw = result.first['arabic_words'] as String;
+    final List<dynamic> parsed = jsonDecode(raw);
+
+    return parsed
+        .whereType<String>()
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+  }
+  Future<List<Grammar>> getGrammarByAyah({
+    required int surahId,
+    required int ayahNumber,
+  }) async {
+    final db = await _db;
+
+    final result = await db.rawQuery('''
+      SELECT *
+      FROM master_edited
+      WHERE ChapterNo = ?
+        AND VerseNo = ?
+      ORDER BY WordNo
+    ''', [surahId, ayahNumber]);
+
+    return result.map((e) => Grammar.fromDb(e)).toList();
+  }
+  Future<Map<String, dynamic>?> getAudioForAyah(
+    int surahId,
+    int ayahNumber,
+  ) async {
+    final db = await _db;
+    final result = await db.rawQuery('''
+      SELECT *
+      FROM audio_index
+      WHERE sura_id = ?
+        AND ayah_start <= ?
+        AND ayah_end >= ?
+      LIMIT 1
+    ''', [surahId, ayahNumber, ayahNumber]);
+
+    if (result.isEmpty) return null;
+    return result.first;
+  }
+
+  
 }

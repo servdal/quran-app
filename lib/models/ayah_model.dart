@@ -12,53 +12,56 @@ class OccurrenceLocation {
   }
 }
 
-class GrammarPart {
-  final int partNumber;
-  final String grammar;
-  final String lemma;
-  final String verbForm;
+class Grammar {
+  final int id;
+  final String rootAr;
+  final String rootCode;
+  final String rootEn;
+  final int rootWordId;
+  final int chapterNo;
+  final int verseNo;
+  final String meaningEn;
+  final String meaningID;
+  final String wordAr;
+  final int wordNo;
+  final String grammarFormDesc;
+  final String grammarFormDescID;
 
-  GrammarPart({
-    required this.partNumber,
-    required this.grammar,
-    required this.lemma,
-    required this.verbForm,
+  Grammar({
+    required this.id,
+    required this.rootAr,
+    required this.rootCode,
+    required this.rootEn,
+    required this.rootWordId,
+    required this.chapterNo,
+    required this.verseNo,
+    required this.meaningEn,
+    required this.meaningID,
+    required this.wordAr,
+    required this.wordNo,
+    required this.grammarFormDesc,
+    required this.grammarFormDescID,
   });
 
-  factory GrammarPart.fromJson(Map<String, dynamic> json) {
-    return GrammarPart(
-      partNumber: json['part_number'],
-      grammar: json['grammar'],
-      lemma: json['lemma'],
-      verbForm: json['verb_form'],
+  factory Grammar.fromDb(Map<String, dynamic> json) {
+    return Grammar(
+      id: json['id'],
+      rootAr: json['RootAr'],
+      rootCode: json['RootCode'],
+      rootEn: json['RootEn'],
+      rootWordId: json['RootWordId'],
+      chapterNo: json['ChapterNo'],
+      verseNo: json['VerseNo'],
+      meaningEn: json['MeaningEn'],
+      meaningID: json['MeaningId'],
+      wordAr: json['WordAr'],
+      wordNo: json['WordNo'],
+      grammarFormDesc: json['GrammarFormDesc'],
+      grammarFormDescID: json['GrammarFormDescID'],
     );
   }
 }
 
-class AnalysisDetail {
-  final List<GrammarPart> parts;
-  final int occurrences;
-  final List<OccurrenceLocation> occurrenceLocations;
-
-  AnalysisDetail({
-    required this.parts,
-    required this.occurrences,
-    required this.occurrenceLocations,
-  });
-
-  factory AnalysisDetail.fromJson(Map<String, dynamic> json) {
-    return AnalysisDetail(
-      parts: List<GrammarPart>.from(
-        (json['parts'] as List).map((p) => GrammarPart.fromJson(p)),
-      ),
-      occurrences: json['occurrences'],
-      occurrenceLocations: List<OccurrenceLocation>.from(
-        (json['occurrence_locations'] as List)
-            .map((l) => OccurrenceLocation.fromJson(l)),
-      ),
-    );
-  }
-}
 
 // ------------------- MODEL LAMA YANG DIPERBARUI -------------------
 

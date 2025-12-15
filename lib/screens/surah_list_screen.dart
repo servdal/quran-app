@@ -81,7 +81,7 @@ class _SurahListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      surah.nameEn,
+                      surah.name,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

@@ -29,8 +29,8 @@ class TafsirSurahListScreen extends ConsumerWidget {
                   leading: CircleAvatar(
                     child: Text(surah.suraId.toString()),
                   ),
-                  title: Text(surah.englishName),
-                  subtitle: Text("${surah.englishNameTranslation} | ${surah.numberOfAyahs} Ayat"),
+                  title: Text(surah.name),
+                  subtitle: Text("${surah.translation} | ${surah.numberOfAyahs} Ayat"),
                   trailing: Text(
                     surah.name,
                     style: const TextStyle(fontFamily: 'LPMQ', fontSize: 18),

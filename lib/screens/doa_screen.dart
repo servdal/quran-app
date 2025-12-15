@@ -20,7 +20,7 @@ final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
   
   List<DoaUIData> uiDataList = [];
   for (final doaItem in daftarDoaAlQuran) {
-    final allAyahsInSurah = await dataService.getAyahsBySurahId(doaItem.surahId);
+    final allAyahsInSurah = await dataService.getAyahsBySurahId(doaItem.surahId, ref as WidgetRef);
     
     List<Ayah> fetchedAyahs = [];
     for (final ayahNum in doaItem.ayahs) {

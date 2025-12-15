@@ -79,6 +79,7 @@ class QuranRepository {
         $translationCol AS translation_aya_text,
         $translitCol AS transliteration,
         tajweed_text,
+        tafsir_jalalayn,
         sura_name
       FROM merged_aya
       WHERE sura_id = ?
@@ -110,10 +111,11 @@ class QuranRepository {
         $translationCol AS translation_aya_text,
         $translitCol AS transliteration,
         tajweed_text,
+        tafsir_jalalayn,
         sura_name
       FROM merged_aya
       WHERE page_number = ?
-      ORDER BY sura_id, aya_number
+     ORDER BY sura_id ASC, aya_number ASC
     ''', [pageNumber]);
   }
 
@@ -134,7 +136,7 @@ class QuranRepository {
         $translationCol AS translation
       FROM merged_aya
       WHERE $translationCol LIKE ?
-      ORDER BY sura_id, aya_number
+      ORDER BY sura_id ASC, aya_number ASC
       LIMIT 100
     ''', ['%$query%']);
   }
@@ -153,7 +155,7 @@ class QuranRepository {
         GrammarFormDescID
       FROM master_edited
       WHERE ChapterNo = ? AND VerseNo = ?
-      ORDER BY WordNo
+      ORDER BY ChapterNo ASC, VerseNo ASC, WordNo ASC
     ''', [surahId, ayahNumber]);
   }
 

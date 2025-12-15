@@ -33,13 +33,17 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
   @override
   void initState() {
     super.initState();
+    
     if (widget.initialScrollIndex != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (itemScrollController.isAttached) {
-          itemScrollController.jumpTo(
-            index: widget.initialScrollIndex!,
-            alignment: 0.1,
-          );
+          final index = widget.initialScrollIndex!;
+          if (index >= 0) {
+            itemScrollController.jumpTo(
+              index: index,
+              alignment: 0.1,
+            );
+          }
         }
       });
     }

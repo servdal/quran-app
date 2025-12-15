@@ -142,7 +142,7 @@ class _AyahBlock extends ConsumerWidget {
     final spans = TajweedParser.parse(ayah.tajweedText, baseStyle);
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 24),
+      margin: const EdgeInsets.only(bottom: 32),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -162,11 +162,7 @@ class _AyahBlock extends ConsumerWidget {
             ),
             const Divider(height: 32),
             _GrammarSection(ayah: ayah),
-            const Divider(height: 32),
-            Text(
-              'Tafsir Jalalayn:\n${ayah.tafsir}',
-              textAlign: TextAlign.justify,
-            ),
+            
           ],
         ),
       ),
@@ -188,7 +184,7 @@ class _GrammarSection extends ConsumerWidget {
     final isId = ref.watch(settingsProvider).language == 'id';
     final asyncWords = ref.watch(
       ayahWordsProvider(
-        (surahId: ayah.id, ayahNumber: ayah.number),
+        (surahId: ayah.surahId, ayahNumber: ayah.number),
       ),
     );
 
@@ -240,28 +236,58 @@ class _GrammarToolbar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ui = ref.watch(grammarUiProvider);
     final n = ref.read(grammarUiProvider.notifier);
-    return Wrap(
-      alignment: WrapAlignment.end,
-      spacing: 8,
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _chip('Semua', ui.filter == null, () => n.setFilter(null)),
-        _chip('Fi’il', ui.filter == GrammarType.fiil,
-            () => n.setFilter(GrammarType.fiil)),
-        _chip('Isim', ui.filter == GrammarType.isim,
-            () => n.setFilter(GrammarType.isim)),
-        _chip('Harf', ui.filter == GrammarType.harf,
-            () => n.setFilter(GrammarType.harf)),
-        _chip('Highlight Root', ui.highlightRoot, n.toggleHighlightRoot),
-        _chip('Mode Belajar', ui.learningMode, n.toggleLearningMode),
+        // ===== FILTER BAR =====
+        SizedBox(
+          height: 40,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              _chip('Semua', ui.filter == null, () => n.setFilter(null)),
+              _chip('Fi’il', ui.filter == GrammarType.fiil,
+                  () => n.setFilter(GrammarType.fiil)),
+              _chip('Isim', ui.filter == GrammarType.isim,
+                  () => n.setFilter(GrammarType.isim)),
+              _chip('Harf', ui.filter == GrammarType.harf,
+                  () => n.setFilter(GrammarType.harf)),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 8),
+
+        // ===== MODE BAR =====
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FilterChip(
+              label: const Text('Highlight Root'),
+              selected: ui.highlightRoot,
+              onSelected: (_) => n.toggleHighlightRoot(),
+            ),
+            const SizedBox(width: 8),
+            FilterChip(
+              label: const Text('Mode Belajar'),
+              selected: ui.learningMode,
+              onSelected: (_) => n.toggleLearningMode(),
+            ),
+          ],
+        ),
       ],
     );
   }
 
   Widget _chip(String label, bool selected, VoidCallback onTap) {
-    return FilterChip(
-      label: Text(label),
-      selected: selected,
-      onSelected: (_) => onTap(),
+    return Padding(
+      padding: const EdgeInsets.only(right: 6),
+      child: FilterChip(
+        label: Text(label),
+        selected: selected,
+        onSelected: (_) => onTap(),
+      ),
     );
   }
 }
@@ -299,54 +325,82 @@ class _GrammarCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isId = ref.watch(settingsProvider).language == 'id';
-
     final meaning = isId ? grammar.meaningId : grammar.meaningEn;
     final grammarDesc =
         isId ? grammar.grammarDescId : grammar.grammarDescEn;
 
-    return Card(
-      color: highlightRoot
-          ? Theme.of(context).colorScheme.primary.withOpacity(0.08)
-          : null,
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: ListTile(
-        onTap: () => showDialog(
-          context: context,
-          builder: (_) => GrammarPopup(grammar: grammar),
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: () => showDialog(
+        context: context,
+        builder: (_) => GrammarPopup(grammar: grammar),
+      ),
+      child: Card(
+        elevation: 1,
+        margin: const EdgeInsets.symmetric(vertical: 6),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
-        leading: CircleAvatar(
-          backgroundColor: _color(context),
-          child: Text(
-            grammar.rootWordId.toString(),
-            style: const TextStyle(color: Colors.white),
-          ),
-        ),
-        title: Text(
-          grammar.wordAr,
-          textDirection: TextDirection.rtl,
-          style: const TextStyle(fontFamily: 'LPMQ', fontSize: 22),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(meaning.isEmpty ? '-' : meaning),
-            if (learningMode) ...[
-              const SizedBox(height: 4),
-              Text(isId
-                  ? 'Akar: ${grammar.rootAr} (${grammar.rootCode})'
-                  : 'Root: ${grammar.rootAr} (${grammar.rootEn})'),
-              Text(grammarDesc),
+        color: highlightRoot
+            ? Theme.of(context).colorScheme.primary.withOpacity(0.08)
+            : null,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // ===== WORD =====
+              Text(
+                grammar.wordAr,
+                textDirection: TextDirection.rtl,
+                style: const TextStyle(
+                  fontFamily: 'LPMQ',
+                  fontSize: 26,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              const SizedBox(height: 6),
+
+              // ===== MEANING =====
+              Text(
+                meaning.isEmpty ? '-' : meaning,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Roboto',
+                  color: Colors.grey.shade700,
+                ),
+              ),
+
+              if (learningMode) ...[
+                const Divider(height: 16),
+
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Chip(
+                    label: Text(grammarDesc),
+                    backgroundColor: _color(context).withOpacity(0.15),
+                  ),
+                ),
+
+                const SizedBox(height: 4),
+
+                Text(
+                  isId
+                      ? 'Akar: ${grammar.rootAr} (${grammar.rootCode})'
+                      : 'Root: ${grammar.rootAr} (${grammar.rootEn})',
+                  style: const TextStyle(fontSize: 12, fontFamily: 'Roboto'),
+                ),
+              ],
             ],
-          ],
-        ),
-        trailing: Chip(
-          label: Text(grammarDesc),
-          backgroundColor: _color(context).withOpacity(0.15),
+          ),
         ),
       ),
     );
   }
 }
+
 
 /* ============================================================
    HEADER

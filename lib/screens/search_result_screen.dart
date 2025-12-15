@@ -31,13 +31,20 @@ class SearchResultScreen extends ConsumerWidget {
             itemBuilder: (context, index) {
               final result = results[index];
               return ListTile(
-                title: Text('QS. ${result['surahName']} : ${result['ayahNumber']}'),
-                subtitle: Text(result['ayahTextPreview'], maxLines: 2, overflow: TextOverflow.ellipsis),
+                title: Text('QS. ${result['sura_name']} : ${result['aya_number']}'),
+                subtitle: Text(
+                  result['translation'] ?? '',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SurahDetailScreen(surahId: result['surahId']),
+                      builder: (context) => SurahDetailScreen(
+                        surahId: result['sura_id'] as int,
+                        initialScrollIndex: (result['aya_number'] as int) - 1,
+                      ),
                     ),
                   );
                 },

@@ -130,7 +130,7 @@ class DeresanPage extends ConsumerWidget {
 
         for (int i = 0; i < ayahs.length; i++) {
           final ayah = ayahs[i];
-
+          
           // ===== Surah baru =====
           if (i == 0 || ayah.surahId != ayahs[i - 1].surahId) {
             if (currentSpans.isNotEmpty) {
@@ -325,7 +325,7 @@ class _NavigationControls extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: const Icon(Icons.arrow_forward),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 controller.previousPage(
                   duration: const Duration(milliseconds: 250),
@@ -334,7 +334,7 @@ class _NavigationControls extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_forward),
               onPressed: () {
                 controller.nextPage(
                   duration: const Duration(milliseconds: 250),

@@ -215,15 +215,51 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
    * ========================= */
 
   Widget _tabText(List<InlineSpan> spans) {
+    final settings = ref.watch(settingsProvider);
+    final theme = Theme.of(context);
+
+    // Pilih transliteration berdasarkan bahasa
+    // (saat ini field-nya sama, tapi logika sudah siap)
+    final String transliterationText =
+        widget.ayah.transliteration.trim();
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: RichText(
-        textAlign: TextAlign.right,
-        textDirection: TextDirection.rtl,
-        text: TextSpan(children: spans),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // ===== TEKS ARAB =====
+          RichText(
+            textAlign: TextAlign.right,
+            textDirection: TextDirection.rtl,
+            text: TextSpan(children: spans),
+          ),
+
+          // ===== TRANSLITERATION =====
+          if (transliterationText.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Divider(
+              color: theme.dividerColor.withOpacity(0.6),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              transliterationText,
+              textDirection: TextDirection.ltr,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: settings.arabicFontSize * 0.6,
+                fontStyle: FontStyle.italic,
+                fontFamily: 'Roboto',
+                height: 1.6,
+                color: theme.textTheme.bodyMedium?.color?.withOpacity(0.85),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
+
 
   Widget _tabTranslation() {
     return SingleChildScrollView(

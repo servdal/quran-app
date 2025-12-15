@@ -1,15 +1,11 @@
-import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../models/ayah_model.dart';
 import '../../providers/bookmark_provider.dart';
 import '../../providers/settings_provider.dart';
-import '../../providers/audio_provider.dart';
-import '../../screens/download_manager_screen.dart';
 import '../../utils/tajweed_parser.dart';
 import '../../utils/auto_tajweed_parser.dart';
 
@@ -28,64 +24,11 @@ class AyahWidget extends ConsumerStatefulWidget {
 }
 
 class _AyahWidgetState extends ConsumerState<AyahWidget> {
-  late final AudioPlayer _player;
-  PlayerState _playerState = PlayerState.stopped;
-
-  @override
-  void initState() {
-    super.initState();
-    _player = AudioPlayer();
-    _player.onPlayerStateChanged.listen((state) {
-      if (mounted) setState(() => _playerState = state);
-    });
-  }
-
+  
   @override
   void dispose() {
-    _player.dispose();
     super.dispose();
   }
-
-  /* =========================
-   * AUDIO
-   * ========================= */
-
-  Future<void> _playAudio() async {
-    final audioIndexAsync = ref.read(audioIndexProvider);
-
-    audioIndexAsync.when(
-      data: (audioList) async {
-        final match = audioList.cast<Map<String, dynamic>>().firstWhere(
-          (e) {
-            final surahs = List<int>.from(e['surah_ids'] ?? []);
-            return surahs.contains(widget.ayah.id);
-          },
-          orElse: () => {},
-        );
-
-        if (match.isEmpty) {
-          _snack('Audio tidak tersedia');
-          return;
-        }
-
-        final filename = match['file'];
-        final dir = await getApplicationDocumentsDirectory();
-        final file = File('${dir.path}/audio/$filename');
-
-        if (!await file.exists()) {
-          _needDownload();
-          return;
-        }
-
-        await _player.play(DeviceFileSource(file.path));
-      },
-      loading: () => _snack('Memuat audio...'),
-      error: (_, __) => _snack('Gagal memuat audio'),
-    );
-  }
-
-  Future<void> _pauseAudio() => _player.pause();
-  Future<void> _stopAudio() => _player.stop();
 
   /* =========================
    * BOOKMARK
@@ -154,7 +97,6 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
     final theme = Theme.of(context);
-
     final baseArabicStyle = TextStyle(
       fontFamily: 'LPMQ',
       fontSize: settings.arabicFontSize,
@@ -217,7 +159,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   Widget _tabText(List<InlineSpan> spans) {
     final settings = ref.watch(settingsProvider);
     final theme = Theme.of(context);
-
+    
     // Pilih transliteration berdasarkan bahasa
     // (saat ini field-nya sama, tapi logika sudah siap)
     final String transliterationText =
@@ -276,60 +218,77 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   }
 
   Widget _tabAudio() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('KH Bahauddin Nursalim'),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              iconSize: 48,
-              icon: Icon(
-                _playerState == PlayerState.playing
-                    ? Icons.pause_circle
-                    : Icons.play_circle,
-              ),
-              onPressed:
-                  _playerState == PlayerState.playing ? _pauseAudio : _playAudio,
-            ),
-            IconButton(
-              iconSize: 48,
-              icon: const Icon(Icons.stop_circle),
-              onPressed: _stopAudio,
-            ),
-          ],
-        ),
-      ],
+    
+    final videoId = YoutubePlayer.convertUrlToId(
+      'https://www.youtube.com/watch?v=fM7BQNV6koc&list=PLdfZWRI2eOVYYEkjAqrGm7AgWuPn_26jk',
     );
-  }
 
-  /* =========================
-   * HELPERS
-   * ========================= */
+    if (videoId == null) {
+      return const Center(child: Text('Video tidak valid'));
+    }
 
-  void _needDownload() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Audio belum diunduh'),
-        action: SnackBarAction(
-          label: 'Unduh',
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const DownloadManagerScreen(),
-              ),
-            );
-          },
-        ),
-      ),
-    );
+    return YoutubeAudioTab(videoId: videoId);
   }
 
   void _snack(String msg) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(msg)));
   }
+  
 }
+
+class YoutubeAudioTab extends StatefulWidget {
+  final String videoId;
+
+  const YoutubeAudioTab({
+    super.key,
+    required this.videoId,
+  });
+
+  @override
+  State<YoutubeAudioTab> createState() => _YoutubeAudioTabState();
+}
+
+class _YoutubeAudioTabState extends State<YoutubeAudioTab> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+        disableDragSeek: false,
+        loop: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          'Tilawah via YouTube',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 12),
+        YoutubePlayer(
+          controller: _controller,
+          showVideoProgressIndicator: true,
+          progressIndicatorColor: Theme.of(context).primaryColor,
+        ),
+      ],
+    );
+  }
+}
+

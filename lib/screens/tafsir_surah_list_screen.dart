@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/models/surah_index_model.dart'; // Ganti model
+import 'package:quran_app/models/surah_index_model.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/tafsir_view_screen.dart';
 
@@ -11,45 +11,93 @@ class TafsirSurahListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allSurahsAsync = ref.watch(allSurahsProvider);
+    final surahsAsync = ref.watch(allSurahsProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pilih Surah untuk Ditafsirkan"),
+        title: const Text("Pilih Surah untuk Tafsir"),
       ),
-      body: allSurahsAsync.when(
-        data: (surahs) {
+      body: surahsAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(
+          child: Text('Gagal memuat daftar surah: $e'),
+        ),
+        data: (List<SurahIndexInfo> surahs) {
           return ListView.builder(
             itemCount: surahs.length,
             itemBuilder: (context, index) {
               final surah = surahs[index];
+              final theme = Theme.of(context);
+
               return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    child: Text(surah.suraId.toString()),
-                  ),
-                  title: Text(surah.name),
-                  subtitle: Text("${surah.translation} | ${surah.numberOfAyahs} Ayat"),
-                  trailing: Text(
-                    surah.name,
-                    style: const TextStyle(fontFamily: 'LPMQ', fontSize: 18),
-                  ),
+                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TafsirViewScreen(surahId: surah.suraId),
+                        builder: (_) =>
+                            TafsirViewScreen(surahId: surah.suraId),
                       ),
                     );
                   },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        /// Nomor Surah
+                        CircleAvatar(
+                          backgroundColor:
+                              theme.primaryColor.withOpacity(0.1),
+                          child: Text(
+                            surah.suraId.toString(),
+                            style: TextStyle(
+                              color: theme.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+
+                        /// Nama Latin + info
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                surah.nameLatin,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${surah.revelationType} • ${surah.numberOfAyahs} Ayat',
+                                style: theme.textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        /// Nama Arab
+                        Text(
+                          surah.nameArabic,
+                          style: TextStyle(
+                            fontFamily: 'LPMQ',
+                            fontSize: 22,
+                            color: theme.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text('Gagal memuat daftar surah: $error')),
       ),
     );
   }

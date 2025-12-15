@@ -1,94 +1,105 @@
 import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quran_app/models/surah_index_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/surah_model.dart';
 import '../repository/quran_repository.dart';
 import '../models/ayah_model.dart';
-import '../models/surah_index_model.dart';
 import '../models/page_index_model.dart';
 import '../models/surah_detail_data.dart';
 
 class QuranDataService {
   final QuranRepository _repo = QuranRepository();
 
-  List<SurahIndexInfo>? _surahIndexCache;
   List<PageIndexInfo>? _pageIndexCache;
-  String? _cachedLang;
-
-  Future<String> _getLanguage() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('selected_language') ?? 'id';
-  }
 
   /// ===============================
-  ///  SURAH INDEX (Dinamins Bahasa)
+  ///  SURAH INDEX (FINAL & STABIL)
   /// ===============================
   Future<List<SurahIndexInfo>> getAllSurahIndex() async {
-    final lang = await _getLanguage();
-    if (_cachedLang != lang) {
-      _surahIndexCache = null;
-      _cachedLang = lang;
-    }
-    if (_surahIndexCache != null) return _surahIndexCache!;
+    final rows = await _repo.getSurahListRaw();
 
-    final rows = await _repo.getSurahListRaw(lang: lang);
-
-    _surahIndexCache = rows.map((row) {
+    return rows.map((r) {
       return SurahIndexInfo(
-        suraId: row['sura_id'],
-        name: row['latin_name'], // Dinamis
-        arabicName: row['arabic_name'],
-        translation: row['translation'],
-        revelationType: row['revelation_type'],
-        numberOfAyahs: row['ayah_count'],
+        suraId: r['sura_id'] as int,
+        nameLatin: (r['sura_name_en']?.toString().isNotEmpty ?? false)
+            ? r['sura_name_en']
+            : r['sura_name'],
+        nameArabic: r['sura_name_arabic'] ?? '',
+        translation: (r['sura_name_translation_en']?.toString().isNotEmpty ?? false)
+            ? r['sura_name_translation_en']
+            : r['sura_name_translation'],
+        revelationType: (r['revelation_type_en']?.toString().isNotEmpty ?? false)
+            ? r['revelation_type_en']
+            : r['location'],
+        numberOfAyahs: r['number_of_ayahs'] as int,
       );
     }).toList();
+  }
 
-    return _surahIndexCache!;
-  }
-  // Provider-friendly wrapper
-  Future<List<SurahIndexInfo>> getAllSurahIndexProvider(WidgetRef ref) {
-    return getAllSurahIndex();
-  }
-  
   /// ===============================
   ///  PAGE INDEX
   /// ===============================
   Future<List<PageIndexInfo>> getAllPageIndex() async {
-    if (_pageIndexCache != null) return _pageIndexCache!;
-
-    final rows = await _repo.getAllPages();
-    _pageIndexCache = rows;
-
+    _pageIndexCache ??= await _repo.getAllPages();
     return _pageIndexCache!;
   }
 
   /// ===============================
-  ///  AYAT per SURAH (bahasa fleksibel)
+  ///  AYAT per SURAH
   /// ===============================
-  Future<List<Ayah>> getAyahsBySurahId(int surahId, WidgetRef ref) async {
+  Future<List<Ayah>> getAyahsBySurahId(int surahId) async {
     final rows = await _repo.getAyahRowsBySurah(surahId);
-    return rows.map((r) => Ayah.fromDb(r)).toList();
+    return rows.map(Ayah.fromDb).toList();
   }
-
 
   /// ===============================
   ///  AYAT per HALAMAN
   /// ===============================
   Future<List<Ayah>> getAyahsByPage(int page) async {
     final rows = await _repo.getAyahRowsByPage(page);
-    return rows.map((r) => Ayah.fromDb(r)).toList();
+    return rows.map(Ayah.fromDb).toList();
   }
 
   /// ===============================
-  ///  SEARCH (Dinamis Bahasa)
+  ///  SEARCH
   /// ===============================
-  Future<List<Map<String, dynamic>>> searchAyahs(String query) async {
-    return await _repo.searchAyah(query);
+  Future<List<Map<String, dynamic>>> searchAyahs(String query) {
+    return _repo.searchAyah(query);
   }
 
   /// ===============================
-  ///  RANDOM AYAH
+  ///  SURAH DETAIL
+  /// ===============================
+  Future<SurahDetailData> getSurahDetail(int surahId) async {
+    final lang = await _getLanguage();
+
+    final meta = await _repo.getSurahMeta(surahId, lang: lang);
+    final rows = await _repo.getAyahRowsBySurah(surahId);
+
+    return SurahDetailData(
+      surahName: meta.name,
+      surahTranslation: meta.translation,
+      revelationType: meta.revelationType,
+      ayahs: rows.map(Ayah.fromDb).toList(),
+    );
+  }
+  /// ===============================
+  ///  GRAMMAR
+  /// ===============================
+  Future<List<Grammar>> getAyahGrammar(int surahId, int ayahNumber) {
+    return _repo.getGrammarByAyah(
+      surahId: surahId,
+      ayahNumber: ayahNumber,
+    );
+  }
+  
+  Future _getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('selected_language') ?? 'id';
+  }
+  /// ===============================
+  ///  RANDOM AYAH (untuk Splash)
   /// ===============================
   Future<Ayah?> loadRandomAyahForSplash() async {
     final randomSurah = Random().nextInt(114) + 1;
@@ -96,51 +107,8 @@ class QuranDataService {
     final rows = await _repo.getAyahRowsBySurah(randomSurah);
     if (rows.isEmpty) return null;
 
-    return Ayah.fromDb(rows[Random().nextInt(rows.length)]);
-  }
-
-  /// ===============================
-  ///  WORD BY WORD
-  /// ===============================
-  Future<List<Map<String, dynamic>>> getWordByAyah(int surahId, int ayahNum) {
-    return _repo.getWordByAyah(surahId, ayahNum);
-  }
-
-  /// ===============================
-  ///  SURAH DETAIL (metadata + ayahs)
-  /// ===============================
-  Future<SurahDetailData> getSurahDetail(int surahId) async {
-    final lang = await _getLanguage();
-
-    // 1. Ambil metadata surah
-    final surahMeta = await _repo.getSurahMeta(surahId, lang: lang);
-
-    // 2. Ambil ayat-ayat
-    final rows = await _repo.getAyahRowsBySurah(surahId);
-    final ayahs = rows.map((r) => Ayah.fromDb(r)).toList();
-
-    return SurahDetailData(
-      surahName: surahMeta['name'] ?? '',
-      surahTranslation: surahMeta['translation'] ?? '',
-      revelationType: surahMeta['revelation_type'] ?? '',
-      ayahs: ayahs,
-    );
-  }
-  Future<Surah> getSurahDetailById(int surahId, WidgetRef ref) async {
-    final rows = await _repo.getAyahRowsBySurah(surahId);
-
-    if (rows.isEmpty) {
-      throw Exception("Surah tidak ditemukan di database");
-    }
-
-    return Surah(
-      id: rows.first['sura_id'],
-      name: rows.first['latin_name'],
-      englishName: rows.first['latin_name'], // fallback
-      englishNameTranslation: rows.first['translation'],
-      revelationType: rows.first['revelation_type'],
-      ayahs: rows.map((r) => Ayah.fromDb(r)).toList(),
-    );
+    final randomRow = rows[Random().nextInt(rows.length)];
+    return Ayah.fromDb(randomRow);
   }
   Future<List<Grammar>> getAyahWords(
     int surahId,
@@ -152,33 +120,44 @@ class QuranDataService {
     );
   }
 }
-
 final quranDataServiceProvider = Provider((ref) => QuranDataService());
 
-final allSurahsProvider = FutureProvider((ref) {
-  return ref.read(quranDataServiceProvider).getAllSurahIndexProvider(ref as WidgetRef);
+final allSurahsProvider =
+    FutureProvider<List<SurahIndexInfo>>((ref) {
+  return ref.read(quranDataServiceProvider).getAllSurahIndex();
 });
 
-final allPagesProvider = FutureProvider((ref) {
+final allPagesProvider =
+    FutureProvider<List<PageIndexInfo>>((ref) {
   return ref.read(quranDataServiceProvider).getAllPageIndex();
 });
 
-final pageAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, page) {
-  return ref.read(quranDataServiceProvider).getAyahsByPage(page);
-});
-
-final surahAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, surahId) {
-  return ref.read(quranDataServiceProvider).getAyahsBySurahId(surahId, ref as WidgetRef);
+final surahAyahsProvider =
+    FutureProvider.family<List<Ayah>, int>((ref, surahId) {
+  return ref.read(quranDataServiceProvider).getAyahsBySurahId(surahId);
 });
 
 final surahDetailProvider =
     FutureProvider.family<SurahDetailData, int>((ref, surahId) {
-  return ref.watch(quranDataServiceProvider).getSurahDetail(surahId);
+  return ref.read(quranDataServiceProvider).getSurahDetail(surahId);
 });
 
-final ayahWordsProvider = FutureProvider.family<
-    List<Grammar>,
-    ({int surahId, int ayahNumber})>((ref, param) {
-  final service = ref.read(quranDataServiceProvider);
-  return service.getAyahWords(param.surahId, param.ayahNumber);
+final ayahWordsProvider =
+    FutureProvider.family<List<Grammar>, ({int surahId, int ayahNumber})>(
+        (ref, p) {
+  return ref
+      .read(quranDataServiceProvider)
+      .getAyahGrammar(p.surahId, p.ayahNumber);
 });
+
+final pageAyahsProvider =
+    FutureProvider.family<List<Ayah>, int>((ref, page) {
+  return ref
+      .read(quranDataServiceProvider)
+      .getAyahsByPage(page);
+});
+
+final randomAyahProvider = FutureProvider<Ayah?>((ref) {
+  return ref.read(quranDataServiceProvider).loadRandomAyahForSplash();
+});
+

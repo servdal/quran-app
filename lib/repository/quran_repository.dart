@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:quran_app/models/surah_meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import '../database/db_helper.dart';
@@ -15,39 +16,31 @@ class QuranRepository {
   Future<Database> get _db async => DBHelper.database;
 
   /// Daftar surah (untuk index)
-  Future<List<Map<String, dynamic>>> getSurahListRaw({required String lang}) async {
+  Future<List<Map<String, dynamic>>> getSurahListRaw() async {
     final db = await _db;
-
-    final latinNameCol = lang == 'id'
-        ? 'sura_name'
-        : 'sura_name_en';
-
-    final translationCol = lang == 'id'
-        ? 'sura_name_translation'
-        : 'sura_name_translation_en';
-
-    final revelationCol = lang == 'id'
-        ? 'location'
-        : 'revelation_type_en';
-
-    return await db.rawQuery('''
+    return db.rawQuery('''
       SELECT DISTINCT
         sura_id,
-        $latinNameCol AS name,
-        sura_name_arabic AS arabic_name,
-        $translationCol AS translation,
-        $revelationCol AS revelation_type
+        sura_name,
+        sura_name_arabic,
+        sura_name_translation,
+        sura_name_en,
+        sura_name_translation_en,
+        revelation_type_en,
+        COUNT(*) AS number_of_ayahs
       FROM merged_aya
+      GROUP BY sura_id
       ORDER BY sura_id
     ''');
   }
+
 
 
   /// Daftar halaman (page index)
   Future<List<PageIndexInfo>> getAllPages() async {
     final db = await _db;
     final rows = await db.rawQuery('''
-      SELECT DISTINCT page_number, MIN(sura_id) AS first_sura_id
+      SELECT DISTINCT page_number,MIN(juz_id) AS juz_id, MIN(sura_id) AS first_sura_id
       FROM merged_aya
       GROUP BY page_number
       ORDER BY page_number
@@ -83,7 +76,7 @@ class QuranRepository {
         page_number,
         juz_id,
         $textCol AS aya_text,
-        $translationCol AS translation,
+        $translationCol AS translation_aya_text,
         $translitCol AS transliteration,
         tajweed_text,
         sura_name
@@ -114,7 +107,7 @@ class QuranRepository {
         page_number,
         juz_id,
         $textCol AS aya_text,
-        $translationCol AS translation,
+        $translationCol AS translation_aya_text,
         $translitCol AS transliteration,
         tajweed_text,
         sura_name
@@ -164,52 +157,34 @@ class QuranRepository {
     ''', [surahId, ayahNumber]);
   }
 
-  Future<Map<String, dynamic>> getSurahMeta(int surahId, {required String lang}) async {
+  Future<SurahMeta> getSurahMeta(int surahId, {required String lang}) async {
     final db = await _db;
 
     final latinCol = lang == 'id' ? 'sura_name' : 'sura_name_en';
-    final translationCol = lang == 'id' ? 'sura_name_translation' : 'sura_name_translation_en';
-    final revealCol = lang == 'id' ? 'location' : 'revelation_type_en';
+    final translationCol =
+        lang == 'id' ? 'sura_name_translation' : 'sura_name_translation_en';
+    final revealCol =
+        lang == 'id' ? 'location' : 'revelation_type_en';
 
     final rows = await db.rawQuery('''
       SELECT 
         $latinCol AS name,
         $translationCol AS translation,
         $revealCol AS revelation_type
-      FROM merged_aya 
+      FROM merged_aya
       WHERE sura_id = ?
       LIMIT 1
     ''', [surahId]);
 
-    return rows.isNotEmpty ? rows.first : {};
-  }
-  // Ambil arabic_words (JSON) dari merged_aya
-  Future<List<String>> getArabicWords(
-    int surahId,
-    int ayahNumber,
-  ) async {
-    final db = await _db;
-
-    final result = await db.rawQuery('''
-      SELECT arabic_words
-      FROM merged_aya
-      WHERE sura_id = ? AND aya_number = ?
-      LIMIT 1
-    ''', [surahId, ayahNumber]);
-
-    if (result.isEmpty || result.first['arabic_words'] == null) {
-      return [];
+    if (rows.isEmpty) {
+      throw Exception('Metadata surah tidak ditemukan');
     }
 
-    final raw = result.first['arabic_words'] as String;
-    final List<dynamic> parsed = jsonDecode(raw);
-
-    return parsed
-        .whereType<String>()
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
+    return SurahMeta.fromDb(rows.first);
   }
+
+  // Ambil arabic_words (JSON) dari merged_aya
+  
   Future<List<Grammar>> getGrammarByAyah({
     required int surahId,
     required int ayahNumber,
@@ -226,23 +201,6 @@ class QuranRepository {
 
     return result.map((e) => Grammar.fromDb(e)).toList();
   }
-  Future<Map<String, dynamic>?> getAudioForAyah(
-    int surahId,
-    int ayahNumber,
-  ) async {
-    final db = await _db;
-    final result = await db.rawQuery('''
-      SELECT *
-      FROM audio_index
-      WHERE sura_id = ?
-        AND ayah_start <= ?
-        AND ayah_end >= ?
-      LIMIT 1
-    ''', [surahId, ayahNumber, ayahNumber]);
-
-    if (result.isEmpty) return null;
-    return result.first;
-  }
-
+  
   
 }

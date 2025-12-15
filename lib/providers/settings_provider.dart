@@ -4,39 +4,42 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings {
   final double arabicFontSize;
-
+  final String language;
   Settings({
     required this.arabicFontSize,
+    required this.language,
   });
+
 
   Settings copyWith({
     double? arabicFontSize,
+    String? language,
   }) {
     return Settings(
       arabicFontSize: arabicFontSize ?? this.arabicFontSize,
+      language: language ?? this.language,
     );
   }
 }
 
 class SettingsNotifier extends StateNotifier<Settings> {
-  SettingsNotifier() : super(Settings(arabicFontSize: 28.0)) {
-    _loadSettings();
+  SettingsNotifier()
+      : super(
+          Settings(
+            arabicFontSize: 28,
+            language: 'id', // default
+          ),
+        );
+
+  void setFontSize(double size) {
+    state = state.copyWith(arabicFontSize: size);
   }
 
-  static const String _fontSizeKey = 'arabic_font_size';
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    final fontSize = prefs.getDouble(_fontSizeKey) ?? 28.0;
-    state = Settings(arabicFontSize: fontSize);
-  }
-
-  Future<void> setFontSize(double newSize) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble(_fontSizeKey, newSize);
-    state = state.copyWith(arabicFontSize: newSize);
+  void setLanguage(String lang) {
+    state = state.copyWith(language: lang);
   }
 }
+
 
 final settingsProvider = StateNotifierProvider<SettingsNotifier, Settings>((ref) {
   return SettingsNotifier();

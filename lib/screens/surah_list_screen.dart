@@ -11,96 +11,84 @@ class SurahListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allSurahsAsyncValue = ref.watch(allSurahsProvider);
+    final surahsAsync = ref.watch(allSurahsProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Daftar Surah'),
-      ),
-      body: allSurahsAsyncValue.when(
+      appBar: AppBar(title: const Text('Daftar Surah')),
+      body: surahsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text('Gagal memuat data: $error')),
-        data: (surahs) {
-          return ListView.builder(
-            itemCount: surahs.length,
-            itemBuilder: (context, index) {
-              final surah = surahs[index];
-              return _SurahListItem(surah: surah);
-            },
-          );
-        },
+        error: (e, _) => Center(child: Text('Gagal memuat data: $e')),
+        data: (surahs) => ListView.builder(
+          itemCount: surahs.length,
+          itemBuilder: (context, index) {
+            return _SurahListItem(surah: surahs[index]);
+          },
+        ),
       ),
     );
   }
 }
 
 class _SurahListItem extends StatelessWidget {
+  final SurahIndexInfo surah;
   const _SurahListItem({required this.surah});
-
-  final SurahIndexInfo surah; // Ganti model
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: InkWell(
+        borderRadius: BorderRadius.circular(12),
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SurahDetailScreen(surahId: surah.suraId),
+              builder: (_) => SurahDetailScreen(surahId: surah.suraId),
             ),
           );
         },
-        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: theme.primaryColor.withOpacity(0.1),
-                ),
-                child: Center(
-                  child: Text(
-                    surah.suraId.toString(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: theme.primaryColor,
-                    ),
+              CircleAvatar(
+                backgroundColor: theme.primaryColor.withOpacity(0.1),
+                child: Text(
+                  surah.suraId.toString(),
+                  style: TextStyle(
+                    color: theme.primaryColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               const SizedBox(width: 16),
+
+              /// Nama Latin + Meta
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      surah.name,
-                      style: TextStyle(
+                      surah.nameLatin,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${surah.revelationType} • ${surah.numberOfAyahs} Ayat',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: theme.textTheme.bodyMedium?.color,
-                      ),
+                      style: theme.textTheme.bodySmall,
                     ),
                   ],
                 ),
               ),
+
+              /// Nama Arab
               Text(
-                surah.name,
+                surah.nameArabic,
                 style: TextStyle(
                   fontFamily: 'LPMQ',
                   fontSize: 22,

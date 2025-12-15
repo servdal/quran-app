@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quran_app/providers/bookmark_provider.dart';
-import 'package:quran_app/providers/settings_provider.dart';
-import 'package:quran_app/services/quran_data_service.dart';
-import 'package:quran_app/utils/tajweed_parser.dart';
-import 'package:quran_app/utils/auto_tajweed_parser.dart';
+import '../../providers/bookmark_provider.dart';
+import '../../providers/settings_provider.dart';
+import '../../services/quran_data_service.dart';
+import '../../utils/tajweed_parser.dart';
+import '../../utils/auto_tajweed_parser.dart';
 
 // Layar utama yang mengelola navigasi halaman (PageView)
 class DeresanViewScreen extends StatefulWidget {
@@ -128,9 +128,9 @@ class DeresanPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ayahsProvider = pageAyahsProvider(pageNumber);
-    final ayahsAsync = ref.watch(ayahsProvider);
-
+    final ayahsAsync = ref.watch(pageAyahsProvider(pageNumber));
+   final settings = ref.watch(settingsProvider);
+    final lang = settings.language;
     return ayahsAsync.when(
       data: (ayahs) {
         if (ayahs.isEmpty) {
@@ -159,7 +159,7 @@ class DeresanPage extends ConsumerWidget {
             }
 
             // 2. Tambahkan Header Nama Surah sebagai widget baru
-            pageWidgets.add(_SurahHeaderWidget(surahName: ayah.suraName ?? 'Surah ${ayah.suraId}'));
+            pageWidgets.add(_SurahHeaderWidget(surahName: ayah.suraName));
 
             // 3. Tambahkan Bismillah sebagai widget baru jika perlu
             if (ayah.suraId != 9 && ayah.ayaNumber == 1) {
@@ -178,7 +178,17 @@ class DeresanPage extends ConsumerWidget {
             height: 2.2,
             color: theme.colorScheme.onSurface,
           );
-          currentSurahSpans.addAll(AutoTajweedParser.parse(ayah.ayaText, baseTextStyle));
+          if (lang == 'id') {
+            currentSurahSpans.addAll(
+              AutoTajweedParser.parse(ayah.ayaText, baseTextStyle),
+            );
+          } else {
+            final spans = TajweedParser.parse(
+              ayah.tajweedText,
+              baseTextStyle,
+            );
+            currentSurahSpans.addAll(spans);
+          }
           currentSurahSpans.add(const TextSpan(text: ' '));
           currentSurahSpans.add(WidgetSpan(
             child: _AyahNumberMarker(

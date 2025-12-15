@@ -71,7 +71,7 @@ final dzikrProvider =
 
     // Jika dzikir dari Al-Qur'an (punya surahId)
     if (item.surahId != null) {
-      final allAyahsInSurah = await dataService.getAyahsBySurahId(item.surahId!, ref as WidgetRef);
+      final allAyahsInSurah = await dataService.getAyahsBySurahId(item.surahId!);
       
       if (item.isFullSurah) {
         fetchedAyahs = allAyahsInSurah;
@@ -82,8 +82,8 @@ final dzikrProvider =
       arabicText = fetchedAyahs.map((a) => a.tajweedText).join(' ');
       final lang = await _getLanguage();
       var surahNameMap = lang == 'en'
-          ? {for (var surah in allSurahIndex) surah.suraId: surah.translation}
-          : {for (var surah in allSurahIndex) surah.suraId: surah.name};
+          ? {for (var surah in allSurahIndex) surah.suraId: surah.nameLatin}
+          : {for (var surah in allSurahIndex) surah.suraId: surah.nameArabic};
       surahName = surahNameMap[item.surahId] ?? "QS. ${item.surahId}";
     } 
     // Jika dzikir dari Hadits (punya arabicText)

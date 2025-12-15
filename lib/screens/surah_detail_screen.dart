@@ -52,7 +52,13 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: surahDetailAsync.when(
-          data: (surah) => Text(surah.surahName),
+          data: (surah) => Text(
+            surah.surahName,
+            style: const TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           loading: () => const Text('Memuat...'),
           error: (e, s) => const Text('Error'),
         ),

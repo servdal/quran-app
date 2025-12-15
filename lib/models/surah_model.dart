@@ -17,21 +17,6 @@ class Surah {
     required this.ayahs,
   });
 
-  factory Surah.fromJson(Map<String, dynamic> json) {
-    var ayahsListFromJson = json['data'] as List? ?? [];
-    List<Ayah> parsedAyahs =
-        ayahsListFromJson.map((i) => Ayah.fromJson(i)).toList();
-
-    return Surah(
-      id: json['sura_id'],
-      name: json['name'],
-      englishName: json['englishName'],
-      englishNameTranslation: json['englishNameTranslation'],
-      revelationType: json['revelationType'],
-      ayahs: parsedAyahs,
-    );
-  }
-
   /// 🔥 NEW: from SQLite rows
   factory Surah.fromDb(int surahId, List<Map<String, dynamic>> rows) {
     if (rows.isEmpty) {

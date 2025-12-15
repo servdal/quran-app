@@ -76,7 +76,7 @@ final dzikrProvider =
       if (item.isFullSurah) {
         fetchedAyahs = allAyahsInSurah;
       } else if (item.ayahNumber != null) {
-        fetchedAyahs = allAyahsInSurah.where((ayah) => ayah.ayaNumber == item.ayahNumber).toList();
+        fetchedAyahs = allAyahsInSurah.where((ayah) => ayah.number == item.ayahNumber).toList();
       }
       
       arabicText = fetchedAyahs.map((a) => a.tajweedText).join(' ');
@@ -236,9 +236,9 @@ class DzikirListView extends ConsumerWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => SurahDetailScreen(
-                                    surahId: uiData.ayahs.first.suraId,
+                                    surahId: uiData.ayahs.first.id,
                                     initialScrollIndex:
-                                        uiData.ayahs.first.ayaNumber - 1,
+                                        uiData.ayahs.first.number - 1,
                                   ),
                                 ));
                           },

@@ -15,14 +15,41 @@ class SurahIndexInfo {
     required this.numberOfAyahs,
   });
 
-  factory SurahIndexInfo.fromDb(Map<String, dynamic> row) {
+  factory SurahIndexInfo.fromDb(
+    Map<String, dynamic> row, {
+    required String lang,
+  }) {
+    final isEn = lang == 'en';
+
     return SurahIndexInfo(
-      suraId: row['sura_id'],
-      nameLatin: row['sura_name'] ?? row['sura_name_en'] ?? '',
+      suraId: row['sura_id'] as int,
+
+      nameLatin: isEn
+          ? (row['sura_name_en'] ??
+              row['sura_name'] ??
+              '')
+          : (row['sura_name'] ??
+              row['sura_name_en'] ??
+              ''),
+
       nameArabic: row['sura_name_arabic'] ?? '',
-      translation: row['sura_name_translation'] ?? row['sura_name_translation_en'] ?? '',
-      revelationType:
-          row['location'] ?? row['revelation_type_en'] ?? '',
+
+      translation: isEn
+          ? (row['sura_name_translation_en'] ??
+              row['sura_name_translation'] ??
+              '')
+          : (row['sura_name_translation'] ??
+              row['sura_name_translation_en'] ??
+              ''),
+
+      revelationType: isEn
+          ? (row['revelation_type_en'] ??
+              row['location'] ??
+              '')
+          : (row['location'] ??
+              row['revelation_type_en'] ??
+              ''),
+
       numberOfAyahs: row['number_of_ayahs'] ?? 0,
     );
   }

@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:quran_app/models/surah_meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import '../database/db_helper.dart';
 import '../../models/page_index_model.dart';
-import '../../models/ayah_model.dart';
-
+import '../models/grammar_model.dart';
 class QuranRepository {
   Future<String> _getLanguage() async {
     final prefs = await SharedPreferences.getInstance();
@@ -15,25 +12,29 @@ class QuranRepository {
 
   Future<Database> get _db async => DBHelper.database;
 
-  /// Daftar surah (untuk index)
-  Future<List<Map<String, dynamic>>> getSurahListRaw() async {
+  Future<List<Map<String, dynamic>>> getSurahIndexRows() async {
     final db = await _db;
+
     return db.rawQuery('''
-      SELECT DISTINCT
+      SELECT
         sura_id,
-        sura_name,
-        sura_name_arabic,
-        sura_name_translation,
-        sura_name_en,
-        sura_name_translation_en,
-        revelation_type_en,
+
+        MAX(sura_name) AS sura_name,
+        MAX(sura_name_en) AS sura_name_en,
+        MAX(sura_name_arabic) AS sura_name_arabic,
+
+        MAX(sura_name_translation) AS sura_name_translation,
+        MAX(sura_name_translation_en) AS sura_name_translation_en,
+
+        MAX(location) AS location,
+        MAX(revelation_type_en) AS revelation_type_en,
+
         COUNT(*) AS number_of_ayahs
       FROM merged_aya
       GROUP BY sura_id
       ORDER BY sura_id
     ''');
   }
-
 
 
   /// Daftar halaman (page index)
@@ -157,50 +158,66 @@ class QuranRepository {
     ''', [surahId, ayahNumber]);
   }
 
-  Future<SurahMeta> getSurahMeta(int surahId, {required String lang}) async {
+  Future<Map<String, dynamic>> getSurahMeta(
+    int surahId, {
+    required String lang,
+  }) async {
     final db = await _db;
-
-    final latinCol = lang == 'id' ? 'sura_name' : 'sura_name_en';
-    final translationCol =
-        lang == 'id' ? 'sura_name_translation' : 'sura_name_translation_en';
-    final revealCol =
-        lang == 'id' ? 'location' : 'revelation_type_en';
 
     final rows = await db.rawQuery('''
       SELECT 
-        $latinCol AS name,
-        $translationCol AS translation,
-        $revealCol AS revelation_type
+        sura_name,
+        sura_name_arabic,
+        sura_name_translation,
+        location,
+        revelation_type_en
       FROM merged_aya
       WHERE sura_id = ?
       LIMIT 1
     ''', [surahId]);
 
-    if (rows.isEmpty) {
-      throw Exception('Metadata surah tidak ditemukan');
-    }
+    if (rows.isEmpty) return {};
 
-    return SurahMeta.fromDb(rows.first);
+    final r = rows.first;
+
+    return {
+      'name': r['sura_name'] ?? '',
+      'arabic_name': r['sura_name_arabic'] ?? '',
+      'translation': r['sura_name_translation'] ?? '',
+      'revelation_type':
+          lang == 'id' ? r['location'] : r['revelation_type_en'],
+    };
   }
 
-  // Ambil arabic_words (JSON) dari merged_aya
-  
+
+  /// 🔹 Grammar per ayat (master_edited)
   Future<List<Grammar>> getGrammarByAyah({
     required int surahId,
     required int ayahNumber,
   }) async {
     final db = await _db;
 
-    final result = await db.rawQuery('''
-      SELECT *
+    final rows = await db.rawQuery('''
+      SELECT
+        id,
+        RootAr,
+        RootCode,
+        RootEn,
+        RootWordId,
+        ChapterNo,
+        VerseNo,
+        MeaningEn,
+        MeaningId,
+        WordAr,
+        WordNo,
+        GrammarFormDesc,
+        GrammarFormDescID
       FROM master_edited
       WHERE ChapterNo = ?
         AND VerseNo = ?
       ORDER BY WordNo
     ''', [surahId, ayahNumber]);
 
-    return result.map((e) => Grammar.fromDb(e)).toList();
-  }
-  
-  
+    return rows.map(Grammar.fromDb).toList();
+  }  
 }

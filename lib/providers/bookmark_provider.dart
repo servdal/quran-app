@@ -4,22 +4,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum BookmarkViewType { surah, page, deresan, tafsir }
 
 class Bookmark {
-  final String type;
+  final BookmarkViewType type;
   final int surahId;
   final String surahName;
-  final int ayahNumber;
+
+  final int? ayahNumber;
   final int? pageNumber;
 
   Bookmark({
     required this.type,
     required this.surahId,
     required this.surahName,
-    required this.ayahNumber,
+    this.ayahNumber,
     this.pageNumber,
   });
 
   Map<String, dynamic> toJson() => {
-        'type': type,
+        'type': type.name,
         'surahId': surahId,
         'surahName': surahName,
         'ayahNumber': ayahNumber,
@@ -27,7 +28,10 @@ class Bookmark {
       };
 
   factory Bookmark.fromJson(Map<String, dynamic> json) => Bookmark(
-        type: json['type'],
+        type: BookmarkViewType.values.firstWhere(
+          (e) => e.name == json['type'],
+          orElse: () => BookmarkViewType.surah,
+        ),
         surahId: json['surahId'],
         surahName: json['surahName'],
         ayahNumber: json['ayahNumber'],

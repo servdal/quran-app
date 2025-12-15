@@ -74,6 +74,7 @@ class _SurahListItem extends StatelessWidget {
                       surah.nameLatin,
                       style: const TextStyle(
                         fontSize: 16,
+                        fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -90,7 +91,7 @@ class _SurahListItem extends StatelessWidget {
               Text(
                 surah.nameArabic,
                 style: TextStyle(
-                  fontFamily: 'LPMQ',
+                  fontFamily: 'Uthmani',
                   fontSize: 22,
                   color: theme.primaryColor,
                 ),

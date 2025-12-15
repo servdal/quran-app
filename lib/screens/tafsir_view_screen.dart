@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:quran_app/models/grammar_model.dart';
 
 import '../models/ayah_model.dart';
 import '../widgets/grammar_popup.dart';
@@ -14,11 +15,16 @@ import '../utils/tajweed_parser.dart';
 
 enum GrammarType { fiil, isim, harf, other }
 
-GrammarType detectGrammarType(String desc) {
-  final d = desc.toLowerCase();
-  if (d.contains('verb')) return GrammarType.fiil;
-  if (d.contains('noun')) return GrammarType.isim;
-  if (d.contains('particle')) return GrammarType.harf;
+GrammarType detectGrammarType({
+  required Grammar g,
+  required bool isId,
+}) {
+  final d = (isId ? g.grammarDescId : g.grammarDescEn).toLowerCase();
+
+  if (d.contains('fi') || d.contains('verb')) return GrammarType.fiil;
+  if (d.contains('isim') || d.contains('noun')) return GrammarType.isim;
+  if (d.contains('harf') || d.contains('particle')) return GrammarType.harf;
+
   return GrammarType.other;
 }
 
@@ -83,7 +89,7 @@ final ayahWordsProvider = FutureProvider.family<
 class TafsirViewScreen extends ConsumerWidget {
   final int surahId;
   const TafsirViewScreen({super.key, required this.surahId});
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final surahAsync = ref.watch(surahDetailProvider(surahId));
@@ -119,7 +125,7 @@ class TafsirViewScreen extends ConsumerWidget {
 class _AyahBlock extends ConsumerWidget {
   final Ayah ayah;
   final String surahName;
-
+  
   const _AyahBlock({
     required this.ayah,
     required this.surahName,
@@ -151,14 +157,14 @@ class _AyahBlock extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              ayah.translationAyaText,
+              ayah.translation,
               textAlign: TextAlign.justify,
             ),
             const Divider(height: 32),
             _GrammarSection(ayah: ayah),
             const Divider(height: 32),
             Text(
-              'Tafsir Jalalayn:\n${ayah.tafsirJalalayn}',
+              'Tafsir Jalalayn:\n${ayah.tafsir}',
               textAlign: TextAlign.justify,
             ),
           ],
@@ -179,10 +185,10 @@ class _GrammarSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ui = ref.watch(grammarUiProvider);
-
+    final isId = ref.watch(settingsProvider).language == 'id';
     final asyncWords = ref.watch(
       ayahWordsProvider(
-        (surahId: ayah.suraId, ayahNumber: ayah.ayaNumber),
+        (surahId: ayah.id, ayahNumber: ayah.number),
       ),
     );
 
@@ -196,7 +202,7 @@ class _GrammarSection extends ConsumerWidget {
             ? words
             : words
                 .where((g) =>
-                    detectGrammarType(g.grammarFormDesc) == ui.filter)
+                    detectGrammarType(g: g, isId: isId) == ui.filter)
                 .toList();
 
         final rootCount = <String, int>{};
@@ -213,7 +219,7 @@ class _GrammarSection extends ConsumerWidget {
               final sameRoot = rootCount[g.rootAr]! > 1;
               return _GrammarCard(
                 grammar: g,
-                type: detectGrammarType(g.grammarFormDesc),
+                type: detectGrammarType(g: g, isId: isId),
                 highlightRoot: ui.highlightRoot && sameRoot,
                 learningMode: ui.learningMode,
               );
@@ -234,7 +240,7 @@ class _GrammarToolbar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ui = ref.watch(grammarUiProvider);
     final n = ref.read(grammarUiProvider.notifier);
-
+    final isId = ref.watch(settingsProvider).language == 'id';
     return Wrap(
       alignment: WrapAlignment.end,
       spacing: 8,
@@ -265,7 +271,7 @@ class _GrammarToolbar extends ConsumerWidget {
    GRAMMAR CARD
 ============================================================ */
 
-class _GrammarCard extends StatelessWidget {
+class _GrammarCard extends ConsumerWidget {
   final Grammar grammar;
   final GrammarType type;
   final bool highlightRoot;
@@ -291,21 +297,14 @@ class _GrammarCard extends StatelessWidget {
     }
   }
 
-  String _label() {
-    switch (type) {
-      case GrammarType.fiil:
-        return 'Fi’il';
-      case GrammarType.isim:
-        return 'Isim';
-      case GrammarType.harf:
-        return 'Harf';
-      default:
-        return 'Lainnya';
-    }
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isId = ref.watch(settingsProvider).language == 'id';
+
+    final meaning = isId ? grammar.meaningId : grammar.meaningEn;
+    final grammarDesc =
+        isId ? grammar.grammarDescId : grammar.grammarDescEn;
+
     return Card(
       color: highlightRoot
           ? Theme.of(context).colorScheme.primary.withOpacity(0.08)
@@ -318,8 +317,10 @@ class _GrammarCard extends StatelessWidget {
         ),
         leading: CircleAvatar(
           backgroundColor: _color(context),
-          child: Text(grammar.wordNo.toString(),
-              style: const TextStyle(color: Colors.white)),
+          child: Text(
+            grammar.rootWordId.toString(),
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
         title: Text(
           grammar.wordAr,
@@ -329,18 +330,18 @@ class _GrammarCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(grammar.meaningID.isNotEmpty
-                ? grammar.meaningID
-                : grammar.meaningEn),
+            Text(meaning.isEmpty ? '-' : meaning),
             if (learningMode) ...[
               const SizedBox(height: 4),
-              Text('Akar: ${grammar.rootAr} (${grammar.rootEn})'),
-              Text(grammar.grammarFormDesc),
+              Text(isId
+                  ? 'Akar: ${grammar.rootAr} (${grammar.rootCode})'
+                  : 'Root: ${grammar.rootAr} (${grammar.rootEn})'),
+              Text(grammarDesc),
             ],
           ],
         ),
         trailing: Chip(
-          label: Text(_label()),
+          label: Text(grammarDesc),
           backgroundColor: _color(context).withOpacity(0.15),
         ),
       ),
@@ -363,7 +364,7 @@ class _AyahHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('QS ${ayah.suraId}:${ayah.ayaNumber}',
+        Text('QS ${ayah.id}:${ayah.number}',
             style: const TextStyle(fontWeight: FontWeight.bold)),
         Icon(Icons.menu_book_outlined, color: Theme.of(context).primaryColor),
       ],

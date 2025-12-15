@@ -1,209 +1,71 @@
-class OccurrenceLocation {
-  final int surahId;
-  final int ayahNumber;
-
-  OccurrenceLocation({required this.surahId, required this.ayahNumber});
-
-  factory OccurrenceLocation.fromJson(Map<String, dynamic> json) {
-    return OccurrenceLocation(
-      surahId: json['surah_id'],
-      ayahNumber: json['ayah_number'],
-    );
-  }
-}
-
-class Grammar {
-  final int id;
-  final String rootAr;
-  final String rootCode;
-  final String rootEn;
-  final int rootWordId;
-  final int chapterNo;
-  final int verseNo;
-  final String meaningEn;
-  final String meaningID;
-  final String wordAr;
-  final int wordNo;
-  final String grammarFormDesc;
-  final String grammarFormDescID;
-
-  Grammar({
-    required this.id,
-    required this.rootAr,
-    required this.rootCode,
-    required this.rootEn,
-    required this.rootWordId,
-    required this.chapterNo,
-    required this.verseNo,
-    required this.meaningEn,
-    required this.meaningID,
-    required this.wordAr,
-    required this.wordNo,
-    required this.grammarFormDesc,
-    required this.grammarFormDescID,
-  });
-
-  factory Grammar.fromDb(Map<String, dynamic> json) {
-    return Grammar(
-      id: json['id'],
-      rootAr: json['RootAr'],
-      rootCode: json['RootCode'],
-      rootEn: json['RootEn'],
-      rootWordId: json['RootWordId'],
-      chapterNo: json['ChapterNo'],
-      verseNo: json['VerseNo'],
-      meaningEn: json['MeaningEn'],
-      meaningID: json['MeaningId'],
-      wordAr: json['WordAr'],
-      wordNo: json['WordNo'],
-      grammarFormDesc: json['GrammarFormDesc'],
-      grammarFormDescID: json['GrammarFormDescID'],
-    );
-  }
-}
-
-
-// ------------------- MODEL LAMA YANG DIPERBARUI -------------------
-
-class SurahInfo {
-  final String name;
-  final String englishName;
-  final String englishNameTranslation;
-  final String revelationType;
-
-  SurahInfo({
-    required this.name,
-    required this.englishName,
-    required this.englishNameTranslation,
-    required this.revelationType,
-  });
-
-  factory SurahInfo.fromJson(Map<String, dynamic> json) {
-    return SurahInfo(
-      name: json['name'] ?? '',
-      englishName: json['englishName'] ?? '',
-      englishNameTranslation: json['englishNameTranslation'] ?? '',
-      revelationType: json['revelationType'] ?? '',
-    );
-  }
-}
-
-class Word {
-  final int position;
-  final String arabic;
-  final String transliteration;
-  final String translation;
-  final int? analysisId;
-
-  Word({
-    required this.position,
-    required this.arabic,
-    required this.transliteration,
-    required this.translation,
-    this.analysisId,
-  });
-
-  factory Word.fromJson(Map<String, dynamic> json) {
-    return Word(
-      position: json['position'],
-      arabic: json['arabic'],
-      transliteration: json['transliteration'] ?? '',
-      translation: json['translation'] ?? '',
-      analysisId: json['analysis_id'],
-    );
-  }
-}
-
 class Ayah {
-  final int ayaId;
-  final int ayaNumber;
-  final String ayaText;
-  final int suraId;
-  final String suraName;
-  final int pageNumber;
-  final String translationAyaText;
-  final String tafsirJalalayn;
-  final SurahInfo? surah;
-  final List<Word> words;
-  final String transliteration;
+  final int id; // aya_id
+  final int number; // aya_number
+
+  final int surahId;
+  final String surahName; // latin / localized
+  final int juz;
+  final int page;
+
+  /// Teks utama Arab (ID: kemenag, EN: uthmani)
+  final String arabicText;
+
+  /// Tajweed markup (untuk EN / advanced mode)
   final String tajweedText;
-  final int juzId;
-  final bool sajda;
 
-  String get audioKey =>
-      '${suraId.toString().padLeft(3, '0')}${ayaNumber.toString().padLeft(3, '0')}';
+  /// Terjemahan (ID / EN)
+  final String translation;
 
-  Ayah({
-    required this.ayaId,
-    required this.ayaNumber,
-    required this.ayaText,
-    required this.suraId,
-    required this.suraName,
-    required this.pageNumber,
-    required this.translationAyaText,
-    required this.tafsirJalalayn,
-    this.surah,
-    required this.words,
-    required this.transliteration,
+  /// Tafsir Jalalayn
+  final String tafsir;
+
+  /// Transliterasi (opsional)
+  final String transliteration;
+
+  /// Ayat sajdah
+  final bool isSajda;
+
+  const Ayah({
+    required this.id,
+    required this.number,
+    required this.surahId,
+    required this.surahName,
+    required this.juz,
+    required this.page,
+    required this.arabicText,
     required this.tajweedText,
-    required this.juzId,
-    required this.sajda,
+    required this.translation,
+    required this.tafsir,
+    required this.transliteration,
+    required this.isSajda,
   });
 
-  // Masih dipakai kalau baca dari JSON assets lama
-  factory Ayah.fromJson(Map<String, dynamic> json) {
-    String suraNameValue = '';
-    if (json['surah'] is Map<String, dynamic>) {
-      suraNameValue = json['surah']['englishName'] ?? '';
-    }
-    return Ayah(
-      ayaId: json['aya_id'],
-      ayaNumber: json['aya_number'],
-      ayaText: json['aya_text'],
-      suraId: json['sura_id'],
-      suraName: suraNameValue,
-      pageNumber: json['page_number'],
-      translationAyaText: json['translation_aya_text'] ?? '',
-      tafsirJalalayn: json['tafsir_jalalayn'] ?? '',
-      surah: json.containsKey('surah')
-          ? SurahInfo.fromJson(json['surah'])
-          : null,
-      words: List<Word>.from(
-        (json['words'] as List).map((w) => Word.fromJson(w)),
-      ),
-      transliteration: json['transliteration'] ?? '',
-      tajweedText: json['tajweed_text'] ?? '',
-      juzId: json['juz_id'],
-      sajda: json['sajda'] ?? false,
-    );
-  }
-
-  /// 🔥 Baru: construct dari baris SQLite (tabel merged_aya)
-  ///
-  /// Repository akan meng-*alias* kolom seperti ini:
-  /// - aya_text         -> teks sesuai bahasa (ID/EN)
-  /// - translation      -> terjemah sesuai bahasa (ID/EN)
-  /// - sura_name        -> nama surah (latin)
-  /// - transliteration  -> transliterasi (ID/EN)
-  ///
+  /// Factory utama dari SQLite row
   factory Ayah.fromDb(Map<String, dynamic> row) {
     return Ayah(
-      ayaId: row['aya_id'] as int,
-      ayaNumber: row['aya_number'] as int,
-      ayaText: (row['aya_text'] ?? '') as String,
-      suraId: row['sura_id'] as int,
-      suraName: (row['sura_name'] ?? '') as String,
-      pageNumber: (row['page_number'] ?? 0) as int,
-      translationAyaText: (row['translation'] ?? '') as String,
-      tafsirJalalayn: (row['tafsir_jalalayn'] ?? '') as String,
-      // SurahInfo tidak diisi di sini; kalau perlu bisa dibuatkan dari meta surah.
-      surah: null,
-      // words dikosongkan, karena word-by-word diambil dari tabel master_edited
-      words: const [],
-      transliteration: (row['transliteration'] ?? '') as String,
+      id: row['aya_id'] as int,
+      number: row['aya_number'] as int,
+      surahId: row['sura_id'] as int,
+      surahName: (row['sura_name'] ?? '') as String,
+      juz: (row['juz_id'] ?? 0) as int,
+      page: (row['page_number'] ?? 0) as int,
+
+      arabicText: (row['aya_text'] ?? '') as String,
       tajweedText: (row['tajweed_text'] ?? '') as String,
-      juzId: (row['juz_id'] ?? 0) as int,
-      sajda: (row['sajda'] == 1 || row['sajda'] == true),
+
+      translation: (row['translation_aya_text'] ?? '') as String,
+      tafsir: (row['tafsir_jalalayn'] ?? '') as String,
+
+      transliteration: (row['transliteration'] ?? '') as String,
+
+      isSajda: row['sajda'] == 1 || row['sajda'] == true,
     );
   }
+
+  /// Key audio berbasis surah + ayat
+  String get audioKey =>
+      '${surahId.toString().padLeft(3, '0')}_${number.toString().padLeft(3, '0')}';
+
+  /// Label QS
+  String get label => 'QS $surahId:$number';
 }

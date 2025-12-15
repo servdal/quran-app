@@ -70,6 +70,7 @@ class TafsirSurahListScreen extends ConsumerWidget {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'Roboto'
                                 ),
                               ),
                               const SizedBox(height: 4),

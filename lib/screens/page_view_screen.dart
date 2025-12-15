@@ -117,13 +117,13 @@ class _QuranPageWidget extends ConsumerWidget {
           itemCount: ayahs.length,
           itemBuilder: (context, index) {
             final ayah = ayahs[index];
-            final bool isFirstAyahInSurah = ayah.ayaNumber == 1;
+            final bool isFirstAyahInSurah = ayah.number == 1;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (isFirstAyahInSurah)
-                  _SurahHeader(surahName: ayah.suraName),
+                  _SurahHeader(surahName: ayah.surahName),
                 AyahWidget(
                   ayah: ayah,
                   viewType: BookmarkViewType.page,

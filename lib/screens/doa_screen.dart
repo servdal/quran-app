@@ -25,7 +25,7 @@ final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
     List<Ayah> fetchedAyahs = [];
     for (final ayahNum in doaItem.ayahs) {
       try {
-        final foundAyah = allAyahsInSurah.firstWhere((a) => a.ayaNumber == ayahNum);
+        final foundAyah = allAyahsInSurah.firstWhere((a) => a.number == ayahNum);
         fetchedAyahs.add(foundAyah);
       } catch (e) {
         throw Exception("Ayat tidak ditemukan: Surah ${doaItem.surahId} Ayat $ayahNum");
@@ -87,7 +87,7 @@ class _DoaList extends ConsumerWidget {
 
             // --- PERUBAHAN 1: Gunakan teks bertajwid ---
             final combinedTajweedText = doaData.ayahs.map((a) => a.tajweedText).join(' ');
-            final combinedTranslation = doaData.ayahs.map((a) => a.translationAyaText).join(' ');
+            final combinedTranslation = doaData.ayahs.map((a) => a.translation).join(' ');
 
             // Parsing teks tajwid menjadi RichText
             final baseTextStyle = TextStyle(

@@ -7,6 +7,7 @@ import '../repository/quran_repository.dart';
 import '../models/ayah_model.dart';
 import '../models/page_index_model.dart';
 import '../models/surah_detail_data.dart';
+import '../models/grammar_model.dart';
 
 class QuranDataService {
   final QuranRepository _repo = QuranRepository();
@@ -17,25 +18,15 @@ class QuranDataService {
   ///  SURAH INDEX (FINAL & STABIL)
   /// ===============================
   Future<List<SurahIndexInfo>> getAllSurahIndex() async {
-    final rows = await _repo.getSurahListRaw();
+    final prefs = await SharedPreferences.getInstance();
+    final lang = prefs.getString('selected_language') ?? 'id';
 
-    return rows.map((r) {
-      return SurahIndexInfo(
-        suraId: r['sura_id'] as int,
-        nameLatin: (r['sura_name_en']?.toString().isNotEmpty ?? false)
-            ? r['sura_name_en']
-            : r['sura_name'],
-        nameArabic: r['sura_name_arabic'] ?? '',
-        translation: (r['sura_name_translation_en']?.toString().isNotEmpty ?? false)
-            ? r['sura_name_translation_en']
-            : r['sura_name_translation'],
-        revelationType: (r['revelation_type_en']?.toString().isNotEmpty ?? false)
-            ? r['revelation_type_en']
-            : r['location'],
-        numberOfAyahs: r['number_of_ayahs'] as int,
-      );
-    }).toList();
+    final rows = await _repo.getSurahIndexRows();
+    return rows
+        .map((r) => SurahIndexInfo.fromDb(r, lang: lang))
+        .toList();
   }
+
 
   /// ===============================
   ///  PAGE INDEX
@@ -73,17 +64,22 @@ class QuranDataService {
   /// ===============================
   Future<SurahDetailData> getSurahDetail(int surahId) async {
     final lang = await _getLanguage();
-
     final meta = await _repo.getSurahMeta(surahId, lang: lang);
+
+    if (meta.isEmpty) {
+      throw Exception('Metadata surah ID $surahId tidak ditemukan');
+    }
+
     final rows = await _repo.getAyahRowsBySurah(surahId);
 
     return SurahDetailData(
-      surahName: meta.name,
-      surahTranslation: meta.translation,
-      revelationType: meta.revelationType,
+      surahName: meta['name'] ?? '',
+      surahTranslation: meta['translation'] ?? '',
+      revelationType: meta['revelation_type'] ?? '',
       ayahs: rows.map(Ayah.fromDb).toList(),
     );
   }
+
   /// ===============================
   ///  GRAMMAR
   /// ===============================
@@ -124,8 +120,11 @@ final quranDataServiceProvider = Provider((ref) => QuranDataService());
 
 final allSurahsProvider =
     FutureProvider<List<SurahIndexInfo>>((ref) {
-  return ref.read(quranDataServiceProvider).getAllSurahIndex();
+  return ref
+      .read(quranDataServiceProvider)
+      .getAllSurahIndex();
 });
+
 
 final allPagesProvider =
     FutureProvider<List<PageIndexInfo>>((ref) {

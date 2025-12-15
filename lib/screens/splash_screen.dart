@@ -136,7 +136,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   child: Column(
                     children: [
                       Text(
-                        _randomAyah!.ayaText,
+                        _randomAyah!.arabicText,
                         textAlign: TextAlign.center,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -148,7 +148,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        _randomAyah!.translationAyaText,
+                        _randomAyah!.translation,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Poppins',

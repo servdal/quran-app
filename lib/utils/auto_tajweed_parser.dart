@@ -1,4 +1,3 @@
-// lib/utils/auto_tajweed_parser.dart
 import 'package:flutter/material.dart';
 import 'package:quran_app/theme/app_theme.dart';
 
@@ -10,6 +9,7 @@ import 'package:quran_app/theme/app_theme.dart';
 ///   ikhfa syafawi, qalqalah, and a simple mad detection (mad thabi'i).
 /// - Colors entire fragments (letter + diacritics) using AppTheme.tajweedColors.
 /// - Transfers tanwin visually to the next token when rule requires.
+// ignore: unintended_html_in_doc_comment
 /// - Returns List<TextSpan> to render in a RichText (TextDirection.rtl).
 ///
 /// Note: This is intentionally conservative — it focuses on reliable,
@@ -106,15 +106,7 @@ class AutoTajweedParser {
     // We'll keep track of which tokens have been colored/consumed.
     final int n = tokens.length;
 
-    // Utility: add token to output with style
-    void _emitTokenWithKey(int idx, String key) {
-      final t = tokens[idx];
-      final Color c = colorForKey(key, defaultColor);
-      final TextStyle style = baseStyle.copyWith(color: c);
-      out.add(TextSpan(text: t.full, style: style));
-    }
-
-    void _emitTokenRaw(int idx) {
+    void emitTokenRaw(int idx) {
       final t = tokens[idx];
       final TextStyle style = baseStyle.copyWith(color: defaultColor);
       out.add(TextSpan(text: t.full, style: style));
@@ -208,7 +200,7 @@ class AutoTajweedParser {
         final String nextDisplay = '${next.full}$tanwinChar';
 
         // Emit both tokens colored by ruleKey
-        final Color c = colorForKey(ruleKey!, defaultColor);
+        final Color c = colorForKey(ruleKey, defaultColor);
         final TextStyle ruleStyle = baseStyle.copyWith(color: c);
         out.add(TextSpan(text: currDisplay, style: ruleStyle));
         out.add(TextSpan(text: nextDisplay, style: ruleStyle));
@@ -233,13 +225,13 @@ class AutoTajweedParser {
       if (ruleKey == null) {
         // standalone qalqalah or madd that we earlier flagged (already covered some cases)
         // We'll emit raw token with default color.
-        _emitTokenRaw(i);
+        emitTokenRaw(i);
         i += 1;
         continue;
       }
 
       // Fallback: emit raw
-      _emitTokenRaw(i);
+      emitTokenRaw(i);
       i += 1;
     }
 

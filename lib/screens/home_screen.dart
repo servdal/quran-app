@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
+import 'package:quran_app/screens/language_selector_screen.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
@@ -24,7 +25,6 @@ import 'package:quran_app/screens/dzikir_screen.dart';
 import 'package:quran_app/services/notification_service.dart';
 import 'package:quran_app/screens/doa_screen.dart';
 import 'package:quran_app/screens/aqidah_screen.dart';
-import 'package:quran_app/screens/download_manager_screen.dart';
 import 'package:quran_app/screens/tafsir_surah_list_screen.dart';
 import 'package:quran_app/screens/qibla_screen.dart';
 import '../../services/quran_data_service.dart';
@@ -169,15 +169,14 @@ class PrayerCountdownCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 220, // 🔴 LEBIH BESAR
-      height: 220,
+      width: 180,
+      height: 180,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // 🔵 Lingkaran background
           Container(
-            width: 220,
-            height: 220,
+            width: 180,
+            height: 180,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Theme.of(context)
@@ -187,14 +186,13 @@ class PrayerCountdownCircle extends StatelessWidget {
             ),
           ),
 
-          // 🟢 Progress di tepi
           TweenAnimationBuilder<double>(
             tween: Tween(begin: 0, end: progress),
             duration: const Duration(milliseconds: 600),
             builder: (_, value, __) {
               return SizedBox(
-                width: 200,
-                height: 200,
+                width: 160,
+                height: 160,
                 child: CircularProgressIndicator(
                   value: value,
                   strokeWidth: 10,
@@ -211,7 +209,7 @@ class PrayerCountdownCircle extends StatelessWidget {
               Text(
                 _format(remaining),
                 style: const TextStyle(
-                  fontSize: 28,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -219,7 +217,7 @@ class PrayerCountdownCircle extends StatelessWidget {
               Text(
                 'Menuju $prayerName',
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 10,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -732,10 +730,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.cloud_download_outlined,
-          title: 'Unduh Audio',
+          title: 'Setting',
           color: Colors.blueGrey.shade400,
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const DownloadManagerScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const LanguageSelectorScreen()));
           },
         ),
       ],

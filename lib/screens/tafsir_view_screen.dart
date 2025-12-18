@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:quran_app/models/grammar_model.dart';
+import 'package:quran_app/utils/auto_tajweed_parser.dart';
 
 import '../models/ayah_model.dart';
 import '../widgets/grammar_popup.dart';
@@ -133,13 +134,20 @@ class _AyahBlock extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsProvider);
+    
     final baseStyle = TextStyle(
       fontFamily: 'LPMQ',
       fontSize: ref.watch(settingsProvider).arabicFontSize,
       height: 2.1,
     );
+    final isId = settings.language == 'id';
 
-    final spans = TajweedParser.parse(ayah.tajweedText, baseStyle);
+    final spans = isId
+        ? AutoTajweedParser.parse(ayah.arabicText, baseStyle)
+        : TajweedParser.parse(ayah.tajweedText, baseStyle);
+
+
 
     return Card(
       margin: const EdgeInsets.only(bottom: 32),

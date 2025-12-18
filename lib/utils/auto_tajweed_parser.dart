@@ -95,6 +95,7 @@ class AutoTajweedParser {
   /// baseStyle is used for text metrics, color will be replaced per rule.
   static List<TextSpan> parse(String ayaText, TextStyle baseStyle) {
     if (ayaText.isEmpty) return [];
+    ayaText = ayaText.replaceAll('\u200c', '').replaceAll('\u200b', '');
 
     final List<_Token> tokens = _tokenize(ayaText);
 
@@ -119,19 +120,18 @@ class AutoTajweedParser {
       out.add(TextSpan(text: t.full, style: style));
     }
 
-    // For tanwin transfer: when previous token has tanwin and rule requires transfer,
-    // we will render prev token without the tanwin and append tanwin to next token rendering.
-    // To avoid mutating tokens (we need them intact), we'll build the display strings locally.
-    // We'll iterate and decide per pair (i, i+1).
     int i = 0;
     while (i < n) {
       final curr = tokens[i];
+      if (curr.base == 'ٰ') {
+        out.add(TextSpan(text: curr.full, style: baseStyle.copyWith(color: defaultColor)));
+        i++;
+        continue;
+      }
       final next = (i + 1 < n) ? tokens[i + 1] : null;
 
-      // default: no rule
       String? ruleKey;
 
-      // detect if current token ends with tanwin or sukun
       final bool currHasTanwin = curr.hasTanwin;
       final bool currHasSukun = curr.hasSukun;
 

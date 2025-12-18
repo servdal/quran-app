@@ -86,12 +86,15 @@ class TajweedParser {
       if (glyph == 'ٮٰ') {
         return 'ى';
       }
+      //if (glyph == 'ٱ') {
+      //  if (next == 'ل' || next == 'h') return 'ا';
+      //  if (fullText != null && index != null && fullText.startsWith('[l[', index + 1)) {
+      //    return 'ا';
+      //  }
+      //  return 'ال';
+      //}
       if (glyph == 'ٱ') {
-        if (next == 'ل' || next == 'h') return 'ا';
-        if (fullText != null && index != null && fullText.startsWith('[l[', index + 1)) {
-          return 'ا';
-        }
-        return 'ال';
+        return 'ا'; 
       }
       if (glyph == smallAlef) {
         return daggerAlef;
@@ -256,7 +259,10 @@ class TajweedParser {
 
           // if innerText begins with fatha+smallAlef -> special daggerAlef handling
           if (innerText.length >= 2 && innerText[0] == fatha && innerText[1] == smallAlef) {
-            final bool hadF = removeTrailingFatha();
+            bool isLafadzAllah = buf.toString().endsWith('ل');
+            if (!isLafadzAllah) {
+                removeTrailingFatha(); 
+            }
             flushBufferWithTopColor();
             int j = end + 1;
             String diacs = '';

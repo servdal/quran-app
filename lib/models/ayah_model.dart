@@ -1,9 +1,9 @@
 class Ayah {
-  final int id; // aya_id
-  final int number; // aya_number
+  final int id;
+  final int number;
 
   final int surahId;
-  final String surahName; // latin / localized
+  final String surahName;
   final int juz;
   final int page;
 

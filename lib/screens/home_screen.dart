@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
+import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/screens/language_selector_screen.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
@@ -151,14 +152,16 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
 
 class PrayerCountdownCircle extends StatelessWidget {
   final Duration remaining;
-  final double progress; // 0.0 - 1.0
+  final double progress;
   final String prayerName;
+  final bool isId;
 
   const PrayerCountdownCircle({
     super.key,
     required this.remaining,
     required this.progress,
     required this.prayerName,
+    required this.isId,
   });
 
   String _format(Duration d) {
@@ -169,14 +172,14 @@ class PrayerCountdownCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 180,
-      height: 180,
+      width: 150,
+      height: 150,
       child: Stack(
         alignment: Alignment.center,
         children: [
           Container(
-            width: 180,
-            height: 180,
+            width: 150,
+            height: 150,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Theme.of(context)
@@ -191,8 +194,8 @@ class PrayerCountdownCircle extends StatelessWidget {
             duration: const Duration(milliseconds: 600),
             builder: (_, value, __) {
               return SizedBox(
-                width: 160,
-                height: 160,
+                width: 140,
+                height: 140,
                 child: CircularProgressIndicator(
                   value: value,
                   strokeWidth: 10,
@@ -215,11 +218,9 @@ class PrayerCountdownCircle extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                'Menuju $prayerName',
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                // Logika Bahasa
+                isId ? 'Menuju $prayerName' : 'Towards $prayerName',
+                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -324,7 +325,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-  
+    final settings = ref.watch(settingsProvider);
+    final isId = settings.language == 'id';
     ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
       next.whenData((prayerData) {
         final DateTime? closestTime = prayerData['closestTime'];
@@ -346,30 +348,34 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final bookmarks = ref.watch(bookmarkProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const FittedBox(
+        title: FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text("Al Quran Digital"),
+          child: Text(isId ? "Al Quran Digital" : "Digital Quran"),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.explore_outlined),
-            tooltip: 'Arah Kiblat',
+            tooltip: isId ? 'Arah Kiblat' : 'Qibla Direction',
             onPressed: _handleQiblaTap,
           ),
           IconButton(
             icon: const Icon(Icons.info_outline),
-            tooltip: 'Tentang Aplikasi',
+            tooltip: isId ? 'Tentang Aplikasi' : 'About App',
             onPressed: () {
               showAboutDialog(
                 context: context,
-                applicationName: 'Tafsir Jalalayn dengan Audio Gus Baha',
+                applicationName: isId 
+                    ? 'Tafsir Jalalayn dengan Audio Gus Baha' 
+                    : 'Jalalayn Tafsir with Gus Baha Audio',
                 applicationVersion: '3.0.5',
                 applicationIcon: const Icon(Icons.mosque_rounded, size: 48),
                 applicationLegalese: '© 2025 Duidev Software House',
                 children: <Widget>[
                   const SizedBox(height: 24),
-                  const Text(
-                    'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya. Malang, 16 Desember 2025',
+                  Text(
+                    isId 
+                    ? 'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya.'
+                    : 'This application provides Quranic exegesis (Jalalayn) with audio by KH. Bahauddin Nursalim (Gus Baha) along with Quranic text and translations.',
                     textAlign: TextAlign.justify,
                   ),
                   RichText(
@@ -380,7 +386,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         fontFamily: 'LPMQ',
                         fontSize: 14,
                       ),
-                      text: 'الاثنين , ٢٤ جُمادى الآخرة ١٤٤٧',
+                      text: 'الجمعة , ٢٨ جُمادى الآخرة ١٤٤٧',
                     ),
                   ),
                 ],
@@ -396,9 +402,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildHeader(context, theme),
+                _buildHeader(context, theme, isId),
                 const SizedBox(height: 24),
-                _buildSearchBar(context, theme),
+                _buildSearchBar(context, theme, isId),
                 const SizedBox(height: 16),
                 
                 prayerAsync.when(
@@ -414,21 +420,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Jadwal Sholat (${prayer["hijriDate"]})",
+                                Text(
+                                    "${isId ? 'Jadwal Sholat' : 'Prayer Times'} (${prayer["hijriDate"]})",
                                     style: theme.textTheme.titleMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Roboto'
-                                      )),
+                                        fontWeight: FontWeight.bold, fontFamily: 'Roboto')),
                                 if (prayer['isOffline'] == true)
-                                  const Tooltip(
-                                    message: 'Data offline',
-                                    child: Icon(Icons.cloud_off, size: 18, color: Colors.grey),
+                                  Tooltip(
+                                    message: isId ? 'Data offline' : 'Offline data',
+                                    child: const Icon(Icons.cloud_off, size: 18, color: Colors.grey),
                                   ),
                               ],
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "Lokasi: ${prayer["location"]}",
+                              "${isId ? 'Lokasi' : 'Location'}: ${prayer["location"]}",
                               style: theme.textTheme.bodySmall,
                             ),
                             const Divider(height: 16),
@@ -445,6 +450,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       prayer["closestTime"],
                                     ),
                                     prayerName: prayer["closestPrayer"],
+                                    isId: isId,
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
@@ -488,10 +494,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Gagal memuat jadwal sholat:\n${error.toString().replaceAll("Exception: ", "")}", 
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: theme.colorScheme.error),
-                      ),
+                              isId 
+                              ? "Gagal memuat jadwal sholat:\n${error.toString().replaceAll("Exception: ", "")}"
+                              : "Failed to load prayer times:\n${error.toString().replaceAll("Exception: ", "")}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: theme.colorScheme.error),
+                            ),
                     )
                   ),
                 ),
@@ -502,24 +510,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Tanda Baca Tersimpan',
+                        isId ? 'Tanda Baca Tersimpan' : 'Saved Bookmarks',
                         style: theme.textTheme.titleLarge
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 12),
                       ...bookmarks.entries.map((entry) {
                         return _buildBookmarkCard(
-                            context, ref, theme, entry.key, entry.value);
+                            context, ref, theme, entry.key, entry.value, isId);
                       }).toList(),
                       const SizedBox(height: 24),
                     ],
                   ),
 
               
-                _buildMenuGrid(context),
+                _buildMenuGrid(context, isId),
                 const SizedBox(height: 32),
                 
-                _buildDeveloperInfo(context),
+                _buildDeveloperInfo(context, isId),
               ],
             ),
           ),
@@ -527,7 +535,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-  Widget _buildHeader(BuildContext context, ThemeData theme) {
+  Widget _buildHeader(BuildContext context, ThemeData theme, bool isId) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -535,17 +543,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ],
     );
   }
-  Widget _buildSearchBar(BuildContext context, ThemeData theme) {
+  Widget _buildSearchBar(BuildContext context, ThemeData theme, bool isId) {
     return TextField(
-      decoration: const InputDecoration(
-        hintText: 'Cari surah atau terjemahan...',
-        prefixIcon: Icon(Icons.search),
+      decoration: InputDecoration(
+        hintText: isId ? 'Cari surah atau terjemahan...' : 'Search surah or translation...',
+        prefixIcon: const Icon(Icons.search),
       ),
       onChanged: _onSearchChanged,
     );
   }
   Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme,
-      String name, Bookmark bookmark) {
+      String name, Bookmark bookmark, bool isId) {
     final cardColor = theme.brightness == Brightness.light
         ? theme.primaryColor
         : theme.colorScheme.surface;
@@ -567,17 +575,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             style: TextStyle(color: onCardColor.withOpacity(0.8))),
         trailing: IconButton(
           icon: Icon(Icons.delete_outline, color: onCardColor),
-          tooltip: 'Hapus Bookmark',
+          tooltip: isId ? 'Hapus Bookmark' : 'Remove Bookmark',
           onPressed: () {
             showDialog(
               context: context,
               builder: (dialogContext) => AlertDialog(
-                title: const Text('Hapus Bookmark?'),
-                content: Text('Anda yakin ingin menghapus bookmark "$name"?'),
+                title: Text(isId ? 'Hapus Bookmark?' : 'Delete Bookmark?'),
+                content: Text(isId 
+                  ? 'Anda yakin ingin menghapus bookmark "$name"?' 
+                  : 'Are you sure you want to delete bookmark "$name"?'),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(dialogContext).pop(),
-                    child: const Text('Batal'),
+                    child: Text(isId ? 'Batal' : 'Cancel'),
                   ),
                   TextButton(
                     onPressed: () {
@@ -585,10 +595,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       Navigator.of(dialogContext).pop();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text('Bookmark "$name" telah dihapus.')),
+                            content: Text(isId 
+                          ? 'Bookmark "$name" telah dihapus.' 
+                          : 'Bookmark "$name" deleted.')),
                       );
                     },
-                    child: const Text('Hapus'),
+                    child: Text(isId ? 'Hapus' : 'Delete'),
                   ),
                 ],
               ),
@@ -647,7 +659,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-  Widget _buildMenuGrid(BuildContext context) {
+  Widget _buildMenuGrid(BuildContext context, bool isId) {
     return GridView.count(
       crossAxisCount: 2, 
       shrinkWrap: true,
@@ -658,7 +670,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         _MenuTile(
           icon: Icons.list_alt_rounded,
-          title: 'Lihat per Surah',
+          title: isId ? 'Lihat per Surah' : 'Browse by Surah',
           color: Colors.teal.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahListScreen()));
@@ -666,7 +678,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.auto_stories_rounded,
-          title: 'Lihat per Halaman',
+          title: isId ? 'Lihat per Halaman' : 'Browse by Page',
           color: Colors.blue.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen()));
@@ -674,7 +686,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.menu_book,
-          title: 'Belajar Nahwu',
+          title: isId ? 'Belajar Nahwu' : 'Learn Nahwu',
           color: Colors.brown.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const TafsirSurahListScreen()));
@@ -682,7 +694,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.menu_book_rounded,
-          title: 'AlQuran Klasik',
+          title: isId ? 'AlQuran Klasik' : 'Classic Quran',
           color: Colors.indigo.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen(mode: PageListViewMode.deresan)));
@@ -690,7 +702,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.color_lens_outlined,
-          title: 'Glosarium Tajwid',
+          title: isId ? 'Glosarium Tajwid' : 'Tajwid Glossary',
           color: Colors.purple.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const GlossaryScreen()));
@@ -698,7 +710,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.wb_sunny_outlined,
-          title: 'Dzikir Pagi',
+          title: isId ? 'Dzikir Pagi' : 'Morning Dhikr',
           color: Colors.orange.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const DzikirScreen(type: DzikrType.pagi)));
@@ -706,7 +718,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.nights_stay_outlined,
-          title: 'Dzikir Petang',
+          title: isId ? 'Dzikir Petang' : 'Evening Dhikr',
           color: Colors.deepPurple.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const DzikirScreen(type: DzikrType.petang)));
@@ -714,7 +726,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.volunteer_activism_rounded,
-          title: 'Kumpulan Doa',
+          title: isId ? 'Kumpulan Doa' : 'Daily Prayers (Dua)',
           color: Colors.green.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const DoaScreen()));
@@ -730,7 +742,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _MenuTile(
           icon: Icons.cloud_download_outlined,
-          title: 'Setting',
+          title: isId ? 'Pengaturan' : 'Settings',
           color: Colors.blueGrey.shade400,
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const LanguageSelectorScreen()));
@@ -739,10 +751,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ],
     );
   }
-  Widget _buildDeveloperInfo(BuildContext context) {
+  Widget _buildDeveloperInfo(BuildContext context, bool isId) {
     final Uri githubUrl = Uri.parse('https://github.com/servdal/quran-app');
 
-    Future<void> _launchUrl() async {
+    Future<void> menujuGitHub() async {
       if (!await launchUrl(githubUrl, mode: LaunchMode.externalApplication)) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -755,18 +767,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Column(
       children: [
         Text(
-          'Dikembangkan dengan ❤️ oleh Duidev Software House',
+          isId 
+          ? 'Dikembangkan dengan ❤️ oleh Duidev Software House' 
+          : 'Developed with ❤️ by Duidev Software House',
           style: Theme.of(context).textTheme.bodySmall,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
         InkWell(
-          onTap: _launchUrl,
+          onTap: menujuGitHub,
           borderRadius: BorderRadius.circular(8),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             child: Text(
-              'Bantu kembangkan di https://github.com/servdal/quran-app',
+              isId 
+              ? 'Bantu kembangkan di https://github.com/servdal/quran-app'
+              : 'Contribute at https://github.com/servdal/quran-app',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,

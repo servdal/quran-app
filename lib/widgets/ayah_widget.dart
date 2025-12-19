@@ -49,15 +49,21 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   void _bookmarkDialog() {
     final controller = TextEditingController();
     final existing = ref.read(bookmarkProvider).keys.toList();
-
+    final settings = ref.watch(settingsProvider);
+    final isId = settings.language == 'id';
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Simpan Bookmark'),
+        title: Text(isId ? 'Simpan Bookmark' : 'Save Bookmark'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: controller),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: isId ? 'Beri nama...' : 'Enter name...',
+              ),
+            ),
             const SizedBox(height: 8),
             ...existing.map(
               (e) => ListTile(
@@ -73,7 +79,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Batal'),
+            child: Text(isId ? 'Batal' : 'Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -82,7 +88,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
                 Navigator.pop(context);
               }
             },
-            child: const Text('Simpan'),
+            child: Text(isId ? 'Simpan' : 'Save'),
           ),
         ],
       ),
@@ -97,6 +103,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
     final theme = Theme.of(context);
+
     final baseArabicStyle = TextStyle(
       fontFamily: 'LPMQ',
       fontSize: settings.arabicFontSize,
@@ -114,7 +121,11 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       children: [
         ListTile(
           leading: CircleAvatar(child: Text(widget.ayah.number.toString())),
-          title: Text('Juz ${widget.ayah.juz} page ${widget.ayah.page}'),
+          title: Text(
+            isId 
+             ? 'Juz ${widget.ayah.juz} | Hal ${widget.ayah.page}'
+             : 'Juz ${widget.ayah.juz} | Page ${widget.ayah.page}'
+          ),
           trailing: IconButton(
             icon: const Icon(Icons.bookmark_add_outlined),
             onPressed: _bookmarkDialog,
@@ -125,11 +136,11 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
           length: 4,
           child: Column(
             children: [
-              const TabBar(
+              TabBar(
                 isScrollable: true,
                 tabs: [
-                  Tab(text: 'Teks'),
-                  Tab(text: 'Terjemah'),
+                  Tab(text: isId ? 'Teks' : 'Text'),
+                  Tab(text: isId ? 'Terjemah' : 'Translation'),
                   Tab(text: 'Tafsir'),
                   Tab(text: 'Audio'),
                 ],
@@ -141,7 +152,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
                     _tabText(spans),
                     _tabTranslation(),
                     _tabTafsir(),
-                    _tabAudio(),
+                    _tabAudio(isId),
                   ],
                 ),
               ),
@@ -217,7 +228,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     );
   }
 
-  Widget _tabAudio() {
+  Widget _tabAudio(bool isId) {
     
     final videoId = YoutubePlayer.convertUrlToId(
       'https://www.youtube.com/watch?v=fM7BQNV6koc&list=PLdfZWRI2eOVYYEkjAqrGm7AgWuPn_26jk',
@@ -227,7 +238,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
       return const Center(child: Text('Video tidak valid'));
     }
 
-    return YoutubeAudioTab(videoId: videoId);
+    return YoutubeAudioTab(videoId: videoId, isId: isId);
   }
 
   void _snack(String msg) {
@@ -239,10 +250,12 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
 
 class YoutubeAudioTab extends StatefulWidget {
   final String videoId;
+  final bool isId;
 
   const YoutubeAudioTab({
     super.key,
     required this.videoId,
+    this.isId = true,
   });
 
   @override
@@ -277,9 +290,9 @@ class _YoutubeAudioTabState extends State<YoutubeAudioTab> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'Tilawah via YouTube',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        Text(
+          widget.isId ? 'Audio via YouTube' : 'Audio via YouTube',
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         YoutubePlayer(

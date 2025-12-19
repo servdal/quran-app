@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quran_app/providers/settings_provider.dart'; // Pastikan import ini ada
 import 'home_screen.dart';
 
-class LanguageSelectorScreen extends StatelessWidget {
+// 1. Ubah menjadi ConsumerWidget
+class LanguageSelectorScreen extends ConsumerWidget {
   const LanguageSelectorScreen({super.key});
 
-  Future<void> _setLanguage(BuildContext context, String lang) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('selected_language', lang);
+  Future<void> _setLanguage(BuildContext context, WidgetRef ref, String lang) async {
+    // 2. Panggil fungsi di provider untuk update State & SharedPreferences sekaligus
+    // (Asumsi provider Anda memiliki method setLanguage, lihat poin 2 di bawah)
+    await ref.read(settingsProvider.notifier).setLanguage(lang);
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
-    );
+    // 3. Navigasi balik (gunakan pushReplacement atau pop)
+    if (context.mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) { // Tambahkan parameter ref
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -33,10 +39,11 @@ class LanguageSelectorScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              _buildLangButton(context, "Bahasa Indonesia", "id"),
+              // Kirim ref ke fungsi
+              _buildLangButton(context, ref, "Bahasa Indonesia", "id"),
               const SizedBox(height: 16),
 
-              _buildLangButton(context, "English", "en"),
+              _buildLangButton(context, ref, "English", "en"),
               const SizedBox(height: 32),
             ],
           ),
@@ -45,11 +52,11 @@ class LanguageSelectorScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLangButton(BuildContext context, String label, String code) {
+  Widget _buildLangButton(BuildContext context, WidgetRef ref, String label, String code) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () => _setLanguage(context, code),
+        onPressed: () => _setLanguage(context, ref, code),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 14),
         ),

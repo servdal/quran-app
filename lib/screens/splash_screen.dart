@@ -5,10 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:geolocator/geolocator.dart';
 import 'package:quran_app/services/notification_service.dart';
+import 'package:quran_app/theme/app_theme.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/screens/home_screen.dart';
 import 'package:quran_app/services/quran_data_service.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -19,8 +21,8 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   Ayah? _randomAyah;
-  final String _loadingMessage = 'Mempersiapkan aplikasi...';
-
+  List<double> lottieColor(Color c) =>
+    [c.red / 255, c.green / 255, c.blue / 255, c.opacity];
   @override
   void initState() {
     super.initState();
@@ -39,21 +41,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     await Future.delayed(const Duration(seconds: 5));
 
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    }
     if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
       await NotificationService().init();
       tz.initializeTimeZones();
     }
     await _requestAllPermissions();
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    }
+    await Future.delayed(const Duration(seconds: 3));
+    if (!mounted) return;
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const HomeScreen()),
+    );
   }
   Future<void> _requestAllPermissions() async {
     try {
@@ -72,51 +70,55 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final Size screenSize = MediaQuery.of(context).size;
-
+    
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-          child: Column(
+          child: 
+          Column(
             children: [
-              Image.asset('assets/images/mascot.png', height: screenSize.height * 0.15),
+              Image.asset(
+                'assets/images/mascot.png',
+                height: screenSize.height * 0.12,
+              ),
+              const SizedBox(height: 12),
+              Lottie.asset(
+                'assets/lottie/loading_robot_quran.json',
+                width: 180,
+                repeat: true,
+                delegates: LottieDelegates(
+                  values: [
+                    /// Glow → primary / jalalah
+                    ValueDelegate.color(
+                      const ['Glow', 'Glow Fill', 'Color'],
+                      value: theme.brightness == Brightness.dark
+                          ? AppTheme.tajweedColors['jalalah']!.withOpacity(0.6)
+                          : theme.colorScheme.primary,
+                    ),
+
+                    /// Robot body → surface
+                    ValueDelegate.color(
+                      const ['Robot', 'Robot Fill', 'Color'],
+                      value: theme.colorScheme.surface,
+                    ),
+
+                    /// Mushaf → secondary
+                    ValueDelegate.color(
+                      const ['Mushaf', 'Mushaf Fill', 'Color'],
+                      value: theme.colorScheme.secondary,
+                    ),
+                  ],
+                ),
+              ),
+
               const SizedBox(height: 16),
-              
               Text(
                 'Al-Quran Digital',
-                style: theme.textTheme.headlineLarge?.copyWith(
-                  fontSize: 32,
-                  color: theme.primaryColor,
-                  letterSpacing: 1.5,
-                  shadows: [
-                    Shadow(
-                      offset: const Offset(0, 0),
-                      blurRadius: 15.0,
-                      color: theme.primaryColor.withOpacity(0.5),
-                    ),
-                  ],
-                ),
+                style: theme.textTheme.headlineLarge,
               ),
-              const SizedBox(height: 40),
-
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      color: theme.primaryColor,
-                      strokeWidth: 4,
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      _loadingMessage,
-                      style: TextStyle(fontSize: 16, color: theme.textTheme.bodyMedium?.color),
-                    ),
-                  ],
-                ),
-              ),
-
+              const SizedBox(height: 24),
               if (_randomAyah != null)
                 Container(
                   padding: const EdgeInsets.all(16.0),

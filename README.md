@@ -8,15 +8,16 @@ Aplikasi ini dibangun dengan **Flutter** dan dirancang agar **intuitif, cepat, d
 ## ✨ Fitur Utama
 
 ✅ **Mode Membaca Quran**
--   **Mushaf**: Tampilan per halaman seperti Al-Quran cetak.
+-   **Per Halaman**: Tampilan per halaman seperti Al-Quran cetak.
 -   **Per Surah**: Tampilan standar berdasarkan surah.
--   **Deresan**: Mode khusus untuk mengulang-ulang hafalan (tilawah).
+-   **Klasik**: Mode Klasik AlQuran
+-   **Belajar**: Mode Belajar Tajwid dan Nahwu di AlQuran
 
 ✅ **Detail Ayat Lengkap (4 Tab)**
 -   **Teks**: Teks Arab dengan pewarnaan **Tajwid** dan transliterasi Latin.
 -   **Arti**: Terjemahan Bahasa Indonesia.
--   **Tafsir**: Tafsir Jalalayn.
--   **Audio**: Lantunan ayat per ayat oleh KH. Bahauddin Nursalim (Gus Baha), sepenuhnya offline.
+-   **Tafsir**: Tafsir Jalalayn. (versi inggris sumber dari : [https://www.academia.edu/39891639/Al_Jalalain_Eng](https://www.academia.edu/39891639/Al_Jalalain_Eng))
+-   **Audio**: oleh KH. Bahauddin Nursalim (Gus Baha), sumber [https://www.youtube.com/@officiallp3ia](https://www.youtube.com/@officiallp3ia).
 
 ✅ **Fitur Pelengkap Ibadah**
 -   **Jadwal Sholat & Countdown**: Waktu sholat akurat berdasarkan lokasi dengan hitung mundur ke waktu sholat berikutnya.
@@ -27,7 +28,7 @@ Aplikasi ini dibangun dengan **Flutter** dan dirancang agar **intuitif, cepat, d
 
 ✅ **Personalisasi & Navigasi**
 -   **Pencarian Cerdas**: Cari surah berdasarkan nama atau terjemahan ayat.
--   **Bookmark**: Tandai bacaan terakhir untuk dilanjutkan kembali.
+-   **Bookmark**: Tandai bacaan terakhir untuk dilanjutkan kembali. (support multiple bookmark)
 -   **Ukuran Font**: Sesuaikan ukuran font Arab demi kenyamanan mata.
 -   **Navigasi Mudah**: Tombol "Berikutnya" & "Sebelumnya" untuk berpindah antar surah atau halaman.
 
@@ -52,7 +53,7 @@ Aplikasi ini dibangun dengan **Flutter** dan dirancang agar **intuitif, cepat, d
 
 Aplikasi ini adalah hasil kolaborasi antara kecerdasan buatan dan kreativitas manusia.
 
--   Dibangun oleh: **Gemini (AI Google)**
+-   Dibangun oleh: **Gemini** dan **ChatGPT**
 -   Prompt oleh: **Duidev Software House**
 
 ---

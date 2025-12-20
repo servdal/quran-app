@@ -69,7 +69,9 @@ class QuranRepository {
     final translitCol = lang == 'id'
         ? 'transliteration_kemenag'
         : 'transliteration';
-
+    final tafsirCol = lang == 'id'
+        ? 'tafsir_jalalayn'
+        : 'tafsir_jalalayn_en';
     return await db.rawQuery('''
       SELECT
         aya_id,
@@ -80,8 +82,8 @@ class QuranRepository {
         $textCol AS aya_text,
         $translationCol AS translation,
         $translitCol AS transliteration,
+        $tafsirCol AS tafsir,
         tajweed_text,
-        tafsir_jalalayn,
         sura_name
       FROM merged_aya
       WHERE sura_id = ?
@@ -103,7 +105,9 @@ class QuranRepository {
     final translitCol = lang == 'id'
         ? 'transliteration_kemenag'
         : 'transliteration';
-
+    final tafsirCol = lang == 'id'
+        ? 'tafsir_jalalayn'
+        : 'tafsir_jalalayn_en';
     return await db.rawQuery('''
       SELECT
         aya_id,
@@ -114,8 +118,8 @@ class QuranRepository {
         $textCol AS aya_text,
         $translationCol AS translation,
         $translitCol AS transliteration,
+        $tafsirCol AS tafsir_jalalayn,
         tajweed_text,
-        tafsir_jalalayn,
         sura_name
       FROM merged_aya
       WHERE page_number = ?

@@ -289,7 +289,7 @@ class _DeresanHeader extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Halaman $currentPage',
+            'Page $currentPage',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,

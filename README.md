@@ -1,85 +1,101 @@
-# 📖 Al-Quran Digital & Kumpulan Doa
-
-Selamat datang di **Al-Quran Digital**, sebuah aplikasi sumber terbuka (**open-source**) yang dirancang untuk menjadi teman sehari-hari Anda dalam membaca, mempelajari, dan merenungi ayat-ayat suci Al-Quran beserta tuntunan ibadah lainnya.
-Aplikasi ini dibangun dengan **Flutter** dan dirancang agar **intuitif, cepat, dan kaya fitur**.
+# 🏆 Mushaf  
+### Digital Qur’an & Islamic Companion
 
 ---
 
-## ✨ Fitur Utama
+## 🇮🇩 Bahasa Indonesia
 
-✅ **Mode Membaca Quran**
--   **Per Halaman**: Tampilan per halaman seperti Al-Quran cetak.
--   **Per Surah**: Tampilan standar berdasarkan surah.
--   **Klasik**: Mode Klasik AlQuran
--   **Belajar**: Mode Belajar Tajwid dan Nahwu di AlQuran
+**Mushaf** adalah aplikasi **open-source** yang dirancang sebagai **pendamping ibadah digital** untuk membantu umat Muslim membaca, mempelajari, dan merenungi Al-Qur’an, sekaligus mendukung aktivitas ibadah harian dalam satu aplikasi terpadu.
 
-✅ **Detail Ayat Lengkap (4 Tab)**
--   **Teks**: Teks Arab dengan pewarnaan **Tajwid** dan transliterasi Latin.
--   **Arti**: Terjemahan Bahasa Indonesia.
--   **Tafsir**: Tafsir Jalalayn. (versi inggris sumber dari : [https://www.academia.edu/39891639/Al_Jalalain_Eng](https://www.academia.edu/39891639/Al_Jalalain_Eng))
--   **Audio**: oleh KH. Bahauddin Nursalim (Gus Baha), sumber [https://www.youtube.com/@officiallp3ia](https://www.youtube.com/@officiallp3ia).
-
-✅ **Fitur Pelengkap Ibadah**
--   **Jadwal Sholat & Countdown**: Waktu sholat akurat berdasarkan lokasi dengan hitung mundur ke waktu sholat berikutnya.
--   **Dzikir Pagi & Petang**: Kumpulan dzikir pagi dan petang yang bersumber dari Al-Quran, lengkap dengan teks Arab bertajwid.
--   **Kumpulan Doa**: Puluhan doa-doa pilihan dari Al-Quran, dikelompokkan berdasarkan tema beserta adab berdoa.
--   **Aqidatul Awam**: Nadham (syair) lengkap mengenai dasar-dasar ilmu aqidah Islam.
--   **Glosarium Tajwid**: Penjelasan lengkap hukum-hukum tajwid beserta contohnya.
-
-✅ **Personalisasi & Navigasi**
--   **Pencarian Cerdas**: Cari surah berdasarkan nama atau terjemahan ayat.
--   **Bookmark**: Tandai bacaan terakhir untuk dilanjutkan kembali. (support multiple bookmark)
--   **Ukuran Font**: Sesuaikan ukuran font Arab demi kenyamanan mata.
--   **Navigasi Mudah**: Tombol "Berikutnya" & "Sebelumnya" untuk berpindah antar surah atau halaman.
-
-✅ **Lainnya**
--   Penanda **ayat sajdah**.
--   Fitur **berbagi ayat** lengkap (teks Arab, arti, tafsir).
+Aplikasi ini dibangun menggunakan **Flutter** dan dirancang agar **intuitif, cepat, modern**, serta dapat digunakan lintas platform.
 
 ---
 
-## 🛠️ Teknologi
+### ✨ Fitur Utama
 
--   **Framework**: Flutter
--   **Manajemen State**: Riverpod
--   **Data Al-Quran & Tafsir**: Olahan data dari berbagai sumber API.
--   **Pewarnaan Tajwid**: Parsing sisi klien dari data mentah.
--   **Jadwal Sholat**: Aladhan Prayer Times API
--   **Notifikasi**: flutter_local_notifications
+#### 📖 Mode Membaca Al-Qur’an
+- **Per Halaman** — Tampilan mushaf per halaman seperti Al-Qur’an cetak.
+- **Per Surah** — Tampilan standar berbasis surah dan ayat.
+- **Mode Klasik** — Nuansa mushaf klasik.
+- **Mode Belajar** — Pembelajaran Tajwid dan Nahwu langsung pada ayat.
 
----
+#### 🧾 Detail Ayat Lengkap (4 Tab)
+- **Teks** — Teks Arab dengan **pewarnaan Tajwid** dan transliterasi Latin.  
+- **Arti** — Terjemahan Bahasa Indonesia.  
+- **Tafsir** — Tafsir **Jalalayn**  
+- **Audio** — Audio oleh **KH. Bahauddin Nursalim (Gus Baha)**  
 
-## 👨‍💻 Pengembang
 
-Aplikasi ini adalah hasil kolaborasi antara kecerdasan buatan dan kreativitas manusia.
+#### 🕌 Fitur Pendukung Ibadah
+- **Jadwal Sholat & Countdown** berbasis lokasi.
+- **Dzikir Pagi & Petang** bersumber dari Al-Qur’an.
+- **Kumpulan Doa** tematik beserta adab berdoa.
+- **Aqidatul Awam** (nadham aqidah).
+- **Glosarium Tajwid** lengkap dengan contoh.
 
--   Dibangun oleh: **Gemini** dan **ChatGPT**
--   Prompt oleh: **Duidev Software House**
+#### ⚙️ Personalisasi & Navigasi
+- **Pencarian Cerdas** surah & ayat.
+- **Bookmark Multi-Level**.
+- **Pengaturan Ukuran Font Arab**.
+- **Navigasi Cepat** antar ayat, halaman, dan surah.
 
----
-
-## 🚀 Deploy
-
-Aplikasi ini tersedia di beberapa platform berikut:
-
--   **Android**: [Google Play Store](https://play.google.com/store/apps/details?id=alquran.duidev.com)
--   **Website**: [duidev-project.web.app](https://duidev-project.web.app)
--   **Asset Kamus**: [Please Request](https://drive.google.com/file/d/1tCMC8OJXBu99KYGfcsMUaIXb8S5_8ybU/view?usp=sharing)
-
----
-
-## 📜 Lisensi
-
-Aplikasi ini sepenuhnya **GRATIS** dan **Open-Source**.
-Anda bebas mengunduh, menggunakan, memodifikasi, dan menyebarluaskan aplikasi ini untuk tujuan apa pun.
+#### 🔖 Fitur Tambahan
+- Penanda **ayat sajdah**.
+- **Berbagi ayat** (teks Arab, arti, dan tafsir).
 
 ---
 
-## ☕ Dukung Pengembangan
+### 🛠️ Teknologi
+- **Framework**: Flutter  
+- **State Management**: Riverpod  
+- **Data Al-Qur’an & Tafsir**: Olahan dari berbagai sumber API  
+- **Pewarnaan Tajwid**: Client-side parsing  
+- **Jadwal Sholat**: Aladhan Prayer Times API  
+- **Notifikasi**: flutter_local_notifications  
 
-Jika aplikasi ini bermanfaat bagi Anda, silakan berdonasi untuk mendukung update di masa mendatang.
+---
 
-**Scan QRIS berikut untuk berdonasi:**
+### 📚 Sumber Data & Referensi
+
+Aplikasi Mushaf memanfaatkan dan mengolah data dari berbagai sumber terpercaya, antara lain:
+
+1. **Kementerian Agama Republik Indonesia**  
+   https://quran.kemenag.go.id/  
+   (Font, Teks Arab dan Terjememah Indonesia)
+
+2. **AlQuran Cloud API**  
+   https://alquran.cloud/  
+   (Referensi mushaf, terjemahan, dan struktur Al-Qur’an)
+
+3. **Tafsir Jalalayn (English Translation)**  
+   https://www.academia.edu/39891639/Al_Jalalain_Eng  
+
+4. **Audio Kajian & Murattal**  
+   KH. Bahauddin Nursalim (Gus Baha)  
+   https://www.youtube.com/@officiallp3ia  
+
+5. **Sumber-sumber lain**  
+   Beberapa data tambahan diperoleh dari referensi terbuka (open sources), literatur Islam, dan kontribusi komunitas yang belum seluruhnya tercatat secara eksplisit.  
+   Apabila terdapat sumber yang terlewat, silakan menghubungi pengembang untuk penambahan atribusi yang sesuai.
+
+---
+
+### 🚀 Distribusi
+- **Android**  
+  https://play.google.com/store/apps/details?id=alquran.duidev.com  
+- **Web**  
+  https://duidev-project.web.app  
+
+---
+
+### 📜 Lisensi
+Mushaf adalah aplikasi **GRATIS & Open-Source**.  
+Anda bebas menggunakan, memodifikasi, dan mendistribusikan ulang aplikasi ini untuk tujuan apa pun.
+
+---
+
+### ☕ Dukung Pengembangan
+Jika Mushaf bermanfaat bagi Anda, silakan berdonasi untuk mendukung pengembangan selanjutnya.
 
 <p align="center">
   <img src="https://masjidi.duidev.com/qrcodeduidev.png" alt="QRIS Donasi" width="300">
@@ -87,4 +103,83 @@ Jika aplikasi ini bermanfaat bagi Anda, silakan berdonasi untuk mendukung update
 
 ---
 
-🙏 Terima kasih atas dukungan dan doanya. Semoga aplikasi ini memberi manfaat bagi banyak orang.
+## 🇬🇧 English Version
+
+**Mushaf** is an **open-source digital Islamic companion app** designed to help Muslims read, study, and reflect upon the Qur’an, while also supporting daily worship activities in a single, integrated application.
+
+Built with **Flutter**, Mushaf delivers a **fast, intuitive, and modern** experience across multiple platforms.
+
+---
+
+### ✨ Key Features
+
+#### 📖 Qur’an Reading Modes
+- **Page View** — Mushaf-style page layout like the printed Qur’an.
+- **Surah View** — Standard verse-by-verse reading.
+- **Classic Mode** — Traditional mushaf appearance.
+- **Learning Mode** — Tajweed and Nahwu learning directly on verses.
+
+#### 🧾 Complete Ayah Details (4 Tabs)
+- **Text** — Arabic text with **Tajweed color highlighting** and Latin transliteration.  
+- **Translation** — Indonesian translation.  
+- **Tafsir** — **Tafsir Jalalayn**  
+- **Audio** — Audio by **KH. Bahauddin Nursalim (Gus Baha)**  
+
+#### 🕌 Worship Companion Features
+- **Prayer Times & Countdown** based on user location.
+- **Morning & Evening Dhikr** sourced from the Qur’an.
+- **Collection of Du’a** categorized by themes.
+- **Aqidatul Awam** (Islamic creed poem).
+- **Tajweed Glossary** with explanations and examples.
+
+---
+
+### 🛠️ Tech Stack
+- **Framework**: Flutter  
+- **State Management**: Riverpod  
+- **Qur’an & Tafsir Data**: Processed from multiple API sources  
+- **Tajweed Highlighting**: Client-side parsing  
+- **Prayer Times**: Aladhan Prayer Times API  
+- **Notifications**: flutter_local_notifications  
+
+---
+
+### 📚 Data Sources & References
+
+Mushaf utilizes and processes data from several trusted sources, including:
+
+1. **Ministry of Religious Affairs of the Republic of Indonesia**  
+   https://quran.kemenag.go.id/
+
+2. **AlQuran Cloud API**  
+   https://alquran.cloud/
+
+3. **Tafsir Jalalayn (English Translation)**  
+   https://www.academia.edu/39891639/Al_Jalalain_Eng
+
+4. **Audio Lectures & Recitations**  
+   KH. Bahauddin Nursalim (Gus Baha)  
+   https://www.youtube.com/@officiallp3ia
+
+5. **Other references**  
+   Additional data are sourced from various open references, Islamic literature, and community contributions that may not yet be fully documented.  
+   If any attribution is missing, please contact the developer for proper acknowledgment.
+
+---
+
+### 👨‍💻 Contributors
+This project is a collaboration between **human creativity** and **artificial intelligence**.
+
+- **Built with**: Gemini & ChatGPT  
+- **Prompt & Direction**: Duidev Software House  
+
+---
+
+### 📜 License
+Mushaf is **FREE & Open-Source** software.  
+You are free to use, modify, and redistribute it for any purpose.
+
+---
+
+🙏  
+May **Mushaf** become a source of benefit, guidance, and blessing for all.

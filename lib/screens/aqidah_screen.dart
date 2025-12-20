@@ -29,11 +29,6 @@ class AqidahScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Tentang Kitab",
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    const Divider(height: 16),
-                    Text(
                       aqidahMuqaddimah,
                       textAlign: TextAlign.justify,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5),

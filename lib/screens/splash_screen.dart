@@ -18,6 +18,52 @@ class SplashScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
+class HybridLottieLogo extends StatelessWidget {
+  final double size;
+
+  const HybridLottieLogo({super.key, this.size = 200});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final glowColor = theme.brightness == Brightness.dark
+        ? AppTheme.tajweedColors['jalalah']!.withOpacity(0.6)
+        : theme.colorScheme.primary;
+
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          /// Glow animation
+          Lottie.asset(
+            'assets/lottie/glow_pulse_theme.json',
+            width: size,
+            height: size,
+            repeat: true,
+            delegates: LottieDelegates(
+              values: [
+                ValueDelegate.color(
+                  const ['Glow', 'Glow Fill', 'Color'],
+                  value: glowColor,
+                ),
+              ],
+            ),
+          ),
+
+          /// Robot + Mushaf PNG
+          Image.asset(
+            'assets/mascot.png',
+            width: size * 0.72,
+            fit: BoxFit.contain,
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   Ayah? _randomAyah;
@@ -69,7 +115,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final Size screenSize = MediaQuery.of(context).size;
     
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -79,43 +124,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           child: 
           Column(
             children: [
-              Image.asset(
-                'assets/images/mascot.png',
-                height: screenSize.height * 0.12,
+              HybridLottieLogo(
+                size: 220,
               ),
-              const SizedBox(height: 12),
-              Lottie.asset(
-                'assets/lottie/loading_robot_quran.json',
-                width: 180,
-                repeat: true,
-                delegates: LottieDelegates(
-                  values: [
-                    /// Glow → primary / jalalah
-                    ValueDelegate.color(
-                      const ['Glow', 'Glow Fill', 'Color'],
-                      value: theme.brightness == Brightness.dark
-                          ? AppTheme.tajweedColors['jalalah']!.withOpacity(0.6)
-                          : theme.colorScheme.primary,
-                    ),
-
-                    /// Robot body → surface
-                    ValueDelegate.color(
-                      const ['Robot', 'Robot Fill', 'Color'],
-                      value: theme.colorScheme.surface,
-                    ),
-
-                    /// Mushaf → secondary
-                    ValueDelegate.color(
-                      const ['Mushaf', 'Mushaf Fill', 'Color'],
-                      value: theme.colorScheme.secondary,
-                    ),
-                  ],
-                ),
-              ),
-
               const SizedBox(height: 16),
               Text(
-                'Al-Quran Digital',
+                'Mushaf',
                 style: theme.textTheme.headlineLarge,
               ),
               const SizedBox(height: 24),

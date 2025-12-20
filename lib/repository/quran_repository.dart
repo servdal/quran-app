@@ -66,7 +66,9 @@ class QuranRepository {
     final translationCol = lang == 'id'
         ? 'translation_aya_text_kemenag'
         : 'translation_aya_text';
-    final translitCol = 'COALESCE(transliteration_kemenag, transliteration)';
+    final translitCol = lang == 'id'
+        ? 'transliteration_kemenag'
+        : 'transliteration';
 
     return await db.rawQuery('''
       SELECT
@@ -76,7 +78,7 @@ class QuranRepository {
         page_number,
         juz_id,
         $textCol AS aya_text,
-        $translationCol AS translation_aya_text,
+        $translationCol AS translation,
         $translitCol AS transliteration,
         tajweed_text,
         tafsir_jalalayn,
@@ -98,7 +100,9 @@ class QuranRepository {
     final translationCol = lang == 'id'
         ? 'translation_aya_text_kemenag'
         : 'translation_aya_text';
-    final translitCol = 'COALESCE(transliteration_kemenag, transliteration)';
+    final translitCol = lang == 'id'
+        ? 'transliteration_kemenag'
+        : 'transliteration';
 
     return await db.rawQuery('''
       SELECT
@@ -108,7 +112,7 @@ class QuranRepository {
         page_number,
         juz_id,
         $textCol AS aya_text,
-        $translationCol AS translation_aya_text,
+        $translationCol AS translation,
         $translitCol AS transliteration,
         tajweed_text,
         tafsir_jalalayn,

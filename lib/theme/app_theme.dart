@@ -22,6 +22,11 @@ class AppTheme {
         color: Color(0xFFAAAAAA),
         description: 'Hamzah yang diucapkan saat memulai bacaan, namun tidak diucapkan saat berada di tengah kalimat.'),
     const TajweedRule(
+        key: 'h_auto',
+        name: 'Hamzah Washal (Otomatis)',
+        color: Color(0xFF9E9E9E),
+        description: 'Hamzah yang hanya dibaca saat memulai bacaan dan gugur ketika disambung. Pada mode deteksi otomatis, huruf ini tidak diperlakukan sebagai huruf mad dan tidak mempengaruhi hukum tajwid di sekitarnya.'),
+    const TajweedRule(
         key: 's',
         name: 'Silent',
         color: Color(0xFFAAAAAA),
@@ -97,10 +102,20 @@ class AppTheme {
         color: Color(0xFFA1A1A1),
         description: 'Meleburkan dua huruf yang makhraj dan sifatnya berdekatan. Contoh: Qaf (ق) bertemu Kaf (ك).'),
     const TajweedRule(
+        key: 'jalalah',
+        name: 'Lafẓ Jalālah',
+        color: Color(0xFF2E7D32),
+        description:'Kata khusus yang merujuk kepada Allah (اللّٰهُ dan turunannya seperti اللَّهُمَّ). Memiliki kaidah bacaan khusus dan tidak mengikuti hukum mad, idgham, atau ikhfa. Harakat akhirnya harus dijaga dan tidak boleh berubah.'),
+    const TajweedRule(
         key: 'g',
         name: 'Ghunnah',
         color: Color(0xFFFF7E1E),
         description: 'Dengungan yang keluar dari rongga hidung. Terjadi pada setiap huruf Nun (ن) dan Mim (م) yang bertasydid. Dibaca dengan menahan suara selama 2 harakat.'),
+    const TajweedRule(
+        key: 'maddah_fix',
+        name: 'Alif Maddah Khusus',
+        color: Color(0xFF5C6BC0),
+        description: 'Menandai Alif Maddah (آ) atau kombinasi Alif dengan Dagger Alef (ٰ) yang tidak boleh diperlakukan sebagai dua mad. Mad hanya dihitung satu kali sesuai kaidah Mushaf Indonesia.'),
   ];
 
   static final Map<String, Color> tajweedColors = {

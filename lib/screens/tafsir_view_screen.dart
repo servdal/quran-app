@@ -28,7 +28,14 @@ GrammarType detectGrammarType({
 
   return GrammarType.other;
 }
-
+String tr(
+  WidgetRef ref, {
+  required String id,
+  required String en,
+}) {
+  final lang = ref.read(settingsProvider).language;
+  return lang == 'id' ? id : en;
+}
 /* ============================================================
    UI STATE (FILTER, MODE BELAJAR, HIGHLIGHT ROOT)
 ============================================================ */
@@ -38,24 +45,31 @@ class GrammarUiState {
   final bool highlightRoot;
   final bool learningMode;
 
+  // 🆕 tajwid highlight
+  final String? activeTajweedKey;
+
   const GrammarUiState({
     this.filter,
     this.highlightRoot = false,
     this.learningMode = false,
+    this.activeTajweedKey,
   });
 
   GrammarUiState copyWith({
     GrammarType? filter,
     bool? highlightRoot,
     bool? learningMode,
+    String? activeTajweedKey,
   }) {
     return GrammarUiState(
       filter: filter,
       highlightRoot: highlightRoot ?? this.highlightRoot,
       learningMode: learningMode ?? this.learningMode,
+      activeTajweedKey: activeTajweedKey,
     );
   }
 }
+
 
 class GrammarUiNotifier extends StateNotifier<GrammarUiState> {
   GrammarUiNotifier() : super(const GrammarUiState());
@@ -65,6 +79,8 @@ class GrammarUiNotifier extends StateNotifier<GrammarUiState> {
       state = state.copyWith(highlightRoot: !state.highlightRoot);
   void toggleLearningMode() =>
       state = state.copyWith(learningMode: !state.learningMode);
+  void setActiveTajweed(String? key) =>
+    state = state.copyWith(activeTajweedKey: key);
 }
 
 final grammarUiProvider =
@@ -99,7 +115,7 @@ class TafsirViewScreen extends ConsumerWidget {
       appBar: AppBar(
         title: surahAsync.when(
           data: (s) => Text('Tafsir ${s.surahName}'),
-          loading: () => const Text('Memuat...'),
+          loading: () => Text(tr(ref, id: 'Memuat...', en: 'Loading...')),
           error: (_, __) => const Text('Error'),
         ),
       ),
@@ -143,12 +159,21 @@ class _AyahBlock extends ConsumerWidget {
     );
     final isId = settings.language == 'id';
 
+    final ui = ref.watch(grammarUiProvider);
+    final notifier = ref.read(grammarUiProvider.notifier);
+
     final spans = isId
-        ? AutoTajweedParser.parse(ayah.arabicText, baseStyle)
+        ? AutoTajweedParser.parse(
+            ayah.arabicText,
+            baseStyle,
+            learningMode: ui.learningMode,
+            activeKey: ui.activeTajweedKey,
+            onTapRule: (key) => notifier.setActiveTajweed(key),
+            onClosePopup: () => notifier.setActiveTajweed(null),
+            context: context,
+          )
         : TajweedParser.parse(ayah.tajweedText, baseStyle);
-
-
-
+  
     return Card(
       margin: const EdgeInsets.only(bottom: 32),
       child: Padding(
@@ -161,7 +186,10 @@ class _AyahBlock extends ConsumerWidget {
             RichText(
               textDirection: TextDirection.rtl,
               textAlign: TextAlign.right,
-              text: TextSpan(children: spans),
+              text: TextSpan(
+                style: baseStyle,
+                children: spans,
+              ),
             ),
             const SizedBox(height: 12),
             Text(
@@ -198,7 +226,9 @@ class _GrammarSection extends ConsumerWidget {
 
     return asyncWords.when(
       loading: () => const LinearProgressIndicator(),
-      error: (e, _) => Text('Gagal memuat analisis: $e'),
+      error: (e, _) => Text(
+                        '${tr(ref, id: 'Gagal memuat analisis', en: 'Failed to load analysis')}: $e',
+                      ),
       data: (words) {
         if (words.isEmpty) return const SizedBox.shrink();
 
@@ -254,13 +284,14 @@ class _GrammarToolbar extends ConsumerWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              _chip('Semua', ui.filter == null, () => n.setFilter(null)),
-              _chip('Fi’il', ui.filter == GrammarType.fiil,
+              _chip(tr(ref, id: 'Semua', en: 'All'), ui.filter == null, () => n.setFilter(null)),
+              _chip(tr(ref, id: 'Fi’il', en: 'Verb'), ui.filter == GrammarType.fiil,
                   () => n.setFilter(GrammarType.fiil)),
-              _chip('Isim', ui.filter == GrammarType.isim,
+              _chip(tr(ref, id: 'Isim', en: 'Noun'), ui.filter == GrammarType.isim,
                   () => n.setFilter(GrammarType.isim)),
-              _chip('Harf', ui.filter == GrammarType.harf,
+              _chip(tr(ref, id: 'Harf', en: 'Particle'), ui.filter == GrammarType.harf,
                   () => n.setFilter(GrammarType.harf)),
+
             ],
           ),
         ),
@@ -272,13 +303,25 @@ class _GrammarToolbar extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FilterChip(
-              label: const Text('Highlight Root'),
+              label: Text(
+                      tr(
+                        ref,
+                        id: 'Sorot Akar Kata',
+                        en: 'Highlight Root',
+                      ),
+                    ),
               selected: ui.highlightRoot,
               onSelected: (_) => n.toggleHighlightRoot(),
             ),
             const SizedBox(width: 8),
             FilterChip(
-              label: const Text('Mode Belajar'),
+              label: Text(
+                      tr(
+                        ref,
+                        id: 'Mode Belajar (Tajwid & Nahwu)',
+                        en: 'Learning Mode (Tajweed & Grammar)',
+                      ),
+                    ),
               selected: ui.learningMode,
               onSelected: (_) => n.toggleLearningMode(),
             ),

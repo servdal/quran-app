@@ -53,7 +53,7 @@ class Ayah {
       arabicText: (row['aya_text'] ?? '') as String,
       tajweedText: (row['tajweed_text'] ?? '') as String,
 
-      translation: (row['translation_aya_text'] ?? '') as String,
+      translation: (row['translation'] ?? '') as String,
       tafsir: (row['tafsir_jalalayn'] ?? '') as String,
 
       transliteration: (row['transliteration'] ?? '') as String,

@@ -118,7 +118,7 @@ class QuranRepository {
         $textCol AS aya_text,
         $translationCol AS translation,
         $translitCol AS transliteration,
-        $tafsirCol AS tafsir_jalalayn,
+        $tafsirCol AS tafsir,
         tajweed_text,
         sura_name
       FROM merged_aya

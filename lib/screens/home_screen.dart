@@ -28,7 +28,6 @@ import 'package:quran_app/screens/doa_screen.dart';
 import 'package:quran_app/screens/aqidah_screen.dart';
 import 'package:quran_app/screens/tafsir_surah_list_screen.dart';
 import 'package:quran_app/screens/qibla_screen.dart';
-import '../../services/quran_data_service.dart';
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
 
@@ -190,22 +189,21 @@ class PrayerCountdownCircle extends StatelessWidget {
           ),
 
           TweenAnimationBuilder<double>(
-            tween: Tween(begin: 0, end: progress),
-            duration: const Duration(milliseconds: 600),
+            tween: Tween(begin: progress, end: progress), 
+            duration: const Duration(seconds: 1),
             builder: (_, value, __) {
               return SizedBox(
                 width: 140,
                 height: 140,
                 child: CircularProgressIndicator(
-                  value: value,
+                  value: value, 
                   strokeWidth: 10,
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: Colors.grey.withOpacity(0.2),
+                  strokeCap: StrokeCap.round,
                 ),
               );
             },
           ),
-
-          // 🕰️ Teks di DALAM lingkaran
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -218,7 +216,6 @@ class PrayerCountdownCircle extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                // Logika Bahasa
                 isId ? 'Menuju $prayerName' : 'Towards $prayerName',
                 style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
               ),
@@ -261,12 +258,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.dispose();
   }
   double _countdownProgress(Duration remaining, DateTime target) {
-    final total = target.difference(
-      DateTime.now().subtract(remaining),
-    ).inSeconds;
-
-    if (total <= 0) return 0;
-    return remaining.inSeconds / total;
+    final totalSeconds = target.difference(DateTime.now().subtract(remaining)).inSeconds;
+    if (totalSeconds <= 0) return 0.0;
+    double progress = remaining.inSeconds / totalSeconds;
+    return progress.clamp(0.0, 1.0);
   }
   void _startCountdown(DateTime prayerTime) {
     _countdownTimer?.cancel();
@@ -286,8 +281,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       }
     });
   }
-
-
   void _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
@@ -301,7 +294,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       }
     });
   }
-
   void _handleQiblaTap() {
     if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
       showDialog(
@@ -350,48 +342,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text(isId ? "Al Quran Digital" : "Digital Quran"),
+          child: Text("Mushaf"),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.explore_outlined),
             tooltip: isId ? 'Arah Kiblat' : 'Qibla Direction',
             onPressed: _handleQiblaTap,
-          ),
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: isId ? 'Tentang Aplikasi' : 'About App',
-            onPressed: () {
-              showAboutDialog(
-                context: context,
-                applicationName: isId 
-                    ? 'Tafsir Jalalayn dengan Audio Gus Baha' 
-                    : 'Jalalayn Tafsir with Gus Baha Audio',
-                applicationVersion: '3.0.5',
-                applicationIcon: const Icon(Icons.mosque_rounded, size: 48),
-                applicationLegalese: '© 2025 Duidev Software House',
-                children: <Widget>[
-                  const SizedBox(height: 24),
-                  Text(
-                    isId 
-                    ? 'Aplikasi ini menyediakan tafsir Al-Quran (Jalalayn) dengan audio oleh KH. Bahauddin Nursalim (Gus Baha) beserta teks Al-Quran dan terjemahannya.'
-                    : 'This application provides Quranic exegesis (Jalalayn) with audio by KH. Bahauddin Nursalim (Gus Baha) along with Quranic text and translations.',
-                    textAlign: TextAlign.justify,
-                  ),
-                  RichText(
-                    textAlign: TextAlign.right,
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyMedium?.color,
-                        fontFamily: 'LPMQ',
-                        fontSize: 14,
-                      ),
-                      text: 'الجمعة , ٢٨ جُمادى الآخرة ١٤٤٧',
-                    ),
-                  ),
-                ],
-              );
-            },
           ),
         ],
       ),
@@ -504,7 +461,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const JumpToSection(),
                 if (bookmarks.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -894,165 +850,4 @@ class GlossaryScreen extends StatelessWidget {
       ),
     );
   }
-}
-class JumpToSection extends ConsumerWidget {
-  const JumpToSection({super.key});
-  
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    
-  
-    final mode = ref.watch(jumpToModeProvider);
-    void handleJump(
-      BuildContext context,
-      WidgetRef ref,
-      JumpToMode mode,
-    ) {
-      final target = ref.read(jumpTargetProvider);
-
-      if (target == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Target belum dipilih')),
-        );
-        return;
-      }
-
-      switch (mode) {
-        case JumpToMode.surah:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => SurahDetailScreen(
-                surahId: target,
-              ),
-            ),
-          );
-          break;
-
-        case JumpToMode.page:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => PageViewScreen(
-                initialPage: target,
-              ),
-            ),
-          );
-          break;
-
-        case JumpToMode.deresan:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => DeresanViewScreen(
-                initialPage: target,
-              ),
-            ),
-          );
-          break;
-
-        case JumpToMode.tafsir:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => TafsirViewScreen(
-                surahId: target,
-              ),
-            ),
-          );
-          break;
-      }
-    }
-
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Jump To',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-
-            DropdownButton<JumpToMode>(
-              value: mode,
-              isExpanded: true,
-              items: JumpToMode.values.map((m) {
-                return DropdownMenuItem(
-                  value: m,
-                  child: Text(m.name.toUpperCase()),
-                );
-              }).toList(),
-              onChanged: (v) =>
-                  ref.read(jumpToModeProvider.notifier).state = v!,
-            ),
-
-            const SizedBox(height: 12),
-            _buildJumpTarget(mode, ref),
-            const SizedBox(height: 12),
-
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.arrow_forward),
-                label: const Text('Jump'),
-                onPressed: () => handleJump(context, ref, mode),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildJumpTarget(JumpToMode mode, WidgetRef ref) {
-  switch (mode) {
-    case JumpToMode.surah:
-    case JumpToMode.tafsir:
-      final surahAsync = ref.watch(allSurahsProvider);
-
-      return surahAsync.when(
-        loading: () => const CircularProgressIndicator(),
-        error: (e, _) => Text('Gagal memuat surah'),
-        data: (surahs) {
-          final selected = ref.watch(jumpTargetProvider);
-
-          return DropdownButtonFormField<int>(
-            value: selected,
-            isExpanded: true,
-            decoration: const InputDecoration(
-              labelText: 'Pilih Surah',
-            ),
-            items: surahs.map<DropdownMenuItem<int>>((s) {
-              return DropdownMenuItem(
-                value: s.suraId,
-                child: Text(
-                  '${s.suraId}. ${s.nameLatin}',
-                  overflow: TextOverflow.ellipsis,
-                ),
-              );
-            }).toList(),
-            onChanged: (v) {
-              ref.read(jumpTargetProvider.notifier).state = v;
-            },
-          );
-        },
-      );
-
-    case JumpToMode.page:
-    case JumpToMode.deresan:
-      return TextField(
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          labelText: 'Nomor Halaman',
-        ),
-        onChanged: (v) {
-          ref.read(jumpTargetProvider.notifier).state = int.tryParse(v);
-        },
-      );
-  }
-}
-
 }

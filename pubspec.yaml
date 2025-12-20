@@ -3,7 +3,7 @@ description: "Digital Qur’an & Islamic Companion"
 
 publish_to: 'none'
 
-version: 3.0.6+27
+version: 3.0.7+28
 
 environment:
   sdk: ^3.7.2
@@ -56,6 +56,8 @@ flutter_launcher_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/images/main_logo.png"
+  adaptive_icon_foreground: assets/images/main_logo.png
+  adaptive_icon_background: "#0A1A2F"
   macos:
     generate: true
     image_path: "assets/images/main_logo.png"

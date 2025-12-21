@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
+import 'package:quran_app/screens/deresan_view_screen.dart';
 import 'package:quran_app/screens/language_selector_screen.dart';
+import 'package:quran_app/screens/page_view_screen.dart';
+import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
+import 'package:quran_app/screens/tafsir_view_screen.dart';
 import 'package:quran_app/theme/app_theme.dart';
 import 'package:quran_app/screens/page_list_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -141,7 +146,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final theme = Theme.of(context);
     final isId = ref.watch(settingsProvider).language == 'id';
     final prayerAsync = ref.watch(prayerProvider);
-
+    final bookmarks = ref.watch(bookmarkProvider);
     ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
       next.whenData((data) => _startCountdown(data['closestTime'], data['prevTime']));
     });
@@ -187,10 +192,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
 
               const SizedBox(height: 25),
-              Text(isId ? "Menu Utama" : "Main Menu", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+              Text(isId ? "Lanjutkan:" : "Bookmark", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 15),
+              if (bookmarks.isEmpty)
+                _buildEmptyBookmark(isId)
+              else
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: bookmarks.length,
+                  itemBuilder: (context, index) {
+                    String name = bookmarks.keys.elementAt(index);
+                    Bookmark bookmark = bookmarks.values.elementAt(index);
 
-              // Grid Menu - Penyebab utama error jika tidak dibungkus dengan benar
+                    return _buildBookmarkCard(
+                      context, 
+                      ref, 
+                      theme, 
+                      name, 
+                      bookmark, 
+                      isId
+                    );
+                  },
+                ),
+              const SizedBox(height: 15),
+              Text(isId ? "Menu Utama" : "Main Menu", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+              
               _buildMenuGrid(context, isId, ThemeData()),
               
               const SizedBox(height: 40),
@@ -443,25 +470,180 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildTile(IconData icon, String label, Color bg, Color iconCol, VoidCallback onTap) {
-    return Material(
-      color: bg,
-      borderRadius: BorderRadius.circular(15),
-      child: InkWell(
-        onTap: () { HapticFeedback.mediumImpact(); onTap(); },
-        borderRadius: BorderRadius.circular(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme,
+    String name, Bookmark bookmark, bool isId) {
+    final primaryColor = theme.primaryColor;
+    final isDarkMode = theme.brightness == Brightness.dark;
+  String getSubtitle() {
+      if (bookmark.type == BookmarkViewType.deresan || bookmark.type == BookmarkViewType.page) {
+        return isId 
+            ? 'Halaman ${bookmark.pageNumber} | ${bookmark.surahName}'
+            : 'Page ${bookmark.pageNumber} | ${bookmark.surahName}';
+      }
+      return isId
+          ? 'Ayat ${bookmark.ayahNumber} | ${bookmark.surahName}'
+          : 'Ayah ${bookmark.ayahNumber} | ${bookmark.surahName}';
+    }
+    String getTypeName() {
+      switch (bookmark.type) {
+        case BookmarkViewType.deresan: return 'Deresan';
+        case BookmarkViewType.tafsir: return 'Tafsir';
+        case BookmarkViewType.page: return isId ? 'Halaman' : 'Page';
+        default: return 'Surah';
+      }
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          colors: isDarkMode 
+            ? [theme.colorScheme.surface, theme.colorScheme.surface.withOpacity(0.8)]
+            : [primaryColor.withOpacity(0.9), primaryColor],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: primaryColor.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.bookmark_rounded, color: Colors.white, size: 28),
+        ),
+        title: Row(
           children: [
-            Icon(icon, color: iconCol, size: 28),
-            const SizedBox(height: 5),
-            Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+            Expanded(
+              child: Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold, 
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: Colors.white24,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                getTypeName(),
+                style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
         ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(
+            getSubtitle(),
+            style: TextStyle(color: Colors.white.withOpacity(0.85), fontSize: 14),
+          ),
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete_sweep_outlined, color: Colors.white70),
+          onPressed: () => _confirmDelete(context, ref, name, isId),
+        ),
+        onTap: () {
+          _handleNavigation(context, bookmark);
+        },
       ),
     );
   }
 
+  void _confirmDelete(BuildContext context, WidgetRef ref, String name, bool isId) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            const Icon(Icons.warning_amber_rounded, color: Colors.red),
+            const SizedBox(width: 10),
+            Text(isId ? 'Hapus Bookmark?' : 'Delete Bookmark?'),
+          ],
+        ),
+        content: Text(
+          isId
+              ? 'Apakah Anda yakin ingin menghapus "$name" dari daftar simpanan?'
+              : 'Are you sure you want to remove "$name" from your bookmarks?',
+          style: const TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(
+              isId ? 'Batal' : 'Cancel',
+              style: TextStyle(color: Colors.grey.shade600),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red.shade400,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            onPressed: () {
+              ref.read(bookmarkProvider.notifier).removeBookmark(name);
+              Navigator.of(dialogContext).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(isId 
+                      ? 'Bookmark "$name" telah dihapus' 
+                      : 'Bookmark "$name" deleted'),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: Colors.grey.shade800,
+                ),
+              );
+            },
+            child: Text(isId ? 'Hapus' : 'Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+  void _handleNavigation(BuildContext context, Bookmark bookmark) {
+    switch (bookmark.type) {
+      case BookmarkViewType.deresan:
+        if (bookmark.pageNumber != null) {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (_) => DeresanViewScreen(initialPage: bookmark.pageNumber!),
+          ));
+        }
+        break;
+      case BookmarkViewType.surah:
+        Navigator.push(context, MaterialPageRoute(
+          builder: (_) => SurahDetailScreen(
+            surahId: bookmark.surahId,
+            initialScrollIndex: bookmark.ayahNumber != null ? bookmark.ayahNumber! - 1 : null,
+          ),
+        ));
+        break;
+      case BookmarkViewType.page:
+        if (bookmark.pageNumber != null) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => PageViewScreen(initialPage: bookmark.pageNumber!)));
+        }
+        break;
+      case BookmarkViewType.tafsir:
+        Navigator.push(context, MaterialPageRoute(builder: (_) => TafsirViewScreen(surahId: bookmark.surahId)));
+        break;
+    }
+  }
   Widget _buildDeveloperInfo(BuildContext context, bool isId) {
     return Column(
       children: [
@@ -474,6 +656,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ],
     );
   }
+  Widget _buildEmptyBookmark(bool isId) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 20),
+    child: Center(
+      child: Column(
+        children: [
+          Icon(Icons.bookmark_border, size: 50, color: Colors.grey.withOpacity(0.5)),
+          const SizedBox(height: 8),
+          Text(
+            isId ? 'Belum ada bookmark' : 'No bookmarks yet',
+            style: TextStyle(color: Colors.grey.shade500),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 }
 
 

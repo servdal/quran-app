@@ -54,46 +54,34 @@ class AutoTajweedParser {
 
   static final Set<int> _qalqalahLetters =
       {'ق','ط','ب','ج','د'}.map((e) => e.codeUnitAt(0)).toSet();
-  static final RegExp _lafzJalalahRegex =
-    RegExp(r'اللّٰهُ?');
-  static String _normalizeDiacritics(String diacs) {
+static final RegExp _lafzJalalahRegex = RegExp(r'([اال]لّٰ[ه][َُِ]?)');
+static String _normalizeDiacritics(String diacs) {
     if (diacs.isEmpty) return diacs;
 
     final runes = diacs.runes.toList();
-
     final shadda = <int>[];
     final dagger = <int>[];
-    final harakat = <int>[];
+    final harakat = <int>[]; // Fathah, Kasrah, Dhommah
     final tanwin = <int>[];
     final sukun = <int>[];
-    final others = <int>[];
 
     for (final r in runes) {
-      if (r == 0x0651) {
-        shadda.add(r);
-      } else if (r == 0x0670) {
-        dagger.add(r);
-      } else if (r == 0x064E || r == 0x064F || r == 0x0650) {
-        harakat.add(r);
-      } else if (r == 0x064B || r == 0x064C || r == 0x064D) {
-        tanwin.add(r);
-      } else if (r == 0x0652) {
-        sukun.add(r);
-      } else {
-        others.add(r);
-      }
+      if (r == 0x0651) shadda.add(r);
+      else if (r == 0x0670) dagger.add(r);
+      else if (r == 0x064E || r == 0x064F || r == 0x0650) harakat.add(r);
+      else if (r == 0x064B || r == 0x064C || r == 0x064D) tanwin.add(r);
+      else if (r == 0x0652) sukun.add(r);
     }
 
+    // Urutan yang benar sangat krusial untuk rendering Flutter
     return String.fromCharCodes([
-      ...shadda,
-      ...dagger,
-      ...harakat,
+      ...shadda,   // Tasydid pertama
+      ...harakat,  // Harakat (Dhommah/Kasrah) kedua
+      ...dagger,   // Alif Khanjariyah terakhir (di atas tasydid)
       ...tanwin,
       ...sukun,
-      ...others,
     ]);
   }
-
   /// ===========================================================
   /// PUBLIC API
   /// ===========================================================
@@ -109,38 +97,40 @@ class AutoTajweedParser {
   }) {
     if (ayaText.isEmpty) return [];
     final effectiveStyle = baseStyle.color == null 
-        ? baseStyle.copyWith(color: Colors.black) // atau warna tema Anda
+        ? baseStyle.copyWith(color: Colors.black)
         : baseStyle;
 
     ayaText = ayaText.replaceAll('\u200c', '').replaceAll('\u200b', '');
+    // ... di dalam static List<TextSpan> parse ...
+    
     final match = _lafzJalalahRegex.firstMatch(ayaText);
     if (match != null) {
-      final before = ayaText.substring(0, match.start);
-      final lafz = match.group(0)!;
-      final after = ayaText.substring(match.end);
-      
       final List<TextSpan> combinedSpans = [];
+      final before = ayaText.substring(0, match.start);
+      final lafz = match.group(0)!; // Ini mengandung 'Allah/Lillah' + Harakat
+      final after = ayaText.substring(match.end);
       
       if (before.isNotEmpty) {
         combinedSpans.addAll(parse(before, effectiveStyle, 
-            lang: lang,
-            learningMode: learningMode, activeKey: activeKey, 
+            lang: lang, learningMode: learningMode, activeKey: activeKey, 
             onTapRule: onTapRule, onClosePopup: onClosePopup, context: context));
       }
-      
       combinedSpans.add(TextSpan(
         text: lafz,
         style: effectiveStyle.copyWith(
           color: AppTheme.tajweedColors['jalalah'],
-          backgroundColor: activeKey == 'jalalah' ? AppTheme.tajweedColors['jalalah']?.withOpacity(0.15) : null,
+          backgroundColor: activeKey == 'jalalah' 
+              ? AppTheme.tajweedColors['jalalah']?.withOpacity(0.15) 
+              : null,
         ),
-        recognizer: (learningMode && context != null) ? _tap(context, true, 'jalalah', lang, onTapRule, onClosePopup) : null,
+        recognizer: (learningMode && context != null) 
+            ? _tap(context, true, 'jalalah', lang, onTapRule, onClosePopup) 
+            : null,
       ));
 
       if (after.isNotEmpty) {
         combinedSpans.addAll(parse(after, effectiveStyle,
-            lang: lang,
-            learningMode: learningMode, activeKey: activeKey, 
+            lang: lang, learningMode: learningMode, activeKey: activeKey, 
             onTapRule: onTapRule, onClosePopup: onClosePopup, context: context));
       }
       return combinedSpans;

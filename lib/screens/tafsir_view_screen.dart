@@ -114,9 +114,22 @@ class TafsirViewScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: surahAsync.when(
-          data: (s) => Text('Tafsir ${s.surahName}'),
-          loading: () => Text(tr(ref, id: 'Memuat...', en: 'Loading...')),
-          error: (_, __) => const Text('Error'),
+          data: (s) => Text(
+            'QS ${s.surahName}',
+            style: const TextStyle(
+              fontFamily: 'Roboto', // Menggunakan font Roboto
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          loading: () => Text(
+            tr(ref, id: 'Memuat...', en: 'Loading...'),
+            style: const TextStyle(fontFamily: 'Roboto'),
+          ),
+          error: (_, __) => const Text(
+            'Error',
+            style: TextStyle(fontFamily: 'Roboto'),
+          ),
         ),
       ),
       body: surahAsync.when(
@@ -156,16 +169,18 @@ class _AyahBlock extends ConsumerWidget {
       fontFamily: 'LPMQ',
       fontSize: ref.watch(settingsProvider).arabicFontSize,
       height: 2.1,
+      color: Theme.of(context).colorScheme.onSurface
     );
     final isId = settings.language == 'id';
 
     final ui = ref.watch(grammarUiProvider);
     final notifier = ref.read(grammarUiProvider.notifier);
-
+    final lang = ref.watch(settingsProvider).language;
     final spans = isId
         ? AutoTajweedParser.parse(
             ayah.arabicText,
             baseStyle,
+            lang: lang,
             learningMode: ui.learningMode,
             activeKey: ui.activeTajweedKey,
             onTapRule: (key) => notifier.setActiveTajweed(key),
@@ -193,7 +208,7 @@ class _AyahBlock extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              ayah.translation,
+              ayah.tafsir,
               textAlign: TextAlign.justify,
             ),
             const Divider(height: 32),
@@ -318,8 +333,8 @@ class _GrammarToolbar extends ConsumerWidget {
               label: Text(
                       tr(
                         ref,
-                        id: 'Mode Belajar (Tajwid & Nahwu)',
-                        en: 'Learning Mode (Tajweed & Grammar)',
+                        id: 'Mode Belajar',
+                        en: 'Learning Mode',
                       ),
                     ),
               selected: ui.learningMode,

@@ -1,23 +1,26 @@
 // lib/screens/aqidah_screen.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Tambahkan Riverpod
 import 'package:quran_app/data/aqidah_data.dart';
+import 'package:quran_app/providers/settings_provider.dart'; // Sesuaikan path provider Anda
 
-class AqidahScreen extends StatelessWidget {
+// Ubah menjadi ConsumerWidget agar bisa mengakses 'ref'
+class AqidahScreen extends ConsumerWidget {
   const AqidahScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String lang = ref.watch(settingsProvider).language;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nadham Aqidatul Awam'),
+        title: Text(lang == 'id' ? 'Nadham Aqidatul Awam' : 'Aqidatul Awam Poem'),
+        centerTitle: true,
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(12.0),
-        // Jumlah item adalah jumlah bait + 1 untuk mukadimah
         itemCount: aqidatulAwam.length + 1,
         itemBuilder: (context, index) {
-          // Item pertama adalah mukadimah
           if (index == 0) {
             return Card(
               elevation: 2,
@@ -29,9 +32,12 @@ class AqidahScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      aqidahMuqaddimah,
+                      aqidahMuqaddimah[lang] ?? aqidahMuqaddimah['id']!,
                       textAlign: TextAlign.justify,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        height: 1.5,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
@@ -39,7 +45,6 @@ class AqidahScreen extends StatelessWidget {
             );
           }
           
-          // Item selanjutnya adalah bait-bait nadham
           final nadham = aqidatulAwam[index - 1];
           return Card(
             elevation: 1,
@@ -50,26 +55,50 @@ class AqidahScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  CircleAvatar(
-                    child: Text(nadham.verseNumber.toString()),
+                  // Nomor Bait
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: CircleAvatar(
+                      radius: 16,
+                      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                      child: Text(
+                        nadham.verseNumber.toString(),
+                        style: TextStyle(
+                          fontSize: 12, 
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor
+                        ),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
+                  // Teks Arab
                   Text(
                     nadham.arabicText,
                     textAlign: TextAlign.right,
-                    style: const TextStyle(fontFamily: 'LPMQ', fontSize: 22, height: 2.0),
+                    style: const TextStyle(
+                      fontFamily: 'LPMQ', // Pastikan font terdaftar di pubspec
+                      fontSize: 24, 
+                      height: 2.0
+                    ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
+                  // Latin
                   Text(
                     nadham.latinText,
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.grey[600]
+                    ),
                   ),
-                  const Divider(height: 24),
+                  const Divider(height: 32),
                   Text(
-                    nadham.translation,
+                    nadham.getTranslation(lang),
                     textAlign: TextAlign.justify,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      height: 1.4,
+                    ),
                   ),
                 ],
               ),

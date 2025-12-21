@@ -2,120 +2,167 @@ import 'package:flutter/material.dart';
 
 class TajweedRule {
   final String key;
-  final String name;
+  final String nameId; // Nama Bahasa Indonesia
+  final String nameEn; // Nama Bahasa Inggris
   final Color color;
-  final String description;
+  final String descriptionId; // Deskripsi Bahasa Indonesia
+  final String descriptionEn; // Deskripsi Bahasa Inggris
 
   const TajweedRule({
     required this.key,
-    required this.name,
+    required this.nameId,
+    required this.nameEn,
     required this.color,
-    required this.description,
+    required this.descriptionId,
+    required this.descriptionEn,
   });
-}
 
+  // Fungsi pembantu untuk UI
+  String getName(String langCode) => langCode == 'en' ? nameEn : nameId;
+  String getDescription(String langCode) => langCode == 'en' ? descriptionEn : descriptionId;
+}
 class AppTheme {
   static final List<TajweedRule> tajweedRules = [
     const TajweedRule(
         key: 'h',
-        name: 'Hamza Wasl',
+        nameId: 'Hamzah Washal',
+        nameEn: 'Hamzah Wasl',
         color: Color(0xFFAAAAAA),
-        description: 'Hamzah yang diucapkan saat memulai bacaan, namun tidak diucapkan saat berada di tengah kalimat.'),
+        descriptionId: 'Hamzah yang diucapkan saat memulai bacaan, namun tidak diucapkan saat berada di tengah kalimat.',
+        descriptionEn: 'Hamzah pronounced at the beginning of a word but skipped when connected with the previous word.'),
     const TajweedRule(
         key: 'h_auto',
-        name: 'Hamzah Washal (Otomatis)',
+        nameId: 'Hamzah Washal (Otomatis)',
+        nameEn: 'Hamzah Wasl (Auto)',
         color: Color(0xFF9E9E9E),
-        description: 'Hamzah yang hanya dibaca saat memulai bacaan dan gugur ketika disambung. Pada mode deteksi otomatis, huruf ini tidak diperlakukan sebagai huruf mad dan tidak mempengaruhi hukum tajwid di sekitarnya.'),
+        descriptionId: 'Hamzah yang hanya dibaca saat memulai bacaan dan gugur ketika disambung.',
+        descriptionEn: 'Hamzah that is only read when starting a recitation and dropped when connected.'),
     const TajweedRule(
         key: 's',
-        name: 'Silent',
+        nameId: 'Silent',
+        nameEn: 'Silent',
         color: Color(0xFFAAAAAA),
-        description: 'Menandakan huruf yang tidak dilafalkan (dibaca). Meskipun tertulis, huruf ini dilewati saat membaca.'),
+        descriptionId: 'Menandakan huruf yang tidak dilafalkan (dibaca) meskipun tertulis.',
+        descriptionEn: 'Indicates letters that are written but not pronounced.'),
     const TajweedRule(
         key: 'l',
-        name: 'Laam Shamsiyah',
+        nameId: 'Laam Shamsiyah',
+        nameEn: 'Solar Laam',
         color: Color(0xFFAAAAAA),
-        description: 'Terjadi ketika "Alif Lam" (ال) bertemu dengan salah satu dari 14 huruf Syamsiyah. Huruf Lam tidak dibaca, melainkan dilebur ke huruf berikutnya.'),
+        descriptionId: 'Huruf Lam tidak dibaca, melainkan dilebur ke huruf berikutnya (huruf Syamsiyah).',
+        descriptionEn: 'The letter Laam is not pronounced and is merged into the following solar letter.'),
     const TajweedRule(
         key: 'n',
-        name: 'Madda Normal (2 harakat)',
+        nameId: 'Mad Thabi\'i',
+        nameEn: 'Natural Madda',
         color: Color(0xFF537FFF),
-        description: 'Juga dikenal sebagai Mad Thabi\'i. Terjadi ketika Fathah diikuti Alif, Kasrah diikuti Ya Sukun, atau Dhammah diikuti Wau Sukun. Dibaca panjang 2 harakat.'),
+        descriptionId: 'Pemanjangan suara sebanyak 2 harakat pada huruf Alif, Ya, atau Wau.',
+        descriptionEn: 'Natural prolongation of sound for 2 beats on Alif, Ya, or Waw.'),
     const TajweedRule(
         key: 'p',
-        name: 'Madda Permissible (2, 4, 6 harakat)',
+        nameId: 'Mad Jaiz Munfasil',
+        nameEn: 'Permissible Madda',
         color: Color(0xFF4050FF),
-        description: 'Juga dikenal sebagai Mad Jaiz Munfasil. Terjadi ketika Mad Thabi\'i bertemu dengan Hamzah di lain kata. Boleh dibaca panjang 2, 4, atau 6 harakat.'),
+        descriptionId: 'Mad Thabi\'i bertemu Hamzah di lain kata. Dibaca panjang 2, 4, atau 5 harakat.',
+        descriptionEn: 'Natural Madda followed by a Hamzah in a different word. Prolonged for 2, 4, or 5 beats.'),
     const TajweedRule(
         key: 'm',
-        name: 'Madda Necessary (6 harakat)',
+        nameId: 'Mad Lazim',
+        nameEn: 'Necessary Madda',
         color: Color(0xFF000EBC),
-        description: 'Juga dikenal sebagai Mad Lazim. Terjadi ketika Mad Thabi\'i bertemu dengan Tasydid atau Sukun asli dalam satu kata. Wajib dibaca panjang 6 harakat.'),
+        descriptionId: 'Mad Thabi\'i bertemu dengan Tasydid atau Sukun asli. Wajib dibaca panjang 6 harakat.',
+        descriptionEn: 'Natural Madda followed by a Shaddah or a permanent Sukun. Must be prolonged for 6 beats.'),
     const TajweedRule(
         key: 'q',
-        name: 'Qalqalah',
+        nameId: 'Qalqalah',
+        nameEn: 'Qalqalah (Echoing)',
         color: Color(0xFFDD0008),
-        description: 'Memantulkan suara pada huruf sukun (mati) di antara lima huruf: Qaf (ق), Tha (ط), Ba (ب), Jim (ج), Dal (د).'),
+        descriptionId: 'Memantulkan suara pada huruf sukun: ق, ط, ب, ج, d.',
+        descriptionEn: 'Echoing or bouncing sound on a sukun letter from: Qaf, Tha, Ba, Jeem, Dal.'),
     const TajweedRule(
         key: 'o',
-        name: 'Madda Obligatory (4-5 harakat)',
+        nameId: 'Mad Wajib Muttasil',
+        nameEn: 'Obligatory Madda',
         color: Color(0xFF2144C1),
-        description: 'Juga dikenal sebagai Mad Wajib Muttasil. Terjadi ketika Mad Thabi\'i bertemu dengan Hamzah dalam satu kata yang sama. Wajib dibaca panjang 4 atau 5 harakat.'),
+        descriptionId: 'Mad Thabi\'i bertemu dengan Hamzah dalam satu kata. Wajib dibaca panjang 4 atau 5 harakat.',
+        descriptionEn: 'Natural Madda followed by a Hamzah in the same word. Prolonged for 4 or 5 beats.'),
     const TajweedRule(
         key: 'c',
-        name: 'Ikhfa Shafawi',
+        nameId: 'Ikhfa Shafawi',
+        nameEn: 'Labial Ikhfa',
         color: Color(0xFFD500B7),
-        description: 'Terjadi ketika Mim Sukun (مْ) bertemu dengan huruf Ba (ب). Dibaca dengan samar-samar dan didengungkan.'),
+        descriptionId: 'Mim Sukun bertemu dengan huruf Ba (ب). Dibaca samar dengan dengungan.',
+        descriptionEn: 'Meem Sakinah followed by the letter Ba. Pronounced with a light nasal sound.'),
     const TajweedRule(
         key: 'f',
-        name: 'Ikhfa\'',
+        nameId: 'Ikhfa Haqiqi',
+        nameEn: 'Ikhfa (Hiding)',
         color: Color(0xFF9400A8),
-        description: 'Juga dikenal sebagai Ikhfa Haqiqi. Terjadi ketika Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 15 huruf Ikhfa. Dibaca samar menuju makhraj huruf berikutnya.'),
+        descriptionId: 'Nun Sukun atau Tanwin bertemu salah satu dari 15 huruf ikhfa. Dibaca samar.',
+        descriptionEn: 'Nun Sakinah or Tanween followed by one of the 15 ikhfa letters. Pronounced with a nasal hiding sound.'),
     const TajweedRule(
         key: 'w',
-        name: 'Idgham Shafawi',
+        nameId: 'Idgham Shafawi',
+        nameEn: 'Labial Idgham',
         color: Color(0xFF58B800),
-        description: 'Juga dikenal sebagai Idgham Mitslain. Terjadi ketika Mim Sukun (مْ) bertemu dengan huruf Mim (م). Dibaca dengan meleburkan kedua huruf Mim disertai dengungan.'),
+        descriptionId: 'Mim Sukun bertemu dengan huruf Mim. Dibaca melebur disertai dengungan.',
+        descriptionEn: 'Meem Sakinah followed by another Meem. Merged with a nasal sound (Ghunnah).'),
     const TajweedRule(
         key: 'i',
-        name: 'Iqlab',
+        nameId: 'Iqlab',
+        nameEn: 'Iqlab (Conversion)',
         color: Color(0xFF26BFFD),
-        description: 'Terjadi ketika Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ba (ب). Suara Nun atau Tanwin diubah menjadi suara Mim (م) disertai dengungan.'),
+        descriptionId: 'Nun Sukun atau Tanwin bertemu huruf Ba. Suara berubah menjadi Mim disertai dengungan.',
+        descriptionEn: 'Nun Sakinah or Tanween followed by Ba. Converted to a Meem sound with Ghunnah.'),
     const TajweedRule(
         key: 'a',
-        name: 'Idgham dengan Ghunnah',
+        nameId: 'Idgham Bighunnah',
+        nameEn: 'Idgham with Ghunnah',
         color: Color(0xFF169777),
-        description: 'Juga dikenal sebagai Idgham Bighunnah. Terjadi ketika Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ya (ي), Nun (ن), Mim (م), atau Wau (و). Dibaca melebur disertai dengungan.'),
+        descriptionId: 'Nun Sukun atau Tanwin bertemu huruf ي, ن, م, و. Dibaca melebur dengan dengungan.',
+        descriptionEn: 'Nun Sakinah or Tanween followed by Yaa, Noon, Meem, or Waw. Merged with a nasal sound.'),
     const TajweedRule(
         key: 'u',
-        name: 'Idgham tanpa Ghunnah',
+        nameId: 'Idgham Bilaghunnah',
+        nameEn: 'Idgham without Ghunnah',
         color: Color(0xFF169200),
-        description: 'Juga dikenal sebagai Idgham Bilaghunnah. Terjadi ketika Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Lam (ل) atau Ra (ر). Dibaca melebur tanpa dengungan.'),
+        descriptionId: 'Nun Sukun atau Tanwin bertemu huruf ل atau ر. Dibaca melebur tanpa dengungan.',
+        descriptionEn: 'Nun Sakinah or Tanween followed by Laam or Raa. Merged without a nasal sound.'),
     const TajweedRule(
         key: 'd',
-        name: 'Idgham Mutajanisayn',
+        nameId: 'Idgham Mutajanisayn',
+        nameEn: 'Homogeneous Idgham',
         color: Color(0xFFA1A1A1),
-        description: 'Meleburkan dua huruf yang sama makhrajnya (tempat keluar) tetapi berbeda sifatnya. Contoh: Ta (ت) bertemu Tha (ط).'),
+        descriptionId: 'Meleburkan dua huruf yang sama makhrajnya tetapi berbeda sifatnya.',
+        descriptionEn: 'Merging two letters with the same point of articulation but different characteristics.'),
     const TajweedRule(
         key: 'b',
-        name: 'Idgham Mutaqaribayn',
+        nameId: 'Idgham Mutaqaribayn',
+        nameEn: 'Convergent Idgham',
         color: Color(0xFFA1A1A1),
-        description: 'Meleburkan dua huruf yang makhraj dan sifatnya berdekatan. Contoh: Qaf (ق) bertemu Kaf (ك).'),
+        descriptionId: 'Meleburkan dua huruf yang makhraj dan sifatnya berdekatan.',
+        descriptionEn: 'Merging two letters whose points of articulation and characteristics are close.'),
     const TajweedRule(
         key: 'jalalah',
-        name: 'Lafẓ Jalālah',
+        nameId: 'Lafadz Jalalah',
+        nameEn: 'Word Allah (Jalalah)',
         color: Color(0xFF2E7D32),
-        description:'Kata khusus yang merujuk kepada Allah (اللّٰهُ dan turunannya seperti اللَّهُمَّ). Memiliki kaidah bacaan khusus dan tidak mengikuti hukum mad, idgham, atau ikhfa. Harakat akhirnya harus dijaga dan tidak boleh berubah.'),
+        descriptionId: 'Kaidah khusus untuk pengucapan kata "Allah" (tebal atau tipis).',
+        descriptionEn: 'Special rules for the pronunciation of the word "Allah" (Heavy or Light).'),
     const TajweedRule(
         key: 'g',
-        name: 'Ghunnah',
+        nameId: 'Ghunnah',
+        nameEn: 'Ghunnah (Nasalization)',
         color: Color(0xFFFF7E1E),
-        description: 'Dengungan yang keluar dari rongga hidung. Terjadi pada setiap huruf Nun (ن) dan Mim (م) yang bertasydid. Dibaca dengan menahan suara selama 2 harakat.'),
+        descriptionId: 'Dengungan pada huruf Nun atau Mim yang bertasydid (2 harakat).',
+        descriptionEn: 'A nasal sound produced by doubling the Noon or Meem for 2 beats.'),
     const TajweedRule(
         key: 'maddah_fix',
-        name: 'Alif Maddah Khusus',
+        nameId: 'Alif Maddah Khusus',
+        nameEn: 'Special Alif Maddah',
         color: Color(0xFF5C6BC0),
-        description: 'Menandai Alif Maddah (آ) atau kombinasi Alif dengan Dagger Alef (ٰ) yang tidak boleh diperlakukan sebagai dua mad. Mad hanya dihitung satu kali sesuai kaidah Mushaf Indonesia.'),
+        descriptionId: 'Penanda khusus Alif Maddah sesuai kaidah Mushaf Indonesia.',
+        descriptionEn: 'Special Alif Maddah marker according to Indonesian Mushaf standards.'),
   ];
 
   static final Map<String, Color> tajweedColors = {

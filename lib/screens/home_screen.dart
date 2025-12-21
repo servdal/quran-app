@@ -1,18 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/screens/language_selector_screen.dart';
-import 'package:quran_app/screens/page_view_screen.dart';
-import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
-import 'package:quran_app/screens/tafsir_view_screen.dart';
 import 'package:quran_app/theme/app_theme.dart';
 import 'package:quran_app/screens/page_list_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,832 +16,565 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:quran_app/screens/deresan_view_screen.dart';
 import 'package:quran_app/screens/dzikir_screen.dart';
-import 'package:quran_app/services/notification_service.dart';
 import 'package:quran_app/screens/doa_screen.dart';
 import 'package:quran_app/screens/aqidah_screen.dart';
 import 'package:quran_app/screens/tafsir_surah_list_screen.dart';
 import 'package:quran_app/screens/qibla_screen.dart';
-Map<String, dynamic> _processPrayerData(String jsonData) {
-  final data = jsonDecode(jsonData);
 
-  if (data['data'] == null || data['data']['timings'] == null) {
-    throw Exception("Struktur data API tidak valid.");
-  }
-  final hijriData = data["data"]["date"]["hijri"];
-  final hijriDateString = "${hijriData['day']} ${hijriData['month']['en']} ${hijriData['year']}";
-
-  final timings = data["data"]["timings"];
-  final prayerOrder = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-  final now = DateTime.now();
-  String? nextPrayerName;
-  DateTime? nextPrayerTime;
-
-  for (String prayer in prayerOrder) {
-    if (timings.containsKey(prayer)) {
-      final timeString = timings[prayer];
-      DateTime prayerTime = DateFormat("HH:mm").parse(timeString);
-      prayerTime = DateTime(now.year, now.month, now.day, prayerTime.hour, prayerTime.minute);
-
-      if (prayerTime.isAfter(now)) {
-        nextPrayerName = prayer;
-        nextPrayerTime = prayerTime;
-        break;
-      }
-    }
-  }
-
-  if (nextPrayerName == null) {
-    nextPrayerName = 'Fajr';
-    final timeString = timings['Fajr'];
-    DateTime fajrTime = DateFormat("HH:mm").parse(timeString);
-    nextPrayerTime = DateTime(now.year, now.month, now.day + 1, fajrTime.hour, fajrTime.minute);
-  }
-
-  final closestDiff = nextPrayerTime?.difference(now);
-
-  return {
-    "date": data["data"]["date"]["readable"],
-    "method": data["data"]["meta"]["method"]["name"],
-    "timings": timings,
-    "hijriDate": hijriDateString,
-    "closestPrayer": nextPrayerName,
-    "closestTime": nextPrayerTime,
-    "closestDiff": closestDiff,
-    "location": data["data"]["meta"]["timezone"],
-    "isOffline": false,
-  };
-}
-
+// --- PROVIDER & LOGIC ---
 final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
-  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    throw Exception("Layanan lokasi (GPS) tidak aktif. Harap aktifkan untuk melihat jadwal sholat.");
-  }
-  LocationPermission permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      throw Exception("Izin lokasi ditolak oleh pengguna.");
-    }
-  }
-  if (permission == LocationPermission.deniedForever) {
-    throw Exception("Izin lokasi ditolak secara permanen. Harap aktifkan dari pengaturan sistem.");
-  }
-
   try {
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    final lat = position.latitude;
-    final lng = position.longitude;
-    final response = await http.get(Uri.parse("http://api.aladhan.com/v1/timings?latitude=$lat&longitude=$lng"));
+    final response = await http.get(Uri.parse("http://api.aladhan.com/v1/timings?latitude=${position.latitude}&longitude=${position.longitude}"));
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
-
       await prefs.setString('last_prayer_data', response.body);
       final data = _processPrayerData(response.body);
       try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+        List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
         if (placemarks.isNotEmpty) {
           final p = placemarks.first;
-
           String? city = p.locality;
           String? subAdmin = p.subAdministrativeArea;
           String? admin = p.administrativeArea;
-
-          // Pilih bagian yang tidak null
           String shortAddress = [
             city,
             if (city == null || city.isEmpty) subAdmin,
             admin,
           ].where((e) => e != null && e.isNotEmpty).map((e) => e!).toList().join(', ');
 
-          // Jika semua kosong, fallback
           if (shortAddress.isEmpty) {
-            shortAddress = "Koordinat (${lat.toStringAsFixed(3)}, ${lng.toStringAsFixed(3)})";
+            shortAddress = "Koordinat (${position.latitude.toStringAsFixed(3)}, ${position.longitude.toStringAsFixed(3)})";
           }
 
           data["location"] = shortAddress;
         }
-      } catch (e) {
-        debugPrint("Gagal mendapatkan alamat GPS: $e dengan Latitude: $lat, Longitude: $lng");
-      }
+      } catch (_) {}
       return data;
-    } else {
-      throw Exception("Gagal terhubung ke server waktu sholat.");
-    }
-  } on SocketException {
+    } else { throw Exception("Gagal muat"); }
+  } catch (e) {
     final prefs = await SharedPreferences.getInstance();
     final offlineData = prefs.getString('last_prayer_data');
-    if (offlineData != null) {
-      final processedData = _processPrayerData(offlineData);
-      processedData['isOffline'] = true;
-      return processedData;
-    } else {
-      throw Exception("Tidak ada koneksi internet dan tidak ada data tersimpan.");
-    }
+    if (offlineData != null) return _processPrayerData(offlineData);
+    rethrow;
   }
 });
 
-class PrayerCountdownCircle extends StatelessWidget {
-  final Duration remaining;
-  final double progress;
-  final String prayerName;
-  final bool isId;
+Map<String, dynamic> _processPrayerData(String jsonData) {
+  final data = jsonDecode(jsonData);
+  final timings = data["data"]["timings"];
+  final prayerOrder = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+  final now = DateTime.now();
 
-  const PrayerCountdownCircle({
-    super.key,
-    required this.remaining,
-    required this.progress,
-    required this.prayerName,
-    required this.isId,
-  });
-
-  String _format(Duration d) {
-    String two(int n) => n.toString().padLeft(2, '0');
-    return '${two(d.inHours)}:${two(d.inMinutes % 60)}:${two(d.inSeconds % 60)}';
+  String? nextName; DateTime? nextTime; DateTime? prevTime;
+  final hijriData = data["data"]["date"]["hijri"];
+  final hijriDateString = "${hijriData['day']} ${hijriData['month']['en']} ${hijriData['year']}";
+  for (int i = 0; i < prayerOrder.length; i++) {
+    DateTime pTime = DateFormat("HH:mm").parse(timings[prayerOrder[i]]);
+    pTime = DateTime(now.year, now.month, now.day, pTime.hour, pTime.minute);
+    if (pTime.isAfter(now)) {
+      nextName = prayerOrder[i]; nextTime = pTime;
+      prevTime = (i > 0) ? DateTime(now.year, now.month, now.day, DateFormat("HH:mm").parse(timings[prayerOrder[i-1]]).hour, DateFormat("HH:mm").parse(timings[prayerOrder[i-1]]).minute) : now.subtract(const Duration(hours: 4));
+      break;
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      height: 150,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Theme.of(context)
-                  .colorScheme
-                  .primaryContainer
-                  .withOpacity(0.25),
-            ),
-          ),
-
-          TweenAnimationBuilder<double>(
-            tween: Tween(begin: progress, end: progress), 
-            duration: const Duration(seconds: 1),
-            builder: (_, value, __) {
-              return SizedBox(
-                width: 140,
-                height: 140,
-                child: CircularProgressIndicator(
-                  value: value, 
-                  strokeWidth: 10,
-                  backgroundColor: Colors.grey.withOpacity(0.2),
-                  strokeCap: StrokeCap.round,
-                ),
-              );
-            },
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                _format(remaining),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                isId ? 'Menuju $prayerName' : 'Towards $prayerName',
-                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+  if (nextName == null) {
+    nextName = 'Fajr';
+    DateTime fajr = DateFormat("HH:mm").parse(timings['Fajr']);
+    nextTime = DateTime(now.year, now.month, now.day + 1, fajr.hour, fajr.minute);
+    DateTime isha = DateFormat("HH:mm").parse(timings['Isha']);
+    prevTime = DateTime(now.year, now.month, now.day, isha.hour, isha.minute);
   }
+
+  return {
+    "location": data["data"]["meta"]["timezone"],
+    "hijriDate": hijriDateString,
+    "timings": timings,
+    "closestPrayer": nextName,
+    "closestTime": nextTime,
+    "prevTime": prevTime,
+  };
 }
 
-enum JumpToMode { surah, page, deresan, tafsir }
-
-final jumpToModeProvider =
-    StateProvider<JumpToMode>((_) => JumpToMode.surah);
-
-final jumpTargetProvider =
-    StateProvider<int?>((_) => null);
-
+// --- MAIN SCREEN ---
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
-
-    @override
-    ConsumerState<HomeScreen> createState() => _HomeScreenState();
-  }
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  Timer? _debounce;
   Timer? _countdownTimer;
   Duration? _timeUntilPrayer;
-  
-  @override
-  void initState() {
-    super.initState();
-  }
-  @override
-  void dispose() {
-    _debounce?.cancel();
-    _countdownTimer?.cancel();
-    super.dispose();
-  }
-  double _countdownProgress(Duration remaining, DateTime target) {
-    final totalSeconds = target.difference(DateTime.now().subtract(remaining)).inSeconds;
-    if (totalSeconds <= 0) return 0.0;
-    double progress = remaining.inSeconds / totalSeconds;
-    return progress.clamp(0.0, 1.0);
-  }
-  void _startCountdown(DateTime prayerTime) {
+  double _progress = 0.0;
+
+  void _startCountdown(DateTime target, DateTime prev) {
     _countdownTimer?.cancel();
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
       final now = DateTime.now();
-      final diff = prayerTime.difference(now);
-
+      final diff = target.difference(now);
       if (diff.isNegative) {
         timer.cancel();
         ref.invalidate(prayerProvider);
       } else {
-        if (mounted) {
-          setState(() {
-            _timeUntilPrayer = diff;
-          });
-        }
+        final totalRange = target.difference(prev).inSeconds;
+        setState(() {
+          _timeUntilPrayer = diff;
+          _progress = (diff.inSeconds / totalRange).clamp(0.0, 1.0);
+        });
       }
     });
   }
-  void _onSearchChanged(String query) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      if (query.trim().length > 2) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SearchResultScreen(query: query.trim()),
-          ),
-        );
-      }
-    });
-  }
-  void _handleQiblaTap() {
-    if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Fitur Tidak Tersedia"),
-          content: const Text("Petunjuk arah kiblat hanya tersedia di perangkat Android dan iOS."),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
-    } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const QiblaScreen()));
-    }
+
+  @override
+  void dispose() {
+    _countdownTimer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final settings = ref.watch(settingsProvider);
-    final isId = settings.language == 'id';
-    ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
-      next.whenData((prayerData) {
-        final DateTime? closestTime = prayerData['closestTime'];
-        final String? closestPrayer = prayerData['closestPrayer'];
+    final isId = ref.watch(settingsProvider).language == 'id';
+    final prayerAsync = ref.watch(prayerProvider);
 
-        if (closestTime != null && closestPrayer != null) {
-          _startCountdown(closestTime);
-          NotificationService().cancelAllNotifications();
-          NotificationService().scheduleAdzanNotification(
-            id: 0,
-            prayerName: closestPrayer,
-            scheduledTime: closestTime,
-          );
-        }
-      });
+    ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
+      next.whenData((data) => _startCountdown(data['closestTime'], data['prevTime']));
     });
 
-    final prayerAsync = ref.watch(prayerProvider);
-    final bookmarks = ref.watch(bookmarkProvider);
     return Scaffold(
       appBar: AppBar(
-        title: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text("Mushaf"),
-        ),
+        title: const Text("Mushaf", style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.explore_outlined),
-            tooltip: isId ? 'Arah Kiblat' : 'Qibla Direction',
-            onPressed: _handleQiblaTap,
-          ),
+          IconButton(icon: const Icon(Icons.explore_outlined), onPressed: () {
+            if (kIsWeb) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Kompas tidak tersedia di Web")));
+            } else {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const QiblaScreen()));
+            }
+          })
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildHeader(context, theme, isId),
-                const SizedBox(height: 24),
-                _buildSearchBar(context, theme, isId),
-                const SizedBox(height: 16),
-                
-                prayerAsync.when(
-                  data: (prayer) {
-                    return Card(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      elevation: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    "${isId ? 'Jadwal Sholat' : 'Prayer Times'} (${prayer["hijriDate"]})",
-                                    style: theme.textTheme.titleMedium?.copyWith(
-                                        fontWeight: FontWeight.bold, fontFamily: 'Roboto')),
-                                if (prayer['isOffline'] == true)
-                                  Tooltip(
-                                    message: isId ? 'Data offline' : 'Offline data',
-                                    child: const Icon(Icons.cloud_off, size: 18, color: Colors.grey),
-                                  ),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "${isId ? 'Lokasi' : 'Location'}: ${prayer["location"]}",
-                              style: theme.textTheme.bodySmall,
-                            ),
-                            const Divider(height: 16),
-                            if (prayer["closestPrayer"] != null &&
-                                prayer["closestTime"] != null &&
-                                _timeUntilPrayer != null)
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  PrayerCountdownCircle(
-                                    remaining: _timeUntilPrayer!,
-                                    progress: _countdownProgress(
-                                      _timeUntilPrayer!,
-                                      prayer["closestTime"],
-                                    ),
-                                    prayerName: prayer["closestPrayer"],
-                                    isId: isId,
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      children: prayer["timings"].entries
-                                          .where((e) => ![
-                                                "Midnight",
-                                                "Firstthird",
-                                                "Lastthird",
-                                                "Imsak",
-                                                "Sunset"
-                                              ].contains(e.key))
-                                          .map<Widget>(
-                                            (e) => Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 4),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(e.key),
-                                                  Text(
-                                                    e.value,
-                                                    style: const TextStyle(fontWeight: FontWeight.bold),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                          .toList(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (error, stackTrace) => Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                              isId 
-                              ? "Gagal memuat jadwal sholat:\n${error.toString().replaceAll("Exception: ", "")}"
-                              : "Failed to load prayer times:\n${error.toString().replaceAll("Exception: ", "")}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: theme.colorScheme.error),
-                            ),
-                    )
-                  ),
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Search Bar
+              TextField(
+                decoration: InputDecoration(
+                  hintText: isId ? 'Cari Surah...' : 'Search...',
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true,
+                  fillColor: theme.colorScheme.surfaceVariant.withOpacity(0.3),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: BorderSide.none),
                 ),
-                const SizedBox(height: 24),
-                if (bookmarks.isNotEmpty)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        isId ? 'Tanda Baca Tersimpan' : 'Saved Bookmarks',
-                        style: theme.textTheme.titleLarge
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 12),
-                      ...bookmarks.entries.map((entry) {
-                        return _buildBookmarkCard(
-                            context, ref, theme, entry.key, entry.value, isId);
-                      }).toList(),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
+                onSubmitted: (v) => Navigator.push(context, MaterialPageRoute(builder: (_) => SearchResultScreen(query: v))),
+              ),
+              const SizedBox(height: 20),
 
+              // Prayer Card
+              prayerAsync.when(
+                data: (prayer) => _buildPrayerCard(prayer, theme, isId),
+                loading: () => const Center(child: Padding(padding: EdgeInsets.all(20), child: CircularProgressIndicator())),
+                error: (err, _) => Center(child: Text("Gagal memuat jadwal")),
+              ),
+
+              const SizedBox(height: 25),
+              Text(isId ? "Menu Utama" : "Main Menu", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 15),
+
+              // Grid Menu - Penyebab utama error jika tidak dibungkus dengan benar
+              _buildMenuGrid(context, isId, ThemeData()),
               
-                _buildMenuGrid(context, isId),
-                const SizedBox(height: 32),
-                
-                _buildDeveloperInfo(context, isId),
-              ],
-            ),
+              const SizedBox(height: 40),
+              _buildDeveloperInfo(context, isId)
+            ],
           ),
         ),
       ),
     );
   }
-  Widget _buildHeader(BuildContext context, ThemeData theme, bool isId) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+
+  Widget _buildPrayerCard(Map<String, dynamic> prayer, ThemeData theme, bool isId) {
+    final cs = theme.colorScheme;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(colors: [cs.primary, cs.primary.withOpacity(0.7)]),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(prayer["location"], style: TextStyle(color: cs.onPrimary, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+                    Text(prayer["hijriDate"], style: TextStyle(color: cs.onPrimary.withOpacity(0.8), fontSize: 12)),
+                  ],
+                ),
+              ),
+              const Icon(Icons.location_on, color: Colors.white70, size: 18),
+            ],
+          ),
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // Countdown Circle
+              if (_timeUntilPrayer != null) ...[
+                _buildTimerCircle(cs, isId, prayer["closestPrayer"]),
+                const SizedBox(width: 15),
+              ],
+              // Times List
+              Expanded(
+                child: Column(
+                  children: (prayer["timings"] as Map).entries
+                      .where((e) => ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].contains(e.key))
+                      .map((e) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(e.key, style: TextStyle(color: e.key == prayer["closestPrayer"] ? Colors.yellow : Colors.white, fontSize: 13)),
+                          Text(e.value, style: TextStyle(color: Colors.white, fontSize: 13)),
+                        ],
+                      )).toList(),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimerCircle(ColorScheme cs, bool isId, String nextName) {
+    final hours = _timeUntilPrayer!.inHours.toString().padLeft(2, '0');
+    final mins = (_timeUntilPrayer!.inMinutes % 60).toString().padLeft(2, '0');
+    final secs = (_timeUntilPrayer!.inSeconds % 60).toString().padLeft(2, '0');
+    
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Text('Assalamualaikum Warohmatullahi Wabarokatuh.', style: theme.textTheme.bodyMedium?.copyWith(fontSize: 18)),
+        SizedBox(
+          width: 100, height: 100,
+          child: CircularProgressIndicator(value: _progress, color: Colors.white, backgroundColor: Colors.white12, strokeWidth: 5, strokeCap: StrokeCap.round),
+        ),
+        Column(
+          children: [
+            Text("$hours:$mins:$secs", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+            Text(isId ? "Ke $nextName" : "To $nextName", style: const TextStyle(color: Colors.white70, fontSize: 8)),
+          ],
+        ),
       ],
     );
   }
-  Widget _buildSearchBar(BuildContext context, ThemeData theme, bool isId) {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: isId ? 'Cari surah atau terjemahan...' : 'Search surah or translation...',
-        prefixIcon: const Icon(Icons.search),
+
+  Widget _buildMenuGrid(BuildContext context, bool isId, ThemeData theme) {
+    final colorScheme = theme.colorScheme;
+    
+    return Center(
+      child: Wrap(
+        spacing: 12.0,
+        runSpacing: 16.0,
+        children: [
+          _menuItem(
+            context,
+            name: isId ? 'Per Surah' : 'By Surah',
+            icon: Icons.menu_book_rounded,
+            color: colorScheme.primary,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SurahListScreen())),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? 'Per Halaman' : 'By Page',
+            icon: Icons.auto_stories_rounded,
+            color: Colors.blue,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageListScreen())),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: "Nahwu",
+            icon: Icons.menu_book,
+            color: Colors.brown,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TafsirSurahListScreen())),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? "Klasik" : "Classic",
+            icon: Icons.history_edu,
+            color: Colors.indigo,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageListScreen(mode: PageListViewMode.deresan))),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? "Tajwid" : "Tajweed",
+            icon: Icons.color_lens_rounded,
+            color: Colors.purple,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GlossaryScreen())),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? "Dzikir Pagi" : "Morning Dhikr",
+            icon: Icons.wb_sunny_rounded,
+            color: Colors.orange,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DzikirScreen(type: DzikrType.pagi))),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? "Dzikir Petang" : "Evening Dhikr",
+            icon: Icons.nights_stay,
+            color: Colors.deepPurple,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DzikirScreen(type: DzikrType.petang))),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? "Doa" : "Dua",
+            icon: Icons.volunteer_activism_rounded,
+            color: Colors.green,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DoaScreen())),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: "Aqidah",
+            icon: Icons.favorite_rounded,
+            color: Colors.redAccent,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AqidahScreen())),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? "Setelan" : "Settings",
+            icon: Icons.settings_rounded,
+            color: Colors.blueGrey,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LanguageSelectorScreen())),
+            theme: theme,
+          ),
+        ],
       ),
-      onChanged: _onSearchChanged,
     );
   }
-  Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme,
-      String name, Bookmark bookmark, bool isId) {
-    final cardColor = theme.brightness == Brightness.light
-        ? theme.primaryColor
-        : theme.colorScheme.surface;
-    final onCardColor = theme.brightness == Brightness.light
-        ? theme.colorScheme.onPrimary
-        : theme.colorScheme.onSurface;
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      color: cardColor,
-      child: ListTile(
-        leading: Icon(Icons.bookmark, color: onCardColor, size: 30),
-        title: Text(name,
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: onCardColor)),
-        subtitle: Text('Ayah ${bookmark.ayahNumber} | ${bookmark.surahName} ',
-            style: TextStyle(color: onCardColor.withOpacity(0.8))),
-        trailing: IconButton(
-          icon: Icon(Icons.delete_outline, color: onCardColor),
-          tooltip: isId ? 'Hapus Bookmark' : 'Remove Bookmark',
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (dialogContext) => AlertDialog(
-                title: Text(isId ? 'Hapus Bookmark?' : 'Delete Bookmark?'),
-                content: Text(isId 
-                  ? 'Anda yakin ingin menghapus bookmark "$name"?' 
-                  : 'Are you sure you want to delete bookmark "$name"?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(dialogContext).pop(),
-                    child: Text(isId ? 'Batal' : 'Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      ref.read(bookmarkProvider.notifier).removeBookmark(name);
-                      Navigator.of(dialogContext).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text(isId 
-                          ? 'Bookmark "$name" telah dihapus.' 
-                          : 'Bookmark "$name" deleted.')),
-                      );
-                    },
-                    child: Text(isId ? 'Hapus' : 'Delete'),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+  Widget _menuItem(
+    BuildContext context, {
+    required String name,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+    required ThemeData theme,
+    bool available = true,
+  }) {
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Opacity(
+      opacity: available ? 1 : 0.3,
+      child: InkWell(
         onTap: () {
-          switch (bookmark.type) {
-            case BookmarkViewType.surah:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => SurahDetailScreen(
-                    surahId: bookmark.surahId,
-                    initialScrollIndex:
-                        bookmark.ayahNumber != null ? bookmark.ayahNumber! - 1 : null,
-                  ),
-                ),
-              );
-              break;
-
-            case BookmarkViewType.page:
-              if (bookmark.pageNumber == null) return;
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      PageViewScreen(initialPage: bookmark.pageNumber!),
-                ),
-              );
-              break;
-
-            case BookmarkViewType.deresan:
-              if (bookmark.pageNumber == null) return;
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      DeresanViewScreen(initialPage: bookmark.pageNumber!),
-                ),
-              );
-              break;
-
-            case BookmarkViewType.tafsir:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      TafsirViewScreen(surahId: bookmark.surahId),
-                ),
-              );
-              break;
-          }
+          HapticFeedback.lightImpact();
+          onTap();
         },
-
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.28, // Responsif: lebar sekitar 1/3 layar
+          height: 120,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          decoration: BoxDecoration(
+            // Warna background adaptif: Abu-abu sangat terang (light) atau Abu-abu gelap (dark)
+            color: isDark ? theme.colorScheme.surfaceVariant.withOpacity(0.2) : const Color(0xFFF4F4F4),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 2),
+                blurRadius: 6,
+                color: Colors.black.withOpacity(isDark ? 0.5 : 0.1),
+              )
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Indikator Status (seperti di referensi SMART ROOM)
+              Align(
+                alignment: Alignment.topRight,
+                child: CircleAvatar(
+                  radius: 4,
+                  backgroundColor: color, // Menggunakan warna kategori sebagai status
+                ),
+              ),
+              const Spacer(),
+              // Icon Tengah
+              Icon(
+                icon,
+                size: 32,
+                color: isDark ? theme.colorScheme.onSurface : color,
+              ),
+              const Spacer(),
+              // Label Teks
+              Text(
+                name,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: isDark ? theme.colorScheme.onSurface : Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
-  Widget _buildMenuGrid(BuildContext context, bool isId) {
-    return GridView.count(
-      crossAxisCount: 2, 
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      childAspectRatio: 1.2,
-      children: [
-        _MenuTile(
-          icon: Icons.list_alt_rounded,
-          title: isId ? 'Lihat per Surah' : 'Browse by Surah',
-          color: Colors.teal.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahListScreen()));
-          },
+
+  Widget _buildTile(IconData icon, String label, Color bg, Color iconCol, VoidCallback onTap) {
+    return Material(
+      color: bg,
+      borderRadius: BorderRadius.circular(15),
+      child: InkWell(
+        onTap: () { HapticFeedback.mediumImpact(); onTap(); },
+        borderRadius: BorderRadius.circular(15),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: iconCol, size: 28),
+            const SizedBox(height: 5),
+            Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+          ],
         ),
-        _MenuTile(
-          icon: Icons.auto_stories_rounded,
-          title: isId ? 'Lihat per Halaman' : 'Browse by Page',
-          color: Colors.blue.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen()));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.menu_book,
-          title: isId ? 'Belajar Nahwu' : 'Learn Nahwu',
-          color: Colors.brown.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const TafsirSurahListScreen()));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.menu_book_rounded,
-          title: isId ? 'AlQuran Klasik' : 'Classic Quran',
-          color: Colors.indigo.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const PageListScreen(mode: PageListViewMode.deresan)));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.color_lens_outlined,
-          title: isId ? 'Glosarium Tajwid' : 'Tajwid Glossary',
-          color: Colors.purple.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const GlossaryScreen()));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.wb_sunny_outlined,
-          title: isId ? 'Dzikir Pagi' : 'Morning Dhikr',
-          color: Colors.orange.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const DzikirScreen(type: DzikrType.pagi)));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.nights_stay_outlined,
-          title: isId ? 'Dzikir Petang' : 'Evening Dhikr',
-          color: Colors.deepPurple.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const DzikirScreen(type: DzikrType.petang)));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.volunteer_activism_rounded,
-          title: isId ? 'Kumpulan Doa' : 'Daily Prayers (Dua)',
-          color: Colors.green.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const DoaScreen()));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.favorite,
-          title: 'Aqidatul Awam',
-          color: Colors.brown.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AqidahScreen()));
-          },
-        ),
-        _MenuTile(
-          icon: Icons.cloud_download_outlined,
-          title: isId ? 'Pengaturan' : 'Settings',
-          color: Colors.blueGrey.shade400,
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const LanguageSelectorScreen()));
-          },
-        ),
-      ],
+      ),
     );
   }
+
   Widget _buildDeveloperInfo(BuildContext context, bool isId) {
-    final Uri githubUrl = Uri.parse('https://github.com/servdal/quran-app');
-
-    Future<void> menujuGitHub() async {
-      if (!await launchUrl(githubUrl, mode: LaunchMode.externalApplication)) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Tidak dapat membuka link: $githubUrl')),
-          );
-        }
-      }
-    }
-
     return Column(
       children: [
-        Text(
-          isId 
-          ? 'Dikembangkan dengan ❤️ oleh Duidev Software House' 
-          : 'Developed with ❤️ by Duidev Software House',
-          style: Theme.of(context).textTheme.bodySmall,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
+        const Text('Developed with ❤️ by Duidev Software House', style: TextStyle(fontSize: 10)),
+        const SizedBox(height: 4),
         InkWell(
-          onTap: menujuGitHub,
-          borderRadius: BorderRadius.circular(8),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-            child: Text(
-              isId 
-              ? 'Bantu kembangkan di https://github.com/servdal/quran-app'
-              : 'Contribute at https://github.com/servdal/quran-app',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                decoration: TextDecoration.underline,
-                decorationColor: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
+          onTap: () => launchUrl(Uri.parse('https://github.com/servdal/quran-app')),
+          child: const Text('Contribute at GitHub', style: TextStyle(fontSize: 10, decoration: TextDecoration.underline, color: Colors.blue)),
         ),
       ],
     );
   }
 }
 
-class _MenuTile extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final Color color;
-  final VoidCallback onTap;
 
-  const _MenuTile({
-    required this.icon,
-    required this.title,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 1, end: 1),
-      duration: const Duration(milliseconds: 150),
-      builder: (context, scale, child) {
-        return Transform.scale(scale: scale, child: child);
-      },
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        elevation: 4,
-        child: InkWell(
-          onTap: onTap,
-          splashColor: Colors.white24,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            color: color,
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 42, color: Colors.white),
-                const SizedBox(height: 12),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-
-  }
-}
-
-class GlossaryScreen extends StatelessWidget {
+class GlossaryScreen extends ConsumerWidget {
   const GlossaryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 1. Baca bahasa dari provider
+    final lang = ref.watch(settingsProvider).language;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Glosarium Tajwid'),
+        title: Text(lang == 'en' ? "Tajweed Glossary" : "Glosarium Tajwid"),
+        centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            margin: EdgeInsets.zero,
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: AppTheme.tajweedRules.length,
-              itemBuilder: (context, index) {
-                final rule = AppTheme.tajweedRules[index];
-                return ExpansionTile(
-                  leading: CircleAvatar(backgroundColor: rule.color, radius: 12),
-                  title: Text(rule.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-                  childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-                  children: <Widget>[
-                    Text(
-                      rule.description,
-                      textAlign: TextAlign.justify,
-                      style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
-                    ),
-                  ],
-                );
-              },
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        itemCount: AppTheme.tajweedRules.length,
+        itemBuilder: (context, index) {
+          final rule = AppTheme.tajweedRules[index];
+
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-          ),
-        ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: ExpansionTile(
+                // Menghilangkan garis default ExpansionTile
+                shape: const Border(),
+                collapsedShape: const Border(),
+                // Indikator Warna di samping (Vertical Line)
+                leading: Container(
+                  width: 6,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: rule.color,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                title: Text(
+                  rule.getName(lang), // BILINGUAL NAME
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                subtitle: Text(
+                  lang == 'en' ? "Tap to see details" : "Ketuk untuk detail",
+                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                ),
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Divider(),
+                        const SizedBox(height: 8),
+                        Text(
+                          rule.getDescription(lang), // BILINGUAL DESCRIPTION
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.6,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        // Badge kecil untuk menunjukkan Key (opsional)
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Chip(
+                            label: Text(
+                              "Code: ${rule.key.toUpperCase()}",
+                              style: const TextStyle(fontSize: 10, color: Colors.white),
+                            ),
+                            backgroundColor: rule.color.withOpacity(0.8),
+                            padding: EdgeInsets.zero,
+                            visualDensity: VisualDensity.compact,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

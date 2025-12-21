@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quran_app/providers/settings_provider.dart';
 import '../services/quran_data_service.dart';
 import '../screens/page_view_screen.dart';
 import '../screens/deresan_view_screen.dart';
@@ -14,10 +15,12 @@ class PageListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final allPagesAsync = ref.watch(allPagesProvider);
-
+    final lang = ref.watch(settingsProvider).language;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Daftar Halaman Mushaf"),
+        title: Text(
+          lang == 'en' ? "Mushaf Page List" : "Daftar Halaman Mushaf",
+        ),
         centerTitle: true,
       ),
       body: allPagesAsync.when(

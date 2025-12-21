@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/data/doa_data.dart';
 import 'package:quran_app/models/ayah_model.dart';
-import 'package:quran_app/providers/settings_provider.dart'; // Import settings provider
+import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
-import 'package:quran_app/utils/tajweed_parser.dart'; // Import Tajweed Parser
+import 'package:quran_app/utils/tajweed_parser.dart';
+import '../../utils/auto_tajweed_parser.dart';
 
 class DoaUIData {
   final List<Ayah> ayahs;
@@ -17,7 +18,9 @@ class DoaUIData {
 
 final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
   final dataService = ref.watch(quranDataServiceProvider);
-  
+  // Re-fetch saat bahasa berubah agar translasi ayat dari DB ikut berubah
+  ref.watch(settingsProvider); 
+
   List<DoaUIData> uiDataList = [];
   for (final doaItem in daftarDoaAlQuran) {
     final allAyahsInSurah = await dataService.getAyahsBySurahId(doaItem.surahId);
@@ -28,7 +31,7 @@ final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
         final foundAyah = allAyahsInSurah.firstWhere((a) => a.number == ayahNum);
         fetchedAyahs.add(foundAyah);
       } catch (e) {
-        throw Exception("Ayat tidak ditemukan: Surah ${doaItem.surahId} Ayat $ayahNum");
+        continue; // Skip jika tidak ketemu
       }
     }
     if (fetchedAyahs.isNotEmpty) {
@@ -38,35 +41,54 @@ final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
   return uiDataList;
 });
 
-class DoaScreen extends StatelessWidget {
+class DoaScreen extends ConsumerWidget {
   const DoaScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lang = ref.watch(settingsProvider).language;
+    final theme = Theme.of(context);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Kumpulan Doa'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Daftar Doa'),
-              Tab(text: 'Adab Berdoa'),
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              expandedHeight: 100.0,
+              floating: true,
+              pinned: true,
+              title: Text(lang == 'en' ? 'Qur\'anic Prayers' : 'Doa Al-Qur\'an'),
+              centerTitle: true,
+              backgroundColor: theme.scaffoldBackgroundColor,
+              elevation: 0,
+            ),
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SliverAppBarDelegate(
+                TabBar(
+                  labelColor: theme.primaryColor,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  tabs: [
+                    Tab(text: lang == 'en' ? 'Prayers' : 'Daftar Doa'),
+                    Tab(text: lang == 'en' ? 'Etiquettes' : 'Adab'),
+                  ],
+                ),
+              ),
+            ),
+          ],
+          body: const TabBarView(
+            children: [
+              _DoaList(),
+              _AdabList(),
             ],
           ),
-        ),
-        body: const TabBarView(
-          children: [
-            _DoaList(),
-            _AdabList(),
-          ],
         ),
       ),
     );
   }
 }
-
-// Widget untuk menampilkan daftar doa
 class _DoaList extends ConsumerWidget {
   const _DoaList();
 
@@ -74,111 +96,182 @@ class _DoaList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final doaAsync = ref.watch(doaProvider);
-    // Ambil ukuran font dari settings provider
-    final arabicFontSize = ref.watch(settingsProvider).arabicFontSize;
+    final settings = ref.watch(settingsProvider);
+    final lang = settings.language;
 
     return doaAsync.when(
       data: (uiDataList) {
         return ListView.builder(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
           itemCount: uiDataList.length,
           itemBuilder: (context, index) {
             final doaData = uiDataList[index];
-
-            // --- PERUBAHAN 1: Gunakan teks bertajwid ---
-            final combinedTajweedText = doaData.ayahs.map((a) => a.tajweedText).join(' ');
+            final combinedArabicText = doaData.ayahs.map((a) => a.arabicText).join(' ');
             final combinedTranslation = doaData.ayahs.map((a) => a.translation).join(' ');
 
-            // Parsing teks tajwid menjadi RichText
             final baseTextStyle = TextStyle(
                 fontFamily: 'LPMQ',
-                fontSize: arabicFontSize, // Gunakan font size dari settings
-                height: 2.2,
-                color: Theme.of(context).colorScheme.onSurface);
-            final textSpans = TajweedParser.parse(combinedTajweedText, baseTextStyle);
+                fontSize: settings.arabicFontSize,
+                height: 2.0,
+                color: theme.colorScheme.onSurface);
 
-            return Card(
-              elevation: 2,
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(doaData.doaInfo.title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-                    const Divider(height: 24),
-                    
-                    // --- PERUBAHAN 2: Gunakan RichText untuk menampilkan tajwid ---
-                    RichText(
-                      textAlign: TextAlign.right,
+            // Gunakan AutoTajweed jika Indonesia, TajweedParser jika Inggris
+            final textSpans = lang == 'id'
+                ? AutoTajweedParser.parse(
+                    combinedArabicText, 
+                    baseTextStyle, 
+                    lang: lang, 
+                    context: context, 
+                    learningMode: true
+                  )
+                : TajweedParser.parse(
+                    doaData.ayahs.map((a) => a.tajweedText).join(' '), 
+                    baseTextStyle
+                  );
+
+            return Container(
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: theme.cardColor,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4))
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      doaData.doaInfo.getTitle(lang),
+                      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: theme.primaryColor),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    color: theme.primaryColor.withOpacity(0.03),
+                    child: Directionality(
                       textDirection: TextDirection.rtl,
-                      text: TextSpan(
-                        style: baseTextStyle,
-                        children: textSpans,
+                      child: RichText(
+                        textAlign: TextAlign.right,
+                        text: TextSpan(children: textSpans),
                       ),
                     ),
-                    
-                    const SizedBox(height: 16),
-                    Text(
-                      '"$combinedTranslation"',
-                      textAlign: TextAlign.justify,
-                      style: theme.textTheme.bodyMedium?.copyWith(fontStyle: FontStyle.italic),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(doaData.doaInfo.source, style: theme.textTheme.bodySmall),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => SurahDetailScreen(
-                                surahId: doaData.doaInfo.surahId,
-                                initialScrollIndex: doaData.doaInfo.ayahs.first - 1,
-                              ),
-                            ));
-                          },
-                          child: const Text('Lihat Konteks Ayat'),
+                        Text(
+                          combinedTranslation,
+                          textAlign: TextAlign.justify,
+                          style: theme.textTheme.bodyMedium?.copyWith(height: 1.5, color: Colors.grey.shade700),
                         ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Badge(
+                              label: Text(doaData.doaInfo.source),
+                              backgroundColor: theme.primaryColor.withOpacity(0.1),
+                              textColor: theme.primaryColor,
+                              largeSize: 24,
+                            ),
+                            TextButton.icon(
+                              icon: const Icon(Icons.arrow_outward, size: 16),
+                              label: Text(lang == 'en' ? 'Context' : 'Konteks'),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => SurahDetailScreen(
+                                    surahId: doaData.doaInfo.surahId,
+                                    initialScrollIndex: doaData.doaInfo.ayahs.first - 1,
+                                  ),
+                                ));
+                              },
+                            ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
             );
           },
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(child: Text('Gagal memuat data doa: $error')),
+      error: (e, _) => Center(child: Text('Error: $e')),
     );
   }
 }
 
-// Widget untuk menampilkan daftar adab (tidak ada perubahan)
-class _AdabList extends StatelessWidget {
+class _AdabList extends ConsumerWidget {
   const _AdabList();
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(12.0),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lang = ref.watch(settingsProvider).language;
+    final theme = Theme.of(context);
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
       itemCount: daftarAdabBerdoa.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final adab = daftarAdabBerdoa[index];
-        return Card(
-          elevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: ListTile(
-            leading: CircleAvatar(child: Text('${index + 1}')),
-            title: Text(adab.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(adab.description, textAlign: TextAlign.justify),
-            contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        return IntrinsicHeight(
+          child: Row(
+            children: [
+              // Garis Timeline
+              Column(
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(color: theme.primaryColor, shape: BoxShape.circle),
+                    child: Center(child: Text('${index + 1}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                  ),
+                  if (index != daftarAdabBerdoa.length - 1)
+                    Expanded(child: VerticalDivider(thickness: 2, color: theme.primaryColor.withOpacity(0.2))),
+                ],
+              ),
+              const SizedBox(width: 16),
+              // Konten Adab
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(adab.getTitle(lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const SizedBox(height: 4),
+                      Text(adab.getDescription(lang), textAlign: TextAlign.justify, style: TextStyle(color: Colors.grey.shade600, height: 1.4)),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
     );
   }
+}
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
+  final TabBar _tabBar;
+
+  @override double get minExtent => _tabBar.preferredSize.height;
+  @override double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: _tabBar,
+    );
+  }
+  @override bool shouldRebuild(_SliverAppBarDelegate oldDelegate) => false;
 }

@@ -112,11 +112,19 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     );
 
     final isId = settings.language == 'id';
-
-    final spans = isId
-        ? AutoTajweedParser.parse(widget.ayah.arabicText, baseArabicStyle)
-        : TajweedParser.parse(widget.ayah.tajweedText, baseArabicStyle);
-
+    final lang = ref.watch(settingsProvider).language;
+    final spans = lang == 'id'
+    ? AutoTajweedParser.parse(
+        widget.ayah.arabicText, 
+        baseArabicStyle,
+        lang: lang,             // Parameter bahasa yang baru ditambahkan
+        context: context,      // Diperlukan agar BottomSheet bisa muncul
+        learningMode: true,    // Aktifkan agar bisa diklik
+      )
+    : TajweedParser.parse(
+        widget.ayah.tajweedText, 
+        baseArabicStyle,
+      );
     return Column(
       children: [
         ListTile(

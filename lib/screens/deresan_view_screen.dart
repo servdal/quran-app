@@ -22,8 +22,6 @@ class DeresanViewScreen extends StatefulWidget {
 class _DeresanViewScreenState extends State<DeresanViewScreen> {
   late final PageController _pageController;
   late int _currentPage;
-
-  /// MODE VIEW
   bool _showTafsir = false;
 
   @override
@@ -79,68 +77,45 @@ class _DeresanViewScreenState extends State<DeresanViewScreen> {
           ],
         ),
       ),
-
-      /// ===== FAB TOGGLE TAFSIR =====
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       extendBody: true,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey.shade300,
         elevation: 0,
-        onPressed: () {
-          setState(() {
-            _showTafsir = !_showTafsir;
-          });
-        },
+        onPressed: () => setState(() => _showTafsir = !_showTafsir),
         child: Icon(
           _showTafsir ? Icons.menu_book : Icons.import_contacts,
           color: Colors.black,
           size: 28,
         ),
       ),
-
-      bottomNavigationBar: _DeresanBottomBar(
-        controller: _pageController,
-      ),
+      bottomNavigationBar: _DeresanBottomBar(controller: _pageController),
     );
   }
 }
+
 class DeresanPage extends ConsumerWidget {
   final int pageNumber;
   final bool showTafsir;
 
-  const DeresanPage({
-    super.key,
-    required this.pageNumber,
-    required this.showTafsir,
-  });
-
-  String _toArabicNumber(int number) {
-    const digits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-    return number
-        .toString()
-        .split('')
-        .map((d) => digits[int.parse(d)])
-        .join();
-  }
+  const DeresanPage({super.key, required this.pageNumber, required this.showTafsir});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
+    final lang = settings.language;
     final theme = Theme.of(context);
 
     final ayahsAsync = ref.watch(pageAyahsProvider(pageNumber));
 
     return ayahsAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('Gagal memuat halaman')),
+      error: (e, _) => Center(child: Text(lang == 'en' ? 'Failed to load page' : 'Gagal memuat halaman')),
       data: (ayahs) {
         if (ayahs.isEmpty) {
-          return const Center(child: Text('Tidak ada data.'));
+          return Center(child: Text(lang == 'en' ? 'No data found' : 'Tidak ada data.'));
         }
 
-        /// =========================
-        /// MODE TAFSIR (1 HALAMAN)
-        /// =========================
         if (showTafsir) {
           return SingleChildScrollView(
             padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
@@ -154,19 +129,13 @@ class DeresanPage extends ConsumerWidget {
                     children: [
                       Text(
                         'QS ${ayah.surahId}:${ayah.number}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: theme.primaryColor,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: theme.primaryColor),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         ayah.tafsir,
                         textAlign: TextAlign.justify,
-                        style: const TextStyle(
-                          height: 1.6,
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(height: 1.6, fontSize: 15),
                       ),
                     ],
                   ),
@@ -176,9 +145,6 @@ class DeresanPage extends ConsumerWidget {
           );
         }
 
-        /// =========================
-        /// MODE TEKS ARAB (DEFAULT)
-        /// =========================
         final List<Widget> pageWidgets = [];
         List<InlineSpan> currentSpans = [];
 
@@ -194,54 +160,48 @@ class DeresanPage extends ConsumerWidget {
 
           if (i == 0 || ayah.surahId != ayahs[i - 1].surahId) {
             if (currentSpans.isNotEmpty) {
-              pageWidgets.add(
-                RichText(
-                  textAlign: TextAlign.justify,
-                  textDirection: TextDirection.rtl,
-                  text: TextSpan(children: currentSpans),
-                ),
-              );
+              pageWidgets.add(RichText(
+                textAlign: TextAlign.justify,
+                textDirection: TextDirection.rtl,
+                text: TextSpan(children: currentSpans),
+              ));
               currentSpans = [];
             }
-
             pageWidgets.add(_SurahHeaderWidget(surahName: ayah.surahName));
-
             if (ayah.surahId != 9 && ayah.number == 1) {
-              pageWidgets.add(
-                _BismillahWidget(fontSize: settings.arabicFontSize),
-              );
+              pageWidgets.add(_BismillahWidget(fontSize: settings.arabicFontSize));
             }
           }
 
-          final spans = settings.language == 'id'
-              ? AutoTajweedParser.parse(ayah.arabicText, baseTextStyle)
+          final spans = lang == 'id'
+              ? AutoTajweedParser.parse(
+                  ayah.arabicText, 
+                  baseTextStyle, 
+                  lang: lang,
+                  context: context,
+                  learningMode: true,
+                )
               : TajweedParser.parse(ayah.tajweedText, baseTextStyle);
 
           currentSpans.addAll(spans);
-          currentSpans.add(const TextSpan(text: '\u00A0'));
-
-          currentSpans.add(
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: AyahOrnamentalNumber(
-                number: _toArabicNumber(ayah.number),
-                fontSize: settings.arabicFontSize,
-                hasSajda: ayah.isSajda,
-              ),
+          currentSpans.add(const TextSpan(text: ' '));
+          currentSpans.add(WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: AyahOrnamentalNumber(
+              number: ayah.number.toString(),
+              fontSize: settings.arabicFontSize,
+              hasSajda: ayah.isSajda,
             ),
-          );
-
-          currentSpans.add(const TextSpan(text: '\u00A0'));
+          ));
+          currentSpans.add(const TextSpan(text: ' '));
         }
 
         if (currentSpans.isNotEmpty) {
-          pageWidgets.add(
-            RichText(
-              textAlign: TextAlign.justify,
-              textDirection: TextDirection.rtl,
-              text: TextSpan(children: currentSpans),
-            ),
-          );
+          pageWidgets.add(RichText(
+            textAlign: TextAlign.justify,
+            textDirection: TextDirection.rtl,
+            text: TextSpan(children: currentSpans),
+          ));
         }
 
         return Directionality(
@@ -256,19 +216,16 @@ class DeresanPage extends ConsumerWidget {
   }
 }
 
-class _DeresanHeader extends StatelessWidget {
+class _DeresanHeader extends ConsumerWidget {
   final int currentPage;
   final VoidCallback onBack;
   final VoidCallback onMore;
 
-  const _DeresanHeader({
-    required this.currentPage,
-    required this.onBack,
-    required this.onMore,
-  });
+  const _DeresanHeader({required this.currentPage, required this.onBack, required this.onMore});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lang = ref.watch(settingsProvider).language;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
       child: Column(
@@ -277,25 +234,294 @@ class _DeresanHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: onBack,
-              ),
-              IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: onMore,
-              ),
+              IconButton(icon: const Icon(Icons.arrow_back), onPressed: onBack),
+              IconButton(icon: const Icon(Icons.more_vert), onPressed: onMore),
             ],
           ),
           const SizedBox(height: 6),
           Text(
-            'Page $currentPage',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
+            lang == 'en' ? 'Page $currentPage' : 'Halaman $currentPage',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SettingsModalContent extends ConsumerWidget {
+  final int currentPage;
+  const SettingsModalContent({super.key, required this.currentPage});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsProvider);
+    final lang = settings.language;
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            lang == 'en' ? 'Arabic Font Size' : 'Ukuran Font Arab',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Slider(
+            value: settings.arabicFontSize,
+            min: 18,
+            max: 40,
+            divisions: 22,
+            label: settings.arabicFontSize.round().toString(),
+            onChanged: (value) => ref.read(settingsProvider.notifier).setFontSize(value),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.bookmark_add),
+              label: Text(lang == 'en' ? 'Bookmark This Page' : 'Tandai Halaman Ini'),
+              onPressed: () => _showBookmarkDialog(context, ref, currentPage, lang),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showBookmarkDialog(BuildContext context, WidgetRef ref, int currentPage, String lang) async {
+    final textController = TextEditingController();
+    final bookmarks = ref.read(bookmarkProvider);
+    final existingNames = bookmarks.keys.toList();
+    final ayahs = await ref.read(pageAyahsProvider(currentPage).future);
+    if (ayahs.isEmpty) return;
+
+    final firstAyah = ayahs.first;
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: Text(lang == 'en' ? 'Bookmark Deresan Page' : 'Tandai Halaman Deresan'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: textController,
+                  decoration: InputDecoration(
+                    labelText: lang == 'en' ? 'New Bookmark Name' : 'Nama Bookmark Baru',
+                    hintText: lang == 'en' ? 'e.g., Night Deresan' : 'Contoh: Deresan Malam',
+                  ),
+                ),
+                if (existingNames.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  Text(
+                    lang == 'en' ? 'Or overwrite existing:' : 'Atau timpa yang sudah ada:',
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  const Divider(),
+                  SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      itemCount: existingNames.length,
+                      itemBuilder: (context, index) {
+                        final name = existingNames[index];
+                        final bookmark = bookmarks[name]!;
+                        return ListTile(
+                          title: Text(name),
+                          subtitle: bookmark.pageNumber != null
+                              ? Text(lang == 'en' ? 'Page ${bookmark.pageNumber}' : 'Halaman ${bookmark.pageNumber}')
+                              : null,
+                          onTap: () async {
+                            final newBookmark = Bookmark(
+                              type: BookmarkViewType.deresan,
+                              surahId: firstAyah.surahId,
+                              surahName: firstAyah.surahName,
+                              ayahNumber: firstAyah.number,
+                              pageNumber: currentPage,
+                            );
+                            await ref.read(bookmarkProvider.notifier).addOrUpdateBookmark(name, newBookmark);
+                            Navigator.of(dialogContext).pop();
+                            Navigator.of(context).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(lang == 'en' ? 'Bookmark "$name" updated' : 'Bookmark "$name" diperbarui'),
+                            ));
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(lang == 'en' ? 'Cancel' : 'Batal'),
+            ),
+            ElevatedButton(
+              child: Text(lang == 'en' ? 'Save New' : 'Simpan Baru'),
+              onPressed: () async {
+                final name = textController.text.trim();
+                if (name.isEmpty) return;
+                final newBookmark = Bookmark(
+                  type: BookmarkViewType.deresan,
+                  surahId: firstAyah.surahId,
+                  surahName: firstAyah.surahName,
+                  ayahNumber: firstAyah.number,
+                  pageNumber: currentPage,
+                );
+                await ref.read(bookmarkProvider.notifier).addOrUpdateBookmark(name, newBookmark);
+                Navigator.of(dialogContext).pop();
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(lang == 'en' ? 'Bookmark "$name" saved' : 'Bookmark "$name" disimpan'),
+                ));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class AyahOrnamentalNumber extends StatelessWidget {
+  final String number;
+  final double fontSize;
+  final bool hasSajda;
+
+  const AyahOrnamentalNumber({
+    super.key,
+    required this.number,
+    required this.fontSize,
+    this.hasSajda = false,
+  });
+
+  // Tambahkan fungsi utilitas di sini jika belum ada secara global
+  String _toArabicNumber(String input) {
+    const digits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return input.split('').map((d) {
+      final parsed = int.tryParse(d);
+      return parsed != null ? digits[parsed] : d;
+    }).join();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.onSurface;
+    final arabicNumber = _toArabicNumber(number);
+
+    return Text(
+      hasSajda ? '\u202B ۩ ۞ $arabicNumber \u202C' : '\u202B ۞ $arabicNumber \u202C',
+      textDirection: TextDirection.rtl,
+      style: TextStyle(
+        fontFamily: 'LPMQ',
+        fontSize: fontSize,
+        fontWeight: FontWeight.bold,
+        color: color,
+      ),
+    );
+  }
+}
+
+class _BismillahWidget extends StatelessWidget {
+  final double fontSize;
+
+  const _BismillahWidget({
+    required this.fontSize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final primaryColor = theme.primaryColor;
+
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
+      // Menggunakan Decoration untuk membuat bingkai ornamental
+      decoration: BoxDecoration(
+        color: primaryColor.withOpacity(0.03),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: primaryColor.withOpacity(0.2),
+          width: 1.5,
+        ),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Ornamen sudut (opsional, memberikan kesan klasik)
+          Positioned(
+            left: 0,
+            child: Icon(Icons.star_outline, size: 12, color: primaryColor.withOpacity(0.3)),
+          ),
+          Positioned(
+            right: 0,
+            child: Icon(Icons.star_outline, size: 12, color: primaryColor.withOpacity(0.3)),
+          ),
+          
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
+            child: Text(
+              '\uFD3F بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ \uFD3E',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'LPMQ',
+                fontSize: fontSize, // Sedikit lebih besar dari teks ayat
+                color: theme.colorScheme.onSurface,
+                height: 1.5,
+                shadows: [
+                  Shadow(
+                    offset: const Offset(1, 1),
+                    blurRadius: 2.0,
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+class _SurahHeaderWidget extends StatelessWidget {
+  final String surahName;
+
+  const _SurahHeaderWidget({
+    required this.surahName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: theme.primaryColor.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: theme.primaryColor),
+      ),
+      child: Center(
+        child: Text(
+          surahName,
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.bold,
+            color: theme.primaryColor,
+          ),
+        ),
       ),
     );
   }
@@ -346,287 +572,5 @@ class _DeresanBottomBar extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _SurahHeaderWidget extends StatelessWidget {
-  final String surahName;
-
-  const _SurahHeaderWidget({
-    required this.surahName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: theme.primaryColor.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.primaryColor),
-      ),
-      child: Center(
-        child: Text(
-          surahName,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: theme.primaryColor,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _BismillahWidget extends StatelessWidget {
-  final double fontSize;
-
-  const _BismillahWidget({
-    required this.fontSize,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 16),
-      child: Center(
-        child: Text(
-          'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'LPMQ',
-            fontSize: fontSize * 1.1,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsModalContent extends ConsumerWidget {
-  final int currentPage;
-
-  const SettingsModalContent({
-    super.key,
-    required this.currentPage,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Ukuran Font Arab',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Slider(
-            value: settings.arabicFontSize,
-            min: 18,
-            max: 40,
-            divisions: 22,
-            label: settings.arabicFontSize.round().toString(),
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).setFontSize(value);
-            },
-          ),
-          const SizedBox(height: 12),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.bookmark_add),
-            label: const Text('Tandai Halaman Ini'),
-            onPressed: () {
-              _showBookmarkDialog(context, ref, currentPage);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showBookmarkDialog(
-    BuildContext context,
-    WidgetRef ref,
-    int currentPage,
-  ) async {
-    final textController = TextEditingController();
-    final bookmarks = ref.read(bookmarkProvider);
-    final existingNames = bookmarks.keys.toList();
-
-    final ayahs = await ref.read(pageAyahsProvider(currentPage).future);
-    if (ayahs.isEmpty) return;
-
-    final firstAyah = ayahs.first;
-
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: const Text('Tandai Halaman Deresan'),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: textController,
-                  decoration: const InputDecoration(
-                    labelText: 'Nama Bookmark Baru',
-                    hintText: 'Contoh: Deresan Malam',
-                  ),
-                ),
-                const SizedBox(height: 16),
-                if (existingNames.isNotEmpty) ...[
-                  const Text(
-                    'Atau timpa bookmark yang sudah ada:',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  const Divider(),
-                  SizedBox(
-                    height: 200,
-                    child: ListView.builder(
-                      itemCount: existingNames.length,
-                      itemBuilder: (context, index) {
-                        final name = existingNames[index];
-                        final bookmark = bookmarks[name]!;
-
-                        return ListTile(
-                          title: Text(name),
-                          subtitle: bookmark.pageNumber != null
-                              ? Text('Halaman ${bookmark.pageNumber}')
-                              : null,
-                          onTap: () async {
-                            final newBookmark = Bookmark(
-                              type: BookmarkViewType.deresan,
-                              surahId: firstAyah.surahId,
-                              surahName: firstAyah.surahName,
-                              ayahNumber: firstAyah.number,
-                              pageNumber: currentPage,
-                            );
-
-                            await ref
-                                .read(bookmarkProvider.notifier)
-                                .addOrUpdateBookmark(name, newBookmark);
-
-                            Navigator.of(dialogContext).pop();
-                            Navigator.of(context).pop();
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Bookmark "$name" berhasil diperbarui',
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Batal'),
-            ),
-            ElevatedButton(
-              child: const Text('Simpan Baru'),
-              onPressed: () async {
-                final name = textController.text.trim();
-                if (name.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Nama bookmark tidak boleh kosong'),
-                    ),
-                  );
-                  return;
-                }
-
-                final newBookmark = Bookmark(
-                  type: BookmarkViewType.deresan,
-                  surahId: firstAyah.surahId,
-                  surahName: firstAyah.surahName,
-                  ayahNumber: firstAyah.number,
-                  pageNumber: currentPage,
-                );
-
-                await ref
-                    .read(bookmarkProvider.notifier)
-                    .addOrUpdateBookmark(name, newBookmark);
-
-                Navigator.of(dialogContext).pop();
-                Navigator.of(context).pop();
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Bookmark "$name" berhasil disimpan'),
-                  ),
-                );
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class AyahOrnamentalNumber extends StatelessWidget {
-  /// Nomor ayat dalam format Arab (contoh: ١٢)
-  final String number;
-
-  /// Ukuran font mengikuti ukuran teks Arab
-  final double fontSize;
-
-  /// Apakah ayat sajdah
-  final bool hasSajda;
-
-  const AyahOrnamentalNumber({
-    super.key,
-    required this.number,
-    required this.fontSize,
-    this.hasSajda = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.onSurface;
-
-    return Text(
-      _buildText(),
-      textDirection: TextDirection.rtl,
-      style: TextStyle(
-        fontFamily: 'Uthmani',
-        fontSize: fontSize * 0.9,
-        fontWeight: FontWeight.bold,
-        height: 1.0,
-        color: color,
-      ),
-    );
-  }
-
-  String _buildText() {
-    // ۞ = Ornamental separator mushaf
-    // ۩ = Sajdah marker
-    if (hasSajda) {
-      return ' ۩ ۞ $number ';
-    }
-    return ' ۞ $number ';
   }
 }

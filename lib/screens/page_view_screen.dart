@@ -34,7 +34,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$_currentPage dari 604'),
+        title: Text('$_currentPage - 604'),
       ),
       body: SafeArea(
         child: Column(
@@ -157,7 +157,7 @@ class _SurahHeader extends StatelessWidget {
           surahName,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: 'LPMQ',
+            fontFamily: 'Roboto',
             fontSize: 24,
             color: Theme.of(context).colorScheme.secondary,
           ),

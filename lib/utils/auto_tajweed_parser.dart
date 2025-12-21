@@ -100,6 +100,7 @@ class AutoTajweedParser {
   static List<TextSpan> parse(
     String ayaText,
     TextStyle baseStyle, {
+    required String lang,
     bool learningMode = false,
     String? activeKey,
     ValueChanged<String>? onTapRule,
@@ -107,31 +108,62 @@ class AutoTajweedParser {
     BuildContext? context,
   }) {
     if (ayaText.isEmpty) return [];
+    final effectiveStyle = baseStyle.color == null 
+        ? baseStyle.copyWith(color: Colors.black) // atau warna tema Anda
+        : baseStyle;
 
     ayaText = ayaText.replaceAll('\u200c', '').replaceAll('\u200b', '');
+    final match = _lafzJalalahRegex.firstMatch(ayaText);
+    if (match != null) {
+      final before = ayaText.substring(0, match.start);
+      final lafz = match.group(0)!;
+      final after = ayaText.substring(match.end);
+      
+      final List<TextSpan> combinedSpans = [];
+      
+      if (before.isNotEmpty) {
+        combinedSpans.addAll(parse(before, effectiveStyle, 
+            lang: lang,
+            learningMode: learningMode, activeKey: activeKey, 
+            onTapRule: onTapRule, onClosePopup: onClosePopup, context: context));
+      }
+      
+      combinedSpans.add(TextSpan(
+        text: lafz,
+        style: effectiveStyle.copyWith(
+          color: AppTheme.tajweedColors['jalalah'],
+          backgroundColor: activeKey == 'jalalah' ? AppTheme.tajweedColors['jalalah']?.withOpacity(0.15) : null,
+        ),
+        recognizer: (learningMode && context != null) ? _tap(context, true, 'jalalah', lang, onTapRule, onClosePopup) : null,
+      ));
+
+      if (after.isNotEmpty) {
+        combinedSpans.addAll(parse(after, effectiveStyle,
+            lang: lang,
+            learningMode: learningMode, activeKey: activeKey, 
+            onTapRule: onTapRule, onClosePopup: onClosePopup, context: context));
+      }
+      return combinedSpans;
+    }
     final tokens = _tokenize(ayaText);
     final List<TextSpan> spans = [];
-
     int i = 0;
+
     while (i < tokens.length) {
       final curr = tokens[i];
       final next = (i + 1 < tokens.length) ? tokens[i + 1] : null;
-
-      // ===== LAFẒ JALĀLAH (اللّٰهُ) =====
       final match = _lafzJalalahRegex.firstMatch(ayaText);
       if (match != null) {
         final before = ayaText.substring(0, match.start);
         final lafz = match.group(0)!;
         final after = ayaText.substring(match.end);
-
         final spans = <TextSpan>[];
-
-        // BEFORE → parse normal
         if (before.isNotEmpty) {
           spans.addAll(
             AutoTajweedParser.parse(
               before,
               baseStyle,
+              lang: lang,
               learningMode: learningMode,
               activeKey: activeKey,
               onTapRule: onTapRule,
@@ -140,8 +172,6 @@ class AutoTajweedParser {
             ),
           );
         }
-
-        // LAFẒ JALĀLAH → RAW, INTERACTIVE
         spans.add(
           TextSpan(
             text: lafz,
@@ -184,7 +214,7 @@ class AutoTajweedParser {
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
-                                    rule.name,
+                                    rule.nameId,
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -193,7 +223,7 @@ class AutoTajweedParser {
                                 ],
                               ),
                               const SizedBox(height: 12),
-                              Text(rule.description),
+                              Text(rule.descriptionId),
                             ],
                           ),
                         ),
@@ -202,13 +232,12 @@ class AutoTajweedParser {
                 : null,
           ),
         );
-
-        // AFTER → parse normal
         if (after.isNotEmpty) {
           spans.addAll(
             AutoTajweedParser.parse(
               after,
               baseStyle,
+              lang: lang,
               learningMode: learningMode,
               activeKey: activeKey,
               onTapRule: onTapRule,
@@ -269,18 +298,12 @@ class AutoTajweedParser {
       if (ruleKey != null && next != null) {
         spans.add(TextSpan(
           text: curr.full + next.full,
-          style: _style(baseStyle, ruleKey, activeKey == ruleKey),
-          recognizer: _tap(
-            context,
-            learningMode,
-            ruleKey,
-            onTapRule,
-            onClosePopup,
-          ),
+          style: _style(effectiveStyle, ruleKey, activeKey == ruleKey),
+          recognizer: _tap(context, learningMode, ruleKey, lang, onTapRule, onClosePopup),
         ));
         i += 2;
       } else {
-        spans.add(TextSpan(text: curr.full, style: baseStyle));
+        spans.add(TextSpan(text: curr.full, style: effectiveStyle));
         i++;
       }
     }
@@ -309,6 +332,7 @@ class AutoTajweedParser {
     BuildContext? context,
     bool enabled,
     String key,
+    String lang,
     ValueChanged<String>? onTapRule,
     VoidCallback? onClosePopup,
   ) {
@@ -345,7 +369,7 @@ class AutoTajweedParser {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      rule.name,
+                      rule.getName(lang),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -354,7 +378,7 @@ class AutoTajweedParser {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Text(rule.description),
+                Text(rule.getDescription(lang)),
               ],
             ),
           ),

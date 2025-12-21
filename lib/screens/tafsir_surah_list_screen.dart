@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/surah_index_model.dart';
+import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/tafsir_view_screen.dart';
 
@@ -12,10 +13,13 @@ class TafsirSurahListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final surahsAsync = ref.watch(allSurahsProvider);
-
+    final lang = ref.watch(settingsProvider).language;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pilih Surah untuk Tafsir"),
+        title: Text(
+          lang == 'en' ? "Mushaf Surah List" : "Daftar Surah Mushaf",
+        ),
+        centerTitle: true,
       ),
       body: surahsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),

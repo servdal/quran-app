@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
@@ -13,6 +15,7 @@ import 'package:quran_app/screens/surah_detail_screen.dart';
 import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
 import 'package:quran_app/screens/tafsir_view_screen.dart';
+import 'package:quran_app/services/notification_service.dart';
 import 'package:quran_app/theme/app_theme.dart';
 import 'package:quran_app/screens/page_list_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,35 +33,51 @@ import 'package:quran_app/screens/qibla_screen.dart';
 // --- PROVIDER & LOGIC ---
 final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   try {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    final response = await http.get(Uri.parse("http://api.aladhan.com/v1/timings?latitude=${position.latitude}&longitude=${position.longitude}"));
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    final response = await http.get(
+      Uri.parse(
+        "http://api.aladhan.com/v1/timings?latitude=${position.latitude}&longitude=${position.longitude}",
+      ),
+    );
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('last_prayer_data', response.body);
       final data = _processPrayerData(response.body);
       try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+        List<Placemark> placemarks = await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
         if (placemarks.isNotEmpty) {
           final p = placemarks.first;
           String? city = p.locality;
           String? subAdmin = p.subAdministrativeArea;
           String? admin = p.administrativeArea;
           String shortAddress = [
-            city,
-            if (city == null || city.isEmpty) subAdmin,
-            admin,
-          ].where((e) => e != null && e.isNotEmpty).map((e) => e!).toList().join(', ');
+                city,
+                if (city == null || city.isEmpty) subAdmin,
+                admin,
+              ]
+              .where((e) => e != null && e.isNotEmpty)
+              .map((e) => e!)
+              .toList()
+              .join(', ');
 
           if (shortAddress.isEmpty) {
-            shortAddress = "Koordinat (${position.latitude.toStringAsFixed(3)}, ${position.longitude.toStringAsFixed(3)})";
+            shortAddress =
+                "Koordinat (${position.latitude.toStringAsFixed(3)}, ${position.longitude.toStringAsFixed(3)})";
           }
 
           data["location"] = shortAddress;
         }
       } catch (_) {}
       return data;
-    } else { throw Exception("Gagal muat"); }
+    } else {
+      throw Exception("Gagal muat");
+    }
   } catch (e) {
     final prefs = await SharedPreferences.getInstance();
     final offlineData = prefs.getString('last_prayer_data');
@@ -73,15 +92,28 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
   final prayerOrder = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
   final now = DateTime.now();
 
-  String? nextName; DateTime? nextTime; DateTime? prevTime;
+  String? nextName;
+  DateTime? nextTime;
+  DateTime? prevTime;
   final hijriData = data["data"]["date"]["hijri"];
-  final hijriDateString = "${hijriData['day']} ${hijriData['month']['en']} ${hijriData['year']}";
+  final hijriDateString =
+      "${hijriData['day']} ${hijriData['month']['en']} ${hijriData['year']}";
   for (int i = 0; i < prayerOrder.length; i++) {
     DateTime pTime = DateFormat("HH:mm").parse(timings[prayerOrder[i]]);
     pTime = DateTime(now.year, now.month, now.day, pTime.hour, pTime.minute);
     if (pTime.isAfter(now)) {
-      nextName = prayerOrder[i]; nextTime = pTime;
-      prevTime = (i > 0) ? DateTime(now.year, now.month, now.day, DateFormat("HH:mm").parse(timings[prayerOrder[i-1]]).hour, DateFormat("HH:mm").parse(timings[prayerOrder[i-1]]).minute) : now.subtract(const Duration(hours: 4));
+      nextName = prayerOrder[i];
+      nextTime = pTime;
+      prevTime =
+          (i > 0)
+              ? DateTime(
+                now.year,
+                now.month,
+                now.day,
+                DateFormat("HH:mm").parse(timings[prayerOrder[i - 1]]).hour,
+                DateFormat("HH:mm").parse(timings[prayerOrder[i - 1]]).minute,
+              )
+              : now.subtract(const Duration(hours: 4));
       break;
     }
   }
@@ -89,7 +121,13 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
   if (nextName == null) {
     nextName = 'Fajr';
     DateTime fajr = DateFormat("HH:mm").parse(timings['Fajr']);
-    nextTime = DateTime(now.year, now.month, now.day + 1, fajr.hour, fajr.minute);
+    nextTime = DateTime(
+      now.year,
+      now.month,
+      now.day + 1,
+      fajr.hour,
+      fajr.minute,
+    );
     DateTime isha = DateFormat("HH:mm").parse(timings['Isha']);
     prevTime = DateTime(now.year, now.month, now.day, isha.hour, isha.minute);
   }
@@ -115,8 +153,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Timer? _countdownTimer;
   Duration? _timeUntilPrayer;
   double _progress = 0.0;
-
-  void _startCountdown(DateTime target, DateTime prev) {
+  bool _isIstima = false;
+  void _startCountdown(
+    DateTime target,
+    DateTime prev,
+    String prayerName,
+    bool isId,
+  ) {
     _countdownTimer?.cancel();
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) return;
@@ -131,8 +174,45 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           _timeUntilPrayer = diff;
           _progress = (diff.inSeconds / totalRange).clamp(0.0, 1.0);
         });
+        if (!_isIstima && diff.inSeconds <= 600 && diff.inSeconds > 590) {
+          _isIstima = true;
+          notificationService.showIstimaNotification(isId);
+        }
       }
     });
+  }
+
+  @pragma('vm:entry-point')
+  void adzanAlarmCallback() {
+    final plugin = FlutterLocalNotificationsPlugin();
+
+    const android = AndroidNotificationDetails(
+      'adzan_channel',
+      'Adzan',
+      importance: Importance.max,
+      priority: Priority.max,
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound('azan'),
+      fullScreenIntent: true,
+    );
+
+    plugin.show(
+      1001,
+      'Waktu Sholat',
+      'Allahu Akbar...',
+      const NotificationDetails(android: android),
+    );
+  }
+
+  Future<void> scheduleAdzanAlarm(DateTime time) async {
+    await AndroidAlarmManager.oneShotAt(
+      time,
+      time.millisecondsSinceEpoch ~/ 1000,
+      adzanAlarmCallback,
+      exact: true,
+      wakeup: true,
+      rescheduleOnReboot: true,
+    );
   }
 
   @override
@@ -147,21 +227,53 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final isId = ref.watch(settingsProvider).language == 'id';
     final prayerAsync = ref.watch(prayerProvider);
     final bookmarks = ref.watch(bookmarkProvider);
+
     ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
-      next.whenData((data) => _startCountdown(data['closestTime'], data['prevTime']));
+      next.whenData((data) async {
+        _startCountdown(
+          data['closestTime'],
+          data['prevTime'],
+          data['closestPrayer'],
+          isId,
+        );
+
+        // 🔥 SCHEDULE ADZAN
+        final alarmId = data['closestTime'].millisecondsSinceEpoch.remainder(
+          1 << 31,
+        );
+        await AndroidAlarmManager.oneShotAt(
+          data['closestTime'],
+          alarmId,
+          adzanAlarmCallback,
+          exact: true,
+          wakeup: true,
+          rescheduleOnReboot: true,
+        );
+      });
     });
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Mushaf", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          "Mushaf",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: [
-          IconButton(icon: const Icon(Icons.explore_outlined), onPressed: () {
-            if (kIsWeb) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Kompas tidak tersedia di Web")));
-            } else {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => const QiblaScreen()));
-            }
-          })
+          IconButton(
+            icon: const Icon(Icons.explore_outlined),
+            onPressed: () {
+              if (kIsWeb) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Kompas tidak tersedia di Web")),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const QiblaScreen()),
+                );
+              }
+            },
+          ),
         ],
       ),
       body: SafeArea(
@@ -178,21 +290,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   prefixIcon: const Icon(Icons.search),
                   filled: true,
                   fillColor: theme.colorScheme.surfaceVariant.withOpacity(0.3),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: BorderSide.none),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-                onSubmitted: (v) => Navigator.push(context, MaterialPageRoute(builder: (_) => SearchResultScreen(query: v))),
+                onSubmitted:
+                    (v) => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => SearchResultScreen(query: v),
+                      ),
+                    ),
               ),
               const SizedBox(height: 20),
 
               // Prayer Card
               prayerAsync.when(
                 data: (prayer) => _buildPrayerCard(prayer, theme, isId),
-                loading: () => const Center(child: Padding(padding: EdgeInsets.all(20), child: CircularProgressIndicator())),
+                loading:
+                    () => const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
                 error: (err, _) => Center(child: Text("Gagal memuat jadwal")),
               ),
 
               const SizedBox(height: 25),
-              Text(isId ? "Lanjutkan:" : "Bookmark", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+              Text(
+                isId ? "Lanjutkan:" : "Bookmark",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 15),
               if (bookmarks.isEmpty)
                 _buildEmptyBookmark(isId)
@@ -206,22 +338,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     Bookmark bookmark = bookmarks.values.elementAt(index);
 
                     return _buildBookmarkCard(
-                      context, 
-                      ref, 
-                      theme, 
-                      name, 
-                      bookmark, 
-                      isId
+                      context,
+                      ref,
+                      theme,
+                      name,
+                      bookmark,
+                      isId,
                     );
                   },
                 ),
               const SizedBox(height: 15),
-              Text(isId ? "Menu Utama" : "Main Menu", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-              
+              Text(
+                isId ? "Menu Utama" : "Main Menu",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
               _buildMenuGrid(context, isId, ThemeData()),
-              
+
               const SizedBox(height: 40),
-              _buildDeveloperInfo(context, isId)
+              _buildDeveloperInfo(context, isId),
             ],
           ),
         ),
@@ -229,13 +366,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildPrayerCard(Map<String, dynamic> prayer, ThemeData theme, bool isId) {
+  Widget _buildPrayerCard(
+    Map<String, dynamic> prayer,
+    ThemeData theme,
+    bool isId,
+  ) {
     final cs = theme.colorScheme;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(colors: [cs.primary, cs.primary.withOpacity(0.7)]),
+        gradient: LinearGradient(
+          colors: [cs.primary, cs.primary.withOpacity(0.7)],
+        ),
       ),
       child: Column(
         children: [
@@ -246,8 +389,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(prayer["location"], style: TextStyle(color: cs.onPrimary, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
-                    Text(prayer["hijriDate"], style: TextStyle(color: cs.onPrimary.withOpacity(0.8), fontSize: 12)),
+                    Text(
+                      prayer["location"],
+                      style: TextStyle(
+                        color: cs.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      prayer["hijriDate"],
+                      style: TextStyle(
+                        color: cs.onPrimary.withOpacity(0.8),
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -266,19 +422,46 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               // Times List
               Expanded(
                 child: Column(
-                  children: (prayer["timings"] as Map).entries
-                      .where((e) => ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].contains(e.key))
-                      .map((e) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(e.key, style: TextStyle(color: e.key == prayer["closestPrayer"] ? Colors.yellow : Colors.white, fontSize: 13)),
-                          Text(e.value, style: TextStyle(color: Colors.white, fontSize: 13)),
-                        ],
-                      )).toList(),
+                  children:
+                      (prayer["timings"] as Map).entries
+                          .where(
+                            (e) => [
+                              'Fajr',
+                              'Dhuhr',
+                              'Asr',
+                              'Maghrib',
+                              'Isha',
+                            ].contains(e.key),
+                          )
+                          .map(
+                            (e) => Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  e.key,
+                                  style: TextStyle(
+                                    color:
+                                        e.key == prayer["closestPrayer"]
+                                            ? Colors.yellow
+                                            : Colors.white,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                Text(
+                                  e.value,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                          .toList(),
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -288,18 +471,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final hours = _timeUntilPrayer!.inHours.toString().padLeft(2, '0');
     final mins = (_timeUntilPrayer!.inMinutes % 60).toString().padLeft(2, '0');
     final secs = (_timeUntilPrayer!.inSeconds % 60).toString().padLeft(2, '0');
-    
+
     return Stack(
       alignment: Alignment.center,
       children: [
         SizedBox(
-          width: 100, height: 100,
-          child: CircularProgressIndicator(value: _progress, color: Colors.white, backgroundColor: Colors.white12, strokeWidth: 5, strokeCap: StrokeCap.round),
+          width: 100,
+          height: 100,
+          child: CircularProgressIndicator(
+            value: _progress,
+            color: Colors.white,
+            backgroundColor: Colors.white12,
+            strokeWidth: 5,
+            strokeCap: StrokeCap.round,
+          ),
         ),
         Column(
           children: [
-            Text("$hours:$mins:$secs", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
-            Text(isId ? "Ke $nextName" : "To $nextName", style: const TextStyle(color: Colors.white70, fontSize: 8)),
+            Text(
+              "$hours:$mins:$secs",
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              isId ? "Ke $nextName" : "To $nextName",
+              style: const TextStyle(color: Colors.white70, fontSize: 8),
+            ),
           ],
         ),
       ],
@@ -308,7 +508,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildMenuGrid(BuildContext context, bool isId, ThemeData theme) {
     final colorScheme = theme.colorScheme;
-    
+
     return Center(
       child: Wrap(
         spacing: 12.0,
@@ -319,7 +519,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? 'Per Surah' : 'By Surah',
             icon: Icons.menu_book_rounded,
             color: colorScheme.primary,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SurahListScreen())),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SurahListScreen()),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -327,7 +531,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? 'Per Halaman' : 'By Page',
             icon: Icons.auto_stories_rounded,
             color: Colors.blue,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageListScreen())),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PageListScreen()),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -335,7 +543,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: "Nahwu",
             icon: Icons.menu_book,
             color: Colors.brown,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TafsirSurahListScreen())),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const TafsirSurahListScreen(),
+                  ),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -343,7 +557,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? "Klasik" : "Classic",
             icon: Icons.history_edu,
             color: Colors.indigo,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageListScreen(mode: PageListViewMode.deresan))),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (_) => const PageListScreen(
+                          mode: PageListViewMode.deresan,
+                        ),
+                  ),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -351,7 +574,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? "Tajwid" : "Tajweed",
             icon: Icons.color_lens_rounded,
             color: Colors.purple,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GlossaryScreen())),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const GlossaryScreen()),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -359,7 +586,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? "Dzikir Pagi" : "Morning Dhikr",
             icon: Icons.wb_sunny_rounded,
             color: Colors.orange,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DzikirScreen(type: DzikrType.pagi))),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const DzikirScreen(type: DzikrType.pagi),
+                  ),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -367,7 +600,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? "Dzikir Petang" : "Evening Dhikr",
             icon: Icons.nights_stay,
             color: Colors.deepPurple,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DzikirScreen(type: DzikrType.petang))),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const DzikirScreen(type: DzikrType.petang),
+                  ),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -375,7 +614,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? "Doa" : "Dua",
             icon: Icons.volunteer_activism_rounded,
             color: Colors.green,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DoaScreen())),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const DoaScreen()),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -383,7 +626,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: "Aqidah",
             icon: Icons.favorite_rounded,
             color: Colors.redAccent,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AqidahScreen())),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AqidahScreen()),
+                ),
             theme: theme,
           ),
           _menuItem(
@@ -391,7 +638,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             name: isId ? "Setelan" : "Settings",
             icon: Icons.settings_rounded,
             color: Colors.blueGrey,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LanguageSelectorScreen())),
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const LanguageSelectorScreen(),
+                  ),
+                ),
             theme: theme,
           ),
         ],
@@ -419,19 +672,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         },
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.28, // Responsif: lebar sekitar 1/3 layar
+          width:
+              MediaQuery.of(context).size.width *
+              0.28, // Responsif: lebar sekitar 1/3 layar
           height: 120,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: BoxDecoration(
             // Warna background adaptif: Abu-abu sangat terang (light) atau Abu-abu gelap (dark)
-            color: isDark ? theme.colorScheme.surfaceVariant.withOpacity(0.2) : const Color(0xFFF4F4F4),
+            color:
+                isDark
+                    ? theme.colorScheme.surfaceVariant.withOpacity(0.2)
+                    : const Color(0xFFF4F4F4),
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
                 offset: const Offset(0, 2),
                 blurRadius: 6,
                 color: Colors.black.withOpacity(isDark ? 0.5 : 0.1),
-              )
+              ),
             ],
           ),
           child: Column(
@@ -442,7 +700,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 alignment: Alignment.topRight,
                 child: CircleAvatar(
                   radius: 4,
-                  backgroundColor: color, // Menggunakan warna kategori sebagai status
+                  backgroundColor:
+                      color, // Menggunakan warna kategori sebagai status
                 ),
               ),
               const Spacer(),
@@ -470,13 +729,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildBookmarkCard(BuildContext context, WidgetRef ref, ThemeData theme,
-    String name, Bookmark bookmark, bool isId) {
+  Widget _buildBookmarkCard(
+    BuildContext context,
+    WidgetRef ref,
+    ThemeData theme,
+    String name,
+    Bookmark bookmark,
+    bool isId,
+  ) {
     final primaryColor = theme.primaryColor;
     final isDarkMode = theme.brightness == Brightness.dark;
-  String getSubtitle() {
-      if (bookmark.type == BookmarkViewType.deresan || bookmark.type == BookmarkViewType.page) {
-        return isId 
+    String getSubtitle() {
+      if (bookmark.type == BookmarkViewType.deresan ||
+          bookmark.type == BookmarkViewType.page) {
+        return isId
             ? 'Halaman ${bookmark.pageNumber} | ${bookmark.surahName}'
             : 'Page ${bookmark.pageNumber} | ${bookmark.surahName}';
       }
@@ -484,12 +750,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ? 'Ayat ${bookmark.ayahNumber} | ${bookmark.surahName}'
           : 'Ayah ${bookmark.ayahNumber} | ${bookmark.surahName}';
     }
+
     String getTypeName() {
       switch (bookmark.type) {
-        case BookmarkViewType.deresan: return 'Deresan';
-        case BookmarkViewType.tafsir: return 'Tafsir';
-        case BookmarkViewType.page: return isId ? 'Halaman' : 'Page';
-        default: return 'Surah';
+        case BookmarkViewType.deresan:
+          return 'Deresan';
+        case BookmarkViewType.tafsir:
+          return 'Tafsir';
+        case BookmarkViewType.page:
+          return isId ? 'Halaman' : 'Page';
+        default:
+          return 'Surah';
       }
     }
 
@@ -498,9 +769,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
-          colors: isDarkMode 
-            ? [theme.colorScheme.surface, theme.colorScheme.surface.withOpacity(0.8)]
-            : [primaryColor.withOpacity(0.9), primaryColor],
+          colors:
+              isDarkMode
+                  ? [
+                    theme.colorScheme.surface,
+                    theme.colorScheme.surface.withOpacity(0.8),
+                  ]
+                  : [primaryColor.withOpacity(0.9), primaryColor],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -520,7 +795,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             color: Colors.white.withOpacity(0.2),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.bookmark_rounded, color: Colors.white, size: 28),
+          child: const Icon(
+            Icons.bookmark_rounded,
+            color: Colors.white,
+            size: 28,
+          ),
         ),
         title: Row(
           children: [
@@ -528,8 +807,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Text(
                 name,
                 style: const TextStyle(
-                  fontSize: 18, 
-                  fontWeight: FontWeight.bold, 
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
@@ -542,7 +821,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               child: Text(
                 getTypeName(),
-                style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
@@ -551,7 +834,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.only(top: 4),
           child: Text(
             getSubtitle(),
-            style: TextStyle(color: Colors.white.withOpacity(0.85), fontSize: 14),
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.85),
+              fontSize: 14,
+            ),
           ),
         ),
         trailing: IconButton(
@@ -565,116 +851,169 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  void _confirmDelete(BuildContext context, WidgetRef ref, String name, bool isId) {
+  void _confirmDelete(
+    BuildContext context,
+    WidgetRef ref,
+    String name,
+    bool isId,
+  ) {
     showDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Row(
-          children: [
-            const Icon(Icons.warning_amber_rounded, color: Colors.red),
-            const SizedBox(width: 10),
-            Text(isId ? 'Hapus Bookmark?' : 'Delete Bookmark?'),
-          ],
-        ),
-        content: Text(
-          isId
-              ? 'Apakah Anda yakin ingin menghapus "$name" dari daftar simpanan?'
-              : 'Are you sure you want to remove "$name" from your bookmarks?',
-          style: const TextStyle(fontSize: 16),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(
-              isId ? 'Batal' : 'Cancel',
-              style: TextStyle(color: Colors.grey.shade600),
+      builder:
+          (dialogContext) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red.shade400,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: Row(
+              children: [
+                const Icon(Icons.warning_amber_rounded, color: Colors.red),
+                const SizedBox(width: 10),
+                Text(isId ? 'Hapus Bookmark?' : 'Delete Bookmark?'),
+              ],
             ),
-            onPressed: () {
-              ref.read(bookmarkProvider.notifier).removeBookmark(name);
-              Navigator.of(dialogContext).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(isId 
-                      ? 'Bookmark "$name" telah dihapus' 
-                      : 'Bookmark "$name" deleted'),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  backgroundColor: Colors.grey.shade800,
+            content: Text(
+              isId
+                  ? 'Apakah Anda yakin ingin menghapus "$name" dari daftar simpanan?'
+                  : 'Are you sure you want to remove "$name" from your bookmarks?',
+              style: const TextStyle(fontSize: 16),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: Text(
+                  isId ? 'Batal' : 'Cancel',
+                  style: TextStyle(color: Colors.grey.shade600),
                 ),
-              );
-            },
-            child: Text(isId ? 'Hapus' : 'Delete'),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red.shade400,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  ref.read(bookmarkProvider.notifier).removeBookmark(name);
+                  Navigator.of(dialogContext).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        isId
+                            ? 'Bookmark "$name" telah dihapus'
+                            : 'Bookmark "$name" deleted',
+                      ),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Colors.grey.shade800,
+                    ),
+                  );
+                },
+                child: Text(isId ? 'Hapus' : 'Delete'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
+
   void _handleNavigation(BuildContext context, Bookmark bookmark) {
     switch (bookmark.type) {
       case BookmarkViewType.deresan:
         if (bookmark.pageNumber != null) {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (_) => DeresanViewScreen(initialPage: bookmark.pageNumber!),
-          ));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (_) => DeresanViewScreen(initialPage: bookmark.pageNumber!),
+            ),
+          );
         }
         break;
       case BookmarkViewType.surah:
-        Navigator.push(context, MaterialPageRoute(
-          builder: (_) => SurahDetailScreen(
-            surahId: bookmark.surahId,
-            initialScrollIndex: bookmark.ayahNumber != null ? bookmark.ayahNumber! - 1 : null,
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (_) => SurahDetailScreen(
+                  surahId: bookmark.surahId,
+                  initialScrollIndex:
+                      bookmark.ayahNumber != null
+                          ? bookmark.ayahNumber! - 1
+                          : null,
+                ),
           ),
-        ));
+        );
         break;
       case BookmarkViewType.page:
         if (bookmark.pageNumber != null) {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => PageViewScreen(initialPage: bookmark.pageNumber!)));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PageViewScreen(initialPage: bookmark.pageNumber!),
+            ),
+          );
         }
         break;
       case BookmarkViewType.tafsir:
-        Navigator.push(context, MaterialPageRoute(builder: (_) => TafsirViewScreen(surahId: bookmark.surahId)));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => TafsirViewScreen(surahId: bookmark.surahId),
+          ),
+        );
         break;
     }
   }
+
   Widget _buildDeveloperInfo(BuildContext context, bool isId) {
     return Column(
       children: [
-        const Text('Developed with ❤️ by Duidev Software House', style: TextStyle(fontSize: 10)),
+        const Text(
+          'Developed with ❤️ by Duidev Software House',
+          style: TextStyle(fontSize: 10),
+        ),
         const SizedBox(height: 4),
         InkWell(
-          onTap: () => launchUrl(Uri.parse('https://github.com/servdal/quran-app')),
-          child: const Text('Contribute at GitHub', style: TextStyle(fontSize: 10, decoration: TextDecoration.underline, color: Colors.blue)),
+          onTap:
+              () =>
+                  launchUrl(Uri.parse('https://github.com/servdal/quran-app')),
+          child: const Text(
+            'Contribute at GitHub',
+            style: TextStyle(
+              fontSize: 10,
+              decoration: TextDecoration.underline,
+              color: Colors.blue,
+            ),
+          ),
         ),
       ],
     );
   }
-  Widget _buildEmptyBookmark(bool isId) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 20),
-    child: Center(
-      child: Column(
-        children: [
-          Icon(Icons.bookmark_border, size: 50, color: Colors.grey.withOpacity(0.5)),
-          const SizedBox(height: 8),
-          Text(
-            isId ? 'Belum ada bookmark' : 'No bookmarks yet',
-            style: TextStyle(color: Colors.grey.shade500),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-}
 
+  Widget _buildEmptyBookmark(bool isId) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Center(
+        child: Column(
+          children: [
+            Icon(
+              Icons.bookmark_border,
+              size: 50,
+              color: Colors.grey.withOpacity(0.5),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              isId ? 'Belum ada bookmark' : 'No bookmarks yet',
+              style: TextStyle(color: Colors.grey.shade500),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class GlossaryScreen extends ConsumerWidget {
   const GlossaryScreen({super.key});
@@ -749,7 +1088,9 @@ class GlossaryScreen extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 1.6,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.8),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -759,7 +1100,10 @@ class GlossaryScreen extends ConsumerWidget {
                           child: Chip(
                             label: Text(
                               "Code: ${rule.key.toUpperCase()}",
-                              style: const TextStyle(fontSize: 10, color: Colors.white),
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.white,
+                              ),
                             ),
                             backgroundColor: rule.color.withOpacity(0.8),
                             padding: EdgeInsets.zero,

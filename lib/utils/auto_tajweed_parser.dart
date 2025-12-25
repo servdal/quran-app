@@ -60,33 +60,16 @@ class AutoTajweedParser {
   static String _normalizeDiacritics(String diacs) {
     if (diacs.isEmpty) return diacs;
 
-    final runes = diacs.runes.toList();
-    final shadda = <int>[];
-    final dagger = <int>[];
-    final harakat = <int>[]; // Fathah, Kasrah, Dhommah
-    final tanwin = <int>[];
-    final sukun = <int>[];
+    final seen = <int>{};
+    final out = <int>[];
 
-    for (final r in runes) {
-      if (r == 0x0651) {
-        shadda.add(r);
-      } else if (r == 0x0670) {
-        dagger.add(r);
-      } else if (r == 0x064E || r == 0x064F || r == 0x0650) {
-        harakat.add(r);
-      } else if (r == 0x064B || r == 0x064C || r == 0x064D) {
-        tanwin.add(r);
-      } else if (r == 0x0652) {
-        sukun.add(r);
+    for (final r in diacs.runes) {
+      if (!seen.contains(r)) {
+        seen.add(r);
+        out.add(r);
       }
     }
-    return String.fromCharCodes([
-      ...shadda,
-      ...harakat,
-      ...dagger,
-      ...tanwin,
-      ...sukun,
-    ]);
+    return String.fromCharCodes(out);
   }
 
   /// ===========================================================
@@ -312,7 +295,7 @@ class AutoTajweedParser {
       if (ruleKey != null && next != null) {
         spans.add(
           TextSpan(
-            text: curr.full + next.full,
+            children: [TextSpan(text: curr.full), TextSpan(text: next.full)],
             style: _style(effectiveStyle, ruleKey, activeKey == ruleKey),
             recognizer: _tap(
               context,
@@ -406,8 +389,9 @@ class AutoTajweedParser {
   static bool _hasDhamma(_Token t) => t.diacritics.contains('ُ');
 
   static bool _isDiacritic(int cp) {
-    if ((cp >= 0x064B && cp <= 0x065F) || cp == 0x0670) return true;
-    if (cp >= 0x06D6 && cp <= 0x06ED) return true;
+    if (cp >= 0x064B && cp <= 0x0652) return true;
+    if (cp == 0x0651) return true;
+    if (cp == 0x0670) return true;
     return false;
   }
 

@@ -53,7 +53,7 @@ class NotificationService {
     const android = AndroidNotificationDetails(
       'istima_channel',
       'Istima',
-      channelDescription: 'Peringatan waktu istima',
+      channelDescription: 'Waktu istima akan segera tiba',
       importance: Importance.high,
       priority: Priority.high,
       playSound: true,
@@ -61,8 +61,10 @@ class NotificationService {
 
     await _plugin.show(
       2002,
-      isId ? 'Peringatan Istima' : 'Istima Warning',
-      isId ? 'Hentikan sholat sunnah' : 'Stop voluntary prayers',
+      isId ? 'Waktu Istima' : 'Istima Time',
+      isId
+          ? 'Bersiaplah adzan akan segera berkumandang'
+          : 'Get ready, adzan will soon sound',
       const NotificationDetails(android: android),
     );
   }
@@ -74,7 +76,7 @@ class NotificationService {
       channelDescription: 'Notifikasi adzan',
       importance: Importance.max,
       priority: Priority.max,
-      playSound: true, // 🔥 DEFAULT SYSTEM SOUND
+      playSound: true,
       fullScreenIntent: true,
     );
 
@@ -96,8 +98,10 @@ class NotificationService {
 
     await _plugin.zonedSchedule(
       2002,
-      isId ? 'Peringatan Istima' : 'Istima Warning',
-      isId ? 'Hentikan sholat sunnah' : 'Stop voluntary prayers',
+      isId ? 'Waktu Istima' : 'Istima Time',
+      isId
+          ? 'Bersiaplah adzan akan segera berkumandang'
+          : 'Get ready, adzan will soon sound',
       tz.TZDateTime.from(istimaTime, tz.local),
       const NotificationDetails(
         android: AndroidNotificationDetails(
@@ -139,35 +143,68 @@ class NotificationService {
   }
 
   /// ================= STICKY =================
+  String _buildTableBody({
+    required bool isId,
+    required String lokasi,
+    required Map timings,
+    required String nextPrayer,
+    required String nextTime,
+  }) {
+    String line(String t) => t.padRight(7);
+    final body = '''
+    $lokasi
+    ──────────────────────────────
+    ${line('Imsak')}${line('Subuh')}${line('Dhuhr')}${line('Asr')}${line('Maghrib')}${line('Isha')}
+    ${line(timings['Imsak'])}${line(timings['Fajr'])}${line(timings['Dhuhr'])}${line(timings['Asr'])}${line(timings['Maghrib'])}${line(timings['Isha'])}
+
+    ${isId ? 'Berikutnya' : 'Next'}: $nextPrayer $nextTime
+    ''';
+    return body;
+  }
+
   Future<void> showSticky({
     required Map timings,
     required String nextPrayer,
     required DateTime nextTime,
     required bool isId,
+    required String location,
   }) async {
-    final text =
-        "Fajr ${timings['Fajr']} • "
-        "Dhuhr ${timings['Dhuhr']} • "
-        "Asr ${timings['Asr']} • "
-        "Maghrib ${timings['Maghrib']} • "
-        "Isha ${timings['Isha']}\n"
-        "${isId ? 'Berikutnya' : 'Next'}: $nextPrayer ${_fmt(nextTime)}";
+    final String tableContent = _buildTableBody(
+      isId: isId,
+      lokasi: location,
+      timings: timings,
+      nextPrayer: nextPrayer,
+      nextTime: _fmt(nextTime),
+    );
+    final notificationDetails = NotificationDetails(
+      android: const AndroidNotificationDetails(
+        'sticky_prayer_channel',
+        'Jadwal Sholat',
+        importance: Importance.low,
+        priority: Priority.low,
+        ongoing: true,
+        autoCancel: false,
+        playSound: false,
+        showWhen: false,
+      ),
+      macOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: false,
+        presentSound: false,
+        threadIdentifier: "prayer_schedule",
+      ),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentSound: false,
+        interruptionLevel: InterruptionLevel.passive,
+      ),
+    );
 
     await _plugin.show(
       9999,
       isId ? 'Jadwal Sholat' : 'Prayer Schedule',
-      text,
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'sticky_prayer_channel',
-          'Jadwal Sholat',
-          importance: Importance.low,
-          priority: Priority.low,
-          ongoing: true,
-          autoCancel: false,
-          playSound: false,
-        ),
-      ),
+      tableContent,
+      notificationDetails,
     );
   }
 

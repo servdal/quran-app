@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class TajweedRule {
   final String key;
-  final String nameId; // Nama Bahasa Indonesia
-  final String nameEn; // Nama Bahasa Inggris
+  final String nameId;
+  final String nameEn;
   final Color color;
   final String descriptionId; // Deskripsi Bahasa Indonesia
   final String descriptionEn; // Deskripsi Bahasa Inggris

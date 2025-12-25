@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-enum BookmarkViewType { surah, page, deresan, tafsir }
+
+enum BookmarkViewType { surah, page, classic, tafsir }
 
 class Bookmark {
   final BookmarkViewType type;
@@ -20,23 +21,23 @@ class Bookmark {
   });
 
   Map<String, dynamic> toJson() => {
-        'type': type.name,
-        'surahId': surahId,
-        'surahName': surahName,
-        'ayahNumber': ayahNumber,
-        'pageNumber': pageNumber,
-      };
+    'type': type.name,
+    'surahId': surahId,
+    'surahName': surahName,
+    'ayahNumber': ayahNumber,
+    'pageNumber': pageNumber,
+  };
 
   factory Bookmark.fromJson(Map<String, dynamic> json) => Bookmark(
-        type: BookmarkViewType.values.firstWhere(
-          (e) => e.name == json['type'],
-          orElse: () => BookmarkViewType.surah,
-        ),
-        surahId: json['surahId'],
-        surahName: json['surahName'],
-        ayahNumber: json['ayahNumber'],
-        pageNumber: json['pageNumber'],
-      );
+    type: BookmarkViewType.values.firstWhere(
+      (e) => e.name == json['type'],
+      orElse: () => BookmarkViewType.surah,
+    ),
+    surahId: json['surahId'],
+    surahName: json['surahName'],
+    ayahNumber: json['ayahNumber'],
+    pageNumber: json['pageNumber'],
+  );
 }
 
 class BookmarkNotifier extends StateNotifier<Map<String, Bookmark>> {
@@ -59,6 +60,7 @@ class BookmarkNotifier extends StateNotifier<Map<String, Bookmark>> {
       }
     }
   }
+
   Future<void> _saveBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
     final encodableMap = state.map(
@@ -66,12 +68,14 @@ class BookmarkNotifier extends StateNotifier<Map<String, Bookmark>> {
     );
     await prefs.setString(_bookmarksKey, jsonEncode(encodableMap));
   }
+
   Future<void> addOrUpdateBookmark(String name, Bookmark bookmark) async {
     final newState = {...state};
     newState[name] = bookmark;
     state = newState;
     await _saveBookmarks();
   }
+
   Future<void> removeBookmark(String name) async {
     final newState = {...state};
     newState.remove(name);
@@ -82,5 +86,5 @@ class BookmarkNotifier extends StateNotifier<Map<String, Bookmark>> {
 
 final bookmarkProvider =
     StateNotifierProvider<BookmarkNotifier, Map<String, Bookmark>>((ref) {
-  return BookmarkNotifier();
-});
+      return BookmarkNotifier();
+    });

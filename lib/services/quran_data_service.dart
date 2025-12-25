@@ -25,7 +25,6 @@ class QuranDataService {
     return rows.map((r) => SurahIndexInfo.fromDb(r, lang: lang)).toList();
   }
 
-
   /// ===============================
   ///  PAGE INDEX
   /// ===============================
@@ -48,6 +47,17 @@ class QuranDataService {
   Future<List<Ayah>> getAyahsByPage(int page) async {
     final rows = await _repo.getAyahRowsByPage(page);
     return rows.map(Ayah.fromDb).toList();
+  }
+
+  Future<int> getJuzFromPage(int page) async {
+    _pageIndexCache ??= await _repo.getAllPages();
+
+    final match = _pageIndexCache!.lastWhere(
+      (p) => p.pageNumber <= page,
+      orElse: () => _pageIndexCache!.first,
+    );
+
+    return match.juzId;
   }
 
   /// ===============================
@@ -83,13 +93,9 @@ class QuranDataService {
   ///  GRAMMAR
   /// ===============================
   Future<List<Grammar>> getAyahGrammar(int surahId, int ayahNumber) {
-    return _repo.getGrammarByAyah(
-      surahId: surahId,
-      ayahNumber: ayahNumber,
-    );
+    return _repo.getGrammarByAyah(surahId: surahId, ayahNumber: ayahNumber);
   }
-  
-  
+
   /// ===============================
   ///  RANDOM AYAH (untuk Splash)
   /// ===============================
@@ -102,48 +108,60 @@ class QuranDataService {
     final randomRow = rows[Random().nextInt(rows.length)];
     return Ayah.fromDb(randomRow);
   }
-  Future<List<Grammar>> getAyahWords(
-    int surahId,
-    int ayahNumber,
-  ) {
-    return _repo.getGrammarByAyah(
-      surahId: surahId,
-      ayahNumber: ayahNumber,
-    );
+
+  Future<List<Grammar>> getAyahWords(int surahId, int ayahNumber) {
+    return _repo.getGrammarByAyah(surahId: surahId, ayahNumber: ayahNumber);
   }
 }
+
 final quranDataServiceProvider = Provider((ref) => QuranDataService());
 
 final allSurahsProvider = FutureProvider<List<SurahIndexInfo>>((ref) {
-  ref.watch(settingsProvider);   
+  ref.watch(settingsProvider);
   return ref.read(quranDataServiceProvider).getAllSurahIndex();
 });
 
 final allPagesProvider = FutureProvider<List<PageIndexInfo>>((ref) {
-  ref.watch(settingsProvider); 
+  ref.watch(settingsProvider);
   return ref.read(quranDataServiceProvider).getAllPageIndex();
 });
 
-final surahAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, surahId) {
-  ref.watch(settingsProvider);  
+final surahAyahsProvider = FutureProvider.family<List<Ayah>, int>((
+  ref,
+  surahId,
+) {
+  ref.watch(settingsProvider);
   return ref.read(quranDataServiceProvider).getAyahsBySurahId(surahId);
 });
 
-final surahDetailProvider = FutureProvider.family<SurahDetailData, int>((ref, surahId) {
+final surahDetailProvider = FutureProvider.family<SurahDetailData, int>((
+  ref,
+  surahId,
+) {
   ref.watch(settingsProvider);
   return ref.read(quranDataServiceProvider).getSurahDetail(surahId);
 });
 
-final ayahWordsProvider = FutureProvider.family<List<Grammar>, ({int surahId, int ayahNumber})>((ref, p) {
-  ref.watch(settingsProvider);
-  return ref.read(quranDataServiceProvider).getAyahGrammar(p.surahId, p.ayahNumber);
-});
+final ayahWordsProvider =
+    FutureProvider.family<List<Grammar>, ({int surahId, int ayahNumber})>((
+      ref,
+      p,
+    ) {
+      ref.watch(settingsProvider);
+      return ref
+          .read(quranDataServiceProvider)
+          .getAyahGrammar(p.surahId, p.ayahNumber);
+    });
 final pageAyahsProvider = FutureProvider.family<List<Ayah>, int>((ref, page) {
   ref.watch(settingsProvider);
   return ref.read(quranDataServiceProvider).getAyahsByPage(page);
 });
 
 final randomAyahProvider = FutureProvider<Ayah?>((ref) {
-  ref.watch(settingsProvider);  
+  ref.watch(settingsProvider);
   return ref.read(quranDataServiceProvider).loadRandomAyahForSplash();
+});
+
+final juzFromPageProvider = FutureProvider.family<int, int>((ref, page) {
+  return ref.read(quranDataServiceProvider).getJuzFromPage(page);
 });

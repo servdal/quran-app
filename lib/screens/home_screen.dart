@@ -266,6 +266,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           nextPrayer: prayer,
           nextTime: nextTime,
           isId: isId,
+          location: data['location'],
         );
 
         // UI countdown only
@@ -584,7 +585,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   MaterialPageRoute(
                     builder:
                         (_) => const PageListScreen(
-                          mode: PageListViewMode.deresan,
+                          mode: PageListViewMode.classic,
                         ),
                   ),
                 ),
@@ -761,7 +762,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final primaryColor = theme.primaryColor;
     final isDarkMode = theme.brightness == Brightness.dark;
     String getSubtitle() {
-      if (bookmark.type == BookmarkViewType.deresan ||
+      if (bookmark.type == BookmarkViewType.classic ||
           bookmark.type == BookmarkViewType.page) {
         return isId
             ? 'Halaman ${bookmark.pageNumber} | ${bookmark.surahName}'
@@ -774,8 +775,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     String getTypeName() {
       switch (bookmark.type) {
-        case BookmarkViewType.deresan:
-          return 'Deresan';
+        case BookmarkViewType.classic:
+          return 'Classic';
         case BookmarkViewType.tafsir:
           return 'Tafsir';
         case BookmarkViewType.page:
@@ -941,7 +942,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   void _handleNavigation(BuildContext context, Bookmark bookmark) {
     switch (bookmark.type) {
-      case BookmarkViewType.deresan:
+      case BookmarkViewType.classic:
         if (bookmark.pageNumber != null) {
           Navigator.push(
             context,

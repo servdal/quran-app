@@ -5,7 +5,7 @@ import '../services/quran_data_service.dart';
 import '../screens/page_view_screen.dart';
 import '../screens/deresan_view_screen.dart';
 
-enum PageListViewMode { page, deresan }
+enum PageListViewMode { page, classic }
 
 class PageListScreen extends ConsumerWidget {
   final PageListViewMode mode;
@@ -49,9 +49,13 @@ class PageListScreen extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => mode == PageListViewMode.page
-                          ? PageViewScreen(initialPage: page.pageNumber)
-                          : DeresanViewScreen(initialPage: page.pageNumber),
+                      builder:
+                          (_) =>
+                              mode == PageListViewMode.page
+                                  ? PageViewScreen(initialPage: page.pageNumber)
+                                  : DeresanViewScreen(
+                                    initialPage: page.pageNumber,
+                                  ),
                     ),
                   );
                 },
@@ -96,9 +100,10 @@ class _PageCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: isDark
-                ? [Colors.blueGrey.shade900, Colors.blueGrey.shade700]
-                : [Colors.white, Colors.blue.shade50],
+            colors:
+                isDark
+                    ? [Colors.blueGrey.shade900, Colors.blueGrey.shade700]
+                    : [Colors.white, Colors.blue.shade50],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -136,8 +141,6 @@ class _PageCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.25),
               margin: const EdgeInsets.symmetric(vertical: 8),
             ),
-
-            
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 // main.dart
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,12 +12,13 @@ import 'screens/language_selector_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AndroidAlarmManager.initialize();
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-  await flutterLocalNotificationsPlugin.initialize(
-    const InitializationSettings(android: android),
-  );
+  if (!kIsWeb && Platform.isAndroid) {
+    final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    await flutterLocalNotificationsPlugin.initialize(
+      const InitializationSettings(android: android),
+    );
+  }
 
   final prefs = await SharedPreferences.getInstance();
   final lang = prefs.getString('selected_language');

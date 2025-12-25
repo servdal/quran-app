@@ -154,6 +154,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Duration? _timeUntilPrayer;
   double _progress = 0.0;
   bool _isIstima = false;
+
   void _startCountdown(
     DateTime target,
     DateTime prev,
@@ -161,23 +162,36 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     bool isId,
   ) {
     _countdownTimer?.cancel();
-    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _isIstima = false;
+
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (!mounted) return;
+
       final now = DateTime.now();
       final diff = target.difference(now);
-      if (diff.isNegative) {
+
+      if (diff.inSeconds <= 0) {
         timer.cancel();
+
+        await notificationService.showAdzanNotification(prayerName, isId);
+
+        _timeUntilPrayer = null;
+        _progress = 0;
         ref.invalidate(prayerProvider);
-      } else {
-        final totalRange = target.difference(prev).inSeconds;
-        setState(() {
-          _timeUntilPrayer = diff;
-          _progress = (diff.inSeconds / totalRange).clamp(0.0, 1.0);
-        });
-        if (!_isIstima && diff.inSeconds <= 600 && diff.inSeconds > 590) {
-          _isIstima = true;
-          notificationService.showIstimaNotification(isId);
-        }
+        return;
+      }
+
+      final total = target.difference(prev).inSeconds;
+
+      setState(() {
+        _timeUntilPrayer = diff;
+        _progress = (diff.inSeconds / total).clamp(0.0, 1.0);
+      });
+
+      // 🔔 ISTIMA 10 MENIT
+      if (!_isIstima && diff.inSeconds <= 600) {
+        _isIstima = true;
+        notificationService.showIstimaNotification(isId);
       }
     });
   }
@@ -230,25 +244,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     ref.listen<AsyncValue<Map<String, dynamic>>>(prayerProvider, (_, next) {
       next.whenData((data) async {
-        _startCountdown(
-          data['closestTime'],
-          data['prevTime'],
-          data['closestPrayer'],
-          isId,
+        final nextTime = data['closestTime'];
+        final prayer = data['closestPrayer'];
+
+        // ADZAN
+        await notificationService.scheduleAdzan(
+          time: nextTime,
+          prayer: prayer,
+          isId: isId,
         );
 
-        // 🔥 SCHEDULE ADZAN
-        final alarmId = data['closestTime'].millisecondsSinceEpoch.remainder(
-          1 << 31,
+        // ISTIMA
+        await notificationService.scheduleIstima(
+          prayerTime: nextTime,
+          isId: isId,
         );
-        await AndroidAlarmManager.oneShotAt(
-          data['closestTime'],
-          alarmId,
-          adzanAlarmCallback,
-          exact: true,
-          wakeup: true,
-          rescheduleOnReboot: true,
+
+        // STICKY
+        await notificationService.showSticky(
+          timings: data['timings'],
+          nextPrayer: prayer,
+          nextTime: nextTime,
+          isId: isId,
         );
+
+        // UI countdown only
+        _startCountdown(nextTime, data['prevTime'], prayer, isId);
       });
     });
 

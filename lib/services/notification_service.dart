@@ -1,18 +1,25 @@
 import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
-  /// INIT (panggil di main.dart)
+  /// ================= INIT =================
   Future<void> init() async {
+    tz.initializeTimeZones();
+
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const settings = InitializationSettings(android: android);
-    await _plugin.initialize(settings);
+    const ios = DarwinInitializationSettings();
+
+    await _plugin.initialize(
+      const InitializationSettings(android: android, iOS: ios),
+    );
   }
 
-  /// ✅ FIX ERROR: REQUEST PERMISSION (Android 13+)
+  /// ================= PERMISSION =================
   Future<void> requestPermissions() async {
     if (Platform.isAndroid) {
       await _plugin
@@ -21,44 +28,16 @@ class NotificationService {
           >()
           ?.requestNotificationsPermission();
     }
+
+    if (Platform.isIOS) {
+      await _plugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, sound: true);
+    }
   }
 
-  /// 🔔 STICKY NOTIFICATION (JADWAL SHOLAT)
-  Future<void> showStickyPrayerNotification({
-    required Map timings,
-    required String nextPrayer,
-    required DateTime nextTime,
-    required bool isId,
-  }) async {
-    final text =
-        "Fajr ${timings['Fajr']} • "
-        "Dhuhr ${timings['Dhuhr']} • "
-        "Asr ${timings['Asr']} • "
-        "Maghrib ${timings['Maghrib']} • "
-        "Isha ${timings['Isha']}\n"
-        "${isId ? 'Berikutnya' : 'Next'}: $nextPrayer ${_fmt(nextTime)}";
-
-    const android = AndroidNotificationDetails(
-      'sticky_prayer_channel',
-      'Jadwal Sholat',
-      channelDescription: 'Jadwal sholat harian',
-      importance: Importance.low,
-      priority: Priority.low,
-      ongoing: true,
-      autoCancel: false,
-      playSound: false,
-      enableVibration: false,
-    );
-
-    await _plugin.show(
-      9999,
-      isId ? 'Jadwal Sholat' : 'Prayer Schedule',
-      text,
-      const NotificationDetails(android: android),
-    );
-  }
-
-  /// ⚠️ ISTIMA (10 MENIT SEBELUM)
   Future<void> showIstimaNotification(bool isId) async {
     const android = AndroidNotificationDetails(
       'istima_channel',
@@ -77,7 +56,6 @@ class NotificationService {
     );
   }
 
-  /// 🔊 ADZAN (PAKAI DEFAULT SOUND DEVICE)
   Future<void> showAdzanNotification(String prayerName, bool isId) async {
     const android = AndroidNotificationDetails(
       'adzan_channel',
@@ -85,7 +63,7 @@ class NotificationService {
       channelDescription: 'Notifikasi adzan',
       importance: Importance.max,
       priority: Priority.max,
-      playSound: true,
+      playSound: true, // 🔥 DEFAULT SYSTEM SOUND
       fullScreenIntent: true,
     );
 
@@ -94,6 +72,91 @@ class NotificationService {
       isId ? 'Waktu Sholat' : 'Prayer Time',
       isId ? 'Telah masuk waktu $prayerName' : 'It is time for $prayerName',
       const NotificationDetails(android: android),
+    );
+  }
+
+  /// ================= ISTIMA =================
+  Future<void> scheduleIstima({
+    required DateTime prayerTime,
+    required bool isId,
+  }) async {
+    final istimaTime = prayerTime.subtract(const Duration(minutes: 10));
+    if (istimaTime.isBefore(DateTime.now())) return;
+
+    await _plugin.zonedSchedule(
+      2002,
+      isId ? 'Peringatan Istima' : 'Istima Warning',
+      isId ? 'Hentikan sholat sunnah' : 'Stop voluntary prayers',
+      tz.TZDateTime.from(istimaTime, tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'istima_channel',
+          'Istima',
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+        iOS: DarwinNotificationDetails(presentSound: true),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+
+  /// ================= ADZAN =================
+  Future<void> scheduleAdzan({
+    required DateTime time,
+    required String prayer,
+    required bool isId,
+  }) async {
+    await _plugin.zonedSchedule(
+      1001,
+      isId ? 'Waktu Sholat' : 'Prayer Time',
+      isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
+      tz.TZDateTime.from(time, tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'adzan_channel',
+          'Adzan',
+          importance: Importance.max,
+          priority: Priority.max,
+          playSound: true,
+          fullScreenIntent: true,
+        ),
+        iOS: DarwinNotificationDetails(presentSound: true),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+
+  /// ================= STICKY =================
+  Future<void> showSticky({
+    required Map timings,
+    required String nextPrayer,
+    required DateTime nextTime,
+    required bool isId,
+  }) async {
+    final text =
+        "Fajr ${timings['Fajr']} • "
+        "Dhuhr ${timings['Dhuhr']} • "
+        "Asr ${timings['Asr']} • "
+        "Maghrib ${timings['Maghrib']} • "
+        "Isha ${timings['Isha']}\n"
+        "${isId ? 'Berikutnya' : 'Next'}: $nextPrayer ${_fmt(nextTime)}";
+
+    await _plugin.show(
+      9999,
+      isId ? 'Jadwal Sholat' : 'Prayer Schedule',
+      text,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'sticky_prayer_channel',
+          'Jadwal Sholat',
+          importance: Importance.low,
+          priority: Priority.low,
+          ongoing: true,
+          autoCancel: false,
+          playSound: false,
+        ),
+      ),
     );
   }
 

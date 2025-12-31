@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'dart:math' as math;
-
-// Imports dari project Anda
 import '../services/quran_data_service.dart';
 import '../providers/settings_provider.dart';
 import '../providers/bookmark_provider.dart';
@@ -19,20 +17,22 @@ class HafalanViewScreen extends ConsumerStatefulWidget {
 
 class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   final SpeechToText _speechToText = SpeechToText();
-
-  // State Data Hafalan
+  final ScrollController _scrollController = ScrollController();
   late int _currentPage;
   List<String> _targetWords = [];
+  List<GlobalKey> _wordKeys = [];
   int _currentIndex = 0;
 
-  // State Logika Hint
-  int _mistakeCount = 0; // Menghitung berapa kali salah/gagal
+  int _mistakeCount = 0;
+  int _totalSkipCount = 0;
+  Set<int> _skippedIndices = {};
 
-  // State UI
+  static const int _hintThreshold = 3;
+  static const int _skipThreshold = 6;
+
   String _statusMessage = 'Tekan mikrofon untuk mulai';
   bool _isListening = false;
 
-  // Info Surat
   String _currentSurahName = '';
   int _currentSurahId = 0;
 
@@ -41,6 +41,12 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     super.initState();
     _currentPage = widget.initialPage;
     _initSpeech();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _initSpeech() async {
@@ -53,17 +59,12 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       onStatus: (val) {
         if (mounted) {
           setState(() => _isListening = val == 'listening');
-          if (val == 'done' || val == 'notListening') {
-            // Jika mic mati sendiri dan belum benar, kita anggap 1x percobaan selesai
-            // (Logic increment mistake ada di onResult final)
-          }
         }
       },
     );
     if (mounted) setState(() {});
   }
 
-  // --- PERSIAPAN DATA ---
   void _prepareData(List<Ayah> ayahs) {
     if (_targetWords.isEmpty && ayahs.isNotEmpty) {
       List<String> words = [];
@@ -76,31 +77,72 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       }
 
       _targetWords = words;
+      _wordKeys = List.generate(words.length, (_) => GlobalKey());
       _currentIndex = 0;
       _currentSurahName = ayahs.first.surahName;
       _currentSurahId = ayahs.first.surahId;
       _mistakeCount = 0;
+      _totalSkipCount = 0;
+      _skippedIndices.clear();
 
-      // Lompat otomatis jika kata pertama adalah simbol/bismillah (opsional)/nomor
       _advanceToNextSpeakable();
     }
   }
 
-  // Melompati simbol/tanda waqaf/nomor ayat yang tidak diucapkan
   void _advanceToNextSpeakable() {
     if (_targetWords.isEmpty) return;
 
-    // Loop selama kata saat ini kosong setelah dinormalisasi
     while (_currentIndex < _targetWords.length &&
         _normalize(_targetWords[_currentIndex]).isEmpty) {
       _currentIndex++;
     }
-
-    // Reset mistake count setiap kali pindah kata
     _mistakeCount = 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToActiveWord();
+    });
   }
 
-  // --- LOGIKA UTAMA (STT & MATCHING) ---
+  void _scrollToActiveWord() {
+    if (_currentIndex >= _wordKeys.length) return;
+
+    final key = _wordKeys[_currentIndex];
+    if (key.currentContext != null) {
+      Scrollable.ensureVisible(
+        key.currentContext!,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+        alignment: 0.35,
+      );
+    }
+  }
+
+  void _skipCurrentWord() {
+    if (_currentIndex >= _targetWords.length) return;
+
+    if (_mistakeCount < _skipThreshold) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Belum bisa skip! Coba ${_skipThreshold - _mistakeCount} kali lagi.",
+          ),
+          duration: const Duration(seconds: 1),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _skippedIndices.add(_currentIndex);
+      _totalSkipCount++;
+      _currentIndex++;
+      _statusMessage = "Kata dilewati (Skip)";
+    });
+
+    _advanceToNextSpeakable();
+  }
+
   void _startListening() async {
     setState(() {
       _statusMessage = "Mendengarkan...";
@@ -109,21 +151,25 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
 
     await _speechToText.listen(
       onResult: (result) {
-        // Cek kecocokan secara realtime
         bool matchFound = _verifyStream(
           result.recognizedWords,
           result.alternates.map((e) => e.recognizedWords).toList(),
         );
 
-        // LOGIKA MISTAKE COUNT:
-        // Kita tambah counter HANYA jika hasil sudah Final (Google selesai mikir) DAN belum cocok.
         if (result.finalResult && !matchFound) {
           setState(() {
             _mistakeCount++;
-            _statusMessage = "Kurang pas, coba lagi (${_mistakeCount}/3)";
+            int sisaSkip = _skipThreshold - _mistakeCount;
 
-            // Auto restart mic jika belum benar (opsional, agar user tidak capek tekan tombol)
-            if (_mistakeCount < 3) {
+            if (_mistakeCount < _hintThreshold) {
+              _statusMessage = "Salah (${_mistakeCount}). Ayo coba lagi!";
+            } else if (_mistakeCount < _skipThreshold) {
+              _statusMessage = "Hint muncul. Skip aktif dalam ${sisaSkip}x.";
+            } else {
+              _statusMessage = "Sudah 6x salah. Tombol Skip AKTIF.";
+            }
+
+            if (_mistakeCount < 10) {
               Future.delayed(const Duration(milliseconds: 500), () {
                 if (mounted && !_isListening) _startListening();
               });
@@ -134,63 +180,50 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       localeId: "ar_SA",
       listenMode: ListenMode.dictation,
       partialResults: true,
-      pauseFor: const Duration(seconds: 3),
+      pauseFor: const Duration(seconds: 4),
     );
   }
 
   bool _verifyStream(String primaryResult, List<String> alternates) {
     if (_currentIndex >= _targetWords.length) {
-      setState(() => _statusMessage = "Halaman Selesai!");
+      setState(
+        () => _statusMessage = "Halaman Selesai! Total Skip: $_totalSkipCount",
+      );
       return true;
     }
 
-    // Gabungkan hasil utama dan alternatif untuk dicek semua
     List<String> inputPossibilities = [primaryResult, ...alternates];
-
     String targetRaw = _targetWords[_currentIndex];
     String targetClean = _normalize(targetRaw);
-
     double bestMatchScore = 0.0;
 
     for (String fullSentence in inputPossibilities) {
-      // 1. Cek Full Sentence (Normalisasi akan menghapus spasi & gabung jadi satu)
-      // Ini mengatasi kasus Mustaqim yang pecah jadi 2 kata
       String fullNormalized = _normalize(fullSentence);
       double scoreFull = _calculateSimilarity(fullNormalized, targetClean);
       if (scoreFull > bestMatchScore) bestMatchScore = scoreFull;
 
-      // 2. Cek Per Kata (Backup jika user ngomongnya putus-putus)
-      List<String> words = fullSentence.split(' '); // Split DULU
+      List<String> words = fullSentence.split(' ');
       int startIdx = (words.length > 5) ? words.length - 5 : 0;
       List<String> recentWords = words.sublist(startIdx);
 
       for (String word in recentWords) {
-        String wordClean = _normalize(word); // Baru normalize per kata
+        String wordClean = _normalize(word);
         double score = _calculateSimilarity(wordClean, targetClean);
         if (score > bestMatchScore) bestMatchScore = score;
       }
     }
 
-    // THRESHOLD: 40% (0.4)
     if (bestMatchScore >= 0.40) {
       setState(() {
         _currentIndex++;
-        _statusMessage = "Benar! Lanjut...";
-        _mistakeCount = 0; // Reset counter karena berhasil
+        _statusMessage = "Benar!";
+        _mistakeCount = 0;
       });
       _advanceToNextSpeakable();
       return true;
     }
-
-    if (_isListening) {
-      // Opsional: Tampilkan apa yang didengar sekilas
-      setState(() => _statusMessage = primaryResult);
-    }
-
     return false;
   }
-
-  // --- ALGORITMA PENDUKUNG ---
 
   double _calculateSimilarity(String s1, String s2) {
     if (s1.isEmpty || s2.isEmpty) return 0.0;
@@ -222,36 +255,19 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     if (text.isEmpty) return "";
     String clean = text;
 
-    // --- 1. FIX LIST HALLUCINATION GOOGLE (Wajib ditaruh paling atas) ---
-    // Google sering mengartikan 'Mustaqim' jadi 'Mous Taqeem' (Pisau Steril)
     clean = clean.replaceAll('الموس', 'المس');
     clean = clean.replaceAll('تعقيم', 'تقيم');
-    clean = clean.replaceAll('سيرات', 'سراط'); // Fix ejaan Sirat
-
-    // Fix Angka 1000 -> Alif
+    clean = clean.replaceAll('سيرات', 'سراط');
     clean = clean.replaceAll('1000', 'ا');
     clean = clean.replaceAll('١٠٠٠', 'ا');
 
-    // --- 2. NORMALISASI HURUF (FONETIK) ---
-    // Kita samakan huruf tebal (Emphatic) dengan huruf tipis agar "Sony" == "Sana"
-
-    // Sad (ص) -> Sin (س)
     clean = clean.replaceAll('ص', 'س');
-    // Tha (ط) -> Ta (ت)
     clean = clean.replaceAll('ط', 'ت');
-    // Zha (ظ) -> Zai (ز)
     clean = clean.replaceAll('ظ', 'ز');
-    // Dzal (ذ) -> Zai (ز) (Sering tertukar)
     clean = clean.replaceAll('ذ', 'ز');
-    // Tsa (ث) -> Sin (س) (Sering tertukar bagi lidah non-arab)
     clean = clean.replaceAll('ث', 'س');
-    // Qaf (ق) -> Kaf (ك) (Opsional, tapi membantu jika tajwid kurang Qalqalah)
     clean = clean.replaceAll('ق', 'ك');
 
-    // Ain (ع) sering tidak terdengar atau jadi Alif, kita biarkan dulu atau
-    // bisa dihapus jika mau ekstrem: clean = clean.replaceAll('ع', '');
-
-    // --- 3. MAPPING MUQATTA'AT (Tetap diperlukan) ---
     Map<String, String> map = {
       'الف': 'ا',
       'لام': 'ل',
@@ -270,52 +286,19 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       if (k.length > 1) clean = clean.replaceAll(RegExp(r'\b' + k + r'\b'), v);
     });
 
-    // --- 4. PEMBERSIHAN UMUM ---
-    // Standarisasi Alif/Ya/Ha
     clean = clean.replaceAll(RegExp(r'[إأآٱ]'), 'ا');
     clean = clean.replaceAll(RegExp(r'[ىئ]'), 'ي');
     clean = clean.replaceAll('ة', 'ه');
     clean = clean.replaceAll('ؤ', 'و');
 
-    // Hapus Non-Arab & Harakat
     clean = clean.replaceAll(RegExp(r'[^\u0600-\u06FF]'), '');
     clean = clean.replaceAll(
       RegExp(r'[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]'),
       '',
     );
-
-    // Hapus Spasi (PENTING: Biar "Al Mous" + "Taqeem" nyambung jadi satu)
-    // Kita hapus spasi agar perbandingan dilakukan per-blok karakter
     clean = clean.replaceAll(' ', '');
 
     return clean.trim();
-  }
-
-  // --- UI ---
-  Future<void> _saveBookmark(String name) async {
-    final newBookmark = Bookmark(
-      type: BookmarkViewType.hafalan,
-      surahId: _currentSurahId,
-      surahName: _currentSurahName,
-      ayahNumber: 1,
-      pageNumber: _currentPage,
-    );
-    await ref
-        .read(bookmarkProvider.notifier)
-        .addOrUpdateBookmark(name, newBookmark);
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Hafalan '$name' berhasil disimpan!"),
-          duration: const Duration(seconds: 1),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      );
-    }
   }
 
   void _showBookmarkDialog() {
@@ -335,7 +318,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: Text(lang == 'en' ? 'Bookmark Tahsin' : 'Tandai Hafalan'),
+          title: Text(lang == 'en' ? 'Bookmark Hafalan' : 'Tandai Hafalan'),
           content: SizedBox(
             width: double.maxFinite,
             child: Column(
@@ -351,11 +334,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                             : 'Nama Bookmark Baru',
                     hintText:
                         lang == 'en'
-                            ? 'e.g., Page 30 Fluent'
+                            ? 'e.g., Juz 30 Lancar'
                             : 'Contoh: Juz 30 Lancar',
                   ),
                 ),
-
                 if (existingHafalanNames.isNotEmpty) ...[
                   const SizedBox(height: 16),
                   Text(
@@ -369,7 +351,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                   ),
                   const Divider(),
                   SizedBox(
-                    height: 150, // Batasi tinggi list
+                    height: 150,
                     child: ListView.separated(
                       shrinkWrap: true,
                       itemCount: existingHafalanNames.length,
@@ -377,7 +359,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                       itemBuilder: (context, index) {
                         final name = existingHafalanNames[index];
                         final bookmark = bookmarks[name]!;
-
                         return ListTile(
                           contentPadding: EdgeInsets.zero,
                           dense: true,
@@ -428,6 +409,31 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     );
   }
 
+  Future<void> _saveBookmark(String name) async {
+    final newBookmark = Bookmark(
+      type: BookmarkViewType.hafalan,
+      surahId: _currentSurahId,
+      surahName: _currentSurahName,
+      ayahNumber: 1,
+      pageNumber: _currentPage,
+    );
+    await ref
+        .read(bookmarkProvider.notifier)
+        .addOrUpdateBookmark(name, newBookmark);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Hafalan '$name' berhasil disimpan!"),
+          duration: const Duration(seconds: 1),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ayahsAsync = ref.watch(pageAyahsProvider(_currentPage));
@@ -461,15 +467,14 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
         error: (e, _) => Center(child: Text("Gagal memuat: $e")),
         data: (ayahs) {
           _prepareData(ayahs);
-
           if (_targetWords.isEmpty)
             return const Center(child: Text("Data ayat kosong."));
 
           return Column(
             children: [
-              // --- AREA AYAT ---
               Expanded(
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 30,
@@ -483,32 +488,38 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                       children: List.generate(_targetWords.length, (index) {
                         bool isPassed = index < _currentIndex;
                         bool isCurrent = index == _currentIndex;
+                        bool isSkipped = _skippedIndices.contains(index);
 
-                        // LOGIKA VISIBILITY (Opacity)
+                        Color textColor = Colors.black87;
                         double opacity = 0.0;
-                        if (isPassed) {
-                          opacity = 1.0; // Sudah lewat -> Muncul Jelas
+
+                        if (isSkipped) {
+                          opacity = 1.0;
+                          textColor = Colors.red;
+                        } else if (isPassed) {
+                          opacity = 1.0;
                         } else if (isCurrent) {
-                          // Jika salah >= 3x, muncul 20% (samar). Jika belum, 0% (invisible).
-                          opacity = _mistakeCount >= 3 ? 0.2 : 0.0;
+                          opacity = _mistakeCount >= _hintThreshold ? 0.2 : 0.0;
                         } else {
-                          opacity = 0.0; // Kata depan -> Invisible
+                          opacity = 0.0;
                         }
 
-                        return AnimatedOpacity(
-                          duration: const Duration(milliseconds: 500),
-                          opacity: opacity,
-                          child: Text(
-                            _targetWords[index],
-                            style: TextStyle(
-                              fontFamily: 'LPMQ',
-                              fontSize: settings.arabicFontSize + 8,
-                              height: 1.6,
-                              color:
-                                  isPassed
-                                      ? Colors.black87
-                                      : Colors
-                                          .black, // Warna hint tetap hitam tapi transparan
+                        return Container(
+                          key:
+                              _wordKeys.length > index
+                                  ? _wordKeys[index]
+                                  : null, // PASANG KEY DISINI
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity,
+                            child: Text(
+                              _targetWords[index],
+                              style: TextStyle(
+                                fontFamily: 'LPMQ',
+                                fontSize: settings.arabicFontSize + 8,
+                                height: 1.6,
+                                color: textColor,
+                              ),
                             ),
                           ),
                         );
@@ -518,7 +529,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                 ),
               ),
 
-              // --- CONTROLS & STATUS BAR ---
               _buildControlBar(),
             ],
           );
@@ -528,6 +538,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   }
 
   Widget _buildControlBar() {
+    bool canSkip = _mistakeCount >= _skipThreshold;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
       decoration: BoxDecoration(
@@ -544,11 +556,12 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Status Text
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: Text(
-              _statusMessage,
+              _totalSkipCount > 0
+                  ? "$_statusMessage • Error/Skip: $_totalSkipCount"
+                  : _statusMessage,
               key: ValueKey(_statusMessage),
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -571,38 +584,85 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                         : null,
               ),
 
-              // MIC BUTTON BESAR
-              GestureDetector(
-                onTap: () {
-                  if (_isListening) {
-                    _speechToText.stop();
-                    setState(() => _isListening = false);
-                  } else {
-                    _startListening();
-                  }
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  height: 70,
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: _isListening ? Colors.redAccent : Colors.teal,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: (_isListening ? Colors.redAccent : Colors.teal)
-                            .withOpacity(0.4),
-                        blurRadius: 15,
-                        spreadRadius: 2,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      if (_isListening) {
+                        _speechToText.stop();
+                        setState(() => _isListening = false);
+                      } else {
+                        _startListening();
+                      }
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        color: _isListening ? Colors.redAccent : Colors.teal,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: (_isListening
+                                    ? Colors.redAccent
+                                    : Colors.teal)
+                                .withOpacity(0.4),
+                            blurRadius: 15,
+                            spreadRadius: 2,
+                          ),
+                        ],
                       ),
-                    ],
+                      child: Icon(
+                        _isListening ? Icons.stop_rounded : Icons.mic_rounded,
+                        color: Colors.white,
+                        size: 38,
+                      ),
+                    ),
                   ),
-                  child: Icon(
-                    _isListening ? Icons.stop_rounded : Icons.mic_rounded,
-                    color: Colors.white,
-                    size: 38,
+
+                  const SizedBox(width: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      color:
+                          canSkip
+                              ? Colors.orange.shade50
+                              : Colors.grey.shade100,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color:
+                            canSkip
+                                ? Colors.orange.shade200
+                                : Colors.grey.shade300,
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.skip_next_rounded),
+                      color: canSkip ? Colors.orange : Colors.grey.shade400,
+                      tooltip:
+                          canSkip ? "Skip kata ini" : "Salah 6x untuk skip",
+                      onPressed: () {
+                        if (canSkip) {
+                          _skipCurrentWord();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Belum bisa skip! Coba ${_skipThreshold - _mistakeCount} kali lagi.",
+                              ),
+                              duration: const Duration(seconds: 1),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
-                ),
+                ],
               ),
 
               IconButton(
@@ -625,6 +685,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       _targetWords = [];
       _currentIndex = 0;
       _mistakeCount = 0;
+      _totalSkipCount = 0;
+      _skippedIndices.clear();
+      _wordKeys = [];
       _statusMessage = "Siap hafalan?";
       _isListening = false;
     });

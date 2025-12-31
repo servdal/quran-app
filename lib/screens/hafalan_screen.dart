@@ -40,6 +40,15 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   void initState() {
     super.initState();
     _currentPage = widget.initialPage;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final lang = ref.read(settingsProvider).language;
+      setState(() {
+        _statusMessage =
+            lang == 'en'
+                ? 'Tap microphone to start'
+                : 'Tekan mikrofon untuk mulai';
+      });
+    });
     _initSpeech();
   }
 
@@ -53,8 +62,14 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     await _speechToText.initialize(
       onError:
           (val) => setState(() {
-            _statusMessage = "Error: ${val.errorMsg}";
-            _isListening = false;
+            final lang = ref.read(settingsProvider).language;
+            setState(() {
+              _statusMessage =
+                  lang == 'en'
+                      ? "Error: ${val.errorMsg}"
+                      : "Error: ${val.errorMsg}";
+              _isListening = false;
+            });
           }),
       onStatus: (val) {
         if (mounted) {
@@ -118,13 +133,16 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   }
 
   void _skipCurrentWord() {
+    final lang = ref.read(settingsProvider).language;
     if (_currentIndex >= _targetWords.length) return;
 
     if (_mistakeCount < _skipThreshold) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "Belum bisa skip! Coba ${_skipThreshold - _mistakeCount} kali lagi.",
+            lang == 'en'
+                ? "Can't skip yet! Try ${_skipThreshold - _mistakeCount} more times."
+                : "Belum bisa skip! Coba ${_skipThreshold - _mistakeCount} kali lagi.",
           ),
           duration: const Duration(seconds: 1),
           behavior: SnackBarBehavior.floating,
@@ -137,15 +155,16 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       _skippedIndices.add(_currentIndex);
       _totalSkipCount++;
       _currentIndex++;
-      _statusMessage = "Kata dilewati (Skip)";
+      _statusMessage = lang == 'en' ? "Word skipped" : "Kata dilewati (Skip)";
     });
 
     _advanceToNextSpeakable();
   }
 
   void _startListening() async {
+    final lang = ref.read(settingsProvider).language;
     setState(() {
-      _statusMessage = "Mendengarkan...";
+      _statusMessage = lang == 'en' ? "Listening..." : "Mendengarkan...";
       _isListening = true;
     });
 
@@ -162,11 +181,20 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
             int sisaSkip = _skipThreshold - _mistakeCount;
 
             if (_mistakeCount < _hintThreshold) {
-              _statusMessage = "Salah (${_mistakeCount}). Ayo coba lagi!";
+              _statusMessage =
+                  lang == 'en'
+                      ? "Wrong ($_mistakeCount). Try again!"
+                      : "Salah ($_mistakeCount). Ayo coba lagi!";
             } else if (_mistakeCount < _skipThreshold) {
-              _statusMessage = "Hint muncul. Skip aktif dalam ${sisaSkip}x.";
+              _statusMessage =
+                  lang == 'en'
+                      ? "Hint shown. Skip available in ${sisaSkip}x."
+                      : "Hint muncul. Skip aktif dalam ${sisaSkip}x.";
             } else {
-              _statusMessage = "Sudah 6x salah. Tombol Skip AKTIF.";
+              _statusMessage =
+                  lang == 'en'
+                      ? "6 mistakes. Skip button ACTIVE."
+                      : "Sudah 6x salah. Tombol Skip AKTIF.";
             }
 
             if (_mistakeCount < 10) {
@@ -185,9 +213,14 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   }
 
   bool _verifyStream(String primaryResult, List<String> alternates) {
+    final lang = ref.read(settingsProvider).language;
     if (_currentIndex >= _targetWords.length) {
       setState(
-        () => _statusMessage = "Halaman Selesai! Total Skip: $_totalSkipCount",
+        () =>
+            _statusMessage =
+                lang == 'en'
+                    ? "Page Complete! Total Skip: $_totalSkipCount"
+                    : "Halaman Selesai! Total Skip: $_totalSkipCount",
       );
       return true;
     }
@@ -216,7 +249,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     if (bestMatchScore >= 0.40) {
       setState(() {
         _currentIndex++;
-        _statusMessage = "Benar!";
+        _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
         _mistakeCount = 0;
       });
       _advanceToNextSpeakable();
@@ -332,10 +365,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                         lang == 'en'
                             ? 'New Bookmark Name'
                             : 'Nama Bookmark Baru',
-                    hintText:
-                        lang == 'en'
-                            ? 'e.g., Juz 30 Lancar'
-                            : 'Contoh: Juz 30 Lancar',
+                    hintText: lang == 'en' ? 'e.g., Juz 30' : 'Contoh: Juz 30',
                   ),
                 ),
                 if (existingHafalanNames.isNotEmpty) ...[
@@ -374,7 +404,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           subtitle: Text(
-                            "Hal. ${bookmark.pageNumber} • ${bookmark.surahName}",
+                            "Page. ${bookmark.pageNumber} • ${bookmark.surahName}",
                             style: const TextStyle(fontSize: 11),
                           ),
                           onTap: () {
@@ -410,6 +440,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   }
 
   Future<void> _saveBookmark(String name) async {
+    final lang = ref.read(settingsProvider).language;
     final newBookmark = Bookmark(
       type: BookmarkViewType.hafalan,
       surahId: _currentSurahId,
@@ -423,7 +454,11 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Hafalan '$name' berhasil disimpan!"),
+          content: Text(
+            lang == 'en'
+                ? "Memorization '$name' saved successfully!"
+                : "Hafalan '$name' berhasil disimpan!",
+          ),
           duration: const Duration(seconds: 1),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -439,13 +474,18 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     final ayahsAsync = ref.watch(pageAyahsProvider(_currentPage));
     final settings = ref.watch(settingsProvider);
     final bookmarksMap = ref.watch(bookmarkProvider);
+    final lang = settings.language;
     final isBookmarked = bookmarksMap.values.any(
       (b) => b.type == BookmarkViewType.hafalan && b.pageNumber == _currentPage,
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hafalan Hal. $_currentPage"),
+        title: Text(
+          lang == 'en'
+              ? "Memorization Pg. $_currentPage"
+              : "Hafalan Hal. $_currentPage",
+        ),
         centerTitle: true,
         elevation: 0,
         actions: [
@@ -464,12 +504,19 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       ),
       body: ayahsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text("Gagal memuat: $e")),
+        error:
+            (e, _) => Center(
+              child: Text(
+                lang == 'en' ? "Failed to load: $e" : "Gagal memuat: $e",
+              ),
+            ),
         data: (ayahs) {
           _prepareData(ayahs);
-          if (_targetWords.isEmpty)
-            return const Center(child: Text("Data ayat kosong."));
-
+          if (_targetWords.isEmpty) {
+            return Center(
+              child: Text(lang == 'en' ? "Empty data." : "Data ayat kosong."),
+            );
+          }
           return Column(
             children: [
               Expanded(
@@ -508,7 +555,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                           key:
                               _wordKeys.length > index
                                   ? _wordKeys[index]
-                                  : null, // PASANG KEY DISINI
+                                  : null,
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),
                             opacity: opacity,
@@ -538,6 +585,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   }
 
   Widget _buildControlBar() {
+    final settings = ref.watch(settingsProvider);
+    final lang = settings.language;
+
     bool canSkip = _mistakeCount >= _skipThreshold;
 
     return Container(
@@ -560,7 +610,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
             duration: const Duration(milliseconds: 300),
             child: Text(
               _totalSkipCount > 0
-                  ? "$_statusMessage • Error/Skip: $_totalSkipCount"
+                  ? "$_statusMessage • ${lang == 'en' ? 'Skip' : 'Skip'}: $_totalSkipCount"
                   : _statusMessage,
               key: ValueKey(_statusMessage),
               textAlign: TextAlign.center,
@@ -579,8 +629,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new),
                 onPressed:
-                    _currentPage > 1
-                        ? () => _changePage(_currentPage - 1)
+                    _currentPage < 604
+                        ? () => _changePage(_currentPage + 1)
                         : null,
               ),
 
@@ -641,7 +691,11 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                       icon: const Icon(Icons.skip_next_rounded),
                       color: canSkip ? Colors.orange : Colors.grey.shade400,
                       tooltip:
-                          canSkip ? "Skip kata ini" : "Salah 6x untuk skip",
+                          canSkip
+                              ? (lang == 'en' ? "Skip word" : "Skip kata ini")
+                              : (lang == 'en'
+                                  ? "6 mistakes to skip"
+                                  : "Salah 6x untuk skip"),
                       onPressed: () {
                         if (canSkip) {
                           _skipCurrentWord();
@@ -649,7 +703,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "Belum bisa skip! Coba ${_skipThreshold - _mistakeCount} kali lagi.",
+                                lang == 'en'
+                                    ? "Can't skip yet! Try ${_skipThreshold - _mistakeCount} more times."
+                                    : "Belum bisa skip! Coba ${_skipThreshold - _mistakeCount} kali lagi.",
                               ),
                               duration: const Duration(seconds: 1),
                               behavior: SnackBarBehavior.floating,
@@ -668,8 +724,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
               IconButton(
                 icon: const Icon(Icons.arrow_forward_ios),
                 onPressed:
-                    _currentPage < 604
-                        ? () => _changePage(_currentPage + 1)
+                    _currentPage > 1
+                        ? () => _changePage(_currentPage - 1)
                         : null,
               ),
             ],
@@ -680,6 +736,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
   }
 
   void _changePage(int p) {
+    final lang = ref.read(settingsProvider).language;
     setState(() {
       _currentPage = p;
       _targetWords = [];
@@ -688,7 +745,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       _totalSkipCount = 0;
       _skippedIndices.clear();
       _wordKeys = [];
-      _statusMessage = "Siap hafalan?";
+      _statusMessage = lang == 'en' ? "Ready for recitation?" : "Siap hafalan?";
       _isListening = false;
     });
     _speechToText.stop();

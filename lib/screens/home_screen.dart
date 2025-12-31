@@ -90,7 +90,7 @@ final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
   final timings = data["data"]["timings"];
-  final prayerOrder = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+  final prayerOrder = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
   final now = DateTime.now();
 
   String? nextName;
@@ -248,20 +248,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         final nextTime = data['closestTime'];
         final prayer = data['closestPrayer'];
 
-        // ADZAN
         await notificationService.scheduleAdzan(
           time: nextTime,
           prayer: prayer,
           isId: isId,
         );
 
-        // ISTIMA
         await notificationService.scheduleIstima(
           prayerTime: nextTime,
           isId: isId,
         );
 
-        // STICKY
         await notificationService.showSticky(
           timings: data['timings'],
           nextPrayer: prayer,
@@ -270,7 +267,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           location: data['location'],
         );
 
-        // UI countdown only
         _startCountdown(nextTime, data['prevTime'], prayer, isId);
       });
     });
@@ -595,7 +591,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           _menuItem(
             context,
             name: isId ? "Mode Hafalan" : "Hifdz Mode",
-            icon: Icons.history_edu,
+            icon: Icons.mic_rounded,
             color: Colors.indigo,
             onTap:
                 () => Navigator.push(

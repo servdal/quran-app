@@ -153,9 +153,9 @@ class NotificationService {
     String line(String t) => t.padRight(7);
     final body = '''
     $lokasi
-    ──────────────────────────────
-    ${line('Imsak')}${line('Subuh')}${line('Dhuhr')}${line('Asr')}${line('Maghrib')}${line('Isha')}
-    ${line(timings['Imsak'])}${line(timings['Fajr'])}${line(timings['Dhuhr'])}${line(timings['Asr'])}${line(timings['Maghrib'])}${line(timings['Isha'])}
+    
+    ${line('Subuh')}${line('Dhuhr')}${line('Asr')}${line('Maghrib')}${line('Isha')}
+    ${line(timings['Fajr'])}${line(timings['Dhuhr'])}${line(timings['Asr'])}${line(timings['Maghrib'])}${line(timings['Isha'])}
 
     ${isId ? 'Berikutnya' : 'Next'}: $nextPrayer $nextTime
     ''';

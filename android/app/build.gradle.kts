@@ -17,8 +17,8 @@ plugins {
 
 android {
     namespace = "alquran.duidev.com"
-    compileSdk = 36
-
+    compileSdk = 35
+    buildToolsVersion = "35.0.0"
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11

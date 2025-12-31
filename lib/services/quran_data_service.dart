@@ -15,9 +15,6 @@ class QuranDataService {
 
   List<PageIndexInfo>? _pageIndexCache;
 
-  /// ===============================
-  ///  SURAH INDEX (FINAL & STABIL)
-  /// ===============================
   Future<List<SurahIndexInfo>> getAllSurahIndex() async {
     final prefs = await SharedPreferences.getInstance();
     final lang = prefs.getString('selected_language') ?? 'id';
@@ -25,25 +22,16 @@ class QuranDataService {
     return rows.map((r) => SurahIndexInfo.fromDb(r, lang: lang)).toList();
   }
 
-  /// ===============================
-  ///  PAGE INDEX
-  /// ===============================
   Future<List<PageIndexInfo>> getAllPageIndex() async {
     _pageIndexCache ??= await _repo.getAllPages();
     return _pageIndexCache!;
   }
 
-  /// ===============================
-  ///  AYAT per SURAH
-  /// ===============================
   Future<List<Ayah>> getAyahsBySurahId(int surahId) async {
     final rows = await _repo.getAyahRowsBySurah(surahId);
     return rows.map(Ayah.fromDb).toList();
   }
 
-  /// ===============================
-  ///  AYAT per HALAMAN
-  /// ===============================
   Future<List<Ayah>> getAyahsByPage(int page) async {
     final rows = await _repo.getAyahRowsByPage(page);
     return rows.map(Ayah.fromDb).toList();
@@ -60,16 +48,10 @@ class QuranDataService {
     return match.juzId;
   }
 
-  /// ===============================
-  ///  SEARCH
-  /// ===============================
   Future<List<Map<String, dynamic>>> searchAyahs(String query) {
     return _repo.searchAyah(query);
   }
 
-  /// ===============================
-  ///  SURAH DETAIL
-  /// ===============================
   Future<SurahDetailData> getSurahDetail(int surahId) async {
     final prefs = await SharedPreferences.getInstance();
     final lang = prefs.getString('selected_language') ?? 'id';
@@ -89,16 +71,10 @@ class QuranDataService {
     );
   }
 
-  /// ===============================
-  ///  GRAMMAR
-  /// ===============================
   Future<List<Grammar>> getAyahGrammar(int surahId, int ayahNumber) {
     return _repo.getGrammarByAyah(surahId: surahId, ayahNumber: ayahNumber);
   }
 
-  /// ===============================
-  ///  RANDOM AYAH (untuk Splash)
-  /// ===============================
   Future<Ayah?> loadRandomAyahForSplash() async {
     final randomSurah = Random().nextInt(114) + 1;
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum BookmarkViewType { surah, page, classic, tafsir }
+enum BookmarkViewType { surah, page, classic, tafsir, hafalan }
 
 class Bookmark {
   final BookmarkViewType type;

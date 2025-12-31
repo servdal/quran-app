@@ -9,6 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/screens/deresan_view_screen.dart';
+import 'package:quran_app/screens/hafalan_screen.dart';
 import 'package:quran_app/screens/language_selector_screen.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
@@ -593,6 +594,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           _menuItem(
             context,
+            name: isId ? "Mode Hafalan" : "Hifdz Mode",
+            icon: Icons.history_edu,
+            color: Colors.indigo,
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (_) => const PageListScreen(
+                          mode: PageListViewMode.hafalan,
+                        ),
+                  ),
+                ),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
             name: isId ? "Tajwid" : "Tajweed",
             icon: Icons.color_lens_rounded,
             color: Colors.purple,
@@ -983,6 +1001,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           context,
           MaterialPageRoute(
             builder: (_) => TafsirViewScreen(surahId: bookmark.surahId),
+          ),
+        );
+        break;
+      case BookmarkViewType.hafalan:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (_) => HafalanViewScreen(initialPage: bookmark.pageNumber!),
           ),
         );
         break;

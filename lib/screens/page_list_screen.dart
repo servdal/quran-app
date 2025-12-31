@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/settings_provider.dart';
+import 'package:quran_app/screens/hafalan_screen.dart';
 import '../services/quran_data_service.dart';
 import '../screens/page_view_screen.dart';
 import '../screens/deresan_view_screen.dart';
 
-enum PageListViewMode { page, classic }
+enum PageListViewMode { page, classic, hafalan }
 
 class PageListScreen extends ConsumerWidget {
   final PageListViewMode mode;
@@ -46,17 +47,22 @@ class PageListScreen extends ConsumerWidget {
                 pageNumber: page.pageNumber,
                 juzId: page.juzId,
                 onTap: () {
+                  Widget destination;
+                  if (mode == PageListViewMode.hafalan) {
+                    destination = HafalanViewScreen(
+                      initialPage: page.pageNumber,
+                    );
+                  } else if (mode == PageListViewMode.page) {
+                    destination = PageViewScreen(initialPage: page.pageNumber);
+                  } else {
+                    destination = DeresanViewScreen(
+                      initialPage: page.pageNumber,
+                    );
+                  }
+
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder:
-                          (_) =>
-                              mode == PageListViewMode.page
-                                  ? PageViewScreen(initialPage: page.pageNumber)
-                                  : DeresanViewScreen(
-                                    initialPage: page.pageNumber,
-                                  ),
-                    ),
+                    MaterialPageRoute(builder: (_) => destination),
                   );
                 },
               );

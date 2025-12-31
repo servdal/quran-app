@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import '../database/db_helper.dart';
 import '../../models/page_index_model.dart';
 import '../models/grammar_model.dart';
+
 class QuranRepository {
   Future<String> _getLanguage() async {
     final prefs = await SharedPreferences.getInstance();
@@ -35,7 +36,6 @@ class QuranRepository {
     ''');
   }
 
-
   /// Daftar halaman (page index)
   Future<List<PageIndexInfo>> getAllPages() async {
     final db = await _db;
@@ -60,19 +60,14 @@ class QuranRepository {
     final db = await _db;
     final lang = await _getLanguage();
 
-    final textCol = lang == 'id'
-        ? 'aya_text_kemenag'
-        : 'aya_text';
-    final translationCol = lang == 'id'
-        ? 'translation_aya_text_kemenag'
-        : 'translation_aya_text';
-    final translitCol = lang == 'id'
-        ? 'transliteration_kemenag'
-        : 'transliteration';
-    final tafsirCol = lang == 'id'
-        ? 'tafsir_jalalayn'
-        : 'tafsir_jalalayn_en';
-    return await db.rawQuery('''
+    final textCol = lang == 'id' ? 'aya_text_kemenag' : 'aya_text';
+    final translationCol =
+        lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
+    final translitCol =
+        lang == 'id' ? 'transliteration_kemenag' : 'transliteration';
+    final tafsirCol = lang == 'id' ? 'tafsir_jalalayn' : 'tafsir_jalalayn_en';
+    return await db.rawQuery(
+      '''
       SELECT
         aya_id,
         aya_number,
@@ -84,11 +79,14 @@ class QuranRepository {
         $translitCol AS transliteration,
         $tafsirCol AS tafsir,
         tajweed_text,
+        arabic_words,
         sura_name
       FROM merged_aya
       WHERE sura_id = ?
       ORDER BY aya_number
-    ''', [surahId]);
+    ''',
+      [surahId],
+    );
   }
 
   /// Ayat per halaman
@@ -96,19 +94,14 @@ class QuranRepository {
     final db = await _db;
     final lang = await _getLanguage();
 
-    final textCol = lang == 'id'
-        ? 'aya_text_kemenag'
-        : 'aya_text';
-    final translationCol = lang == 'id'
-        ? 'translation_aya_text_kemenag'
-        : 'translation_aya_text';
-    final translitCol = lang == 'id'
-        ? 'transliteration_kemenag'
-        : 'transliteration';
-    final tafsirCol = lang == 'id'
-        ? 'tafsir_jalalayn'
-        : 'tafsir_jalalayn_en';
-    return await db.rawQuery('''
+    final textCol = lang == 'id' ? 'aya_text_kemenag' : 'aya_text';
+    final translationCol =
+        lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
+    final translitCol =
+        lang == 'id' ? 'transliteration_kemenag' : 'transliteration';
+    final tafsirCol = lang == 'id' ? 'tafsir_jalalayn' : 'tafsir_jalalayn_en';
+    return await db.rawQuery(
+      '''
       SELECT
         aya_id,
         aya_number,
@@ -120,22 +113,25 @@ class QuranRepository {
         $translitCol AS transliteration,
         $tafsirCol AS tafsir,
         tajweed_text,
+        arabic_words,
         sura_name
       FROM merged_aya
       WHERE page_number = ?
      ORDER BY sura_id ASC, aya_number ASC
-    ''', [pageNumber]);
+    ''',
+      [pageNumber],
+    );
   }
 
   /// Search ayat (sederhana, bisa di-upgrade ke FTS)
   Future<List<Map<String, dynamic>>> searchAyah(String query) async {
     final db = await _db;
     final lang = await _getLanguage();
-    final translationCol = lang == 'id'
-        ? 'translation_aya_text_kemenag'
-        : 'translation_aya_text';
+    final translationCol =
+        lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
 
-    return await db.rawQuery('''
+    return await db.rawQuery(
+      '''
       SELECT
         aya_id,
         aya_number,
@@ -146,16 +142,22 @@ class QuranRepository {
       WHERE $translationCol LIKE ?
       ORDER BY sura_id ASC, aya_number ASC
       LIMIT 100
-    ''', ['%$query%']);
+    ''',
+      ['%$query%'],
+    );
   }
 
   /// Word-by-word dari master_edited
-  Future<List<Map<String, dynamic>>> getWordByAyah(int surahId, int ayahNumber) async {
+  Future<List<Map<String, dynamic>>> getWordByAyah(
+    int surahId,
+    int ayahNumber,
+  ) async {
     final db = await _db;
     final lang = await _getLanguage();
     final meaningCol = lang == 'id' ? 'MeaningId' : 'MeaningEn';
 
-    return await db.rawQuery('''
+    return await db.rawQuery(
+      '''
       SELECT
         WordNo,
         WordAr,
@@ -164,7 +166,9 @@ class QuranRepository {
       FROM master_edited
       WHERE ChapterNo = ? AND VerseNo = ?
       ORDER BY ChapterNo ASC, VerseNo ASC, WordNo ASC
-    ''', [surahId, ayahNumber]);
+    ''',
+      [surahId, ayahNumber],
+    );
   }
 
   Future<Map<String, dynamic>> getSurahMeta(
@@ -173,7 +177,8 @@ class QuranRepository {
   }) async {
     final db = await _db;
 
-    final rows = await db.rawQuery('''
+    final rows = await db.rawQuery(
+      '''
       SELECT 
         sura_name,
         sura_name_arabic,
@@ -183,7 +188,9 @@ class QuranRepository {
       FROM merged_aya
       WHERE sura_id = ?
       LIMIT 1
-    ''', [surahId]);
+    ''',
+      [surahId],
+    );
 
     if (rows.isEmpty) return {};
 
@@ -193,11 +200,9 @@ class QuranRepository {
       'name': r['sura_name'] ?? '',
       'arabic_name': r['sura_name_arabic'] ?? '',
       'translation': r['sura_name_translation'] ?? '',
-      'revelation_type':
-          lang == 'id' ? r['location'] : r['revelation_type_en'],
+      'revelation_type': lang == 'id' ? r['location'] : r['revelation_type_en'],
     };
   }
-
 
   /// 🔹 Grammar per ayat (master_edited)
   Future<List<Grammar>> getGrammarByAyah({
@@ -206,7 +211,8 @@ class QuranRepository {
   }) async {
     final db = await _db;
 
-    final rows = await db.rawQuery('''
+    final rows = await db.rawQuery(
+      '''
       SELECT
         id,
         RootAr,
@@ -225,8 +231,10 @@ class QuranRepository {
       WHERE ChapterNo = ?
         AND VerseNo = ?
       ORDER BY WordNo
-    ''', [surahId, ayahNumber]);
+    ''',
+      [surahId, ayahNumber],
+    );
 
     return rows.map(Grammar.fromDb).toList();
-  }  
+  }
 }

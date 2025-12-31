@@ -153,20 +153,19 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     double bestMatchScore = 0.0;
 
     for (String fullSentence in inputPossibilities) {
-      // 1. Cek Full Sentence (Khusus Muqatta'at pendek: 'Alif Lam Mim')
-      if (targetClean.length < 5) {
-        String fullNormalized = _normalize(fullSentence);
-        double score = _calculateSimilarity(fullNormalized, targetClean);
-        if (score > bestMatchScore) bestMatchScore = score;
-      }
+      // 1. Cek Full Sentence (Normalisasi akan menghapus spasi & gabung jadi satu)
+      // Ini mengatasi kasus Mustaqim yang pecah jadi 2 kata
+      String fullNormalized = _normalize(fullSentence);
+      double scoreFull = _calculateSimilarity(fullNormalized, targetClean);
+      if (scoreFull > bestMatchScore) bestMatchScore = scoreFull;
 
-      // 2. Cek Per Kata (Ambil 5 kata terakhir)
-      List<String> words = fullSentence.split(' ');
+      // 2. Cek Per Kata (Backup jika user ngomongnya putus-putus)
+      List<String> words = fullSentence.split(' '); // Split DULU
       int startIdx = (words.length > 5) ? words.length - 5 : 0;
       List<String> recentWords = words.sublist(startIdx);
 
       for (String word in recentWords) {
-        String wordClean = _normalize(word);
+        String wordClean = _normalize(word); // Baru normalize per kata
         double score = _calculateSimilarity(wordClean, targetClean);
         if (score > bestMatchScore) bestMatchScore = score;
       }
@@ -183,10 +182,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       return true;
     }
 
-    // Update live text feedback (tanpa error message kasar)
     if (_isListening) {
       // Opsional: Tampilkan apa yang didengar sekilas
-      // setState(() => _statusMessage = primaryResult);
+      setState(() => _statusMessage = primaryResult);
     }
 
     return false;
@@ -224,52 +222,71 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
     if (text.isEmpty) return "";
     String clean = text;
 
+    // --- 1. FIX LIST HALLUCINATION GOOGLE (Wajib ditaruh paling atas) ---
+    // Google sering mengartikan 'Mustaqim' jadi 'Mous Taqeem' (Pisau Steril)
+    clean = clean.replaceAll('الموس', 'المس');
+    clean = clean.replaceAll('تعقيم', 'تقيم');
+    clean = clean.replaceAll('سيرات', 'سراط'); // Fix ejaan Sirat
+
     // Fix Angka 1000 -> Alif
     clean = clean.replaceAll('1000', 'ا');
     clean = clean.replaceAll('١٠٠٠', 'ا');
 
-    // Mapping Muqatta'at & Normalisasi Huruf
+    // --- 2. NORMALISASI HURUF (FONETIK) ---
+    // Kita samakan huruf tebal (Emphatic) dengan huruf tipis agar "Sony" == "Sana"
+
+    // Sad (ص) -> Sin (س)
+    clean = clean.replaceAll('ص', 'س');
+    // Tha (ط) -> Ta (ت)
+    clean = clean.replaceAll('ط', 'ت');
+    // Zha (ظ) -> Zai (ز)
+    clean = clean.replaceAll('ظ', 'ز');
+    // Dzal (ذ) -> Zai (ز) (Sering tertukar)
+    clean = clean.replaceAll('ذ', 'ز');
+    // Tsa (ث) -> Sin (س) (Sering tertukar bagi lidah non-arab)
+    clean = clean.replaceAll('ث', 'س');
+    // Qaf (ق) -> Kaf (ك) (Opsional, tapi membantu jika tajwid kurang Qalqalah)
+    clean = clean.replaceAll('ق', 'ك');
+
+    // Ain (ع) sering tidak terdengar atau jadi Alif, kita biarkan dulu atau
+    // bisa dihapus jika mau ekstrem: clean = clean.replaceAll('ع', '');
+
+    // --- 3. MAPPING MUQATTA'AT (Tetap diperlukan) ---
     Map<String, String> map = {
       'الف': 'ا',
       'لام': 'ل',
       'ميم': 'م',
-      'صاد': 'ص',
       'كاف': 'ك',
       'ها': 'ه',
       'يا': 'ي',
       'عين': 'ع',
       'سين': 'س',
-      'قاف': 'ق',
       'نون': 'ن',
       'طه': 'طه',
       'يس': 'يس',
       'حم': 'حم',
-      'ة': 'ه',
-      'ؤ': 'و',
-      'إ': 'ا',
-      'أ': 'ا',
-      'آ': 'ا',
-      'ٱ': 'ا',
-      'ى': 'ي',
-      'ئ': 'ي',
     };
-
-    // Replace whole words for Muqatta'at
     map.forEach((k, v) {
       if (k.length > 1) clean = clean.replaceAll(RegExp(r'\b' + k + r'\b'), v);
     });
 
-    // Replace chars for standard letters
-    map.forEach((k, v) {
-      if (k.length == 1) clean = clean.replaceAll(k, v);
-    });
+    // --- 4. PEMBERSIHAN UMUM ---
+    // Standarisasi Alif/Ya/Ha
+    clean = clean.replaceAll(RegExp(r'[إأآٱ]'), 'ا');
+    clean = clean.replaceAll(RegExp(r'[ىئ]'), 'ي');
+    clean = clean.replaceAll('ة', 'ه');
+    clean = clean.replaceAll('ؤ', 'و');
 
-    // Remove non-Arabic & Harakat
+    // Hapus Non-Arab & Harakat
     clean = clean.replaceAll(RegExp(r'[^\u0600-\u06FF]'), '');
     clean = clean.replaceAll(
       RegExp(r'[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]'),
       '',
     );
+
+    // Hapus Spasi (PENTING: Biar "Al Mous" + "Taqeem" nyambung jadi satu)
+    // Kita hapus spasi agar perbandingan dilakukan per-blok karakter
+    clean = clean.replaceAll(' ', '');
 
     return clean.trim();
   }

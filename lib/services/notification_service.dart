@@ -28,6 +28,16 @@ class NotificationService {
         );
 
     await _plugin.initialize(initializationSettings);
+    if (Platform.isAndroid) {
+      final androidImplementation =
+          _plugin
+              .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin
+              >();
+
+      await androidImplementation?.requestNotificationsPermission();
+      await androidImplementation?.requestExactAlarmsPermission();
+    }
   }
 
   /// ================= PERMISSION =================
@@ -95,25 +105,28 @@ class NotificationService {
   }) async {
     final istimaTime = prayerTime.subtract(const Duration(minutes: 10));
     if (istimaTime.isBefore(DateTime.now())) return;
-
-    await _plugin.zonedSchedule(
-      2002,
-      isId ? 'Waktu Istima' : 'Istima Time',
-      isId
-          ? 'Bersiaplah adzan akan segera berkumandang'
-          : 'Get ready, adzan will soon sound',
-      tz.TZDateTime.from(istimaTime, tz.local),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'istima_channel',
-          'Istima',
-          importance: Importance.high,
-          priority: Priority.high,
+    try {
+      await _plugin.zonedSchedule(
+        2002,
+        isId ? 'Waktu Istima' : 'Istima Time',
+        isId
+            ? 'Bersiaplah adzan akan segera berkumandang'
+            : 'Get ready, adzan will soon sound',
+        tz.TZDateTime.from(istimaTime, tz.local),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'istima_channel',
+            'Istima',
+            importance: Importance.high,
+            priority: Priority.high,
+          ),
+          iOS: DarwinNotificationDetails(presentSound: true),
         ),
-        iOS: DarwinNotificationDetails(presentSound: true),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    );
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      );
+    } catch (e) {
+      // ignore scheduling errors
+    }
   }
 
   /// ================= ADZAN =================
@@ -122,24 +135,28 @@ class NotificationService {
     required String prayer,
     required bool isId,
   }) async {
-    await _plugin.zonedSchedule(
-      1001,
-      isId ? 'Waktu Sholat' : 'Prayer Time',
-      isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
-      tz.TZDateTime.from(time, tz.local),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'adzan_channel',
-          'Adzan',
-          importance: Importance.max,
-          priority: Priority.max,
-          playSound: true,
-          fullScreenIntent: true,
+    try {
+      await _plugin.zonedSchedule(
+        1001,
+        isId ? 'Waktu Sholat' : 'Prayer Time',
+        isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
+        tz.TZDateTime.from(time, tz.local),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'adzan_channel',
+            'Adzan',
+            importance: Importance.max,
+            priority: Priority.max,
+            playSound: true,
+            fullScreenIntent: true,
+          ),
+          iOS: DarwinNotificationDetails(presentSound: true),
         ),
-        iOS: DarwinNotificationDetails(presentSound: true),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    );
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      );
+    } catch (e) {
+      // ignore scheduling errors
+    }
   }
 
   /// ================= STICKY =================

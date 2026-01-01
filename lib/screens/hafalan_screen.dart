@@ -15,7 +15,8 @@ class HafalanViewScreen extends ConsumerStatefulWidget {
   ConsumerState<HafalanViewScreen> createState() => _HafalanViewScreenState();
 }
 
-class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
+class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
+    with SingleTickerProviderStateMixin {
   final SpeechToText _speechToText = SpeechToText();
   final ScrollController _scrollController = ScrollController();
   late int _currentPage;
@@ -25,6 +26,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
 
   int _mistakeCount = 0;
   int _totalSkipCount = 0;
+  int _lastResultLength = 0;
   Set<int> _skippedIndices = {};
 
   static const int _hintThreshold = 3;
@@ -35,6 +37,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
 
   String _currentSurahName = '';
   int _currentSurahId = 0;
+  late AnimationController _pulseController;
+  late Animation<double> _pulseAnimation;
+  String _liveRecognizedWords = "";
 
   @override
   void initState() {
@@ -50,30 +55,46 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       });
     });
     _initSpeech();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
   }
 
   @override
   void dispose() {
+    _speechToText.stop();
+    _pulseController.stop();
+    _pulseController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
   void _initSpeech() async {
     await _speechToText.initialize(
-      onError:
-          (val) => setState(() {
-            final lang = ref.read(settingsProvider).language;
-            setState(() {
-              _statusMessage =
-                  lang == 'en'
-                      ? "Error: ${val.errorMsg}"
-                      : "Error: ${val.errorMsg}";
-              _isListening = false;
-            });
-          }),
+      onError: (val) {
+        if (!mounted) return;
+        setState(() {
+          _statusMessage = "Error: ${val.errorMsg}";
+          _isListening = false;
+          _mistakeCount++;
+          _pulseController.stop();
+          _pulseController.reset();
+        });
+      },
       onStatus: (val) {
-        if (mounted) {
-          setState(() => _isListening = val == 'listening');
+        if (!mounted) return;
+
+        if (val == 'listening') {
+          setState(() => _isListening = true);
+          _pulseController.repeat(reverse: true);
+        } else if (val == 'notListening' || val == 'done') {
+          setState(() => _isListening = false);
+          _pulseController.stop();
+          _pulseController.reset();
         }
       },
     );
@@ -156,65 +177,102 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       _totalSkipCount++;
       _currentIndex++;
       _statusMessage = lang == 'en' ? "Word skipped" : "Kata dilewati (Skip)";
+      _liveRecognizedWords = "";
+      _speechToText.stop();
     });
 
     _advanceToNextSpeakable();
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted) _startListening();
+    });
   }
 
   void _startListening() async {
     final lang = ref.read(settingsProvider).language;
     setState(() {
       _statusMessage = lang == 'en' ? "Listening..." : "Mendengarkan...";
-      _isListening = true;
+      _lastResultLength = 0;
+      _liveRecognizedWords = "";
     });
-
     await _speechToText.listen(
       onResult: (result) {
+        setState(() {
+          _liveRecognizedWords = result.recognizedWords;
+        });
+        if (result.recognizedWords.length < _lastResultLength) {
+          _lastResultLength = 0;
+        }
+        String freshWords = "";
+        if (result.recognizedWords.length > _lastResultLength) {
+          freshWords =
+              result.recognizedWords.substring(_lastResultLength).trim();
+        }
+        if (freshWords.isNotEmpty) {
+          _verifyStream(
+            freshWords,
+            result.alternates.map((e) => e.recognizedWords).toList(),
+          );
+        }
         bool matchFound = _verifyStream(
           result.recognizedWords,
           result.alternates.map((e) => e.recognizedWords).toList(),
         );
 
-        if (result.finalResult && !matchFound) {
-          setState(() {
-            _mistakeCount++;
-            int sisaSkip = _skipThreshold - _mistakeCount;
+        if (result.finalResult) {
+          if (!matchFound) {
+            setState(() {
+              _mistakeCount++;
+              int sisaSkip = _skipThreshold - _mistakeCount;
 
-            if (_mistakeCount < _hintThreshold) {
-              _statusMessage =
-                  lang == 'en'
-                      ? "Wrong ($_mistakeCount). Try again!"
-                      : "Salah ($_mistakeCount). Ayo coba lagi!";
-            } else if (_mistakeCount < _skipThreshold) {
-              _statusMessage =
-                  lang == 'en'
-                      ? "Hint shown. Skip available in ${sisaSkip}x."
-                      : "Hint muncul. Skip aktif dalam ${sisaSkip}x.";
-            } else {
-              _statusMessage =
-                  lang == 'en'
-                      ? "6 mistakes. Skip button ACTIVE."
-                      : "Sudah 6x salah. Tombol Skip AKTIF.";
-            }
+              if (_mistakeCount < _hintThreshold) {
+                _statusMessage =
+                    lang == 'en'
+                        ? "Wrong ($_mistakeCount). Try again!"
+                        : "Salah ($_mistakeCount). Ayo coba lagi!";
+              } else if (_mistakeCount < _skipThreshold) {
+                _statusMessage =
+                    lang == 'en'
+                        ? "Hint shown. Skip available in ${sisaSkip}x."
+                        : "Hint muncul. Skip aktif dalam ${sisaSkip}x.";
+              } else {
+                _statusMessage =
+                    lang == 'en'
+                        ? "6 mistakes. Skip button ACTIVE."
+                        : "Sudah 6x salah. Tombol Skip AKTIF.";
+              }
 
-            if (_mistakeCount < 10) {
-              Future.delayed(const Duration(milliseconds: 500), () {
-                if (mounted && !_isListening) _startListening();
-              });
-            }
-          });
+              if (_mistakeCount < 10) {
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  if (mounted && !_isListening) _startListening();
+                });
+              }
+            });
+          }
         }
       },
       localeId: "ar_SA",
+      // ignore: deprecated_member_use
       listenMode: ListenMode.dictation,
+      // ignore: deprecated_member_use
       partialResults: true,
-      pauseFor: const Duration(seconds: 4),
+      pauseFor: const Duration(seconds: 5),
     );
+  }
+
+  // Update logika saat stop manual atau ganti halaman
+  void _stopListeningManual() {
+    _speechToText.stop();
+    _pulseController.stop(); // Stop animasi
+    setState(() {
+      _isListening = false;
+      _liveRecognizedWords = "";
+    });
   }
 
   bool _verifyStream(String primaryResult, List<String> alternates) {
     final lang = ref.read(settingsProvider).language;
     if (_currentIndex >= _targetWords.length) {
+      _speechToText.stop();
       setState(
         () =>
             _statusMessage =
@@ -225,36 +283,28 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       return true;
     }
 
-    List<String> inputPossibilities = [primaryResult, ...alternates];
     String targetRaw = _targetWords[_currentIndex];
     String targetClean = _normalize(targetRaw);
-    double bestMatchScore = 0.0;
-
-    for (String fullSentence in inputPossibilities) {
-      String fullNormalized = _normalize(fullSentence);
-      double scoreFull = _calculateSimilarity(fullNormalized, targetClean);
-      if (scoreFull > bestMatchScore) bestMatchScore = scoreFull;
-
-      List<String> words = fullSentence.split(' ');
-      int startIdx = (words.length > 5) ? words.length - 5 : 0;
-      List<String> recentWords = words.sublist(startIdx);
-
-      for (String word in recentWords) {
-        String wordClean = _normalize(word);
-        double score = _calculateSimilarity(wordClean, targetClean);
-        if (score > bestMatchScore) bestMatchScore = score;
-      }
+    String inputClean = _normalize(primaryResult);
+    double score = _calculateSimilarity(inputClean, targetClean);
+    bool isMatch = score >= 0.40;
+    if (!isMatch && inputClean.contains(targetClean)) {
+      isMatch = true;
     }
-
-    if (bestMatchScore >= 0.40) {
+    if (isMatch) {
       setState(() {
         _currentIndex++;
         _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
         _mistakeCount = 0;
+
+        _lastResultLength = _liveRecognizedWords.length;
       });
+
       _advanceToNextSpeakable();
+
       return true;
     }
+
     return false;
   }
 
@@ -606,6 +656,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          _buildLiveListeningPanel(),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: Text(
@@ -642,6 +693,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
                       if (_isListening) {
                         _speechToText.stop();
                         setState(() => _isListening = false);
+                        _stopListeningManual();
                       } else {
                         _startListening();
                       }
@@ -731,6 +783,61 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildLiveListeningPanel() {
+    if (!_isListening && _liveRecognizedWords.isEmpty)
+      return const SizedBox.shrink();
+
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.green.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.green.withOpacity(0.3)),
+        ),
+        child: Column(
+          children: [
+            // Ikon berdenyut
+            ScaleTransition(
+              scale: _pulseAnimation,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.green.withOpacity(0.4),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.mic, color: Colors.white, size: 24),
+              ),
+            ),
+            const SizedBox(height: 12),
+            // Teks Live
+            Text(
+              _liveRecognizedWords.isEmpty ? "..." : _liveRecognizedWords,
+              textAlign: TextAlign.center,
+              textDirection: TextDirection.rtl, // Karena bahasa Arab
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+                fontFamily: 'LPMQ', // Pakai font arab jika ada
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

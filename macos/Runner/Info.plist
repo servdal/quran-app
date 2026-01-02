@@ -28,5 +28,15 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Aplikasi ini membutuhkan mikrofon untuk mendengarkan hafalan Anda.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Aplikasi ini membutuhkan pengenalan suara untuk memverifikasi ayat Quran.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Aplikasi membutuhkan lokasi untuk menghitung jadwal sholat dan arah kiblat.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Aplikasi membutuhkan lokasi untuk menghitung jadwal sholat dan arah kiblat saat aplikasi terbuka.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Aplikasi membutuhkan lokasi untuk jadwal sholat yang akurat.</string>
 </dict>
 </plist>

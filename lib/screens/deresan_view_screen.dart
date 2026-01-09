@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -226,7 +228,7 @@ class DeresanPage extends ConsumerWidget {
             WidgetSpan(
               alignment: PlaceholderAlignment.middle,
               child: AyahOrnamentalNumber(
-                number: ayah.number.toString(),
+                number: ayah.number,
                 fontSize: settings.arabicFontSize,
                 hasSajda: ayah.isSajda,
               ),
@@ -502,7 +504,7 @@ class SettingsModalContent extends ConsumerWidget {
 }
 
 class AyahOrnamentalNumber extends StatelessWidget {
-  final String number;
+  final int number;
   final double fontSize;
   final bool hasSajda;
 
@@ -513,10 +515,9 @@ class AyahOrnamentalNumber extends StatelessWidget {
     this.hasSajda = false,
   });
 
-  // Tambahkan fungsi utilitas di sini jika belum ada secara global
-  String _toArabicNumber(String input) {
+  String _toArabicNumber(int input) {
     const digits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    return input.split('').map((d) {
+    return input.toString().split('').map((d) {
       final parsed = int.tryParse(d);
       return parsed != null ? digits[parsed] : d;
     }).join();
@@ -533,9 +534,8 @@ class AyahOrnamentalNumber extends StatelessWidget {
           : '\u202B ۞ $arabicNumber \u202C',
       textDirection: TextDirection.rtl,
       style: TextStyle(
-        fontFamily: 'LPMQ',
+        fontFamily: 'Uthmani',
         fontSize: fontSize,
-        fontWeight: FontWeight.bold,
         color: color,
       ),
     );

@@ -208,7 +208,7 @@ class DeresanPage extends ConsumerWidget {
               );
             }
           }
-
+          
           final spans =
               lang == 'id'
                   ? AutoTajweedParser.parse(
@@ -222,16 +222,7 @@ class DeresanPage extends ConsumerWidget {
 
           currentSpans.addAll(spans);
           currentSpans.add(const TextSpan(text: ' '));
-          currentSpans.add(
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: AyahOrnamentalNumber(
-                number: ayah.number,
-                fontSize: settings.arabicFontSize,
-                hasSajda: ayah.isSajda,
-              ),
-            ),
-          );
+          currentSpans.add(buildAyahNumberSpan(context, ayah, settings.arabicFontSize));
           currentSpans.add(const TextSpan(text: ' '));
         }
 
@@ -500,45 +491,24 @@ class SettingsModalContent extends ConsumerWidget {
     );
   }
 }
+TextSpan buildAyahNumberSpan(BuildContext context, dynamic ayah, double fontSize) {
+  const digits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  final arabicNumber = ayah.number.toString().split('').map((e) => digits[int.parse(e)]).join();
 
-class AyahOrnamentalNumber extends StatelessWidget {
-  final int number;
-  final double fontSize;
-  final bool hasSajda;
+  final text = ayah.isSajda ? ' ۩ ﴿$arabicNumber﴾ ' : ' ﴿$arabicNumber﴾ ';
 
-  const AyahOrnamentalNumber({
-    super.key,
-    required this.number,
-    required this.fontSize,
-    this.hasSajda = false,
-  });
-
-  String _toArabicNumber(int input) {
-    const digits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    return input.toString().split('').map((d) {
-      final parsed = int.tryParse(d);
-      return parsed != null ? digits[parsed] : d;
-    }).join();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.onSurface;
-    final arabicNumber = _toArabicNumber(number);
-
-    return Text(
-      hasSajda
-          ? '\u202B ۩ ۞ $arabicNumber \u202C'
-          : '\u202B ۞ $arabicNumber \u202C',
-      textDirection: TextDirection.rtl,
-      style: TextStyle(
-        fontFamily: 'Uthmani',
-        fontSize: fontSize,
-        color: color,
-      ),
-    );
-  }
+  return TextSpan(
+    text: '\u202B$text\u202C',
+    style: TextStyle(
+      fontFamily: 'LPMQ',
+      fontSize: fontSize * 0.85,
+      fontWeight: FontWeight.w600,
+      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.85),
+      letterSpacing: 1,
+    ),
+  );
 }
+
 
 class _BismillahWidget extends StatelessWidget {
   final double fontSize;

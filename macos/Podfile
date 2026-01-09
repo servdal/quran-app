@@ -1,6 +1,5 @@
-platform :osx, '13.0'
+platform :macos, '13.0'
 
-# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -26,17 +25,25 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_macos_podfile_setup
 
-target 'Runner' do
-  use_frameworks!
+# ✅ PENTING: global, static, modular
+use_frameworks! :linkage => :static
+use_modular_headers!
 
+target 'Runner' do
   flutter_install_all_macos_pods File.dirname(File.realpath(__FILE__))
+
   target 'RunnerTests' do
     inherit! :search_paths
   end
 end
 
+# ✅ FIX GoogleUtilities + Firebase headers
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-    flutter_additional_macos_build_settings(target)
+    target.build_configurations.each do |config|
+      config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+      config.build_settings['DEFINES_MODULE'] = 'YES'
+      config.build_settings['CLANG_ENABLE_MODULES'] = 'YES'
+    end
   end
 end

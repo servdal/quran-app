@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -258,14 +259,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           prayerTime: nextTime,
           isId: isId,
         );
+        if (Platform.isMacOS){
 
-        await notificationService.showSticky(
-          timings: data['timings'],
-          nextPrayer: prayer,
-          nextTime: nextTime,
-          isId: isId,
-          location: data['location'],
-        );
+          await notificationService.showSticky(
+            timings: data['timings'],
+            nextPrayer: prayer,
+            nextTime: nextTime,
+            isId: isId,
+            location: data['location'],
+          );
+        }
 
         _startCountdown(nextTime, data['prevTime'], prayer, isId);
       });

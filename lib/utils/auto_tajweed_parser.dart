@@ -26,6 +26,7 @@ class _Token {
   final String base;
   String diacritics;
 
+  // ignore: unused_element_parameter
   _Token(this.base, [this.diacritics = '']);
 
   String get full => '$base$diacritics';
@@ -154,6 +155,15 @@ class AutoTajweedParser {
       if (curr.hasShadda && (curr.isNun || curr.isMim)) {
         ruleKey = 'g'; // Pastikan key 'g' ada di AppTheme (Ghunnah)
       }
+      // B. ALIF LAM SYAMSIYAH (Aturan Baru)
+      // Logika: Jika ada Alif (biasanya Hamzah Washal), lalu Lam (tak berharakat), lalu huruf depannya Tasydid
+      else if (next != null && curr.baseCode == 0x0644 && !curr.hasSukun && !curr.hasFatha && !curr.hasKasra && !curr.hasDhamma) {
+         // Cek apakah huruf ini Lam, dan huruf depannya bertasydid (Tanda Syamsiyah)
+         if (next.hasShadda) {
+           ruleKey = 'l'; // Lam Syamsiyah (Huruf Lam dianggap lebur)
+           involvesNextToken = true; 
+         }
+      }
       
       // B. Qalqalah (Hanya huruf Qalqalah + Sukun)
       else if (curr.hasSukun && _qalqalahLetters.contains(curr.baseCode)) {
@@ -192,16 +202,19 @@ class AutoTajweedParser {
         }
       }
 
-      // E. Mad Thobi'i (Sederhana)
+      // F. Mad (Penyempurnaan Sedikit)
       else if (next != null) {
-        if (curr.hasFatha && next.baseCode == cpAlef) {
-           ruleKey = 'n'; // Mad Alif
-           involvesNextToken = true;
-        } else if (curr.hasKasra && next.baseCode == cpYa && next.hasSukun) {
-           ruleKey = 'n'; // Mad Ya
-           involvesNextToken = true;
-        } else if (curr.hasDhamma && next.baseCode == cpWaw && next.hasSukun) {
-           ruleKey = 'n'; // Mad Wau
+        // Cek Mad Wajib/Jaiz (Sangat basic: Cek jika ketemu Hamzah)
+        bool isMad = false;
+        if (curr.hasFatha && next.baseCode == cpAlef) isMad = true;
+        else if (curr.hasKasra && next.baseCode == cpYa && next.hasSukun) isMad = true;
+        else if (curr.hasDhamma && next.baseCode == cpWaw && next.hasSukun) isMad = true;
+
+        if (isMad) {
+           // Intip huruf setelah Mad (next+1)
+           // Ini butuh logika 3 huruf (curr, next, nextNext)
+           // Untuk saat ini kita tetapkan 'n' (Mad Thobi'i) agar aman
+           ruleKey = 'n'; 
            involvesNextToken = true;
         }
       }

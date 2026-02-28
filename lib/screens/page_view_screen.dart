@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/widgets/ayah_widget.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class PageViewScreen extends StatefulWidget {
-  const PageViewScreen({super.key, this.initialPage = 1});
+  const PageViewScreen({
+    super.key,
+    this.initialPage = 1,
+    this.initialSurahId,
+    this.initialAyahNumber,
+  });
 
   final int initialPage;
+  final int? initialSurahId;
+  final int? initialAyahNumber;
 
   @override
   State<PageViewScreen> createState() => _PageViewScreenState();
@@ -46,7 +55,14 @@ class _PageViewScreenState extends State<PageViewScreen> {
                 itemCount: 604, 
                 itemBuilder: (context, index) {
                   final pageNumber = index + 1;
-                  return _QuranPageWidget(pageNumber: pageNumber);
+                  final isInitialTargetPage = pageNumber == widget.initialPage;
+                  return _QuranPageWidget(
+                    pageNumber: pageNumber,
+                    targetSurahId:
+                        isInitialTargetPage ? widget.initialSurahId : null,
+                    targetAyahNumber:
+                        isInitialTargetPage ? widget.initialAyahNumber : null,
+                  );
                 },
                 onPageChanged: (index) {
                   setState(() {
@@ -99,20 +115,69 @@ class _PageViewScreenState extends State<PageViewScreen> {
   }
 }
 
-class _QuranPageWidget extends ConsumerWidget {
-  const _QuranPageWidget({required this.pageNumber});
+class _QuranPageWidget extends ConsumerStatefulWidget {
+  const _QuranPageWidget({
+    required this.pageNumber,
+    this.targetSurahId,
+    this.targetAyahNumber,
+  });
 
   final int pageNumber;
+  final int? targetSurahId;
+  final int? targetAyahNumber;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final pageDataAsync = ref.watch(pageAyahsProvider(pageNumber));
+  ConsumerState<_QuranPageWidget> createState() => _QuranPageWidgetState();
+}
+
+class _QuranPageWidgetState extends ConsumerState<_QuranPageWidget> {
+  final ItemScrollController _itemScrollController = ItemScrollController();
+  bool _didAutoScroll = false;
+
+  void _jumpToTargetAyahIfNeeded(List<Ayah> ayahs) {
+    if (_didAutoScroll ||
+        widget.targetSurahId == null ||
+        widget.targetAyahNumber == null) {
+      return;
+    }
+
+    final targetIndex = ayahs.indexWhere(
+      (ayah) =>
+          ayah.surahId == widget.targetSurahId &&
+          ayah.number == widget.targetAyahNumber,
+    );
+
+    if (targetIndex < 0) {
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_itemScrollController.isAttached || _didAutoScroll) {
+        return;
+      }
+
+      _itemScrollController.jumpTo(
+        index: targetIndex,
+        alignment: 0.1,
+      );
+      _didAutoScroll = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pageDataAsync = ref.watch(pageAyahsProvider(widget.pageNumber));
 
     return pageDataAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Gagal memuat halaman $pageNumber')),
+      error:
+          (err, stack) =>
+              Center(child: Text('Gagal memuat halaman ${widget.pageNumber}')),
       data: (ayahs) {
-        return ListView.builder(
+        _jumpToTargetAyahIfNeeded(ayahs);
+
+        return ScrollablePositionedList.builder(
+          itemScrollController: _itemScrollController,
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           itemCount: ayahs.length,
           itemBuilder: (context, index) {
@@ -166,4 +231,3 @@ class _SurahHeader extends StatelessWidget {
     );
   }
 }
-

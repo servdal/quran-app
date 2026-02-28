@@ -10,6 +10,12 @@ class QuranRepository {
     return prefs.getString('selected_language') ?? 'id';
   }
 
+  Future<String> _getArabicTextColumn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final arabicSourceIndex = prefs.getInt('arabic_source') ?? 0;
+    return arabicSourceIndex == 1 ? 'aya_text_kemenag' : 'aya_text';
+  }
+
   Future<Database> get _db async => DBHelper.database;
 
   Future<List<Map<String, dynamic>>> getSurahIndexRows() async {
@@ -59,8 +65,8 @@ class QuranRepository {
   Future<List<Map<String, dynamic>>> getAyahRowsBySurah(int surahId) async {
     final db = await _db;
     final lang = await _getLanguage();
+    final textCol = await _getArabicTextColumn();
 
-    final textCol = lang == 'id' ? 'aya_text_kemenag' : 'aya_text';
     final translationCol =
         lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
     final translitCol =
@@ -93,8 +99,8 @@ class QuranRepository {
   Future<List<Map<String, dynamic>>> getAyahRowsByPage(int pageNumber) async {
     final db = await _db;
     final lang = await _getLanguage();
+    final textCol = await _getArabicTextColumn();
 
-    final textCol = lang == 'id' ? 'aya_text_kemenag' : 'aya_text';
     final translationCol =
         lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
     final translitCol =

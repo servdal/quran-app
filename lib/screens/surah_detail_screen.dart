@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/surah_detail_data.dart';
 import '../providers/bookmark_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/quran_data_service.dart';
 import '../widgets/ayah_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
-final surahDetailProvider =
-    FutureProvider.family<SurahDetailData, int>((ref, surahId) {
-  return ref.watch(quranDataServiceProvider).getSurahDetail(surahId);
-});
 
 class SurahDetailScreen extends ConsumerStatefulWidget {
   final int surahId;
@@ -28,25 +22,38 @@ class SurahDetailScreen extends ConsumerStatefulWidget {
 
 class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
   final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
+  bool _didInitialScroll = false;
 
   @override
   void initState() {
     super.initState();
-    
-    if (widget.initialScrollIndex != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (itemScrollController.isAttached) {
-          final index = widget.initialScrollIndex!;
-          if (index >= 0) {
-            itemScrollController.jumpTo(
-              index: index,
-              alignment: 0.1,
-            );
-          }
-        }
-      });
+  }
+
+  void _jumpToInitialIndexIfNeeded(int ayahCount) {
+    if (_didInitialScroll || widget.initialScrollIndex == null) {
+      return;
     }
+
+    final rawIndex = widget.initialScrollIndex!;
+    if (rawIndex < 0 || ayahCount == 0) {
+      return;
+    }
+
+    final safeIndex = rawIndex.clamp(0, ayahCount - 1).toInt();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !itemScrollController.isAttached || _didInitialScroll) {
+        return;
+      }
+
+      itemScrollController.jumpTo(
+        index: safeIndex,
+        alignment: 0.1,
+      );
+      _didInitialScroll = true;
+    });
   }
 
   @override
@@ -81,7 +88,8 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, stack) => Center(child: Text('Gagal memuat surah: $error')),
                 data: (surah) {
-                  
+                  _jumpToInitialIndexIfNeeded(surah.ayahs.length);
+
                   return ScrollablePositionedList.builder(
                     itemCount: surah.ayahs.length,
                     itemScrollController: itemScrollController,
@@ -178,4 +186,3 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
     );
   }
 }
-

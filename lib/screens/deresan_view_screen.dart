@@ -125,6 +125,7 @@ class DeresanPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     final lang = settings.language;
+    final source = settings.arabicSource;
     final theme = Theme.of(context);
 
     final ayahsAsync = ref.watch(pageAyahsProvider(pageNumber));
@@ -210,7 +211,7 @@ class DeresanPage extends ConsumerWidget {
           }
           
           final spans =
-              lang == 'id'
+              source == ArabicSource.kemenag
                   ? AutoTajweedParser.parse(
                     ayah.arabicText,
                     baseTextStyle,

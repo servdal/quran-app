@@ -994,7 +994,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => PageViewScreen(initialPage: bookmark.pageNumber!),
+              builder:
+                  (_) => PageViewScreen(
+                    initialPage: bookmark.pageNumber!,
+                    initialSurahId: bookmark.surahId,
+                    initialAyahNumber: bookmark.ayahNumber,
+                  ),
             ),
           );
         }

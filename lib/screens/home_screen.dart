@@ -779,11 +779,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final primaryColor = theme.primaryColor;
     final isDarkMode = theme.brightness == Brightness.dark;
     String getSubtitle() {
-      if (bookmark.type == BookmarkViewType.classic ||
-          bookmark.type == BookmarkViewType.page) {
+      if (bookmark.type == BookmarkViewType.classic) {
         return isId
             ? 'Halaman ${bookmark.pageNumber} | ${bookmark.surahName}'
             : 'Page ${bookmark.pageNumber} | ${bookmark.surahName}';
+      }
+      if (bookmark.type == BookmarkViewType.page) {
+        return isId
+            ? 'Halaman ${bookmark.pageNumber} | ${bookmark.surahName} | Ayat ${bookmark.ayahNumber}'
+            : 'Page ${bookmark.pageNumber} | ${bookmark.surahName} | Ayah ${bookmark.ayahNumber}';
       }
       return isId
           ? 'Ayat ${bookmark.ayahNumber} | ${bookmark.surahName}'

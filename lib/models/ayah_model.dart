@@ -31,6 +31,38 @@ class Ayah {
     required this.arabicWords,
   });
 
+  Ayah copyWith({
+    int? id,
+    int? number,
+    int? surahId,
+    String? surahName,
+    int? juz,
+    int? page,
+    String? arabicText,
+    String? tajweedText,
+    String? translation,
+    String? tafsir,
+    String? transliteration,
+    bool? isSajda,
+    List<String>? arabicWords,
+  }) {
+    return Ayah(
+      id: id ?? this.id,
+      number: number ?? this.number,
+      surahId: surahId ?? this.surahId,
+      surahName: surahName ?? this.surahName,
+      juz: juz ?? this.juz,
+      page: page ?? this.page,
+      arabicText: arabicText ?? this.arabicText,
+      tajweedText: tajweedText ?? this.tajweedText,
+      translation: translation ?? this.translation,
+      tafsir: tafsir ?? this.tafsir,
+      transliteration: transliteration ?? this.transliteration,
+      isSajda: isSajda ?? this.isSajda,
+      arabicWords: arabicWords ?? this.arabicWords,
+    );
+  }
+
   factory Ayah.fromDb(Map<String, dynamic> row) {
     List<String> wordsList = [];
     try {

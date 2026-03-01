@@ -13,6 +13,17 @@ class LanguageSelectorScreen extends ConsumerStatefulWidget {
 
 class _LanguageSelectorScreenState
     extends ConsumerState<LanguageSelectorScreen> {
+  final List<({String code, String label})> _languageOptions = const [
+    (code: 'id', label: 'Bahasa Indonesia'),
+    (code: 'en', label: 'English'),
+    (code: 'ms', label: 'Malay'),
+    (code: 'fr', label: 'French'),
+    (code: 'de', label: 'German'),
+    (code: 'tr', label: 'Turkish'),
+    (code: 'ur', label: 'Urdu'),
+    (code: 'es', label: 'Spanish'),
+  ];
+
   late String _language;
   late AppThemeType _theme;
   late ArabicSource _arabicSource;
@@ -55,8 +66,9 @@ class _LanguageSelectorScreenState
             children: [
               Text(
                 "Pengaturan Awal",
-                style: theme.textTheme.headlineMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -68,20 +80,17 @@ class _LanguageSelectorScreenState
               _sectionCard(
                 title: "Bahasa",
                 child: Column(
-                  children: [
-                    _radio(
-                      title: "Bahasa Indonesia",
-                      value: "id",
-                      group: _language,
-                      onChanged: (v) => setState(() => _language = v),
-                    ),
-                    _radio(
-                      title: "English",
-                      value: "en",
-                      group: _language,
-                      onChanged: (v) => setState(() => _language = v),
-                    ),
-                  ],
+                  children:
+                      _languageOptions
+                          .map(
+                            (option) => _radio(
+                              title: option.label,
+                              value: option.code,
+                              group: _language,
+                              onChanged: (v) => setState(() => _language = v),
+                            ),
+                          )
+                          .toList(),
                 ),
               ),
 
@@ -120,16 +129,14 @@ class _LanguageSelectorScreenState
                       subtitle: "Standar internasional (Uthmani)",
                       value: ArabicSource.quranCloud,
                       group: _arabicSource,
-                      onChanged: (v) =>
-                          setState(() => _arabicSource = v),
+                      onChanged: (v) => setState(() => _arabicSource = v),
                     ),
                     _radio(
                       title: "KEMENAG RI",
                       subtitle: "Standar Mushaf Indonesia",
                       value: ArabicSource.kemenag,
                       group: _arabicSource,
-                      onChanged: (v) =>
-                          setState(() => _arabicSource = v),
+                      onChanged: (v) => setState(() => _arabicSource = v),
                     ),
                   ],
                 ),
@@ -159,10 +166,7 @@ class _LanguageSelectorScreenState
 
   /// ---------- Helper Widgets ----------
 
-  Widget _sectionCard({
-    required String title,
-    required Widget child,
-  }) {
+  Widget _sectionCard({required String title, required Widget child}) {
     final theme = Theme.of(context);
 
     return Card(
@@ -174,8 +178,9 @@ class _LanguageSelectorScreenState
           children: [
             Text(
               title,
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             child,

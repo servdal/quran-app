@@ -11,29 +11,39 @@ class NotificationService {
   Future<void> init() async {
     tz.initializeTimeZones();
 
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    const DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings(
-          requestAlertPermission: true,
-          requestBadgePermission: true,
-          requestSoundPermission: true,
-        );
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-          android: initializationSettingsAndroid,
-          macOS: initializationSettingsDarwin,
-          iOS: initializationSettingsDarwin,
-        );
+    const linux = LinuxInitializationSettings(
+      defaultActionName: 'Open notification',
+    );
 
-    await _plugin.initialize(initializationSettings);
+    const darwin = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+
+    const windows = WindowsInitializationSettings(
+      appName: 'Quran App',
+      appUserModelId: 'quran_app',
+      guid: 'd49b0314-ee7a-4626-bf79-97cdb8a991bb',
+    );
+
+    const settings = InitializationSettings(
+      android: android,
+      iOS: darwin,
+      macOS: darwin,
+      linux: linux,
+      windows: windows,
+    );
+
+    await _plugin.initialize(settings);
+
+    /// Android permission
     if (Platform.isAndroid) {
       final androidImplementation =
-          _plugin
-              .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin
-              >();
+          _plugin.resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
 
       await androidImplementation?.requestNotificationsPermission();
       await androidImplementation?.requestExactAlarmsPermission();
@@ -45,20 +55,19 @@ class NotificationService {
     if (Platform.isAndroid) {
       await _plugin
           .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin
-          >()
+              AndroidFlutterLocalNotificationsPlugin>()
           ?.requestNotificationsPermission();
     }
 
     if (Platform.isIOS) {
       await _plugin
           .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin
-          >()
+              IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(alert: true, sound: true);
     }
   }
 
+  /// ================= ISTIMA =================
   Future<void> showIstimaNotification(bool isId) async {
     const android = AndroidNotificationDetails(
       'istima_channel',
@@ -69,16 +78,24 @@ class NotificationService {
       playSound: true,
     );
 
+    const linux = LinuxNotificationDetails(defaultActionName: 'Open');
+    const windows = WindowsNotificationDetails();
+
     await _plugin.show(
       2002,
       isId ? 'Waktu Istima' : 'Istima Time',
       isId
           ? 'Bersiaplah adzan akan segera berkumandang'
           : 'Get ready, adzan will soon sound',
-      const NotificationDetails(android: android),
+      const NotificationDetails(
+        android: android,
+        linux: linux,
+        windows: windows,
+      ),
     );
   }
 
+  /// ================= ADZAN =================
   Future<void> showAdzanNotification(String prayerName, bool isId) async {
     const android = AndroidNotificationDetails(
       'adzan_channel',
@@ -90,95 +107,79 @@ class NotificationService {
       fullScreenIntent: true,
     );
 
+    const linux = LinuxNotificationDetails(defaultActionName: 'Open');
+    const windows = WindowsNotificationDetails();
+
     await _plugin.show(
       1001,
       isId ? 'Waktu Sholat' : 'Prayer Time',
       isId ? 'Telah masuk waktu $prayerName' : 'It is time for $prayerName',
-      const NotificationDetails(android: android),
+      const NotificationDetails(
+        android: android,
+        linux: linux,
+        windows: windows,
+      ),
     );
   }
 
-  /// ================= ISTIMA =================
+  /// ================= ISTIMA SCHEDULE =================
   Future<void> scheduleIstima({
     required DateTime prayerTime,
     required bool isId,
   }) async {
     final istimaTime = prayerTime.subtract(const Duration(minutes: 10));
+
     if (istimaTime.isBefore(DateTime.now())) return;
-    try {
-      await _plugin.zonedSchedule(
-        2002,
-        isId ? 'Waktu Istima' : 'Istima Time',
-        isId
-            ? 'Bersiaplah adzan akan segera berkumandang'
-            : 'Get ready, adzan will soon sound',
-        tz.TZDateTime.from(istimaTime, tz.local),
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'istima_channel',
-            'Istima',
-            importance: Importance.high,
-            priority: Priority.high,
-          ),
-          iOS: DarwinNotificationDetails(presentSound: true),
+
+    await _plugin.zonedSchedule(
+      2002,
+      isId ? 'Waktu Istima' : 'Istima Time',
+      isId
+          ? 'Bersiaplah adzan akan segera berkumandang'
+          : 'Get ready, adzan will soon sound',
+      tz.TZDateTime.from(istimaTime, tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'istima_channel',
+          'Istima',
+          importance: Importance.high,
+          priority: Priority.high,
         ),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      );
-    } catch (e) {
-      // ignore scheduling errors
-    }
+        linux: LinuxNotificationDetails(defaultActionName: 'Open'),
+        windows: WindowsNotificationDetails(),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
   }
 
-  /// ================= ADZAN =================
+  /// ================= ADZAN SCHEDULE =================
   Future<void> scheduleAdzan({
     required DateTime time,
     required String prayer,
     required bool isId,
   }) async {
-    try {
-      await _plugin.zonedSchedule(
-        1001,
-        isId ? 'Waktu Sholat' : 'Prayer Time',
-        isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
-        tz.TZDateTime.from(time, tz.local),
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'adzan_channel',
-            'Adzan',
-            importance: Importance.max,
-            priority: Priority.max,
-            playSound: true,
-            fullScreenIntent: true,
-          ),
-          iOS: DarwinNotificationDetails(presentSound: true),
+    await _plugin.zonedSchedule(
+      1001,
+      isId ? 'Waktu Sholat' : 'Prayer Time',
+      isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
+      tz.TZDateTime.from(time, tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'adzan_channel',
+          'Adzan',
+          importance: Importance.max,
+          priority: Priority.max,
+          playSound: true,
+          fullScreenIntent: true,
         ),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      );
-    } catch (e) {
-      // ignore scheduling errors
-    }
+        linux: LinuxNotificationDetails(defaultActionName: 'Open'),
+        windows: WindowsNotificationDetails(),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
   }
 
   /// ================= STICKY =================
-  String _buildTableBody({
-    required bool isId,
-    required String lokasi,
-    required Map timings,
-    required String nextPrayer,
-    required String nextTime,
-  }) {
-    String line(String t) => t.padRight(7);
-    final body = '''
-    $lokasi
-    
-    ${line('Subuh')}${line('Dhuhr')}${line('Asr')}${line('Maghrib')}${line('Isha')}
-    ${line(timings['Fajr'])}${line(timings['Dhuhr'])}${line(timings['Asr'])}${line(timings['Maghrib'])}${line(timings['Isha'])}
-
-    ${isId ? 'Berikutnya' : 'Next'}: $nextPrayer $nextTime
-    ''';
-    return body;
-  }
-
   Future<void> showSticky({
     required Map timings,
     required String nextPrayer,
@@ -186,42 +187,35 @@ class NotificationService {
     required bool isId,
     required String location,
   }) async {
-    final String tableContent = _buildTableBody(
-      isId: isId,
-      lokasi: location,
-      timings: timings,
-      nextPrayer: nextPrayer,
-      nextTime: _fmt(nextTime),
-    );
-    final notificationDetails = NotificationDetails(
-      android: const AndroidNotificationDetails(
-        'sticky_prayer_channel',
-        'Jadwal Sholat',
-        importance: Importance.low,
-        priority: Priority.low,
-        ongoing: true,
-        autoCancel: false,
-        playSound: false,
-        showWhen: false,
-      ),
-      macOS: const DarwinNotificationDetails(
-        presentAlert: true,
-        presentBadge: false,
-        presentSound: false,
-        threadIdentifier: "prayer_schedule",
-      ),
-      iOS: const DarwinNotificationDetails(
-        presentAlert: true,
-        presentSound: false,
-        interruptionLevel: InterruptionLevel.passive,
-      ),
+    final tableContent = '''
+$location
+
+Subuh   Dzuhur  Ashar   Maghrib Isya
+${timings['Fajr']}   ${timings['Dhuhr']}   ${timings['Asr']}   ${timings['Maghrib']}   ${timings['Isha']}
+
+${isId ? 'Berikutnya' : 'Next'}: $nextPrayer ${_fmt(nextTime)}
+''';
+
+    const android = AndroidNotificationDetails(
+      'sticky_prayer_channel',
+      'Jadwal Sholat',
+      importance: Importance.low,
+      priority: Priority.low,
+      ongoing: true,
+      autoCancel: false,
+      playSound: false,
+      showWhen: false,
     );
 
     await _plugin.show(
       9999,
       isId ? 'Jadwal Sholat' : 'Prayer Schedule',
       tableContent,
-      notificationDetails,
+      const NotificationDetails(
+        android: android,
+        linux: LinuxNotificationDetails(defaultActionName: 'Open'),
+        windows: WindowsNotificationDetails(),
+      ),
     );
   }
 

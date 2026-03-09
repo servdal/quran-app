@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/screens/splash_screen.dart';
 import 'package:quran_app/theme/app_theme.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'dart:io' show Platform;
 import 'screens/language_selector_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // On desktop, sqflite needs ffi factory initialization before openDatabase.
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
   await notificationService.init();
   await notificationService.requestPermissions();
 
@@ -47,3 +57,4 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
+

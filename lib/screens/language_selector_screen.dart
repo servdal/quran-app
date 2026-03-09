@@ -13,15 +13,93 @@ class LanguageSelectorScreen extends ConsumerStatefulWidget {
 
 class _LanguageSelectorScreenState
     extends ConsumerState<LanguageSelectorScreen> {
-  final List<({String code, String label})> _languageOptions = const [
-    (code: 'id', label: 'Bahasa Indonesia'),
-    (code: 'en', label: 'English'),
-    (code: 'ms', label: 'Malay'),
+  final List<({String code, String label})> _otherLanguageOptions = const [
+    (code: 'af', label: 'Afrikaans'),
+    (code: 'sq', label: 'Albanian'),
+    (code: 'am', label: 'Amharic'),
+    (code: 'ar', label: 'Arabic'),
+    (code: 'hy', label: 'Armenian'),
+    (code: 'az', label: 'Azerbaijani'),
+    (code: 'eu', label: 'Basque'),
+    (code: 'be', label: 'Belarusian'),
+    (code: 'bn', label: 'Bengali'),
+    (code: 'bs', label: 'Bosnian'),
+    (code: 'bg', label: 'Bulgarian'),
+    (code: 'ca', label: 'Catalan'),
+    (code: 'ceb', label: 'Cebuano'),
+    (code: 'zh-CN', label: 'Chinese (Simplified)'),
+    (code: 'zh-TW', label: 'Chinese (Traditional)'),
+    (code: 'hr', label: 'Croatian'),
+    (code: 'cs', label: 'Czech'),
+    (code: 'da', label: 'Danish'),
+    (code: 'nl', label: 'Dutch'),
+    (code: 'eo', label: 'Esperanto'),
+    (code: 'et', label: 'Estonian'),
+    (code: 'fi', label: 'Finnish'),
     (code: 'fr', label: 'French'),
+    (code: 'gl', label: 'Galician'),
+    (code: 'ka', label: 'Georgian'),
     (code: 'de', label: 'German'),
-    (code: 'tr', label: 'Turkish'),
-    (code: 'ur', label: 'Urdu'),
+    (code: 'el', label: 'Greek'),
+    (code: 'gu', label: 'Gujarati'),
+    (code: 'ht', label: 'Haitian Creole'),
+    (code: 'ha', label: 'Hausa'),
+    (code: 'he', label: 'Hebrew'),
+    (code: 'hi', label: 'Hindi'),
+    (code: 'hu', label: 'Hungarian'),
+    (code: 'is', label: 'Icelandic'),
+    (code: 'ig', label: 'Igbo'),
+    (code: 'ga', label: 'Irish'),
+    (code: 'it', label: 'Italian'),
+    (code: 'ja', label: 'Japanese'),
+    (code: 'jv', label: 'Javanese'),
+    (code: 'kn', label: 'Kannada'),
+    (code: 'kk', label: 'Kazakh'),
+    (code: 'km', label: 'Khmer'),
+    (code: 'ko', label: 'Korean'),
+    (code: 'ku', label: 'Kurdish'),
+    (code: 'ky', label: 'Kyrgyz'),
+    (code: 'lo', label: 'Lao'),
+    (code: 'la', label: 'Latin'),
+    (code: 'lv', label: 'Latvian'),
+    (code: 'lt', label: 'Lithuanian'),
+    (code: 'mk', label: 'Macedonian'),
+    (code: 'ms', label: 'Malay'),
+    (code: 'ml', label: 'Malayalam'),
+    (code: 'mt', label: 'Maltese'),
+    (code: 'mr', label: 'Marathi'),
+    (code: 'mn', label: 'Mongolian'),
+    (code: 'my', label: 'Myanmar (Burmese)'),
+    (code: 'ne', label: 'Nepali'),
+    (code: 'no', label: 'Norwegian'),
+    (code: 'fa', label: 'Persian'),
+    (code: 'pl', label: 'Polish'),
+    (code: 'pt', label: 'Portuguese'),
+    (code: 'pa', label: 'Punjabi'),
+    (code: 'ro', label: 'Romanian'),
+    (code: 'ru', label: 'Russian'),
+    (code: 'sr', label: 'Serbian'),
+    (code: 'si', label: 'Sinhala'),
+    (code: 'sk', label: 'Slovak'),
+    (code: 'sl', label: 'Slovenian'),
+    (code: 'so', label: 'Somali'),
     (code: 'es', label: 'Spanish'),
+    (code: 'sw', label: 'Swahili'),
+    (code: 'sv', label: 'Swedish'),
+    (code: 'tl', label: 'Tagalog'),
+    (code: 'ta', label: 'Tamil'),
+    (code: 'te', label: 'Telugu'),
+    (code: 'th', label: 'Thai'),
+    (code: 'tr', label: 'Turkish'),
+    (code: 'uk', label: 'Ukrainian'),
+    (code: 'ur', label: 'Urdu'),
+    (code: 'uz', label: 'Uzbek'),
+    (code: 'vi', label: 'Vietnamese'),
+    (code: 'cy', label: 'Welsh'),
+    (code: 'xh', label: 'Xhosa'),
+    (code: 'yi', label: 'Yiddish'),
+    (code: 'yo', label: 'Yoruba'),
+    (code: 'zu', label: 'Zulu'),
   ];
 
   late String _language;
@@ -80,17 +158,52 @@ class _LanguageSelectorScreenState
               _sectionCard(
                 title: "Bahasa",
                 child: Column(
-                  children:
-                      _languageOptions
-                          .map(
-                            (option) => _radio(
-                              title: option.label,
-                              value: option.code,
-                              group: _language,
-                              onChanged: (v) => setState(() => _language = v),
-                            ),
-                          )
-                          .toList(),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _primaryLanguageButton(
+                            label: 'Indonesia',
+                            code: 'id',
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _primaryLanguageButton(
+                            label: 'English',
+                            code: 'en',
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    DropdownButtonFormField<String>(
+                      value:
+                          (_language != 'id' && _language != 'en')
+                              ? _language
+                              : null,
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Bahasa Lain (API)',
+                        border: OutlineInputBorder(),
+                      ),
+                      hint: const Text('Pilih bahasa selain Indonesia/English'),
+                      items:
+                          _otherLanguageOptions
+                              .map(
+                                (option) => DropdownMenuItem<String>(
+                                  value: option.code,
+                                  child: Text(option.label),
+                                ),
+                              )
+                              .toList(),
+                      onChanged: (value) {
+                        if (value == null) return;
+                        setState(() => _language = value);
+                      },
+                    ),
+                  ],
                 ),
               ),
 
@@ -205,6 +318,31 @@ class _LanguageSelectorScreenState
       onChanged: (v) {
         if (v != null) onChanged(v);
       },
+    );
+  }
+
+  Widget _primaryLanguageButton({required String label, required String code}) {
+    final selected = _language == code;
+
+    return ElevatedButton(
+      onPressed: () => setState(() => _language = code),
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        backgroundColor: selected ? Theme.of(context).primaryColor : null,
+        foregroundColor: selected ? Colors.white : null,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (selected) ...[
+            const Icon(Icons.check_circle, size: 18),
+            const SizedBox(width: 6),
+          ],
+          Flexible(
+            child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+          ),
+        ],
+      ),
     );
   }
 }

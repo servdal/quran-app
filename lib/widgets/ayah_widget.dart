@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -23,12 +25,84 @@ class AyahWidget extends ConsumerStatefulWidget {
   ConsumerState<AyahWidget> createState() => _AyahWidgetState();
 }
 
-class _AyahWidgetState extends ConsumerState<AyahWidget> {
+class _AyahWidgetState extends ConsumerState<AyahWidget>
+    with SingleTickerProviderStateMixin {
+  static final Map<String, _RemoteAyahText> _remoteTextCache = {};
+
   final ScreenshotController _screenshotController = ScreenshotController();
+  late final TabController _tabController;
+  Future<_RemoteAyahText?>? _remoteTextFuture;
+  String? _remoteFutureLang;
+  bool _translationRequested = false;
+  bool _tafsirRequested = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    if (!mounted) return;
+    if (_tabController.index == 1 && !_translationRequested) {
+      setState(() => _translationRequested = true);
+      _ensureRemoteTextLoaded();
+      return;
+    }
+    if (_tabController.index == 2 && !_tafsirRequested) {
+      setState(() => _tafsirRequested = true);
+      _ensureRemoteTextLoaded();
+    }
+  }
 
   @override
   void dispose() {
+    _tabController.removeListener(_onTabChanged);
+    _tabController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant AyahWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.ayah.id == widget.ayah.id) return;
+
+    _translationRequested = false;
+    _tafsirRequested = false;
+    _remoteTextFuture = null;
+    _remoteFutureLang = null;
+    _tabController.index = 0;
+  }
+
+  void _resetRemoteFutureIfLanguageChanged(String lang) {
+    if (_remoteFutureLang == lang) return;
+    _remoteFutureLang = lang;
+    _remoteTextFuture = null;
+  }
+
+  void _ensureRemoteTextLoaded() {
+    final lang = ref.read(settingsProvider).language;
+    if (lang == 'id' || lang == 'en') return;
+
+    _resetRemoteFutureIfLanguageChanged(lang);
+    if (_remoteTextFuture != null) return;
+
+    final cacheKey = '${widget.ayah.id}:$lang';
+    if (_remoteTextCache.containsKey(cacheKey)) {
+      _remoteTextFuture = Future.value(_remoteTextCache[cacheKey]);
+      return;
+    }
+
+    _remoteTextFuture = _RemoteTranslationService.translateAyah(
+      ayah: widget.ayah,
+      targetLang: lang,
+    ).then((value) {
+      if (value != null) {
+        _remoteTextCache[cacheKey] = value;
+      }
+      return value;
+    });
   }
 
   /* =========================
@@ -406,6 +480,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     final isId = settings.language == 'id';
     final sumber = settings.arabicSource;
     final lang = settings.language;
+    _resetRemoteFutureIfLanguageChanged(lang);
     final spans =
         sumber == ArabicSource.kemenag
             ? AutoTajweedParser.parse(
@@ -450,32 +525,31 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
           ),
         ),
 
-        DefaultTabController(
-          length: 4,
-          child: Column(
-            children: [
-              TabBar(
-                isScrollable: true,
-                tabs: [
-                  Tab(text: isId ? 'Teks' : 'Text'),
-                  Tab(text: isId ? 'Terjemah' : 'Translation'),
-                  Tab(text: 'Tafsir'),
-                  Tab(text: 'Audio'),
+        Column(
+          children: [
+            TabBar(
+              controller: _tabController,
+              isScrollable: true,
+              tabs: [
+                Tab(text: isId ? 'Teks' : 'Text'),
+                Tab(text: isId ? 'Terjemah' : 'Translation'),
+                const Tab(text: 'Tafsir'),
+                const Tab(text: 'Audio'),
+              ],
+            ),
+            SizedBox(
+              height: 300,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _tabText(spans),
+                  _tabTranslation(lang),
+                  _tabTafsir(lang),
+                  _tabAudio(isId),
                 ],
               ),
-              SizedBox(
-                height: 300,
-                child: TabBarView(
-                  children: [
-                    _tabText(spans),
-                    _tabTranslation(),
-                    _tabTafsir(),
-                    _tabAudio(isId),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
@@ -526,17 +600,86 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
     );
   }
 
-  Widget _tabTranslation() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Text(widget.ayah.translation),
+  Widget _tabTranslation(String lang) {
+    if (lang == 'id' || lang == 'en') {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Text(widget.ayah.translation),
+      );
+    }
+
+    if (!_translationRequested) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    _ensureRemoteTextLoaded();
+    return FutureBuilder<_RemoteAyahText?>(
+      future: _remoteTextFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _buildTranslateLoading(isId: lang == 'id');
+        }
+        final text = snapshot.data?.translation ?? widget.ayah.translation;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Text(text),
+        );
+      },
     );
   }
 
-  Widget _tabTafsir() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Text(widget.ayah.tafsir),
+  Widget _tabTafsir(String lang) {
+    if (lang == 'id' || lang == 'en') {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Text(widget.ayah.tafsir),
+      );
+    }
+
+    if (!_tafsirRequested) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    _ensureRemoteTextLoaded();
+    return FutureBuilder<_RemoteAyahText?>(
+      future: _remoteTextFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _buildTranslateLoading(isId: lang == 'id');
+        }
+        final text = snapshot.data?.tafsir ?? widget.ayah.tafsir;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Text(text),
+        );
+      },
+    );
+  }
+
+  Widget _buildTranslateLoading({required bool isId}) {
+    final color = Theme.of(context).primaryColor;
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 48,
+            height: 48,
+            child: CircularProgressIndicator(
+              strokeWidth: 3.2,
+              valueColor: AlwaysStoppedAnimation<Color>(color),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            isId ? 'Memuat terjemahan...' : 'Loading translation...',
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -554,6 +697,116 @@ class _AyahWidgetState extends ConsumerState<AyahWidget> {
 
   void _snack(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+}
+
+class _RemoteAyahText {
+  final String? translation;
+  final String? tafsir;
+
+  const _RemoteAyahText({this.translation, this.tafsir});
+}
+
+class _RemoteTranslationService {
+  static const String _apiKey = String.fromEnvironment(
+    'CORE_TRANSLATE_API_KEY',
+    defaultValue: '',
+  );
+
+  static const List<String> _endpoints = [
+    'https://duidev.com/api/translate/ayahs',
+    'http://duidev.com/api/translate/ayahs',
+  ];
+
+  static Future<_RemoteAyahText?> translateAyah({
+    required Ayah ayah,
+    required String targetLang,
+  }) async {
+    if (targetLang == 'id' || targetLang == 'en') {
+      return null;
+    }
+
+    for (final endpoint in _endpoints) {
+      try {
+        final response = await http
+            .post(
+              Uri.parse(endpoint),
+              headers: {
+                'Content-Type': 'application/json',
+                if (_apiKey.isNotEmpty) 'X-API-Key': _apiKey,
+              },
+              body: jsonEncode({
+                'target_lang': targetLang,
+                'items': [
+                  {
+                    'ayah_id': ayah.id,
+                    'surah_id': ayah.surahId,
+                    'ayah_number': ayah.number,
+                    'translation': ayah.translation,
+                    'tafsir': ayah.tafsir,
+                  },
+                ],
+              }),
+            )
+            .timeout(const Duration(seconds: 12));
+
+        if (response.statusCode < 200 || response.statusCode >= 300) {
+          continue;
+        }
+
+        final decoded = jsonDecode(response.body);
+        final rows = _extractRows(decoded);
+        if (rows.isEmpty) {
+          continue;
+        }
+
+        final row = rows.firstWhere(
+          (item) => item is Map<String, dynamic>,
+          orElse: () => const {},
+        );
+
+        if (row is! Map<String, dynamic>) {
+          continue;
+        }
+
+        final translation = _toNullableString(
+          row['translation'] ?? row['translated_translation'],
+        );
+        final tafsir = _toNullableString(
+          row['tafsir'] ?? row['translated_tafsir'],
+        );
+
+        if (translation == null && tafsir == null) {
+          continue;
+        }
+
+        return _RemoteAyahText(translation: translation, tafsir: tafsir);
+      } catch (_) {
+        continue;
+      }
+    }
+
+    return null;
+  }
+
+  static List<dynamic> _extractRows(dynamic decoded) {
+    if (decoded is List) return decoded;
+    if (decoded is Map<String, dynamic>) {
+      final data = decoded['data'];
+      if (data is List) return data;
+      final items = decoded['items'];
+      if (items is List) return items;
+      final results = decoded['results'];
+      if (results is List) return results;
+    }
+    return const [];
+  }
+
+  static String? _toNullableString(dynamic value) {
+    if (value == null) return null;
+    final str = value.toString().trim();
+    if (str.isEmpty) return null;
+    return str;
   }
 }
 

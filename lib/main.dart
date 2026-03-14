@@ -5,6 +5,7 @@ import 'package:quran_app/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/screens/splash_screen.dart';
+import 'package:quran_app/screens/permission_gate_screen.dart';
 import 'package:quran_app/theme/app_theme.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -20,7 +21,6 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
   }
   await notificationService.init();
-  await notificationService.requestPermissions();
 
   final prefs = await SharedPreferences.getInstance();
   final lang = prefs.getString('selected_language');
@@ -51,10 +51,12 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: theme,
       home:
-          initialLang == null
-              ? const LanguageSelectorScreen()
-              : const SplashScreen(),
+          PermissionGateScreen(
+            next:
+                initialLang == null
+                    ? const LanguageSelectorScreen()
+                    : const SplashScreen(),
+          ),
     );
   }
 }
-

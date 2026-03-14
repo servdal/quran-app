@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
@@ -18,8 +16,10 @@ import 'package:quran_app/screens/surah_list_screen.dart';
 import 'package:quran_app/screens/search_result_screen.dart';
 import 'package:quran_app/screens/tafsir_view_screen.dart';
 import 'package:quran_app/services/notification_service.dart';
+import 'package:quran_app/services/prayer_widget_service.dart';
 import 'package:quran_app/theme/app_theme.dart';
 import 'package:quran_app/screens/page_list_screen.dart';
+import 'package:quran_app/screens/permission_gate_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -198,39 +198,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
-  @pragma('vm:entry-point')
-  void adzanAlarmCallback() {
-    final plugin = FlutterLocalNotificationsPlugin();
-
-    const android = AndroidNotificationDetails(
-      'adzan_channel',
-      'Adzan',
-      importance: Importance.max,
-      priority: Priority.max,
-      playSound: true,
-      sound: RawResourceAndroidNotificationSound('azan'),
-      fullScreenIntent: true,
-    );
-
-    plugin.show(
-      1001,
-      'Waktu Sholat',
-      'Allahu Akbar...',
-      const NotificationDetails(android: android),
-    );
-  }
-
-  Future<void> scheduleAdzanAlarm(DateTime time) async {
-    await AndroidAlarmManager.oneShotAt(
-      time,
-      time.millisecondsSinceEpoch ~/ 1000,
-      adzanAlarmCallback,
-      exact: true,
-      wakeup: true,
-      rescheduleOnReboot: true,
-    );
-  }
-
   @override
   void dispose() {
     _countdownTimer?.cancel();
@@ -248,6 +215,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       next.whenData((data) async {
         final nextTime = data['closestTime'];
         final prayer = data['closestPrayer'];
+
+        await PrayerWidgetService.updateFromPrayerData(data);
 
         await notificationService.scheduleAdzan(
           time: nextTime,
@@ -681,7 +650,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const LanguageSelectorScreen(),
+                    builder:
+                        (_) => PermissionGateScreen(
+                          next: const LanguageSelectorScreen(),
+                        ),
                   ),
                 ),
             theme: theme,

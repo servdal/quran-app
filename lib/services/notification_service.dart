@@ -1,7 +1,25 @@
 import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
+enum _AdzanSoundMode { native, adzan }
+
+class _AdzanSoundConfig {
+  final bool enabled;
+  final _AdzanSoundMode mode;
+  final String name; // android res/raw name, e.g. azan1
+
+  const _AdzanSoundConfig({
+    required this.enabled,
+    required this.mode,
+    required this.name,
+  });
+
+  bool get useCustomAndroidSound =>
+      enabled && mode == _AdzanSoundMode.adzan && name.isNotEmpty;
+}
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin _plugin =
@@ -50,6 +68,58 @@ class NotificationService {
     }
   }
 
+  Future<_AdzanSoundConfig> _loadAdzanSoundConfig() async {
+    final prefs = await SharedPreferences.getInstance();
+    final enabled = prefs.getBool('adzan_sound_enabled') ?? true;
+    final modeIndex = prefs.getInt('adzan_sound_mode') ?? 0;
+    final name = prefs.getString('adzan_sound_name') ?? 'azan1';
+    final idx = modeIndex.clamp(0, _AdzanSoundMode.values.length - 1).toInt();
+    final mode = _AdzanSoundMode.values[idx];
+    return _AdzanSoundConfig(enabled: enabled, mode: mode, name: name);
+  }
+
+  Future<void> _ensureAndroidChannel({
+    required String channelId,
+    required String channelName,
+    required String channelDescription,
+    required Importance importance,
+    required bool playSound,
+    AndroidNotificationSound? sound,
+  }) async {
+    if (!Platform.isAndroid) return;
+    final androidImplementation =
+        _plugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    if (androidImplementation == null) return;
+
+    final channel = AndroidNotificationChannel(
+      channelId,
+      channelName,
+      description: channelDescription,
+      importance: importance,
+      playSound: playSound,
+      sound: sound,
+    );
+    await androidImplementation.createNotificationChannel(channel);
+  }
+
+  String _adzanChannelId(_AdzanSoundConfig cfg) {
+    if (!cfg.enabled) return 'adzan_channel_silent';
+    if (cfg.useCustomAndroidSound) return 'adzan_channel_${cfg.name}';
+    return 'adzan_channel_native';
+  }
+
+  String _istimaChannelId(_AdzanSoundConfig cfg) {
+    if (!cfg.enabled) return 'istima_channel_silent';
+    if (cfg.useCustomAndroidSound) return 'istima_channel_${cfg.name}';
+    return 'istima_channel_native';
+  }
+
+  AndroidNotificationSound? _androidSound(_AdzanSoundConfig cfg) {
+    if (!cfg.useCustomAndroidSound) return null;
+    return RawResourceAndroidNotificationSound(cfg.name);
+  }
+
   /// ================= PERMISSION =================
   Future<void> requestPermissions() async {
     if (Platform.isAndroid) {
@@ -69,13 +139,25 @@ class NotificationService {
 
   /// ================= ISTIMA =================
   Future<void> showIstimaNotification(bool isId) async {
-    const android = AndroidNotificationDetails(
-      'istima_channel',
+    final cfg = await _loadAdzanSoundConfig();
+    final channelId = _istimaChannelId(cfg);
+    await _ensureAndroidChannel(
+      channelId: channelId,
+      channelName: 'Istima',
+      channelDescription: 'Waktu istima akan segera tiba',
+      importance: Importance.high,
+      playSound: cfg.enabled,
+      sound: _androidSound(cfg),
+    );
+
+    final android = AndroidNotificationDetails(
+      channelId,
       'Istima',
       channelDescription: 'Waktu istima akan segera tiba',
       importance: Importance.high,
       priority: Priority.high,
-      playSound: true,
+      playSound: cfg.enabled,
+      sound: _androidSound(cfg),
     );
 
     const linux = LinuxNotificationDetails(defaultActionName: 'Open');
@@ -87,8 +169,10 @@ class NotificationService {
       isId
           ? 'Bersiaplah adzan akan segera berkumandang'
           : 'Get ready, adzan will soon sound',
-      const NotificationDetails(
+      NotificationDetails(
         android: android,
+        iOS: DarwinNotificationDetails(presentSound: cfg.enabled),
+        macOS: DarwinNotificationDetails(presentSound: cfg.enabled),
         linux: linux,
         windows: windows,
       ),
@@ -97,13 +181,25 @@ class NotificationService {
 
   /// ================= ADZAN =================
   Future<void> showAdzanNotification(String prayerName, bool isId) async {
-    const android = AndroidNotificationDetails(
-      'adzan_channel',
+    final cfg = await _loadAdzanSoundConfig();
+    final channelId = _adzanChannelId(cfg);
+    await _ensureAndroidChannel(
+      channelId: channelId,
+      channelName: 'Adzan',
+      channelDescription: 'Notifikasi adzan',
+      importance: Importance.max,
+      playSound: cfg.enabled,
+      sound: _androidSound(cfg),
+    );
+
+    final android = AndroidNotificationDetails(
+      channelId,
       'Adzan',
       channelDescription: 'Notifikasi adzan',
       importance: Importance.max,
       priority: Priority.max,
-      playSound: true,
+      playSound: cfg.enabled,
+      sound: _androidSound(cfg),
       fullScreenIntent: true,
     );
 
@@ -114,8 +210,10 @@ class NotificationService {
       1001,
       isId ? 'Waktu Sholat' : 'Prayer Time',
       isId ? 'Telah masuk waktu $prayerName' : 'It is time for $prayerName',
-      const NotificationDetails(
+      NotificationDetails(
         android: android,
+        iOS: DarwinNotificationDetails(presentSound: cfg.enabled),
+        macOS: DarwinNotificationDetails(presentSound: cfg.enabled),
         linux: linux,
         windows: windows,
       ),
@@ -131,6 +229,17 @@ class NotificationService {
 
     if (istimaTime.isBefore(DateTime.now())) return;
 
+    final cfg = await _loadAdzanSoundConfig();
+    final channelId = _istimaChannelId(cfg);
+    await _ensureAndroidChannel(
+      channelId: channelId,
+      channelName: 'Istima',
+      channelDescription: 'Waktu istima akan segera tiba',
+      importance: Importance.high,
+      playSound: cfg.enabled,
+      sound: _androidSound(cfg),
+    );
+
     await _plugin.zonedSchedule(
       2002,
       isId ? 'Waktu Istima' : 'Istima Time',
@@ -138,15 +247,20 @@ class NotificationService {
           ? 'Bersiaplah adzan akan segera berkumandang'
           : 'Get ready, adzan will soon sound',
       tz.TZDateTime.from(istimaTime, tz.local),
-      const NotificationDetails(
+      NotificationDetails(
         android: AndroidNotificationDetails(
-          'istima_channel',
+          channelId,
           'Istima',
+          channelDescription: 'Waktu istima akan segera tiba',
           importance: Importance.high,
           priority: Priority.high,
+          playSound: cfg.enabled,
+          sound: _androidSound(cfg),
         ),
-        linux: LinuxNotificationDetails(defaultActionName: 'Open'),
-        windows: WindowsNotificationDetails(),
+        iOS: DarwinNotificationDetails(presentSound: cfg.enabled),
+        macOS: DarwinNotificationDetails(presentSound: cfg.enabled),
+        linux: const LinuxNotificationDetails(defaultActionName: 'Open'),
+        windows: const WindowsNotificationDetails(),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
@@ -158,22 +272,37 @@ class NotificationService {
     required String prayer,
     required bool isId,
   }) async {
+    final cfg = await _loadAdzanSoundConfig();
+    final channelId = _adzanChannelId(cfg);
+    await _ensureAndroidChannel(
+      channelId: channelId,
+      channelName: 'Adzan',
+      channelDescription: 'Notifikasi adzan',
+      importance: Importance.max,
+      playSound: cfg.enabled,
+      sound: _androidSound(cfg),
+    );
+
     await _plugin.zonedSchedule(
       1001,
       isId ? 'Waktu Sholat' : 'Prayer Time',
       isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
       tz.TZDateTime.from(time, tz.local),
-      const NotificationDetails(
+      NotificationDetails(
         android: AndroidNotificationDetails(
-          'adzan_channel',
+          channelId,
           'Adzan',
+          channelDescription: 'Notifikasi adzan',
           importance: Importance.max,
           priority: Priority.max,
-          playSound: true,
+          playSound: cfg.enabled,
+          sound: _androidSound(cfg),
           fullScreenIntent: true,
         ),
-        linux: LinuxNotificationDetails(defaultActionName: 'Open'),
-        windows: WindowsNotificationDetails(),
+        iOS: DarwinNotificationDetails(presentSound: cfg.enabled),
+        macOS: DarwinNotificationDetails(presentSound: cfg.enabled),
+        linux: const LinuxNotificationDetails(defaultActionName: 'Open'),
+        windows: const WindowsNotificationDetails(),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
@@ -213,6 +342,7 @@ ${isId ? 'Berikutnya' : 'Next'}: $nextPrayer ${_fmt(nextTime)}
       tableContent,
       const NotificationDetails(
         android: android,
+        macOS: DarwinNotificationDetails(presentSound: false),
         linux: LinuxNotificationDetails(defaultActionName: 'Open'),
         windows: WindowsNotificationDetails(),
       ),

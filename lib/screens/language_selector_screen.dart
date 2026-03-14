@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/settings_provider.dart'; // Pastikan import ini ada
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show Platform;
+import 'package:quran_app/services/prayer_widget_service.dart';
 import 'home_screen.dart';
 
 class LanguageSelectorScreen extends ConsumerStatefulWidget {
@@ -105,6 +108,9 @@ class _LanguageSelectorScreenState
   late String _language;
   late AppThemeType _theme;
   late ArabicSource _arabicSource;
+  late bool _adzanSoundEnabled;
+  late AdzanSoundMode _adzanSoundMode;
+  late String _adzanSoundName;
 
   @override
   void initState() {
@@ -113,6 +119,9 @@ class _LanguageSelectorScreenState
     _language = settings.language;
     _theme = settings.theme;
     _arabicSource = settings.arabicSource;
+    _adzanSoundEnabled = settings.adzanSoundEnabled;
+    _adzanSoundMode = settings.adzanSoundMode;
+    _adzanSoundName = settings.adzanSoundName;
   }
 
   Future<void> _applySettings() async {
@@ -121,6 +130,9 @@ class _LanguageSelectorScreenState
     await notifier.setLanguage(_language);
     await notifier.setTheme(_theme);
     await notifier.setArabicSource(_arabicSource);
+    await notifier.setAdzanSoundEnabled(_adzanSoundEnabled);
+    await notifier.setAdzanSoundMode(_adzanSoundMode);
+    await notifier.setAdzanSoundName(_adzanSoundName);
 
     if (mounted) {
       Navigator.pushReplacement(
@@ -255,6 +267,120 @@ class _LanguageSelectorScreenState
                 ),
               ),
 
+              _sectionCard(
+                title: "Suara Adzan",
+                child: Column(
+                  children: [
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text("Aktifkan suara"),
+                      subtitle: const Text(
+                        "Jika nonaktif, notifikasi adzan tetap muncul tanpa suara.",
+                      ),
+                      value: _adzanSoundEnabled,
+                      onChanged: (v) => setState(() => _adzanSoundEnabled = v),
+                    ),
+                    const Divider(),
+                    RadioListTile<AdzanSoundMode>(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text("Suara bawaan perangkat"),
+                      value: AdzanSoundMode.native,
+                      groupValue: _adzanSoundMode,
+                      onChanged:
+                          (v) => setState(
+                            () => _adzanSoundMode = v ?? _adzanSoundMode,
+                          ),
+                    ),
+                    RadioListTile<AdzanSoundMode>(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text("Suara adzan"),
+                      subtitle: Text(
+                        (!kIsWeb && Platform.isAndroid)
+                            ? "Tersedia di Android."
+                            : "Tidak didukung di perangkat ini (akan memakai suara bawaan).",
+                      ),
+                      value: AdzanSoundMode.adzan,
+                      groupValue: _adzanSoundMode,
+                      onChanged:
+                          (!kIsWeb && Platform.isAndroid)
+                              ? (v) => setState(
+                                () => _adzanSoundMode = v ?? _adzanSoundMode,
+                              )
+                              : null,
+                    ),
+                    if (!kIsWeb &&
+                        Platform.isAndroid &&
+                        _adzanSoundMode == AdzanSoundMode.adzan) ...[
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<String>(
+                        value: _adzanSoundName,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Pilih suara adzan',
+                          border: OutlineInputBorder(),
+                        ),
+                        items:
+                            _adzanSoundOptions
+                                .map(
+                                  (o) => DropdownMenuItem<String>(
+                                    value: o.value,
+                                    child: Text(o.label),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged: (v) {
+                          if (v == null) return;
+                          setState(() => _adzanSoundName = v);
+                        },
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+
+              if (!kIsWeb)
+                _sectionCard(
+                  title: "Widget",
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        "Tambahkan widget jadwal sholat ke Home Screen (jika didukung perangkat).",
+                        style: theme.textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton.icon(
+                        onPressed:
+                            (!kIsWeb && Platform.isAndroid)
+                                ? () async {
+                                  final ok =
+                                      await PrayerWidgetService.requestPinWidget();
+                                  if (!context.mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        ok
+                                            ? "Widget ditambahkan."
+                                            : "Perangkat tidak mendukung pin widget otomatis. Tambahkan lewat menu Widget di Home Screen.",
+                                      ),
+                                    ),
+                                  );
+                                }
+                                : null,
+                        icon: const Icon(Icons.widgets_outlined),
+                        label: const Text("Add Widget"),
+                      ),
+                      if (!kIsWeb && !Platform.isAndroid) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          "Saat ini tombol Add Widget otomatis hanya tersedia di Android.",
+                          style: theme.textTheme.bodySmall,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+
               const SizedBox(height: 32),
 
               SizedBox(
@@ -346,3 +472,33 @@ class _LanguageSelectorScreenState
     );
   }
 }
+
+class _SoundOption {
+  final String value;
+  final String label;
+  const _SoundOption(this.value, this.label);
+}
+
+const List<_SoundOption> _adzanSoundOptions = [
+  _SoundOption('azan1', 'Azan 1'),
+  _SoundOption('azan2', 'Azan 2'),
+  _SoundOption('azan3', 'Azan 3'),
+  _SoundOption('azan4', 'Azan 4'),
+  _SoundOption('azan5', 'Azan 5'),
+  _SoundOption('azan6', 'Azan 6'),
+  _SoundOption('azan7', 'Azan 7'),
+  _SoundOption('azan8', 'Azan 8'),
+  _SoundOption('azan9', 'Azan 9'),
+  _SoundOption('azan10', 'Azan 10'),
+  _SoundOption('azan11', 'Azan 11'),
+  _SoundOption('azan12', 'Azan 12'),
+  _SoundOption('azan13', 'Azan 13'),
+  _SoundOption('azan14', 'Azan 14'),
+  _SoundOption('azan15', 'Azan 15'),
+  _SoundOption('azan16', 'Azan 16'),
+  _SoundOption('azan17', 'Azan 17'),
+  _SoundOption('azan18', 'Azan 18'),
+  _SoundOption('azan19', 'Azan 19'),
+  _SoundOption('azan20', 'Azan 20'),
+  _SoundOption('azan21', 'Azan 21'),
+];

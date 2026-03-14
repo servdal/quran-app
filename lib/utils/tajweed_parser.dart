@@ -48,6 +48,10 @@ class TajweedParser {
     if (text.isEmpty) return [];
 
     // small pre-normalizations (non-destructive)
+    text = text.replaceAll('\u200c', '');
+    text = text.replaceAll(RegExp(r'\[s\[اْ\]\]ۖ'), 'اْۖ');
+    text = text.replaceAll(RegExp(r'\[s\[اْ\]\]ۗ'), 'اْۗ');
+    text = text.replaceAll(RegExp(r'\[s\[اْ\]\]'), 'اْ');
     text = text.replaceAll('[o[َ[s[اْ]]', 'َا۟');
     text = text.replaceAll('[s[اْ]]', 'ا۟');
     text = text.replaceAll('[s[اْ]‌ۖ', 'اۖ');
@@ -58,6 +62,8 @@ class TajweedParser {
     text = text.replaceAll('[s[اْ]ۚ', 'اۚ');
     text = text.replaceAll('[s[اْ]ۛ', 'اۛ');
     text = text.replaceAll('[s[اْ]ۜ', 'اۜ');
+    text = text.replaceAll('‌ۖ', 'ۖ').replaceAll('‌ۗ', 'ۗ');
+    
 
     final List<TextSpan> spans = [];
     final StringBuffer buf = StringBuffer();
@@ -79,7 +85,12 @@ class TajweedParser {
       if (cp >= 0x06D6 && cp <= 0x06ED) return true;
       return false;
     }
-
+    bool isWaqf(String ch) {
+      if (ch.isEmpty) return false;
+      final int cp = ch.codeUnitAt(0);
+      // Range tanda waqaf Al-Qur'an (U+06D6 - U+06D1)
+      return (cp >= 0x06D6 && cp <= 0x06EC);
+    }
     
 
     String normalizeGlyph(String glyph, {String? next, String? fullText, int? index}) {
@@ -141,7 +152,7 @@ class TajweedParser {
 
     // Try to remove and return a trailing tanwin char (if any) from buffer or last span.
     // Returns the tanwin character removed or ''.
-    String _popTrailingTanwin() {
+    String popTrailingTanwin() {
       // check buffer first
       if (buf.isNotEmpty) {
         final s = buf.toString();
@@ -193,7 +204,7 @@ class TajweedParser {
     // Add sukun to the innerText when needed: if the first base letter lacks diacritic
     // we append sukunChar. naive but practical: if innerText's first rune is letter and
     // second rune is not diacritic, append sukun.
-    String _ensureSukunIfNeeded(String ruleKey, String innerText) {
+    String ensureSukunIfNeeded(String ruleKey, String innerText) {
       if (!sukunRules.contains(ruleKey)) return innerText;
       if (innerText.isEmpty) return innerText;
 
@@ -282,7 +293,7 @@ class TajweedParser {
 
           // *** FIX ORDER: first try to pop tanwin from previous fragment if rule requires transfer
           if (transferTanwinRules.contains(ruleKey)) {
-            final String movedTanwin = _popTrailingTanwin();
+            final String movedTanwin = popTrailingTanwin();
             if (movedTanwin.isNotEmpty) {
               innerText = '$innerText$movedTanwin';
             }
@@ -290,13 +301,14 @@ class TajweedParser {
 
           // gather trailing diacritics after block
           int j = end + 1;
-          while (j < text.length && isDiacritic(text[j])) {
+          while (j < text.length && (isDiacritic(text[j]))) {
+            
             innerText = '$innerText${text[j]}';
             j += 1;
           }
 
           // 2) If ruleKey is in sukunRules, ensure innerText has sukun on base letter when appropriate
-          innerText = _ensureSukunIfNeeded(ruleKey, innerText);
+          innerText = ensureSukunIfNeeded(ruleKey, innerText);
 
           // flush buffer (with top color)
           flushBufferWithTopColor();

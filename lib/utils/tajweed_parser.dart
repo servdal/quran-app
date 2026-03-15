@@ -85,12 +85,6 @@ class TajweedParser {
       if (cp >= 0x06D6 && cp <= 0x06ED) return true;
       return false;
     }
-    bool isWaqf(String ch) {
-      if (ch.isEmpty) return false;
-      final int cp = ch.codeUnitAt(0);
-      // Range tanda waqaf Al-Qur'an (U+06D6 - U+06D1)
-      return (cp >= 0x06D6 && cp <= 0x06EC);
-    }
     
 
     String normalizeGlyph(String glyph, {String? next, String? fullText, int? index}) {
@@ -302,7 +296,7 @@ class TajweedParser {
           // gather trailing diacritics after block
           int j = end + 1;
           while (j < text.length && (isDiacritic(text[j]))) {
-            
+
             innerText = '$innerText${text[j]}';
             j += 1;
           }

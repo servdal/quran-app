@@ -33,7 +33,11 @@ class PrayerWidgetService {
       }
     }
 
-    await HomeWidget.updateWidget(androidName: _androidProviderName);
+    try {
+      await HomeWidget.updateWidget(androidName: _androidProviderName);
+    } catch (_) {
+      // Ignore if widget is not installed yet.
+    }
   }
 
   static Future<bool> requestPinWidget() async {

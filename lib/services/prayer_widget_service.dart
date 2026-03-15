@@ -25,6 +25,13 @@ class PrayerWidgetService {
       'closestTime',
       _fmtTime(data['closestTime']),
     );
+    final closestTime = data['closestTime'];
+    if (closestTime is DateTime) {
+      await HomeWidget.saveWidgetData<int>(
+        'closestTimeEpoch',
+        closestTime.millisecondsSinceEpoch,
+      );
+    }
 
     for (final key in const ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']) {
       final v = timings[key];

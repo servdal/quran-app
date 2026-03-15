@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/prayer_widget_bg">
+    android:background="#00B76A"
+    tools:ignore="HardcodedText">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tv_location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Mountain View, California"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:maxLines="1"
-            android:ellipsize="end" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="📍"
-            android:textSize="14sp"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+        android:text="Mountain View, California"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
     <TextView
         android:id="@+id/tv_hijri"
@@ -42,18 +29,16 @@
         android:textColor="#CCFFFFFF"
         android:textSize="12sp" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp"
-        android:gravity="center_vertical">
+        android:layout_marginTop="12dp">
 
         <TextView
             android:id="@+id/tv_next_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="start|center_vertical"
             android:text="Fajr"
             android:textColor="#FFE082"
             android:textStyle="bold"
@@ -63,16 +48,18 @@
             android:id="@+id/tv_next_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
             android:text="06:09"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:textSize="14sp" />
-    </LinearLayout>
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="#33FFFFFF" />
 
     <LinearLayout
@@ -80,15 +67,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="start|center_vertical"
                 android:text="Fajr"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
@@ -96,21 +82,21 @@
                 android:id="@+id/tv_fajr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
                 android:text="--:--"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="6dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="start|center_vertical"
                 android:text="Dhuhr"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
@@ -118,21 +104,21 @@
                 android:id="@+id/tv_dhuhr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
                 android:text="--:--"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="6dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="start|center_vertical"
                 android:text="Asr"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
@@ -140,21 +126,21 @@
                 android:id="@+id/tv_asr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
                 android:text="--:--"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="6dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="start|center_vertical"
                 android:text="Maghrib"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
@@ -162,21 +148,21 @@
                 android:id="@+id/tv_maghrib"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
                 android:text="--:--"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="6dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="start|center_vertical"
                 android:text="Isha"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
@@ -184,11 +170,11 @@
                 android:id="@+id/tv_isha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
                 android:text="--:--"
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 </LinearLayout>
-

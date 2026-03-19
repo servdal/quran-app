@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:quran_app/theme/app_theme.dart';
 
@@ -15,7 +16,11 @@ bool isTanwinCodeUnit(int cp) {
   return cp == 0x064B || cp == 0x064C || cp == 0x064D;
 }
 
-List<TextSpan> _fragmentToSpans(String fragment, TextStyle ruleStyle) {
+List<TextSpan> _fragmentToSpans(
+  String fragment,
+  TextStyle ruleStyle, {
+  GestureRecognizer? recognizer,
+}) {
   final List<TextSpan> out = [];
   final runes = fragment.runes.toList();
   for (var r in runes) {
@@ -25,10 +30,14 @@ List<TextSpan> _fragmentToSpans(String fragment, TextStyle ruleStyle) {
       final double newOpacity = (baseColor.opacity * 0.5).clamp(0.0, 1.0);
       final Color tanwinColor = baseColor.withOpacity(newOpacity);
       out.add(
-        TextSpan(text: ch, style: ruleStyle.copyWith(color: tanwinColor)),
+        TextSpan(
+          text: ch,
+          style: ruleStyle.copyWith(color: tanwinColor),
+          recognizer: recognizer,
+        ),
       );
     } else {
-      out.add(TextSpan(text: ch, style: ruleStyle));
+      out.add(TextSpan(text: ch, style: ruleStyle, recognizer: recognizer));
     }
   }
   return out;
@@ -47,7 +56,16 @@ class TajweedParser {
   // Rules that require moving/attaching tanwin from previous fragment to current letter
   static const Set<String> transferTanwinRules = {'a', 'u', 'w', 'i'};
 
-  static List<TextSpan> parse(String text, TextStyle baseStyle) {
+  static List<TextSpan> parse(
+    String text,
+    TextStyle baseStyle, {
+    String lang = 'id',
+    bool learningMode = false,
+    String? activeKey,
+    ValueChanged<String>? onTapRule,
+    VoidCallback? onClosePopup,
+    BuildContext? context,
+  }) {
     if (text.isEmpty) return [];
 
     // small pre-normalizations (non-destructive)
@@ -90,6 +108,70 @@ class TajweedParser {
       }
       rule = rule.trim();
       return AppTheme.tajweedColors[rule] ?? colorStack.last;
+    }
+
+    TextStyle styleForRule(String ruleKey, TextStyle style) {
+      final color = AppTheme.tajweedColors[ruleKey];
+      if (color == null) return style;
+      return style.copyWith(
+        color: color,
+        backgroundColor: activeKey == ruleKey ? color.withOpacity(0.15) : null,
+      );
+    }
+
+    GestureRecognizer? recognizerForRule(String ruleKey) {
+      if (!learningMode || context == null) return null;
+
+      return TapGestureRecognizer()
+        ..onTap = () {
+          onTapRule?.call(ruleKey);
+
+          final rule = AppTheme.tajweedRules.firstWhere(
+            (r) => r.key == ruleKey,
+            orElse: () => AppTheme.tajweedRules.first,
+          );
+
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            builder:
+                (_) => Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 14,
+                            height: 14,
+                            decoration: BoxDecoration(
+                              color: rule.color,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            lang == 'id' ? rule.nameId : rule.nameEn,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        lang == 'id' ? rule.descriptionId : rule.descriptionEn,
+                      ),
+                    ],
+                  ),
+                ),
+          ).whenComplete(() => onClosePopup?.call());
+        };
     }
 
     bool isDiacritic(String ch) {
@@ -308,8 +390,17 @@ class TajweedParser {
               j += 1;
             }
             final Color c = colorForRule(ruleName);
-            final TextStyle ruleStyle = baseStyle.copyWith(color: c);
-            spans.addAll(_fragmentToSpans('$daggerAlef$diacs', ruleStyle));
+            final TextStyle ruleStyle = styleForRule(
+              ruleKey,
+              baseStyle.copyWith(color: c),
+            );
+            spans.addAll(
+              _fragmentToSpans(
+                '$daggerAlef$diacs',
+                ruleStyle,
+                recognizer: recognizerForRule(ruleKey),
+              ),
+            );
             i = j;
             continue;
           }
@@ -344,10 +435,19 @@ class TajweedParser {
           flushBufferWithTopColor();
 
           final Color c = colorForRule(ruleName);
-          final TextStyle ruleStyle = baseStyle.copyWith(color: c);
+          final TextStyle ruleStyle = styleForRule(
+            ruleKey,
+            baseStyle.copyWith(color: c),
+          );
 
           if (innerText.isNotEmpty) {
-            spans.addAll(_fragmentToSpans(innerText, ruleStyle));
+            spans.addAll(
+              _fragmentToSpans(
+                innerText,
+                ruleStyle,
+                recognizer: recognizerForRule(ruleKey),
+              ),
+            );
           }
 
           i = j;

@@ -491,7 +491,13 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
               context: context,
               learningMode: true,
             )
-            : TajweedParser.parse(widget.ayah.tajweedText, baseArabicStyle);
+            : TajweedParser.parse(
+              widget.ayah.tajweedText,
+              baseArabicStyle,
+              lang: lang,
+              context: context,
+              learningMode: true,
+            );
     return Column(
       children: [
         ListTile(

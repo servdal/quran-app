@@ -16,10 +16,7 @@ import '../utils/tajweed_parser.dart';
 
 enum GrammarType { fiil, isim, harf, other }
 
-GrammarType detectGrammarType({
-  required Grammar g,
-  required bool isId,
-}) {
+GrammarType detectGrammarType({required Grammar g, required bool isId}) {
   final d = (isId ? g.grammarDescId : g.grammarDescEn).toLowerCase();
 
   if (d.contains('fi') || d.contains('verb')) return GrammarType.fiil;
@@ -28,11 +25,8 @@ GrammarType detectGrammarType({
 
   return GrammarType.other;
 }
-String tr(
-  WidgetRef ref, {
-  required String id,
-  required String en,
-}) {
+
+String tr(WidgetRef ref, {required String id, required String en}) {
   final lang = ref.read(settingsProvider).language;
   return lang == 'id' ? id : en;
 }
@@ -70,7 +64,6 @@ class GrammarUiState {
   }
 }
 
-
 class GrammarUiNotifier extends StateNotifier<GrammarUiState> {
   GrammarUiNotifier() : super(const GrammarUiState());
 
@@ -80,24 +73,27 @@ class GrammarUiNotifier extends StateNotifier<GrammarUiState> {
   void toggleLearningMode() =>
       state = state.copyWith(learningMode: !state.learningMode);
   void setActiveTajweed(String? key) =>
-    state = state.copyWith(activeTajweedKey: key);
+      state = state.copyWith(activeTajweedKey: key);
 }
 
 final grammarUiProvider =
     StateNotifierProvider<GrammarUiNotifier, GrammarUiState>(
-        (ref) => GrammarUiNotifier());
+      (ref) => GrammarUiNotifier(),
+    );
 
 /* ============================================================
    PROVIDER: GRAMMAR PER AYAT
 ============================================================ */
 
-final ayahWordsProvider = FutureProvider.family<
-    List<Grammar>,
-    ({int surahId, int ayahNumber})>((ref, param) {
-  return ref
-      .read(quranDataServiceProvider)
-      .getAyahWords(param.surahId, param.ayahNumber);
-});
+final ayahWordsProvider =
+    FutureProvider.family<List<Grammar>, ({int surahId, int ayahNumber})>((
+      ref,
+      param,
+    ) {
+      return ref
+          .read(quranDataServiceProvider)
+          .getAyahWords(param.surahId, param.ayahNumber);
+    });
 
 /* ============================================================
    SCREEN
@@ -106,7 +102,7 @@ final ayahWordsProvider = FutureProvider.family<
 class TafsirViewScreen extends ConsumerWidget {
   final int surahId;
   const TafsirViewScreen({super.key, required this.surahId});
-  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final surahAsync = ref.watch(surahDetailProvider(surahId));
@@ -114,35 +110,37 @@ class TafsirViewScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: surahAsync.when(
-          data: (s) => Text(
-            'QS ${s.surahName}',
-            style: const TextStyle(
-              fontFamily: 'Roboto', // Menggunakan font Roboto
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          loading: () => Text(
-            tr(ref, id: 'Memuat...', en: 'Loading...'),
-            style: const TextStyle(fontFamily: 'Roboto'),
-          ),
-          error: (_, __) => const Text(
-            'Error',
-            style: TextStyle(fontFamily: 'Roboto'),
-          ),
+          data:
+              (s) => Text(
+                'QS ${s.surahName}',
+                style: const TextStyle(
+                  fontFamily: 'Roboto', // Menggunakan font Roboto
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+          loading:
+              () => Text(
+                tr(ref, id: 'Memuat...', en: 'Loading...'),
+                style: const TextStyle(fontFamily: 'Roboto'),
+              ),
+          error:
+              (_, __) =>
+                  const Text('Error', style: TextStyle(fontFamily: 'Roboto')),
         ),
       ),
       body: surahAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
-        data: (surah) => ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: surah.ayahs.length,
-          itemBuilder: (context, index) {
-            final ayah = surah.ayahs[index];
-            return _AyahBlock(ayah: ayah, surahName: surah.surahName);
-          },
-        ),
+        data:
+            (surah) => ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: surah.ayahs.length,
+              itemBuilder: (context, index) {
+                final ayah = surah.ayahs[index];
+                return _AyahBlock(ayah: ayah, surahName: surah.surahName);
+              },
+            ),
       ),
     );
   }
@@ -155,40 +153,47 @@ class TafsirViewScreen extends ConsumerWidget {
 class _AyahBlock extends ConsumerWidget {
   final Ayah ayah;
   final String surahName;
-  
-  const _AyahBlock({
-    required this.ayah,
-    required this.surahName,
-  });
+
+  const _AyahBlock({required this.ayah, required this.surahName});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
-    
+
     final baseStyle = TextStyle(
       fontFamily: 'LPMQ',
       fontSize: ref.watch(settingsProvider).arabicFontSize,
       height: 2.1,
-      color: Theme.of(context).colorScheme.onSurface
+      color: Theme.of(context).colorScheme.onSurface,
     );
     final isId = settings.language == 'id';
 
     final ui = ref.watch(grammarUiProvider);
     final notifier = ref.read(grammarUiProvider.notifier);
     final lang = ref.watch(settingsProvider).language;
-    final spans = isId
-        ? AutoTajweedParser.parse(
-            ayah.arabicText,
-            baseStyle,
-            lang: lang,
-            learningMode: ui.learningMode,
-            activeKey: ui.activeTajweedKey,
-            onTapRule: (key) => notifier.setActiveTajweed(key),
-            onClosePopup: () => notifier.setActiveTajweed(null),
-            context: context,
-          )
-        : TajweedParser.parse(ayah.tajweedText, baseStyle);
-  
+    final spans =
+        isId
+            ? AutoTajweedParser.parse(
+              ayah.arabicText,
+              baseStyle,
+              lang: lang,
+              learningMode: ui.learningMode,
+              activeKey: ui.activeTajweedKey,
+              onTapRule: (key) => notifier.setActiveTajweed(key),
+              onClosePopup: () => notifier.setActiveTajweed(null),
+              context: context,
+            )
+            : TajweedParser.parse(
+              ayah.tajweedText,
+              baseStyle,
+              lang: lang,
+              learningMode: ui.learningMode,
+              activeKey: ui.activeTajweedKey,
+              onTapRule: (key) => notifier.setActiveTajweed(key),
+              onClosePopup: () => notifier.setActiveTajweed(null),
+              context: context,
+            );
+
     return Card(
       margin: const EdgeInsets.only(bottom: 32),
       child: Padding(
@@ -201,19 +206,12 @@ class _AyahBlock extends ConsumerWidget {
             RichText(
               textDirection: TextDirection.rtl,
               textAlign: TextAlign.right,
-              text: TextSpan(
-                style: baseStyle,
-                children: spans,
-              ),
+              text: TextSpan(style: baseStyle, children: spans),
             ),
             const SizedBox(height: 12),
-            Text(
-              ayah.tafsir,
-              textAlign: TextAlign.justify,
-            ),
+            Text(ayah.tafsir, textAlign: TextAlign.justify),
             const Divider(height: 32),
             _GrammarSection(ayah: ayah),
-            
           ],
         ),
       ),
@@ -234,25 +232,26 @@ class _GrammarSection extends ConsumerWidget {
     final ui = ref.watch(grammarUiProvider);
     final isId = ref.watch(settingsProvider).language == 'id';
     final asyncWords = ref.watch(
-      ayahWordsProvider(
-        (surahId: ayah.surahId, ayahNumber: ayah.number),
-      ),
+      ayahWordsProvider((surahId: ayah.surahId, ayahNumber: ayah.number)),
     );
 
     return asyncWords.when(
       loading: () => const LinearProgressIndicator(),
-      error: (e, _) => Text(
-                        '${tr(ref, id: 'Gagal memuat analisis', en: 'Failed to load analysis')}: $e',
-                      ),
+      error:
+          (e, _) => Text(
+            '${tr(ref, id: 'Gagal memuat analisis', en: 'Failed to load analysis')}: $e',
+          ),
       data: (words) {
         if (words.isEmpty) return const SizedBox.shrink();
 
-        final filtered = ui.filter == null
-            ? words
-            : words
-                .where((g) =>
-                    detectGrammarType(g: g, isId: isId) == ui.filter)
-                .toList();
+        final filtered =
+            ui.filter == null
+                ? words
+                : words
+                    .where(
+                      (g) => detectGrammarType(g: g, isId: isId) == ui.filter,
+                    )
+                    .toList();
 
         final rootCount = <String, int>{};
         for (var g in words) {
@@ -299,14 +298,26 @@ class _GrammarToolbar extends ConsumerWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              _chip(tr(ref, id: 'Semua', en: 'All'), ui.filter == null, () => n.setFilter(null)),
-              _chip(tr(ref, id: 'Fi’il', en: 'Verb'), ui.filter == GrammarType.fiil,
-                  () => n.setFilter(GrammarType.fiil)),
-              _chip(tr(ref, id: 'Isim', en: 'Noun'), ui.filter == GrammarType.isim,
-                  () => n.setFilter(GrammarType.isim)),
-              _chip(tr(ref, id: 'Harf', en: 'Particle'), ui.filter == GrammarType.harf,
-                  () => n.setFilter(GrammarType.harf)),
-
+              _chip(
+                tr(ref, id: 'Semua', en: 'All'),
+                ui.filter == null,
+                () => n.setFilter(null),
+              ),
+              _chip(
+                tr(ref, id: 'Fi’il', en: 'Verb'),
+                ui.filter == GrammarType.fiil,
+                () => n.setFilter(GrammarType.fiil),
+              ),
+              _chip(
+                tr(ref, id: 'Isim', en: 'Noun'),
+                ui.filter == GrammarType.isim,
+                () => n.setFilter(GrammarType.isim),
+              ),
+              _chip(
+                tr(ref, id: 'Harf', en: 'Particle'),
+                ui.filter == GrammarType.harf,
+                () => n.setFilter(GrammarType.harf),
+              ),
             ],
           ),
         ),
@@ -318,25 +329,13 @@ class _GrammarToolbar extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FilterChip(
-              label: Text(
-                      tr(
-                        ref,
-                        id: 'Sorot Akar Kata',
-                        en: 'Highlight Root',
-                      ),
-                    ),
+              label: Text(tr(ref, id: 'Sorot Akar Kata', en: 'Highlight Root')),
               selected: ui.highlightRoot,
               onSelected: (_) => n.toggleHighlightRoot(),
             ),
             const SizedBox(width: 8),
             FilterChip(
-              label: Text(
-                      tr(
-                        ref,
-                        id: 'Mode Belajar',
-                        en: 'Learning Mode',
-                      ),
-                    ),
+              label: Text(tr(ref, id: 'Mode Belajar', en: 'Learning Mode')),
               selected: ui.learningMode,
               onSelected: (_) => n.toggleLearningMode(),
             ),
@@ -392,24 +391,23 @@ class _GrammarCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isId = ref.watch(settingsProvider).language == 'id';
     final meaning = isId ? grammar.meaningId : grammar.meaningEn;
-    final grammarDesc =
-        isId ? grammar.grammarDescId : grammar.grammarDescEn;
+    final grammarDesc = isId ? grammar.grammarDescId : grammar.grammarDescEn;
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () => showDialog(
-        context: context,
-        builder: (_) => GrammarPopup(grammar: grammar),
-      ),
+      onTap:
+          () => showDialog(
+            context: context,
+            builder: (_) => GrammarPopup(grammar: grammar),
+          ),
       child: Card(
         elevation: 1,
         margin: const EdgeInsets.symmetric(vertical: 6),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        color: highlightRoot
-            ? Theme.of(context).colorScheme.primary.withOpacity(0.08)
-            : null,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color:
+            highlightRoot
+                ? Theme.of(context).colorScheme.primary.withOpacity(0.08)
+                : null,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -467,7 +465,6 @@ class _GrammarCard extends ConsumerWidget {
   }
 }
 
-
 /* ============================================================
    HEADER
 ============================================================ */
@@ -483,8 +480,10 @@ class _AyahHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('QS ${ayah.id}:${ayah.number}',
-            style: const TextStyle(fontWeight: FontWeight.bold)),
+        Text(
+          'QS ${ayah.id}:${ayah.number}',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         Icon(Icons.menu_book_outlined, color: Theme.of(context).primaryColor),
       ],
     );

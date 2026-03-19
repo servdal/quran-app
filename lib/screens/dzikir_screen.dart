@@ -17,7 +17,7 @@ class DzikrProviderParams {
   final bool isLengkap;
 
   DzikrProviderParams({required this.type, required this.isLengkap});
-  
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -44,12 +44,14 @@ class DzikrUIData {
   });
 }
 
-final dzikrProvider =
-    FutureProvider.family<List<DzikrUIData>, DzikrProviderParams>((ref, params) async {
+final dzikrProvider = FutureProvider.family<
+  List<DzikrUIData>,
+  DzikrProviderParams
+>((ref, params) async {
   final dataService = ref.watch(quranDataServiceProvider);
   // Re-watch settings agar data ter-refresh saat bahasa berubah
   final settings = ref.watch(settingsProvider);
-  final lang = settings.language; 
+  final lang = settings.language;
 
   List<DzikrItem> dzikrItems;
   if (params.type == DzikrType.pagi) {
@@ -57,9 +59,9 @@ final dzikrProvider =
   } else {
     dzikrItems = params.isLengkap ? dzikirPetangLengkapList : dzikirPetangList;
   }
-  
+
   final allSurahIndex = await ref.watch(allSurahsProvider.future);
-  
+
   List<DzikrUIData> uiDataList = [];
   for (final item in dzikrItems) {
     List<Ayah> fetchedAyahs = [];
@@ -67,31 +69,39 @@ final dzikrProvider =
     String surahName = '';
 
     if (item.surahId != null) {
-      final allAyahsInSurah = await dataService.getAyahsBySurahId(item.surahId!);
-      
+      final allAyahsInSurah = await dataService.getAyahsBySurahId(
+        item.surahId!,
+      );
+
       if (item.isFullSurah) {
         fetchedAyahs = allAyahsInSurah;
       } else if (item.ayahNumber != null) {
-        fetchedAyahs = allAyahsInSurah.where((ayah) => ayah.number == item.ayahNumber).toList();
+        fetchedAyahs =
+            allAyahsInSurah
+                .where((ayah) => ayah.number == item.ayahNumber)
+                .toList();
       }
-      
+
       arabicText = fetchedAyahs.map((a) => a.tajweedText).join(' ');
-      
+
       // Mengambil nama surah berdasarkan bahasa
-      final surahInfo = allSurahIndex.firstWhere((s) => s.suraId == item.surahId);
+      final surahInfo = allSurahIndex.firstWhere(
+        (s) => s.suraId == item.surahId,
+      );
       surahName = lang == 'en' ? surahInfo.nameLatin : surahInfo.nameArabic;
-    } 
-    else if (item.arabicText != null) {
+    } else if (item.arabicText != null) {
       arabicText = item.arabicText!;
-      surahName = "Hadits"; 
+      surahName = "Hadits";
     }
 
-    uiDataList.add(DzikrUIData(
-      ayahs: fetchedAyahs,
-      dzikrInfo: item,
-      surahName: surahName,
-      arabicText: arabicText,
-    ));
+    uiDataList.add(
+      DzikrUIData(
+        ayahs: fetchedAyahs,
+        dzikrInfo: item,
+        surahName: surahName,
+        arabicText: arabicText,
+      ),
+    );
   }
   return uiDataList;
 });
@@ -104,7 +114,8 @@ class DzikirScreen extends ConsumerStatefulWidget {
   ConsumerState<DzikirScreen> createState() => _DzikirScreenState();
 }
 
-class _DzikirScreenState extends ConsumerState<DzikirScreen> with SingleTickerProviderStateMixin {
+class _DzikirScreenState extends ConsumerState<DzikirScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -117,61 +128,80 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> with SingleTickerPr
   Widget build(BuildContext context) {
     final lang = ref.watch(settingsProvider).language;
     final isMorning = widget.type == DzikrType.pagi;
-    
-    final title = isMorning 
-        ? (lang == 'en' ? "Morning Dzikr" : "Dzikir Pagi")
-        : (lang == 'en' ? "Evening Dzikr" : "Dzikir Petang");
+
+    final title =
+        isMorning
+            ? (lang == 'en' ? "Morning Dzikr" : "Dzikir Pagi")
+            : (lang == 'en' ? "Evening Dzikr" : "Dzikir Petang");
 
     return Scaffold(
       body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            expandedHeight: 120.0,
-            floating: true,
-            pinned: true,
-            elevation: 0,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-              background: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: isMorning 
-                        ? [Colors.orange.shade200, Colors.orange.shade50]
-                        : [Colors.indigo.shade300, Colors.indigo.shade50],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+        headerSliverBuilder:
+            (context, innerBoxIsScrolled) => [
+              SliverAppBar(
+                expandedHeight: 120.0,
+                floating: true,
+                pinned: true,
+                elevation: 0,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(
+                    title,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  background: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors:
+                            isMorning
+                                ? [
+                                  Colors.orange.shade200,
+                                  Colors.orange.shade50,
+                                ]
+                                : [
+                                  Colors.indigo.shade300,
+                                  Colors.indigo.shade50,
+                                ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: _SliverAppBarDelegate(
-              TabBar(
-                controller: _tabController,
-                labelColor: Theme.of(context).primaryColor,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: Theme.of(context).primaryColor,
-                tabs: [
-                  Tab(text: lang == 'en' ? "Sunnah" : "Sesuai Sunnah"),
-                  Tab(text: lang == 'en' ? "Full Version" : "Versi Lengkap"),
-                ],
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverAppBarDelegate(
+                  TabBar(
+                    controller: _tabController,
+                    labelColor: Theme.of(context).primaryColor,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Theme.of(context).primaryColor,
+                    tabs: [
+                      Tab(text: lang == 'en' ? "Sunnah" : "Sesuai Sunnah"),
+                      Tab(
+                        text: lang == 'en' ? "Full Version" : "Versi Lengkap",
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
         body: TabBarView(
           controller: _tabController,
           children: [
-            DzikirListView(params: DzikrProviderParams(type: widget.type, isLengkap: false)),
-            DzikirListView(params: DzikrProviderParams(type: widget.type, isLengkap: true)),
+            DzikirListView(
+              params: DzikrProviderParams(type: widget.type, isLengkap: false),
+            ),
+            DzikirListView(
+              params: DzikrProviderParams(type: widget.type, isLengkap: true),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
 class DzikirListView extends ConsumerWidget {
   final DzikrProviderParams params;
   const DzikirListView({super.key, required this.params});
@@ -215,12 +245,18 @@ class DzikirListView extends ConsumerWidget {
     );
   }
 }
+
 class DzikrCard extends StatefulWidget {
   final DzikrUIData uiData;
   final dynamic settings;
   final String lang;
 
-  const DzikrCard({super.key, required this.uiData, required this.settings, required this.lang});
+  const DzikrCard({
+    super.key,
+    required this.uiData,
+    required this.settings,
+    required this.lang,
+  });
 
   @override
   State<DzikrCard> createState() => _DzikrCardState();
@@ -240,24 +276,29 @@ class _DzikrCardState extends State<DzikrCard> {
       height: 2.2,
       color: theme.colorScheme.onSurface,
     );
-    final rawText = widget.uiData.ayahs.isNotEmpty 
-        ? widget.uiData.ayahs.first.arabicText 
-        : (widget.uiData.dzikrInfo.arabicText ?? "");
+    final rawText =
+        widget.uiData.ayahs.isNotEmpty
+            ? widget.uiData.ayahs.first.arabicText
+            : (widget.uiData.dzikrInfo.arabicText ?? "");
 
-    final spans = widget.lang == 'id'
-        ? AutoTajweedParser.parse(
-            rawText,
-            baseTextStyle,
-            lang: widget.lang,
-            context: context,
-            learningMode: true,
-          )
-        : TajweedParser.parse(
-            widget.uiData.ayahs.isNotEmpty 
-                ? widget.uiData.ayahs.first.tajweedText 
-                : widget.uiData.dzikrInfo.arabicText ?? "", 
-            baseTextStyle,
-          );
+    final spans =
+        widget.lang == 'id'
+            ? AutoTajweedParser.parse(
+              rawText,
+              baseTextStyle,
+              lang: widget.lang,
+              context: context,
+              learningMode: true,
+            )
+            : TajweedParser.parse(
+              widget.uiData.ayahs.isNotEmpty
+                  ? widget.uiData.ayahs.first.tajweedText
+                  : widget.uiData.dzikrInfo.arabicText ?? "",
+              baseTextStyle,
+              lang: widget.lang,
+              context: context,
+              learningMode: true,
+            );
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -281,7 +322,7 @@ class _DzikrCardState extends State<DzikrCard> {
             ),
             trailing: _buildCounterCircle(isDone),
           ),
-          
+
           // 3. Gunakan RichText untuk menampilkan hasil parse
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -291,14 +332,12 @@ class _DzikrCardState extends State<DzikrCard> {
                 alignment: Alignment.centerRight,
                 child: RichText(
                   textAlign: TextAlign.right,
-                  text: TextSpan(
-                    children: spans,
-                  ),
+                  text: TextSpan(children: spans),
                 ),
               ),
             ),
           ),
-          
+
           _buildActionButtons(theme),
         ],
       ),
@@ -341,12 +380,17 @@ class _DzikrCardState extends State<DzikrCard> {
               icon: const Icon(Icons.menu_book, size: 16),
               label: Text(widget.lang == 'en' ? "Open Surah" : "Buka Surah"),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => SurahDetailScreen(
-                        surahId: widget.uiData.ayahs.first.surahId,
-                        initialScrollIndex: widget.uiData.ayahs.first.number - 1,
-                      ),
-                    ));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => SurahDetailScreen(
+                          surahId: widget.uiData.ayahs.first.surahId,
+                          initialScrollIndex:
+                              widget.uiData.ayahs.first.number - 1,
+                        ),
+                  ),
+                );
               },
             ),
           IconButton(
@@ -368,9 +412,17 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   double get maxExtent => _tabBar.preferredSize.height;
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(color: Theme.of(context).scaffoldBackgroundColor, child: _tabBar);
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: _tabBar,
+    );
   }
+
   @override
   bool shouldRebuild(_SliverAppBarDelegate oldDelegate) => false;
 }

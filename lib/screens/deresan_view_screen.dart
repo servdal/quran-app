@@ -222,7 +222,13 @@ class DeresanPage extends ConsumerWidget {
                     context: context,
                     learningMode: true,
                   )
-                  : TajweedParser.parse(ayah.tajweedText, baseTextStyle);
+                  : TajweedParser.parse(
+                    ayah.tajweedText,
+                    baseTextStyle,
+                    lang: lang,
+                    context: context,
+                    learningMode: true,
+                  );
 
           currentSpans.addAll(spans);
           currentSpans.add(const TextSpan(text: ' '));

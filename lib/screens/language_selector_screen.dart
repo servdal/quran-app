@@ -111,6 +111,7 @@ class _LanguageSelectorScreenState
   late bool _adzanSoundEnabled;
   late AdzanSoundMode _adzanSoundMode;
   late String _adzanSoundName;
+  late bool _keepScreenAwake;
 
   @override
   void initState() {
@@ -122,6 +123,7 @@ class _LanguageSelectorScreenState
     _adzanSoundEnabled = settings.adzanSoundEnabled;
     _adzanSoundMode = settings.adzanSoundMode;
     _adzanSoundName = settings.adzanSoundName;
+    _keepScreenAwake = settings.keepScreenAwake;
   }
 
   Future<void> _applySettings() async {
@@ -133,6 +135,7 @@ class _LanguageSelectorScreenState
     await notifier.setAdzanSoundEnabled(_adzanSoundEnabled);
     await notifier.setAdzanSoundMode(_adzanSoundMode);
     await notifier.setAdzanSoundName(_adzanSoundName);
+    await notifier.setKeepScreenAwake(_keepScreenAwake);
 
     if (mounted) {
       Navigator.pushReplacement(
@@ -148,27 +151,19 @@ class _LanguageSelectorScreenState
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      body: Center(
+      body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Pengaturan Awal",
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "Atur preferensi aplikasi Anda",
-                style: theme.textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 32),
+              _buildHero(theme),
+              const SizedBox(height: 24),
 
               _sectionCard(
+                icon: Icons.translate_rounded,
                 title: "Bahasa",
+                subtitle: "Pilih bahasa utama aplikasi dan bahasa terjemahan.",
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -220,7 +215,9 @@ class _LanguageSelectorScreenState
               ),
 
               _sectionCard(
+                icon: Icons.palette_outlined,
                 title: "Tema Tampilan",
+                subtitle: "Sesuaikan nuansa visual aplikasi.",
                 child: Column(
                   children: [
                     _radio(
@@ -246,7 +243,10 @@ class _LanguageSelectorScreenState
               ),
 
               _sectionCard(
+                icon: Icons.menu_book_outlined,
                 title: "Sumber Teks Arab",
+                subtitle:
+                    "Pilih sumber mushaf yang paling sesuai dengan preferensi Anda.",
                 child: Column(
                   children: [
                     _radio(
@@ -268,7 +268,9 @@ class _LanguageSelectorScreenState
               ),
 
               _sectionCard(
+                icon: Icons.notifications_active_outlined,
                 title: "Suara Adzan",
+                subtitle: "Atur perilaku suara saat notifikasi adzan aktif.",
                 child: Column(
                   children: [
                     SwitchListTile(
@@ -338,9 +340,30 @@ class _LanguageSelectorScreenState
                 ),
               ),
 
+              if (!kIsWeb && Platform.isMacOS)
+                _sectionCard(
+                  icon: Icons.desktop_mac_outlined,
+                  title: "Layar Tetap Menyala",
+                  subtitle:
+                      "Cegah layar macOS meredup atau mati saat aplikasi sedang digunakan.",
+                  child: SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text("Aktifkan penjaga layar"),
+                    subtitle: const Text(
+                      "Cocok saat membaca mushaf lebih lama tanpa menyentuh trackpad atau keyboard.",
+                    ),
+                    value: _keepScreenAwake,
+                    onChanged:
+                        (value) => setState(() => _keepScreenAwake = value),
+                  ),
+                ),
+
               if (!kIsWeb)
                 _sectionCard(
+                  icon: Icons.widgets_outlined,
                   title: "Widget",
+                  subtitle:
+                      "Tambahkan akses cepat jadwal sholat dari layar utama.",
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -389,6 +412,9 @@ class _LanguageSelectorScreenState
                   onPressed: _applySettings,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
                   ),
                   child: const Text(
                     "Terapkan Pengaturan",
@@ -405,24 +431,132 @@ class _LanguageSelectorScreenState
 
   /// ---------- Helper Widgets ----------
 
-  Widget _sectionCard({required String title, required Widget child}) {
+  Widget _buildHero(ThemeData theme) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            theme.primaryColor.withOpacity(0.16),
+            theme.colorScheme.surfaceContainerHighest.withOpacity(0.9),
+          ],
+        ),
+        border: Border.all(color: theme.primaryColor.withOpacity(0.14)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 52,
+            height: 52,
+            decoration: BoxDecoration(
+              color: theme.primaryColor.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(
+              Icons.tune_rounded,
+              color: theme.primaryColor,
+              size: 28,
+            ),
+          ),
+          const SizedBox(height: 18),
+          Text(
+            "Pengaturan Awal",
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Atur bahasa, tema, sumber mushaf, suara adzan, dan preferensi membaca sebelum mulai menggunakan aplikasi.",
+            style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _sectionCard({
+    required IconData icon,
+    required String title,
+    String? subtitle,
+    required Widget child,
+  }) {
     final theme = Theme.of(context);
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 20),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 18),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: theme.dividerColor.withOpacity(0.12)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 24,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+        padding: const EdgeInsets.fromLTRB(18, 18, 18, 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: theme.primaryColor.withOpacity(0.10),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Icon(icon, color: theme.primaryColor, size: 21),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          subtitle,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            height: 1.45,
+                            color: theme.textTheme.bodySmall?.color
+                                ?.withOpacity(0.82),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            child,
+            const SizedBox(height: 14),
+            Theme(
+              data: theme.copyWith(
+                listTileTheme: theme.listTileTheme.copyWith(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                ),
+              ),
+              child: child,
+            ),
           ],
         ),
       ),

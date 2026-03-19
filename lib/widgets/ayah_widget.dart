@@ -459,6 +459,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
     final theme = Theme.of(context);
+    final panelFontSize = settings.ayahPanelFontSize;
     final bookmarksMap = ref.watch(bookmarkProvider);
     final matchingBookmarkCount =
         bookmarksMap.values
@@ -472,7 +473,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
 
     final baseArabicStyle = TextStyle(
       fontFamily: 'LPMQ',
-      fontSize: settings.arabicFontSize,
+      fontSize: panelFontSize,
       height: 2.2,
       color: theme.colorScheme.onSurface,
     );
@@ -494,7 +495,12 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
     return Column(
       children: [
         ListTile(
-          leading: CircleAvatar(child: Text(widget.ayah.number.toString())),
+          leading: CircleAvatar(
+            child: Text(
+              widget.ayah.number.toString(),
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
           title: Text(
             isId
                 ? 'Juz ${widget.ayah.juz} | Hal ${widget.ayah.page}'
@@ -562,6 +568,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   Widget _tabText(List<InlineSpan> spans) {
     final settings = ref.watch(settingsProvider);
     final theme = Theme.of(context);
+    final panelFontSize = settings.ayahPanelFontSize;
 
     final String transliterationText = widget.ayah.transliteration.trim();
 
@@ -587,7 +594,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
               textDirection: TextDirection.ltr,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: settings.arabicFontSize * 0.6,
+                fontSize: panelFontSize,
                 fontStyle: FontStyle.italic,
                 fontFamily: 'Roboto',
                 height: 1.6,
@@ -601,10 +608,14 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   }
 
   Widget _tabTranslation(String lang) {
+    final panelFontSize = ref.watch(settingsProvider).ayahPanelFontSize;
     if (lang == 'id' || lang == 'en') {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Text(widget.ayah.translation),
+        child: Text(
+          widget.ayah.translation,
+          style: TextStyle(fontSize: panelFontSize),
+        ),
       );
     }
 
@@ -622,17 +633,21 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         final text = snapshot.data?.translation ?? widget.ayah.translation;
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16),
-          child: Text(text),
+          child: Text(text, style: TextStyle(fontSize: panelFontSize)),
         );
       },
     );
   }
 
   Widget _tabTafsir(String lang) {
+    final panelFontSize = ref.watch(settingsProvider).ayahPanelFontSize;
     if (lang == 'id' || lang == 'en') {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Text(widget.ayah.tafsir),
+        child: Text(
+          widget.ayah.tafsir,
+          style: TextStyle(fontSize: panelFontSize),
+        ),
       );
     }
 
@@ -650,7 +665,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         final text = snapshot.data?.tafsir ?? widget.ayah.tafsir;
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16),
-          child: Text(text),
+          child: Text(text, style: TextStyle(fontSize: panelFontSize)),
         );
       },
     );
@@ -658,6 +673,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
 
   Widget _buildTranslateLoading({required bool isId}) {
     final color = Theme.of(context).primaryColor;
+    final panelFontSize = ref.watch(settingsProvider).ayahPanelFontSize;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -676,6 +692,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.w600,
+              fontSize: panelFontSize,
             ),
           ),
         ],
@@ -684,12 +701,18 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   }
 
   Widget _tabAudio(bool isId) {
+    final panelFontSize = ref.watch(settingsProvider).ayahPanelFontSize;
     final videoId = YoutubePlayer.convertUrlToId(
       'https://www.youtube.com/watch?v=fM7BQNV6koc&list=PLdfZWRI2eOVYYEkjAqrGm7AgWuPn_26jk',
     );
 
     if (videoId == null) {
-      return const Center(child: Text('Video tidak valid'));
+      return Center(
+        child: Text(
+          'Video tidak valid',
+          style: TextStyle(fontSize: panelFontSize),
+        ),
+      );
     }
 
     return YoutubeAudioTab(videoId: videoId, isId: isId);

@@ -1,25 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show Platform;
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 enum AppThemeType { light, dark, pink }
-enum ArabicSource {
-  quranCloud,
-  kemenag,
-}
+
+enum ArabicSource { quranCloud, kemenag }
+
 enum AdzanSoundMode { native, adzan }
 
 class Settings {
   final double arabicFontSize;
+  final double ayahPanelFontSize;
+  final bool keepScreenAwake;
   final String language;
   final AppThemeType theme;
   final ArabicSource arabicSource;
   final bool adzanSoundEnabled;
   final AdzanSoundMode adzanSoundMode;
+
   /// Android only (res/raw name without extension), e.g. `azan1`
   final String adzanSoundName;
   Settings({
     required this.arabicFontSize,
+    required this.ayahPanelFontSize,
+    required this.keepScreenAwake,
     required this.language,
     required this.theme,
     required this.arabicSource,
@@ -29,6 +36,8 @@ class Settings {
   });
   Settings copyWith({
     double? arabicFontSize,
+    double? ayahPanelFontSize,
+    bool? keepScreenAwake,
     String? language,
     AppThemeType? theme,
     ArabicSource? arabicSource,
@@ -38,6 +47,8 @@ class Settings {
   }) {
     return Settings(
       arabicFontSize: arabicFontSize ?? this.arabicFontSize,
+      ayahPanelFontSize: ayahPanelFontSize ?? this.ayahPanelFontSize,
+      keepScreenAwake: keepScreenAwake ?? this.keepScreenAwake,
       language: language ?? this.language,
       theme: theme ?? this.theme,
       arabicSource: arabicSource ?? this.arabicSource,
@@ -53,6 +64,8 @@ class SettingsNotifier extends StateNotifier<Settings> {
     : super(
         Settings(
           arabicFontSize: 28,
+          ayahPanelFontSize: 16,
+          keepScreenAwake: !kIsWeb && Platform.isMacOS,
           language: 'id',
           theme: AppThemeType.light,
           arabicSource: ArabicSource.quranCloud,
@@ -67,6 +80,19 @@ class SettingsNotifier extends StateNotifier<Settings> {
     state = state.copyWith(arabicFontSize: size);
   }
 
+  Future<void> setAyahPanelFontSize(double size) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('ayah_panel_font_size', size);
+    state = state.copyWith(ayahPanelFontSize: size);
+  }
+
+  Future<void> setKeepScreenAwake(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('keep_screen_awake', enabled);
+    state = state.copyWith(keepScreenAwake: enabled);
+    await _applyKeepScreenAwake(enabled);
+  }
+
   Future<void> setLanguage(String lang) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selected_language', lang);
@@ -78,6 +104,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
     await prefs.setInt('theme', theme.index);
     state = state.copyWith(theme: theme);
   }
+
   Future<void> setArabicSource(ArabicSource source) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('arabic_source', source.index);
@@ -110,7 +137,12 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final adzanSoundEnabled = prefs.getBool('adzan_sound_enabled') ?? true;
     final adzanSoundModeIndex = prefs.getInt('adzan_sound_mode') ?? 0;
     final adzanSoundName = prefs.getString('adzan_sound_name') ?? 'azan1';
+    final ayahPanelFontSize = prefs.getDouble('ayah_panel_font_size') ?? 16;
+    final keepScreenAwake =
+        prefs.getBool('keep_screen_awake') ?? (!kIsWeb && Platform.isMacOS);
     state = state.copyWith(
+      ayahPanelFontSize: ayahPanelFontSize,
+      keepScreenAwake: keepScreenAwake,
       language: lang,
       theme: AppThemeType.values[themeIndex],
       arabicSource: ArabicSource.values[arabicIndex],
@@ -118,6 +150,16 @@ class SettingsNotifier extends StateNotifier<Settings> {
       adzanSoundMode: AdzanSoundMode.values[adzanSoundModeIndex],
       adzanSoundName: adzanSoundName,
     );
+    await _applyKeepScreenAwake(keepScreenAwake);
+  }
+
+  Future<void> _applyKeepScreenAwake(bool enabled) async {
+    if (kIsWeb || !Platform.isMacOS) return;
+    if (enabled) {
+      await WakelockPlus.enable();
+    } else {
+      await WakelockPlus.disable();
+    }
   }
 }
 

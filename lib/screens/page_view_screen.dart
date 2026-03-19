@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
+import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/widgets/ayah_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class PageViewScreen extends StatefulWidget {
+class PageViewScreen extends ConsumerStatefulWidget {
   const PageViewScreen({
     super.key,
     this.initialPage = 1,
@@ -19,10 +20,10 @@ class PageViewScreen extends StatefulWidget {
   final int? initialAyahNumber;
 
   @override
-  State<PageViewScreen> createState() => _PageViewScreenState();
+  ConsumerState<PageViewScreen> createState() => _PageViewScreenState();
 }
 
-class _PageViewScreenState extends State<PageViewScreen> {
+class _PageViewScreenState extends ConsumerState<PageViewScreen> {
   late PageController _pageController;
   late int _currentPage;
 
@@ -41,9 +42,20 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = ref.watch(settingsProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('$_currentPage - 604'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.format_size),
+            tooltip:
+                settings.language == 'id'
+                    ? 'Ubah ukuran teks panel'
+                    : 'Change panel text size',
+            onPressed: () => _showPanelFontSizeSlider(context, ref),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -52,7 +64,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
               child: PageView.builder(
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 604, 
+                itemCount: 604,
                 itemBuilder: (context, index) {
                   final pageNumber = index + 1;
                   final isInitialTargetPage = pageNumber == widget.initialPage;
@@ -73,8 +85,48 @@ class _PageViewScreenState extends State<PageViewScreen> {
             ),
             _buildPageControls(),
           ],
-        )
+        ),
       ),
+    );
+  }
+
+  void _showPanelFontSizeSlider(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Consumer(
+          builder: (BuildContext context, WidgetRef ref, Widget? child) {
+            final settings = ref.watch(settingsProvider);
+            final currentFontSize = settings.ayahPanelFontSize;
+
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    settings.language == 'id'
+                        ? 'Ukuran Font Teks Panel'
+                        : 'Panel Text Font Size',
+                  ),
+                  Slider(
+                    value: currentFontSize,
+                    min: 12,
+                    max: 56,
+                    divisions: 44,
+                    label: currentFontSize.round().toString(),
+                    onChanged: (double value) {
+                      ref
+                          .read(settingsProvider.notifier)
+                          .setAyahPanelFontSize(value);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -87,28 +139,29 @@ class _PageViewScreenState extends State<PageViewScreen> {
           ElevatedButton.icon(
             icon: const Icon(Icons.arrow_back),
             label: const Text(' '),
-            onPressed: _currentPage < 604
-                ? () {
-                    _pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                  }
-                : null,
+            onPressed:
+                _currentPage < 604
+                    ? () {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                    : null,
           ),
           ElevatedButton.icon(
             icon: const Icon(Icons.arrow_forward),
             label: const Text(' '),
-            onPressed: _currentPage > 1
-                ? () {
-                    _pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                  }
-                : null,
+            onPressed:
+                _currentPage > 1
+                    ? () {
+                      _pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                    : null,
           ),
-          
         ],
       ),
     );
@@ -156,10 +209,7 @@ class _QuranPageWidgetState extends ConsumerState<_QuranPageWidget> {
         return;
       }
 
-      _itemScrollController.jumpTo(
-        index: targetIndex,
-        alignment: 0.1,
-      );
+      _itemScrollController.jumpTo(index: targetIndex, alignment: 0.1);
       _didAutoScroll = true;
     });
   }
@@ -187,12 +237,8 @@ class _QuranPageWidgetState extends ConsumerState<_QuranPageWidget> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (isFirstAyahInSurah)
-                  _SurahHeader(surahName: ayah.surahName),
-                AyahWidget(
-                  ayah: ayah,
-                  viewType: BookmarkViewType.page,
-                ),
+                if (isFirstAyahInSurah) _SurahHeader(surahName: ayah.surahName),
+                AyahWidget(ayah: ayah, viewType: BookmarkViewType.page),
               ],
             );
           },

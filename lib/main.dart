@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/screens/splash_screen.dart';
 import 'package:quran_app/screens/permission_gate_screen.dart';
 import 'package:quran_app/theme/app_theme.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'dart:io' show Platform;
 import 'screens/language_selector_screen.dart';
@@ -20,10 +20,18 @@ void main() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
+  if (!kIsWeb && Platform.isMacOS) {
+    await WakelockPlus.enable();
+  }
   await notificationService.init();
 
   final prefs = await SharedPreferences.getInstance();
   final lang = prefs.getString('selected_language');
+  final keepScreenAwake =
+      prefs.getBool('keep_screen_awake') ?? (!kIsWeb && Platform.isMacOS);
+  if (!kIsWeb && Platform.isMacOS && keepScreenAwake) {
+    await WakelockPlus.enable();
+  }
   runApp(ProviderScope(child: MyApp(initialLang: lang)));
 }
 
@@ -50,13 +58,12 @@ class MyApp extends ConsumerWidget {
       title: 'Mushaf',
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home:
-          PermissionGateScreen(
-            next:
-                initialLang == null
-                    ? const LanguageSelectorScreen()
-                    : const SplashScreen(),
-          ),
+      home: PermissionGateScreen(
+        next:
+            initialLang == null
+                ? const LanguageSelectorScreen()
+                : const SplashScreen(),
+      ),
     );
   }
 }

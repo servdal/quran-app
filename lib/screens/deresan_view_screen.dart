@@ -36,6 +36,7 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
   void _showSettingsModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       showDragHandle: true,
       builder: (_) => SettingsModalContent(currentPage: _currentPage),
     );
@@ -127,6 +128,7 @@ class DeresanPage extends ConsumerWidget {
     final lang = settings.language;
     final source = settings.arabicSource;
     final theme = Theme.of(context);
+    final panelFontSize = settings.ayahPanelFontSize;
 
     final ayahsAsync = ref.watch(pageAyahsProvider(pageNumber));
 
@@ -168,7 +170,10 @@ class DeresanPage extends ConsumerWidget {
                           Text(
                             ayah.tafsir,
                             textAlign: TextAlign.justify,
-                            style: const TextStyle(height: 1.6, fontSize: 15),
+                            style: TextStyle(
+                              height: 1.6,
+                              fontSize: panelFontSize,
+                            ),
                           ),
                         ],
                       ),
@@ -183,7 +188,7 @@ class DeresanPage extends ConsumerWidget {
 
         final baseTextStyle = TextStyle(
           fontFamily: 'LPMQ',
-          fontSize: settings.arabicFontSize,
+          fontSize: panelFontSize,
           height: 1.9,
           color: theme.colorScheme.onSurface,
         );
@@ -204,12 +209,10 @@ class DeresanPage extends ConsumerWidget {
             }
             pageWidgets.add(_SurahHeaderWidget(surahName: ayah.surahName));
             if (ayah.surahId != 9 && ayah.number == 1) {
-              pageWidgets.add(
-                _BismillahWidget(fontSize: settings.arabicFontSize),
-              );
+              pageWidgets.add(_BismillahWidget(fontSize: panelFontSize));
             }
           }
-          
+
           final spans =
               source == ArabicSource.kemenag
                   ? AutoTajweedParser.parse(
@@ -223,7 +226,7 @@ class DeresanPage extends ConsumerWidget {
 
           currentSpans.addAll(spans);
           currentSpans.add(const TextSpan(text: ' '));
-          currentSpans.add(buildAyahNumberSpan(context, ayah, settings.arabicFontSize));
+          currentSpans.add(buildAyahNumberSpan(context, ayah, panelFontSize));
           currentSpans.add(const TextSpan(text: ' '));
         }
 
@@ -318,40 +321,45 @@ class SettingsModalContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     final lang = settings.language;
+    final bottomInset = MediaQuery.of(context).viewPadding.bottom;
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            lang == 'en' ? 'Arabic Font Size' : 'Ukuran Font Arab',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          Slider(
-            value: settings.arabicFontSize,
-            min: 18,
-            max: 40,
-            divisions: 22,
-            label: settings.arabicFontSize.round().toString(),
-            onChanged:
-                (value) =>
-                    ref.read(settingsProvider.notifier).setFontSize(value),
-          ),
-          const SizedBox(height: 12),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.bookmark_add),
-              label: Text(
-                lang == 'en' ? 'Bookmark This Page' : 'Tandai Halaman Ini',
-              ),
-              onPressed:
-                  () => _showBookmarkDialog(context, ref, currentPage, lang),
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(20, 20, 20, 20 + bottomInset),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              lang == 'en' ? 'Arabic Font Size' : 'Ukuran Font Arab',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
+            Slider(
+              value: settings.ayahPanelFontSize,
+              min: 12,
+              max: 56,
+              divisions: 44,
+              label: settings.ayahPanelFontSize.round().toString(),
+              onChanged:
+                  (value) => ref
+                      .read(settingsProvider.notifier)
+                      .setAyahPanelFontSize(value),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.bookmark_add),
+                label: Text(
+                  lang == 'en' ? 'Bookmark This Page' : 'Tandai Halaman Ini',
+                ),
+                onPressed:
+                    () => _showBookmarkDialog(context, ref, currentPage, lang),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -492,9 +500,15 @@ class SettingsModalContent extends ConsumerWidget {
     );
   }
 }
-TextSpan buildAyahNumberSpan(BuildContext context, dynamic ayah, double fontSize) {
-  const digits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-  final arabicNumber = ayah.number.toString().split('').map((e) => digits[int.parse(e)]).join();
+
+TextSpan buildAyahNumberSpan(
+  BuildContext context,
+  dynamic ayah,
+  double fontSize,
+) {
+  const digits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  final arabicNumber =
+      ayah.number.toString().split('').map((e) => digits[int.parse(e)]).join();
 
   final text = ayah.isSajda ? ' ۩ ﴿$arabicNumber﴾ ' : ' ﴿$arabicNumber﴾ ';
 
@@ -509,7 +523,6 @@ TextSpan buildAyahNumberSpan(BuildContext context, dynamic ayah, double fontSize
     ),
   );
 }
-
 
 class _BismillahWidget extends StatelessWidget {
   final double fontSize;

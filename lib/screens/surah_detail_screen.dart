@@ -48,10 +48,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
         return;
       }
 
-      itemScrollController.jumpTo(
-        index: safeIndex,
-        alignment: 0.1,
-      );
+      itemScrollController.jumpTo(index: safeIndex, alignment: 0.1);
       _didInitialScroll = true;
     });
   }
@@ -63,21 +60,22 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: surahDetailAsync.when(
-          data: (surah) => Text(
-            surah.surahName,
-            style: const TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          data:
+              (surah) => Text(
+                surah.surahName,
+                style: const TextStyle(
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
           loading: () => const Text('Memuat...'),
           error: (e, s) => const Text('Error'),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.format_size),
-            onPressed: () => _showFontSizeSlider(context, ref),
-          )
+            onPressed: () => _showPanelFontSizeSlider(context, ref),
+          ),
         ],
       ),
       body: SafeArea(
@@ -86,7 +84,9 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
             Expanded(
               child: surahDetailAsync.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, stack) => Center(child: Text('Gagal memuat surah: $error')),
+                error:
+                    (error, stack) =>
+                        Center(child: Text('Gagal memuat surah: $error')),
                 data: (surah) {
                   _jumpToInitialIndexIfNeeded(surah.ayahs.length);
 
@@ -109,34 +109,40 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
             ),
             _buildSurahNavigation(context, widget.surahId),
           ],
-        )
+        ),
       ),
     );
   }
 
-  void _showFontSizeSlider(BuildContext context, WidgetRef ref) {
+  void _showPanelFontSizeSlider(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
         return Consumer(
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
             final settings = ref.watch(settingsProvider);
-            final currentFontSize = settings.arabicFontSize;
+            final currentFontSize = settings.ayahPanelFontSize;
 
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('Ukuran Font Teks Arab'),
+                  Text(
+                    settings.language == 'id'
+                        ? 'Ukuran Font Teks Panel'
+                        : 'Panel Text Font Size',
+                  ),
                   Slider(
                     value: currentFontSize,
-                    min: 20,
-                    max: 48,
-                    divisions: 14,
+                    min: 12,
+                    max: 56,
+                    divisions: 44,
                     label: currentFontSize.round().toString(),
                     onChanged: (double value) {
-                      ref.read(settingsProvider.notifier).setFontSize(value);
+                      ref
+                          .read(settingsProvider.notifier)
+                          .setAyahPanelFontSize(value);
                     },
                   ),
                 ],
@@ -162,7 +168,9 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SurahDetailScreen(surahId: currentSurahId + 1),
+                    builder:
+                        (context) =>
+                            SurahDetailScreen(surahId: currentSurahId + 1),
                   ),
                 );
               },
@@ -176,7 +184,9 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SurahDetailScreen(surahId: currentSurahId - 1),
+                    builder:
+                        (context) =>
+                            SurahDetailScreen(surahId: currentSurahId - 1),
                   ),
                 );
               },

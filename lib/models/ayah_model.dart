@@ -12,6 +12,7 @@ class Ayah {
   final String translation;
   final String tafsir;
   final String transliteration;
+  final String transliterationKemenag;
   final bool isSajda;
   final List<String> arabicWords;
 
@@ -27,6 +28,7 @@ class Ayah {
     required this.translation,
     required this.tafsir,
     required this.transliteration,
+    required this.transliterationKemenag,
     required this.isSajda,
     required this.arabicWords,
   });
@@ -43,6 +45,7 @@ class Ayah {
     String? translation,
     String? tafsir,
     String? transliteration,
+    String? transliterationKemenag,
     bool? isSajda,
     List<String>? arabicWords,
   }) {
@@ -58,6 +61,8 @@ class Ayah {
       translation: translation ?? this.translation,
       tafsir: tafsir ?? this.tafsir,
       transliteration: transliteration ?? this.transliteration,
+      transliterationKemenag:
+          transliterationKemenag ?? this.transliterationKemenag,
       isSajda: isSajda ?? this.isSajda,
       arabicWords: arabicWords ?? this.arabicWords,
     );
@@ -70,7 +75,6 @@ class Ayah {
       wordsList = List<String>.from(jsonDecode(wordsJson));
     } catch (e) {
       // Jika JSON error, fallback kosong
-      print("Error parsing words: $e");
       wordsList = [];
     }
     return Ayah(
@@ -85,6 +89,8 @@ class Ayah {
       translation: (row['translation'] ?? '') as String,
       tafsir: (row['tafsir'] ?? '') as String,
       transliteration: (row['transliteration'] ?? '') as String,
+      transliterationKemenag:
+          (row['transliteration_kemenag'] ?? '') as String,
       isSajda: row['sajda'] == 1 || row['sajda'] == true,
       arabicWords: wordsList,
     );

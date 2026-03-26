@@ -576,7 +576,10 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
     final theme = Theme.of(context);
     final panelFontSize = settings.ayahPanelFontSize;
 
-    final String transliterationText = widget.ayah.transliteration.trim();
+    final String transliterationText =
+        settings.language == 'id'
+            ? widget.ayah.transliterationKemenag.trim()
+            : widget.ayah.transliteration.trim();
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),

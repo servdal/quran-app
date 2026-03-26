@@ -600,7 +600,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
               textDirection: TextDirection.ltr,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: panelFontSize,
+                fontSize: panelFontSize * 0.6,
                 fontStyle: FontStyle.italic,
                 fontFamily: 'Roboto',
                 height: 1.6,
@@ -620,7 +620,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         padding: const EdgeInsets.all(16),
         child: Text(
           widget.ayah.translation,
-          style: TextStyle(fontSize: panelFontSize),
+          style: TextStyle(fontSize: panelFontSize * 0.6),
         ),
       );
     }
@@ -652,7 +652,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         padding: const EdgeInsets.all(16),
         child: Text(
           widget.ayah.tafsir,
-          style: TextStyle(fontSize: panelFontSize),
+          style: TextStyle(fontSize: panelFontSize * 0.6),
         ),
       );
     }
@@ -698,7 +698,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.w600,
-              fontSize: panelFontSize,
+              fontSize: panelFontSize * 0.6,
             ),
           ),
         ],
@@ -882,10 +882,17 @@ class _YoutubeAudioTabState extends State<YoutubeAudioTab> {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
-        YoutubePlayer(
-          controller: _controller,
-          showVideoProgressIndicator: true,
-          progressIndicatorColor: Theme.of(context).primaryColor,
+        Expanded(
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
         ),
       ],
     );

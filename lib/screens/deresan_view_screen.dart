@@ -54,7 +54,7 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
               currentPage: _currentPage,
               juzAsync: juzAsync,
               onBack: () => Navigator.pop(context),
-              onMore: () => _showSettingsModal(context),
+              onTextSize: () => _showSettingsModal(context),
             ),
             Expanded(
               child: GestureDetector(
@@ -262,18 +262,19 @@ class _DeresanHeader extends ConsumerWidget {
   final int currentPage;
   final AsyncValue<int> juzAsync;
   final VoidCallback onBack;
-  final VoidCallback onMore;
+  final VoidCallback onTextSize;
 
   const _DeresanHeader({
     required this.currentPage,
     required this.juzAsync,
     required this.onBack,
-    required this.onMore,
+    required this.onTextSize,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lang = ref.watch(settingsProvider).language;
+    final settings = ref.watch(settingsProvider);
+    final lang = settings.language;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
       child: Column(
@@ -310,7 +311,60 @@ class _DeresanHeader extends ConsumerWidget {
               ),
 
               const Spacer(),
-              IconButton(icon: const Icon(Icons.more_vert), onPressed: onMore),
+              IconButton(
+                icon: const Icon(Icons.format_size),
+                onPressed: onTextSize,
+                tooltip: lang == 'en' ? 'Text size' : 'Ukuran teks',
+              ),
+              PopupMenuButton<ArabicSource>(
+                icon: const Icon(Icons.menu_book_outlined),
+                tooltip:
+                    lang == 'en' ? 'Arabic text source' : 'Sumber teks Arab',
+                onSelected:
+                    (value) =>
+                        ref
+                            .read(settingsProvider.notifier)
+                            .setArabicSource(value),
+                itemBuilder:
+                    (context) => [
+                      CheckedPopupMenuItem(
+                        value: ArabicSource.quranCloud,
+                        checked:
+                            settings.arabicSource == ArabicSource.quranCloud,
+                        child: const Text('Quran Cloud'),
+                      ),
+                      CheckedPopupMenuItem(
+                        value: ArabicSource.kemenag,
+                        checked: settings.arabicSource == ArabicSource.kemenag,
+                        child: const Text('KEMENAG RI'),
+                      ),
+                    ],
+              ),
+              PopupMenuButton<AppThemeType>(
+                icon: const Icon(Icons.palette_outlined),
+                tooltip: lang == 'en' ? 'App theme' : 'Tema tampilan',
+                onSelected:
+                    (value) =>
+                        ref.read(settingsProvider.notifier).setTheme(value),
+                itemBuilder:
+                    (context) => [
+                      CheckedPopupMenuItem(
+                        value: AppThemeType.light,
+                        checked: settings.theme == AppThemeType.light,
+                        child: const Text('Light'),
+                      ),
+                      CheckedPopupMenuItem(
+                        value: AppThemeType.dark,
+                        checked: settings.theme == AppThemeType.dark,
+                        child: const Text('Dark'),
+                      ),
+                      CheckedPopupMenuItem(
+                        value: AppThemeType.pink,
+                        checked: settings.theme == AppThemeType.pink,
+                        child: const Text('Pink'),
+                      ),
+                    ],
+              ),
             ],
           ),
         ],

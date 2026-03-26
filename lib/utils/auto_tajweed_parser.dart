@@ -98,9 +98,13 @@ class AutoTajweedParser {
   }) {
     if (ayaText.isEmpty) return [];
     
-    final effectiveStyle = baseStyle.color == null
-            ? baseStyle.copyWith(color: Colors.black)
-            : baseStyle;
+    final Color fallbackColor =
+        baseStyle.color ??
+        (context != null
+            ? Theme.of(context).colorScheme.onSurface
+            : Colors.black);
+    final effectiveStyle =
+        baseStyle.color == null ? baseStyle.copyWith(color: fallbackColor) : baseStyle;
 
     ayaText = ayaText.replaceAll('\u200c', '').replaceAll('\u200b', '');
 

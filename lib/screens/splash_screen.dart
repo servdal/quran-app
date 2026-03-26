@@ -81,11 +81,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-          child: Column(
-            children: [
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
               HybridLottieLogo(
                 size: 300,
               ),
@@ -107,18 +109,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 20),
-                    Text(
-                      _loadingMessage,
-                      style: TextStyle(fontFamily: 'LPMQ', fontSize: 16, color: theme.textTheme.bodyMedium?.color),
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 20),
+              Text(
+                _loadingMessage,
+                style: TextStyle(fontFamily: 'LPMQ', fontSize: 16, color: theme.textTheme.bodyMedium?.color),
               ),
 
               if (_randomAyah != null)
@@ -163,7 +157,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     ],
                   ),
                 ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

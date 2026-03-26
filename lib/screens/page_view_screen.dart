@@ -55,6 +55,56 @@ class _PageViewScreenState extends ConsumerState<PageViewScreen> {
                     : 'Change panel text size',
             onPressed: () => _showPanelFontSizeSlider(context, ref),
           ),
+          PopupMenuButton<ArabicSource>(
+            icon: const Icon(Icons.menu_book_outlined),
+            tooltip:
+                settings.language == 'id'
+                    ? 'Sumber teks Arab'
+                    : 'Arabic text source',
+            onSelected:
+                (value) =>
+                    ref.read(settingsProvider.notifier).setArabicSource(value),
+            itemBuilder:
+                (context) => [
+                  CheckedPopupMenuItem(
+                    value: ArabicSource.quranCloud,
+                    checked: settings.arabicSource == ArabicSource.quranCloud,
+                    child: const Text('Quran Cloud'),
+                  ),
+                  CheckedPopupMenuItem(
+                    value: ArabicSource.kemenag,
+                    checked: settings.arabicSource == ArabicSource.kemenag,
+                    child: const Text('KEMENAG RI'),
+                  ),
+                ],
+          ),
+          PopupMenuButton<AppThemeType>(
+            icon: const Icon(Icons.palette_outlined),
+            tooltip:
+                settings.language == 'id'
+                    ? 'Tema tampilan'
+                    : 'App theme',
+            onSelected:
+                (value) => ref.read(settingsProvider.notifier).setTheme(value),
+            itemBuilder:
+                (context) => [
+                  CheckedPopupMenuItem(
+                    value: AppThemeType.light,
+                    checked: settings.theme == AppThemeType.light,
+                    child: const Text('Light'),
+                  ),
+                  CheckedPopupMenuItem(
+                    value: AppThemeType.dark,
+                    checked: settings.theme == AppThemeType.dark,
+                    child: const Text('Dark'),
+                  ),
+                  CheckedPopupMenuItem(
+                    value: AppThemeType.pink,
+                    checked: settings.theme == AppThemeType.pink,
+                    child: const Text('Pink'),
+                  ),
+                ],
+          ),
         ],
       ),
       body: SafeArea(

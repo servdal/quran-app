@@ -68,6 +68,15 @@ class TajweedParser {
   }) {
     if (text.isEmpty) return [];
 
+    final Color baseColor =
+        baseStyle.color ??
+        (context != null
+            ? Theme.of(context).colorScheme.onSurface
+            : Colors.black);
+    colorStack
+      ..clear()
+      ..add(baseColor);
+
     // small pre-normalizations (non-destructive)
     text = text.replaceAll('\u200c', '');
     text = text.replaceAll(RegExp(r'\[s\[اْ\]\]ۖ'), 'اْۖ');
@@ -212,7 +221,7 @@ class TajweedParser {
         final Color top =
             colorStack.isNotEmpty
                 ? colorStack.last
-                : (baseStyle.color ?? Colors.black);
+                : baseColor;
         final TextStyle topStyle = baseStyle.copyWith(color: top);
         spans.addAll(_fragmentToSpans(buf.toString(), topStyle));
         buf.clear();

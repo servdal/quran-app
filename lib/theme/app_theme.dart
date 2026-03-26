@@ -330,18 +330,22 @@ class AppTheme {
       onSurface: Colors.white,
     ),
     fontFamily: 'Poppins',
-    textTheme: const TextTheme(
-      headlineLarge: TextStyle(
+    textTheme: ThemeData.dark().textTheme.apply(
+      fontFamily: 'Poppins',
+      bodyColor: Colors.white,
+      displayColor: Colors.white,
+    ).copyWith(
+      headlineLarge: const TextStyle(
         fontFamily: 'Poppins',
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
-      bodyMedium: TextStyle(
+      bodyMedium: const TextStyle(
         fontFamily: 'Poppins',
         color: Colors.white70,
         height: 1.5,
       ),
-      labelLarge: TextStyle(
+      labelLarge: const TextStyle(
         fontFamily: 'Poppins',
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -373,6 +377,19 @@ class AppTheme {
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF16A34A),
+        foregroundColor: const Color(0xFFFFFFFF),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        textStyle: const TextStyle(
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.bold,
+          inherit: true,
+        ),
       ),
     ),
   );
@@ -419,6 +436,13 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFFE91E63),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        foregroundColor: const Color(0xFFFFFFFF),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        textStyle: const TextStyle(
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.bold,
+          inherit: true,
+        ),
       ),
     ),
   );

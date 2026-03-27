@@ -580,6 +580,13 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         settings.language == 'id'
             ? widget.ayah.transliterationKemenag.trim()
             : widget.ayah.transliteration.trim();
+    if (settings.language == 'id' &&
+        transliterationText.isEmpty &&
+        widget.ayah.transliteration.trim().isNotEmpty) {
+      debugPrint(
+        'Transliteration Kemenag kosong (surah ${widget.ayah.surahId} ayat ${widget.ayah.number}).',
+      );
+    }
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),

@@ -7,7 +7,60 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 enum AppThemeType { light, dark, pink }
 
-enum ArabicSource { quranCloud, kemenag }
+enum ArabicSource {
+  quranCloudTajweed,
+  kemenagTajweed,
+  quranCloud,
+  kemenag,
+}
+
+extension ArabicSourceX on ArabicSource {
+  String get storageKey => switch (this) {
+    ArabicSource.quranCloudTajweed => 'quran_cloud_tajweed',
+    ArabicSource.kemenagTajweed => 'kemenag_tajweed',
+    ArabicSource.quranCloud => 'quran_cloud',
+    ArabicSource.kemenag => 'kemenag',
+  };
+
+  String get label => switch (this) {
+    ArabicSource.quranCloudTajweed => 'Quran Cloud Tajweed',
+    ArabicSource.kemenagTajweed => 'KEMENAG RI Tajweed',
+    ArabicSource.quranCloud => 'Quran Cloud',
+    ArabicSource.kemenag => 'KEMENAG RI',
+  };
+
+  bool get usesQuranCloudText =>
+      this == ArabicSource.quranCloudTajweed || this == ArabicSource.quranCloud;
+
+  bool get usesTajweedParser =>
+      this == ArabicSource.quranCloudTajweed ||
+      this == ArabicSource.kemenagTajweed;
+
+  bool get usesAutoTajweedParser => this == ArabicSource.kemenagTajweed;
+
+  static ArabicSource fromStoredValue(String? value, {int? legacyIndex}) {
+    for (final source in ArabicSource.values) {
+      if (source.storageKey == value) return source;
+    }
+
+    return switch (legacyIndex) {
+      1 => ArabicSource.kemenag,
+      _ => ArabicSource.quranCloud,
+    };
+  }
+}
+
+ArabicSource readArabicSourcePreference(SharedPreferences prefs) {
+  final rawValue = prefs.get('arabic_source');
+  return switch (rawValue) {
+    final String value => ArabicSourceX.fromStoredValue(value),
+    final int legacyIndex => ArabicSourceX.fromStoredValue(
+      null,
+      legacyIndex: legacyIndex,
+    ),
+    _ => ArabicSource.quranCloud,
+  };
+}
 
 enum AdzanSoundMode { native, adzan }
 
@@ -107,7 +160,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setArabicSource(ArabicSource source) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('arabic_source', source.index);
+    await prefs.setString('arabic_source', source.storageKey);
     state = state.copyWith(arabicSource: source);
   }
 
@@ -132,7 +185,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     final lang = prefs.getString('selected_language') ?? 'id';
-    final arabicIndex = prefs.getInt('arabic_source') ?? 0;
+    final arabicSource = readArabicSourcePreference(prefs);
     final themeIndex = prefs.getInt('theme') ?? 0;
     final adzanSoundEnabled = prefs.getBool('adzan_sound_enabled') ?? true;
     final adzanSoundModeIndex = prefs.getInt('adzan_sound_mode') ?? 0;
@@ -145,7 +198,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
       keepScreenAwake: keepScreenAwake,
       language: lang,
       theme: AppThemeType.values[themeIndex],
-      arabicSource: ArabicSource.values[arabicIndex],
+      arabicSource: arabicSource,
       adzanSoundEnabled: adzanSoundEnabled,
       adzanSoundMode: AdzanSoundMode.values[adzanSoundModeIndex],
       adzanSoundName: adzanSoundName,

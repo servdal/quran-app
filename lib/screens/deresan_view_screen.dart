@@ -213,22 +213,28 @@ class DeresanPage extends ConsumerWidget {
             }
           }
 
-          final spans =
-              source == ArabicSource.kemenag
-                  ? AutoTajweedParser.parse(
-                    ayah.arabicText,
-                    baseTextStyle,
-                    lang: lang,
-                    context: context,
-                    learningMode: true,
-                  )
-                  : TajweedParser.parse(
-                    ayah.tajweedText,
-                    baseTextStyle,
-                    lang: lang,
-                    context: context,
-                    learningMode: true,
-                  );
+          final spans = switch (source) {
+            ArabicSource.quranCloudTajweed => TajweedParser.parse(
+              ayah.tajweedText,
+              baseTextStyle,
+              lang: lang,
+              context: context,
+              learningMode: true,
+            ),
+            ArabicSource.kemenagTajweed => AutoTajweedParser.parse(
+              ayah.ayaTextKemenag,
+              baseTextStyle,
+              lang: lang,
+              context: context,
+              learningMode: true,
+            ),
+            ArabicSource.quranCloud => [
+              TextSpan(text: ayah.arabicText, style: baseTextStyle),
+            ],
+            ArabicSource.kemenag => [
+              TextSpan(text: ayah.ayaTextKemenag, style: baseTextStyle),
+            ],
+          };
 
           currentSpans.addAll(spans);
           currentSpans.add(const TextSpan(text: ' '));
@@ -327,6 +333,20 @@ class _DeresanHeader extends ConsumerWidget {
                             .setArabicSource(value),
                 itemBuilder:
                     (context) => [
+                      CheckedPopupMenuItem(
+                        value: ArabicSource.quranCloudTajweed,
+                        checked:
+                            settings.arabicSource ==
+                            ArabicSource.quranCloudTajweed,
+                        child: const Text('Quran Cloud Tajweed'),
+                      ),
+                      CheckedPopupMenuItem(
+                        value: ArabicSource.kemenagTajweed,
+                        checked:
+                            settings.arabicSource ==
+                            ArabicSource.kemenagTajweed,
+                        child: const Text('KEMENAG RI Tajweed'),
+                      ),
                       CheckedPopupMenuItem(
                         value: ArabicSource.quranCloud,
                         checked:

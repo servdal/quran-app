@@ -174,7 +174,7 @@ class _AyahBlock extends ConsumerWidget {
     final spans =
         isId
             ? AutoTajweedParser.parse(
-              ayah.arabicText,
+              ayah.ayaTextKemenag,
               baseStyle,
               lang: lang,
               learningMode: ui.learningMode,

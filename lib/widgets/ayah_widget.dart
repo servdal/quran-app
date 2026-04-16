@@ -482,22 +482,28 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
     final sumber = settings.arabicSource;
     final lang = settings.language;
     _resetRemoteFutureIfLanguageChanged(lang);
-    final spans =
-        sumber == ArabicSource.kemenag
-            ? AutoTajweedParser.parse(
-              widget.ayah.arabicText,
-              baseArabicStyle,
-              lang: lang,
-              context: context,
-              learningMode: true,
-            )
-            : TajweedParser.parse(
-              widget.ayah.tajweedText,
-              baseArabicStyle,
-              lang: lang,
-              context: context,
-              learningMode: true,
-            );
+    final spans = switch (sumber) {
+      ArabicSource.quranCloudTajweed => TajweedParser.parse(
+        widget.ayah.tajweedText,
+        baseArabicStyle,
+        lang: lang,
+        context: context,
+        learningMode: true,
+      ),
+      ArabicSource.kemenagTajweed => AutoTajweedParser.parse(
+        widget.ayah.ayaTextKemenag,
+        baseArabicStyle,
+        lang: lang,
+        context: context,
+        learningMode: true,
+      ),
+      ArabicSource.quranCloud => [
+        TextSpan(text: widget.ayah.arabicText, style: baseArabicStyle),
+      ],
+      ArabicSource.kemenag => [
+        TextSpan(text: widget.ayah.ayaTextKemenag, style: baseArabicStyle),
+      ],
+    };
     return Column(
       children: [
         ListTile(

@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import '../database/db_helper.dart';
 import '../../models/page_index_model.dart';
 import '../models/grammar_model.dart';
+import '../providers/settings_provider.dart';
 
 class QuranRepository {
   Future<String> _getLanguage() async {
@@ -12,8 +13,8 @@ class QuranRepository {
 
   Future<String> _getArabicTextColumn() async {
     final prefs = await SharedPreferences.getInstance();
-    final arabicSourceIndex = prefs.getInt('arabic_source') ?? 0;
-    return arabicSourceIndex == 1 ? 'aya_text_kemenag' : 'aya_text';
+    final arabicSource = readArabicSourcePreference(prefs);
+    return arabicSource.usesQuranCloudText ? 'aya_text' : 'aya_text_kemenag';
   }
 
   Future<Database> get _db async => DBHelper.database;
@@ -86,6 +87,7 @@ class QuranRepository {
         transliteration_kemenag,
         $tafsirCol AS tafsir,
         tajweed_text,
+        aya_text_kemenag,
         arabic_words,
         sura_name
       FROM merged_aya
@@ -121,6 +123,7 @@ class QuranRepository {
         transliteration_kemenag,
         $tafsirCol AS tafsir,
         tajweed_text,
+        aya_text_kemenag,
         arabic_words,
         sura_name
       FROM merged_aya

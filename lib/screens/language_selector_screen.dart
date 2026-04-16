@@ -250,6 +250,20 @@ class _LanguageSelectorScreenState
                 child: Column(
                   children: [
                     _radio(
+                      title: "Quran Cloud Tajweed",
+                      subtitle: "Tajwid dari `tajweed_text` dengan parser khusus",
+                      value: ArabicSource.quranCloudTajweed,
+                      group: _arabicSource,
+                      onChanged: (v) => setState(() => _arabicSource = v),
+                    ),
+                    _radio(
+                      title: "KEMENAG RI Tajweed",
+                      subtitle: "Teks Kemenag dengan AutoTajweedParser",
+                      value: ArabicSource.kemenagTajweed,
+                      group: _arabicSource,
+                      onChanged: (v) => setState(() => _arabicSource = v),
+                    ),
+                    _radio(
                       title: "Quran Cloud",
                       subtitle: "Standar internasional (Uthmani)",
                       value: ArabicSource.quranCloud,

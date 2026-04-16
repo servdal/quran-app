@@ -67,6 +67,19 @@ class _PageViewScreenState extends ConsumerState<PageViewScreen> {
             itemBuilder:
                 (context) => [
                   CheckedPopupMenuItem(
+                    value: ArabicSource.quranCloudTajweed,
+                    checked:
+                        settings.arabicSource ==
+                        ArabicSource.quranCloudTajweed,
+                    child: const Text('Quran Cloud Tajweed'),
+                  ),
+                  CheckedPopupMenuItem(
+                    value: ArabicSource.kemenagTajweed,
+                    checked:
+                        settings.arabicSource == ArabicSource.kemenagTajweed,
+                    child: const Text('KEMENAG RI Tajweed'),
+                  ),
+                  CheckedPopupMenuItem(
                     value: ArabicSource.quranCloud,
                     checked: settings.arabicSource == ArabicSource.quranCloud,
                     child: const Text('Quran Cloud'),

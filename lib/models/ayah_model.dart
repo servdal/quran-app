@@ -13,6 +13,7 @@ class Ayah {
   final String tafsir;
   final String transliteration;
   final String transliterationKemenag;
+  final String ayaTextKemenag;
   final bool isSajda;
   final List<String> arabicWords;
 
@@ -29,6 +30,7 @@ class Ayah {
     required this.tafsir,
     required this.transliteration,
     required this.transliterationKemenag,
+    required this.ayaTextKemenag,
     required this.isSajda,
     required this.arabicWords,
   });
@@ -46,6 +48,7 @@ class Ayah {
     String? tafsir,
     String? transliteration,
     String? transliterationKemenag,
+    String? ayaTextKemenag,
     bool? isSajda,
     List<String>? arabicWords,
   }) {
@@ -60,6 +63,7 @@ class Ayah {
       tajweedText: tajweedText ?? this.tajweedText,
       translation: translation ?? this.translation,
       tafsir: tafsir ?? this.tafsir,
+      ayaTextKemenag: ayaTextKemenag ?? this.ayaTextKemenag,
       transliteration: transliteration ?? this.transliteration,
       transliterationKemenag:
           transliterationKemenag ?? this.transliterationKemenag,
@@ -88,6 +92,7 @@ class Ayah {
       tajweedText: (row['tajweed_text'] ?? '') as String,
       translation: (row['translation'] ?? '') as String,
       tafsir: (row['tafsir'] ?? '') as String,
+      ayaTextKemenag: (row['aya_text_kemenag'] ?? '') as String,
       transliteration: (row['transliteration'] ?? '') as String,
       transliterationKemenag:
           (row['transliteration_kemenag'] ?? '') as String,

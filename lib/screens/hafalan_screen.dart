@@ -108,7 +108,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         if (ayah.arabicWords.isNotEmpty) {
           words.addAll(ayah.arabicWords);
         } else {
-          words.addAll(ayah.arabicText.split(' '));
+          words.addAll(ayah.ayaTextKemenag.split(' '));
         }
       }
 

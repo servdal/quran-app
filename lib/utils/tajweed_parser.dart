@@ -8,9 +8,10 @@ import 'package:quran_app/theme/app_theme.dart';
 ///   jika huruf di dalam block tidak punya harakat.
 /// - Memindahkan TANWIN dari fragmen sebelumnya ke dalam fragmen saat rule
 ///   berada di daftar transferTanwinRules (a, u, w, i).
-/// - Mewarnai seluruh fragmen (huruf + harakat). Tanwin diberi opacity 50%.
+/// - Mewarnai seluruh fragmen sambil menjaga teks Arab dengan style yang sama
+///   dalam satu TextSpan agar bentuk huruf dan posisi harakat tetap benar.
 final List<Color> colorStack = <Color>[Colors.black];
-// Helper: split fragment into TextSpans and handle tanwin softness (50% opacity)
+// Helper: keep each same-style fragment intact so Arabic shaping is preserved.
 bool isTanwinCodeUnit(int cp) {
   // 064B FATHATAN (ً), 064C DAMMATAN (ٌ), 064D KASRATAN (ٍ)
   return cp == 0x064B || cp == 0x064C || cp == 0x064D;
@@ -21,26 +22,8 @@ List<TextSpan> _fragmentToSpans(
   TextStyle ruleStyle, {
   GestureRecognizer? recognizer,
 }) {
-  final List<TextSpan> out = [];
-  final runes = fragment.runes.toList();
-  for (var r in runes) {
-    final ch = String.fromCharCode(r);
-    if (isTanwinCodeUnit(r)) {
-      final Color baseColor = ruleStyle.color ?? colorStack.last;
-      final double newOpacity = (baseColor.opacity * 0.5).clamp(0.0, 1.0);
-      final Color tanwinColor = baseColor.withOpacity(newOpacity);
-      out.add(
-        TextSpan(
-          text: ch,
-          style: ruleStyle.copyWith(color: tanwinColor),
-          recognizer: recognizer,
-        ),
-      );
-    } else {
-      out.add(TextSpan(text: ch, style: ruleStyle, recognizer: recognizer));
-    }
-  }
-  return out;
+  if (fragment.isEmpty) return [];
+  return [TextSpan(text: fragment, style: ruleStyle, recognizer: recognizer)];
 }
 
 class TajweedParser {
@@ -79,10 +62,10 @@ class TajweedParser {
 
     // small pre-normalizations (non-destructive)
     text = text.replaceAll('\u200c', '');
+    text = text.replaceAll('[o[َ[s[اْ]]', 'َا۟');
     text = text.replaceAll(RegExp(r'\[s\[اْ\]\]ۖ'), 'اْۖ');
     text = text.replaceAll(RegExp(r'\[s\[اْ\]\]ۗ'), 'اْۗ');
     text = text.replaceAll(RegExp(r'\[s\[اْ\]\]'), 'اْ');
-    text = text.replaceAll('[o[َ[s[اْ]]', 'َا۟');
     text = text.replaceAll('[s[اْ]]', 'ا۟');
     text = text.replaceAll('[s[اْ]‌ۖ', 'اۖ');
     text = text.replaceAll('[s[اْ]‌ۚ', 'اْ');
@@ -124,7 +107,8 @@ class TajweedParser {
       if (color == null) return style;
       return style.copyWith(
         color: color,
-        backgroundColor: activeKey == ruleKey ? color.withOpacity(0.15) : null,
+        backgroundColor:
+            activeKey == ruleKey ? color.withValues(alpha: 0.15) : null,
       );
     }
 
@@ -207,9 +191,6 @@ class TajweedParser {
       //  }
       //  return 'ال';
       //}
-      if (glyph == 'ٱ') {
-        return 'ا';
-      }
       if (glyph == smallAlef) {
         return daggerAlef;
       }
@@ -218,10 +199,7 @@ class TajweedParser {
 
     void flushBufferWithTopColor() {
       if (buf.isNotEmpty) {
-        final Color top =
-            colorStack.isNotEmpty
-                ? colorStack.last
-                : baseColor;
+        final Color top = colorStack.isNotEmpty ? colorStack.last : baseColor;
         final TextStyle topStyle = baseStyle.copyWith(color: top);
         spans.addAll(_fragmentToSpans(buf.toString(), topStyle));
         buf.clear();
@@ -245,13 +223,66 @@ class TajweedParser {
         if (lastText.isNotEmpty && lastText.endsWith(fatha)) {
           final String trimmed = lastText.substring(0, lastText.length - 1);
           if (trimmed.isNotEmpty) {
-            spans.add(TextSpan(text: trimmed, style: last.style));
+            spans.add(
+              TextSpan(
+                text: trimmed,
+                style: last.style,
+                recognizer: last.recognizer,
+              ),
+            );
           }
           return true;
         }
         spans.add(last);
       }
       return false;
+    }
+
+    String popTrailingCluster() {
+      String popFrom(String source) {
+        if (source.isEmpty) return '';
+        final runes = source.runes.toList();
+        int start = runes.length - 1;
+        if (!isDiacritic(String.fromCharCode(runes[start]))) {
+          return String.fromCharCode(runes[start]);
+        }
+        while (start > 0 && isDiacritic(String.fromCharCode(runes[start]))) {
+          start--;
+        }
+        return String.fromCharCodes(runes.sublist(start));
+      }
+
+      if (buf.isNotEmpty) {
+        final String s = buf.toString();
+        final String cluster = popFrom(s);
+        if (cluster.isEmpty) return '';
+        buf.clear();
+        buf.write(s.substring(0, s.length - cluster.length));
+        return cluster;
+      }
+
+      if (spans.isEmpty) return '';
+      final TextSpan last = spans.removeLast();
+      final String lastText = last.text ?? '';
+      final String cluster = popFrom(lastText);
+      if (cluster.isEmpty) {
+        spans.add(last);
+        return '';
+      }
+      final String trimmed = lastText.substring(
+        0,
+        lastText.length - cluster.length,
+      );
+      if (trimmed.isNotEmpty) {
+        spans.add(
+          TextSpan(
+            text: trimmed,
+            style: last.style,
+            recognizer: last.recognizer,
+          ),
+        );
+      }
+      return cluster;
     }
 
     // Try to remove and return a trailing tanwin char (if any) from buffer or last span.
@@ -293,7 +324,13 @@ class TajweedParser {
                     : '';
             if (trimmed.isNotEmpty) {
               // put trimmed back
-              spans.add(TextSpan(text: trimmed, style: lastSpan.style));
+              spans.add(
+                TextSpan(
+                  text: trimmed,
+                  style: lastSpan.style,
+                  recognizer: lastSpan.recognizer,
+                ),
+              );
             }
             return char;
           } else {
@@ -421,6 +458,13 @@ class TajweedParser {
             fullText: text,
             index: i,
           );
+
+          if (innerText.isNotEmpty && isDiacritic(innerText[0])) {
+            final String previousCluster = popTrailingCluster();
+            if (previousCluster.isNotEmpty) {
+              innerText = '$previousCluster$innerText';
+            }
+          }
 
           // *** FIX ORDER: first try to pop tanwin from previous fragment if rule requires transfer
           if (transferTanwinRules.contains(ruleKey)) {

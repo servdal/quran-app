@@ -62,21 +62,7 @@ class TajweedParser {
 
     // small pre-normalizations (non-destructive)
     text = text.replaceAll('\u200c', '');
-    text = text.replaceAll('[o[َ[s[اْ]]', 'َا۟');
-    text = text.replaceAll(RegExp(r'\[s\[اْ\]\]ۖ'), 'اْۖ');
-    text = text.replaceAll(RegExp(r'\[s\[اْ\]\]ۗ'), 'اْۗ');
-    text = text.replaceAll(RegExp(r'\[s\[اْ\]\]'), 'اْ');
-    text = text.replaceAll('[s[اْ]]', 'ا۟');
-    text = text.replaceAll('[s[اْ]‌ۖ', 'اۖ');
-    text = text.replaceAll('[s[اْ]‌ۚ', 'اْ');
-    text = text.replaceAll('[s[اْ]ۗ', 'اۗ');
-    text = text.replaceAll('[s[اْ]ۘ', 'اۘ');
-    text = text.replaceAll('[s[اْ]ۙ', 'اۙ');
-    text = text.replaceAll('[s[اْ]ۚ', 'اۚ');
-    text = text.replaceAll('[s[اْ]ۛ', 'اۛ');
-    text = text.replaceAll('[s[اْ]ۜ', 'اۜ');
-    text = text.replaceAll('‌ۖ', 'ۖ').replaceAll('‌ۗ', 'ۗ');
-
+    
     final RegExp nestedBlockPattern = RegExp(
       r'\[([a-z](?::\d+)?)\[\[([a-z](?::\d+)?)\[([^\[\]]+)\]([^\[\]]*)\]',
     );

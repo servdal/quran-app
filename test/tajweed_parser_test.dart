@@ -51,4 +51,20 @@ void main() {
     expect(plainText, isNot(contains('[o')));
     expect(plainText, isNot(contains('[s')));
   });
+
+  test('normalizes open sukun alif marker before spaces', () {
+    const tajweedText =
+        'وَءَاتَيْنَ[n[ـٰ]ه[c:12402[ُم ب]َيِّنَ[n[ـٰ][a:12403[تٍ م]ِّنَ [h:2233[ٱ]لْأَمْرِ‌ۖ فَمَا [h:6193[ٱ]خْتَلَف[o[ُوٓ][s[اْ] إِلَّا م[i:146[ِنۢ ب]َعْدِ مَا ج[o[َا]ٓءَهُمُ [h:1804[ٱ]لْعِلْمُ بَغْي[i:1169[َۢا ب]َيْنَهُمْ‌ۚ إِ[g[نّ]َ رَبَّكَ يَ[q:6194[قْ]ضِى بَيْنَهُمْ يَوْمَ [h:592[ٱ]لْقِيَ[n[ـٰ]مَةِ فِيمَا كَانُو[s[اْ] فِيهِ يَخْتَلِف[p[ُو]نَ';
+
+    final spans = TajweedParser.parse(
+      tajweedText,
+      const TextStyle(color: Colors.black),
+    );
+    final plainText = TextSpan(children: spans).toPlainText();
+
+    expect(plainText, contains('ٱخْتَلَفُوٓا۟ إِلَّا'));
+    expect(plainText, contains('كَانُوا۟ فِيهِ'));
+    expect(plainText, isNot(contains('[s')));
+    expect(spans.any((span) => (span.text ?? '').contains('فُوٓا۟')), isTrue);
+  });
 }

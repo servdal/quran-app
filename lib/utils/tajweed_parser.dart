@@ -2,18 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:quran_app/theme/app_theme.dart';
 
-/// TajweedParser (edukatif)
-///
-/// - Menjaga semua harakat dari JSON kecuali menambahkan SUKUN untuk rule tertentu (p,w,u,f)
-///   jika huruf di dalam block tidak punya harakat.
-/// - Memindahkan TANWIN dari fragmen sebelumnya ke dalam fragmen saat rule
-///   berada di daftar transferTanwinRules (a, u, w, i).
-/// - Mewarnai seluruh fragmen sambil menjaga teks Arab dengan style yang sama
-///   dalam satu TextSpan agar bentuk huruf dan posisi harakat tetap benar.
 final List<Color> colorStack = <Color>[Colors.black];
-// Helper: keep each same-style fragment intact so Arabic shaping is preserved.
 bool isTanwinCodeUnit(int cp) {
-  // 064B FATHATAN (ً), 064C DAMMATAN (ٌ), 064D KASRATAN (ٍ)
   return cp == 0x064B || cp == 0x064C || cp == 0x064D;
 }
 
@@ -32,11 +22,8 @@ class TajweedParser {
   static const String smallAlef = 'ٲ';
   static const String fatha = 'َ';
 
-  // Rules that require adding explicit sukun to the inner letter when missing
-  // (extended per user request to include 'u' and 'f')
   static const Set<String> sukunRules = {'p', 'w', 'u', 'f'};
 
-  // Rules that require moving/attaching tanwin from previous fragment to current letter
   static const Set<String> transferTanwinRules = {'a', 'u', 'w', 'i'};
 
   static List<TextSpan> parse(
@@ -60,7 +47,6 @@ class TajweedParser {
       ..clear()
       ..add(baseColor);
 
-    // small pre-normalizations (non-destructive)
     text = text.replaceAll('\u200c', '');
     
     final RegExp nestedBlockPattern = RegExp(
@@ -170,13 +156,13 @@ class TajweedParser {
       if (glyph == 'ٮٰ') {
         return 'ى';
       }
-      //if (glyph == 'ٱ') {
-      //  if (next == 'ل' || next == 'h') return 'ا';
-      //  if (fullText != null && index != null && fullText.startsWith('[l[', index + 1)) {
-      //    return 'ا';
-      //  }
-      //  return 'ال';
-      //}
+      if (glyph == 'ٱ') {
+        if (next == 'ل' || next == 'h') return 'ا';
+        if (fullText != null && index != null && fullText.startsWith('[l[', index + 1)) {
+          return 'ا';
+        }
+        return 'ال';
+      }
       if (glyph == smallAlef) {
         return daggerAlef;
       }
@@ -271,10 +257,7 @@ class TajweedParser {
       return cluster;
     }
 
-    // Try to remove and return a trailing tanwin char (if any) from buffer or last span.
-    // Returns the tanwin character removed or ''.
     String popTrailingTanwin() {
-      // check buffer first
       if (buf.isNotEmpty) {
         final s = buf.toString();
         if (s.isNotEmpty) {
@@ -294,9 +277,7 @@ class TajweedParser {
         return '';
       }
 
-      // then check spans from the end to find a trailing char that is tanwin
       if (spans.isNotEmpty) {
-        // Look at last TextSpan. Might be part of multi-span fragment; check last.
         final TextSpan lastSpan = spans.removeLast();
         final String lastText = lastSpan.text ?? '';
         if (lastText.isNotEmpty) {
@@ -309,7 +290,6 @@ class TajweedParser {
                     ? String.fromCharCodes(runes.sublist(0, runes.length - 1))
                     : '';
             if (trimmed.isNotEmpty) {
-              // put trimmed back
               spans.add(
                 TextSpan(
                   text: trimmed,
@@ -320,12 +300,10 @@ class TajweedParser {
             }
             return char;
           } else {
-            // no tanwin in last span, put it back
             spans.add(lastSpan);
             return '';
           }
         } else {
-          // empty last text - just put back
           spans.add(lastSpan);
           return '';
         }
@@ -333,15 +311,11 @@ class TajweedParser {
       return '';
     }
 
-    // Add sukun to the innerText when needed: if the first base letter lacks diacritic
-    // we append sukunChar. naive but practical: if innerText's first rune is letter and
-    // second rune is not diacritic, append sukun.
     String ensureSukunIfNeeded(String ruleKey, String innerText) {
       if (!sukunRules.contains(ruleKey)) return innerText;
       if (innerText.isEmpty) return innerText;
 
       final runes = innerText.runes.toList();
-      // find first "base letter" (skip leading diacritics if any; though unlikely)
       int idx = 0;
       while (idx < runes.length &&
           isDiacritic(String.fromCharCode(runes[idx]))) {
@@ -349,21 +323,16 @@ class TajweedParser {
       }
       if (idx >= runes.length) return innerText; // nothing to do
 
-      // if after base letter there is an explicit sukun already, do nothing
       if (idx + 1 < runes.length &&
           String.fromCharCode(runes[idx + 1]) == sukunChar) {
         return innerText;
       }
 
-      // if there is any diacritic immediately after the base letter (like fatha, dhamma, kasra, tanwin),
-      // we should NOT add sukun because it already has harakat.
       if (idx + 1 < runes.length &&
           isDiacritic(String.fromCharCode(runes[idx + 1]))) {
         return innerText;
       }
 
-      // otherwise, append sukun after the base letter.
-      // Build new string inserting sukun after first base letter
       final before = String.fromCharCodes(runes.sublist(0, idx + 1));
       final after =
           idx + 1 < runes.length
@@ -387,7 +356,6 @@ class TajweedParser {
 
         final String inside = text.substring(i + 1, end);
 
-        // empty inside -> pop color state
         if (inside.isEmpty) {
           flushBufferWithTopColor();
           if (colorStack.length > 1) {
@@ -399,14 +367,12 @@ class TajweedParser {
 
         final int innerOpen = inside.indexOf('[');
         if (innerOpen != -1) {
-          // rule with inner text: ruleName[innerText
           String ruleName = inside.substring(0, innerOpen);
           String ruleKey = ruleName;
           final int colon = ruleName.indexOf(':');
           if (colon != -1) ruleKey = ruleName.substring(0, colon).trim();
           String innerText = inside.substring(innerOpen + 1);
 
-          // if innerText begins with fatha+smallAlef -> special daggerAlef handling
           if (innerText.length >= 2 &&
               innerText[0] == fatha &&
               innerText[1] == smallAlef) {
@@ -437,7 +403,6 @@ class TajweedParser {
             continue;
           }
 
-          // minimal normalization (non-destructive)
           innerText = normalizeGlyph(
             innerText,
             next: nextChar,
@@ -452,7 +417,6 @@ class TajweedParser {
             }
           }
 
-          // *** FIX ORDER: first try to pop tanwin from previous fragment if rule requires transfer
           if (transferTanwinRules.contains(ruleKey)) {
             final String movedTanwin = popTrailingTanwin();
             if (movedTanwin.isNotEmpty) {
@@ -460,17 +424,14 @@ class TajweedParser {
             }
           }
 
-          // gather trailing diacritics after block
           int j = end + 1;
           while (j < text.length && (isDiacritic(text[j]))) {
             innerText = '$innerText${text[j]}';
             j += 1;
           }
 
-          // 2) If ruleKey is in sukunRules, ensure innerText has sukun on base letter when appropriate
           innerText = ensureSukunIfNeeded(ruleKey, innerText);
 
-          // flush buffer (with top color)
           flushBufferWithTopColor();
 
           final Color c = colorForRule(ruleName);
@@ -493,19 +454,16 @@ class TajweedParser {
           continue;
         }
 
-        // opening color token like [h:123] or [h]
         flushBufferWithTopColor();
         final Color newColor = colorForRule(inside);
         colorStack.add(newColor);
         i = end + 1;
       } else {
-        // plain char outside rule block
         buf.write(normalizeGlyph(ch, next: nextChar, fullText: text, index: i));
         i += 1;
       }
     }
 
-    // flush remaining buffer
     flushBufferWithTopColor();
     return spans;
   }

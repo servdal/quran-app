@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quran_app/theme/app_theme.dart';
 
 final List<Color> colorStack = <Color>[Colors.black];
+
 bool isTanwinCodeUnit(int cp) {
   return cp == 0x064B || cp == 0x064C || cp == 0x064D;
 }
@@ -49,15 +50,20 @@ class TajweedParser {
 
     text = text.replaceAll('\u200c', '');
     
+    // PERBAIKAN UTAMA: Regex yang bisa menangani teks di antara tag bersarang
     final RegExp nestedBlockPattern = RegExp(
-      r'\[([a-z](?::\d+)?)\[\[([a-z](?::\d+)?)\[([^\[\]]+)\]([^\[\]]*)\]',
+      r'\[([a-zA-Z0-9_]+(?::\d+)?)\[([^\[\]]*)\[([a-zA-Z0-9_]+(?::\d+)?)\[([^\[\]]+)\]([^\[\]]*)\]',
     );
+    
+    // Looping untuk meratakan (flatten) semua tag yang bersarang dari dalam ke luar
     while (nestedBlockPattern.hasMatch(text)) {
       text = text.replaceAllMapped(nestedBlockPattern, (match) {
         final String outerRule = match.group(1)!;
-        final String innerBody = match.group(3)!;
-        final String trailingText = match.group(4)!;
-        return '[$outerRule[$innerBody$trailingText]';
+        final String textBefore = match.group(2)!; // Teks sebelum inner tag (misal: ُوٓ)
+        // match.group(3) adalah inner rule, kita lewati seperti logika asli Anda
+        final String innerBody = match.group(4)!;
+        final String trailingText = match.group(5)!;
+        return '[$outerRule[$textBefore$innerBody$trailingText]';
       });
     }
 
@@ -403,12 +409,16 @@ class TajweedParser {
             continue;
           }
 
-          innerText = normalizeGlyph(
-            innerText,
-            next: nextChar,
-            fullText: text,
-            index: i,
-          );
+          // PERBAIKAN TAMBAHAN: Eksekusi normalizeGlyph per-karakter jika itu berupa string panjang
+          if (innerText.isNotEmpty) {
+            String normalizedInner = '';
+            for (int k = 0; k < innerText.length; k++) {
+              String charToNorm = innerText[k];
+              String? nxt = (k + 1 < innerText.length) ? innerText[k + 1] : nextChar;
+              normalizedInner += normalizeGlyph(charToNorm, next: nxt, fullText: text, index: i + 1 + innerOpen + 1 + k);
+            }
+            innerText = normalizedInner;
+          }
 
           if (innerText.isNotEmpty && isDiacritic(innerText[0])) {
             final String previousCluster = popTrailingCluster();

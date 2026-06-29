@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:speech_to_text/speech_to_text.dart';
-import 'dart:math' as math;
+import 'dart:async';
 import '../services/quran_data_service.dart';
 import '../providers/settings_provider.dart';
 import '../providers/bookmark_provider.dart';
 import '../models/ayah_model.dart';
+import '../services/offline_recitation_recognizer.dart';
+import '../utils/recitation_alignment.dart';
+import 'offline_model_manager_screen.dart';
+
+enum HafalanScope { page, surah }
 
 class HafalanViewScreen extends ConsumerStatefulWidget {
   final int initialPage;
-  const HafalanViewScreen({super.key, required this.initialPage});
+  final int? initialSurah;
+  final HafalanScope scope;
+
+  const HafalanViewScreen({super.key, required this.initialPage})
+    : initialSurah = null,
+      scope = HafalanScope.page;
+
+  const HafalanViewScreen.bySurah({super.key, required this.initialSurah})
+    : initialPage = 1,
+      scope = HafalanScope.surah;
 
   @override
   ConsumerState<HafalanViewScreen> createState() => _HafalanViewScreenState();
@@ -17,23 +30,26 @@ class HafalanViewScreen extends ConsumerStatefulWidget {
 
 class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     with SingleTickerProviderStateMixin {
-  final SpeechToText _speechToText = SpeechToText();
+  final OfflineRecitationRecognizer _recitationRecognizer =
+      OfflineRecitationRecognizer();
   final ScrollController _scrollController = ScrollController();
+  StreamSubscription<OfflineRecognitionResult>? _recognizerSubscription;
   late int _currentPage;
+  late int _currentSurah;
   List<String> _targetWords = [];
   List<GlobalKey> _wordKeys = [];
   int _currentIndex = 0;
 
   int _mistakeCount = 0;
   int _totalSkipCount = 0;
-  int _lastResultLength = 0;
-  Set<int> _skippedIndices = {};
+  final Set<int> _skippedIndices = {};
 
   static const int _hintThreshold = 3;
   static const int _skipThreshold = 6;
 
   String _statusMessage = 'Tekan mikrofon untuk mulai';
   bool _isListening = false;
+  bool _isRecognizerReady = false;
 
   String _currentSurahName = '';
   int _currentSurahId = 0;
@@ -41,10 +57,15 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   late Animation<double> _pulseAnimation;
   String _liveRecognizedWords = "";
 
+  bool get _isSurahScope => widget.scope == HafalanScope.surah;
+  int get _currentUnit => _isSurahScope ? _currentSurah : _currentPage;
+  int get _lastUnit => _isSurahScope ? 114 : 604;
+
   @override
   void initState() {
     super.initState();
     _currentPage = widget.initialPage;
+    _currentSurah = widget.initialSurah ?? 1;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final lang = ref.read(settingsProvider).language;
       setState(() {
@@ -54,7 +75,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                 : 'Tekan mikrofon untuk mulai';
       });
     });
-    _initSpeech();
+    _initOfflineRecognizer();
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -66,39 +87,50 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
 
   @override
   void dispose() {
-    _speechToText.stop();
+    _recognizerSubscription?.cancel();
+    _recitationRecognizer.stop();
     _pulseController.stop();
     _pulseController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
-  void _initSpeech() async {
-    await _speechToText.initialize(
-      onError: (val) {
-        if (!mounted) return;
-        setState(() {
-          _statusMessage = "Error: ${val.errorMsg}";
-          _isListening = false;
-          _mistakeCount++;
-          _pulseController.stop();
-          _pulseController.reset();
-        });
-      },
-      onStatus: (val) {
-        if (!mounted) return;
+  Future<void> _initOfflineRecognizer() async {
+    final lang = ref.read(settingsProvider).language;
+    final available = await _recitationRecognizer.isAvailable();
+    if (!mounted) return;
 
-        if (val == 'listening') {
-          setState(() => _isListening = true);
-          _pulseController.repeat(reverse: true);
-        } else if (val == 'notListening' || val == 'done') {
-          setState(() => _isListening = false);
+    await _recognizerSubscription?.cancel();
+    _recognizerSubscription = null;
+
+    if (available) {
+      _recognizerSubscription = _recitationRecognizer.results.listen(
+        _handleRecognitionResult,
+        onError: (error) {
+          if (!mounted) return;
+          setState(() {
+            _statusMessage =
+                lang == 'en'
+                    ? 'Offline recitation engine error: $error'
+                    : 'Mesin hafalan offline bermasalah: $error';
+            _isListening = false;
+            _mistakeCount++;
+          });
           _pulseController.stop();
           _pulseController.reset();
-        }
-      },
-    );
-    if (mounted) setState(() {});
+        },
+      );
+    }
+
+    setState(() {
+      _isRecognizerReady = available;
+      if (!available) {
+        _statusMessage =
+            lang == 'en'
+                ? 'Offline Whisper/Vosk model is not ready'
+                : 'Model offline Whisper/Vosk belum siap';
+      }
+    });
   }
 
   void _prepareData(List<Ayah> ayahs) {
@@ -129,7 +161,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     if (_targetWords.isEmpty) return;
 
     while (_currentIndex < _targetWords.length &&
-        _normalize(_targetWords[_currentIndex]).isEmpty) {
+        RecitationAlignment.normalizePhonetic(
+          _targetWords[_currentIndex],
+        ).isEmpty) {
       _currentIndex++;
     }
     _mistakeCount = 0;
@@ -178,101 +212,131 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       _currentIndex++;
       _statusMessage = lang == 'en' ? "Word skipped" : "Kata dilewati (Skip)";
       _liveRecognizedWords = "";
-      _speechToText.stop();
     });
 
+    _recitationRecognizer.stop();
     _advanceToNextSpeakable();
     Future.delayed(const Duration(milliseconds: 300), () {
       if (mounted) _startListening();
     });
   }
 
-  void _startListening() async {
+  Future<void> _startListening() async {
     final lang = ref.read(settingsProvider).language;
+    if (!_isRecognizerReady) {
+      setState(() {
+        _statusMessage =
+            lang == 'en'
+                ? 'Install an offline Whisper tiny/base or Vosk Arabic model first'
+                : 'Pasang model offline Whisper tiny/base atau Vosk Arabic dulu';
+      });
+      return;
+    }
+
+    if (_currentIndex >= _targetWords.length) return;
+
     setState(() {
       _statusMessage = lang == 'en' ? "Listening..." : "Mendengarkan...";
-      _lastResultLength = 0;
       _liveRecognizedWords = "";
+      _isListening = true;
     });
-    await _speechToText.listen(
-      onResult: (result) {
-        setState(() {
-          _liveRecognizedWords = result.recognizedWords;
-        });
-        if (result.recognizedWords.length < _lastResultLength) {
-          _lastResultLength = 0;
-        }
-        String freshWords = "";
-        if (result.recognizedWords.length > _lastResultLength) {
-          freshWords =
-              result.recognizedWords.substring(_lastResultLength).trim();
-        }
-        if (freshWords.isNotEmpty) {
-          _verifyStream(
-            freshWords,
-            result.alternates.map((e) => e.recognizedWords).toList(),
-          );
-        }
-        bool matchFound = _verifyStream(
-          result.recognizedWords,
-          result.alternates.map((e) => e.recognizedWords).toList(),
-        );
 
-        if (result.finalResult) {
-          if (!matchFound) {
-            setState(() {
-              _mistakeCount++;
-              int sisaSkip = _skipThreshold - _mistakeCount;
+    _pulseController.repeat(reverse: true);
+    final activeWords =
+        _targetWords
+            .skip(_currentIndex)
+            .take(12)
+            .where(
+              (word) => RecitationAlignment.normalizePhonetic(word).isNotEmpty,
+            )
+            .toList();
 
-              if (_mistakeCount < _hintThreshold) {
-                _statusMessage =
-                    lang == 'en'
-                        ? "Wrong ($_mistakeCount). Try again!"
-                        : "Salah ($_mistakeCount). Ayo coba lagi!";
-              } else if (_mistakeCount < _skipThreshold) {
-                _statusMessage =
-                    lang == 'en'
-                        ? "Hint shown. Skip available in ${sisaSkip}x."
-                        : "Hint muncul. Skip aktif dalam ${sisaSkip}x.";
-              } else {
-                _statusMessage =
-                    lang == 'en'
-                        ? "6 mistakes. Skip button ACTIVE."
-                        : "Sudah 6x salah. Tombol Skip AKTIF.";
-              }
+    try {
+      await _recitationRecognizer.configure(
+        engine: OfflineRecitationEngine.whisper,
+        activeWords: activeWords,
+        expectedPhrase: activeWords.join(' '),
+      );
+      await _recitationRecognizer.start();
+    } catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _isListening = false;
+        _statusMessage =
+            lang == 'en'
+                ? 'Offline recitation engine is unavailable'
+                : 'Mesin hafalan offline belum tersedia';
+      });
+      _pulseController.stop();
+      _pulseController.reset();
+    }
+  }
 
-              if (_mistakeCount < 10) {
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  if (mounted && !_isListening) _startListening();
-                });
-              }
-            });
-          }
-        }
-      },
-      localeId: "ar_SA",
-      // ignore: deprecated_member_use
-      listenMode: ListenMode.dictation,
-      // ignore: deprecated_member_use
-      partialResults: true,
-      pauseFor: const Duration(seconds: 5),
-    );
+  void _handleRecognitionResult(OfflineRecognitionResult result) {
+    final lang = ref.read(settingsProvider).language;
+    final displayText =
+        result.transcript.isNotEmpty ? result.transcript : result.phonemes;
+
+    setState(() {
+      _liveRecognizedWords = displayText;
+    });
+
+    final matchFound = _verifyStream([
+      result.transcript,
+      result.phonemes,
+      ...result.alternatives,
+    ]);
+
+    if (!result.isFinal || matchFound) return;
+
+    setState(() {
+      _mistakeCount++;
+      final sisaSkip = _skipThreshold - _mistakeCount;
+
+      if (_mistakeCount < _hintThreshold) {
+        _statusMessage =
+            lang == 'en'
+                ? "Wrong ($_mistakeCount). Try again!"
+                : "Salah ($_mistakeCount). Ayo coba lagi!";
+      } else if (_mistakeCount < _skipThreshold) {
+        _statusMessage =
+            lang == 'en'
+                ? "Hint shown. Skip available in ${sisaSkip}x."
+                : "Hint muncul. Skip aktif dalam ${sisaSkip}x.";
+      } else {
+        _statusMessage =
+            lang == 'en'
+                ? "6 mistakes. Skip button ACTIVE."
+                : "Sudah 6x salah. Tombol Skip AKTIF.";
+      }
+      _isListening = false;
+    });
+
+    _pulseController.stop();
+    _pulseController.reset();
+
+    if (_mistakeCount < 10) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted && !_isListening) _startListening();
+      });
+    }
   }
 
   // Update logika saat stop manual atau ganti halaman
   void _stopListeningManual() {
-    _speechToText.stop();
+    _recitationRecognizer.stop();
     _pulseController.stop(); // Stop animasi
+    _pulseController.reset();
     setState(() {
       _isListening = false;
       _liveRecognizedWords = "";
     });
   }
 
-  bool _verifyStream(String primaryResult, List<String> alternates) {
+  bool _verifyStream(List<String> hypotheses) {
     final lang = ref.read(settingsProvider).language;
     if (_currentIndex >= _targetWords.length) {
-      _speechToText.stop();
+      _recitationRecognizer.stop();
       setState(
         () =>
             _statusMessage =
@@ -283,21 +347,17 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       return true;
     }
 
-    String targetRaw = _targetWords[_currentIndex];
-    String targetClean = _normalize(targetRaw);
-    String inputClean = _normalize(primaryResult);
-    double score = _calculateSimilarity(inputClean, targetClean);
-    bool isMatch = score >= 0.40;
-    if (!isMatch && inputClean.contains(targetClean)) {
-      isMatch = true;
-    }
-    if (isMatch) {
+    final match = RecitationAlignment.align(
+      hypotheses: hypotheses,
+      targetWords: _targetWords,
+      currentIndex: _currentIndex,
+    );
+
+    if (match.isMatch) {
       setState(() {
-        _currentIndex++;
+        _currentIndex += match.matchedWordCount;
         _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
         _mistakeCount = 0;
-
-        _lastResultLength = _liveRecognizedWords.length;
       });
 
       _advanceToNextSpeakable();
@@ -306,82 +366,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     }
 
     return false;
-  }
-
-  double _calculateSimilarity(String s1, String s2) {
-    if (s1.isEmpty || s2.isEmpty) return 0.0;
-    if (s1 == s2) return 1.0;
-    int dist = _levenshtein(s1, s2);
-    int maxLen = math.max(s1.length, s2.length);
-    return 1.0 - (dist / maxLen);
-  }
-
-  int _levenshtein(String s, String t) {
-    if (s == t) return 0;
-    if (s.isEmpty) return t.length;
-    if (t.isEmpty) return s.length;
-    List<int> v0 = List<int>.filled(t.length + 1, 0);
-    List<int> v1 = List<int>.filled(t.length + 1, 0);
-    for (int i = 0; i < t.length + 1; i++) v0[i] = i;
-    for (int i = 0; i < s.length; i++) {
-      v1[0] = i + 1;
-      for (int j = 0; j < t.length; j++) {
-        int cost = (s.codeUnitAt(i) == t.codeUnitAt(j)) ? 0 : 1;
-        v1[j + 1] = math.min(v1[j] + 1, math.min(v0[j + 1] + 1, v0[j] + cost));
-      }
-      for (int j = 0; j < t.length + 1; j++) v0[j] = v1[j];
-    }
-    return v1[t.length];
-  }
-
-  String _normalize(String text) {
-    if (text.isEmpty) return "";
-    String clean = text;
-
-    clean = clean.replaceAll('الموس', 'المس');
-    clean = clean.replaceAll('تعقيم', 'تقيم');
-    clean = clean.replaceAll('سيرات', 'سراط');
-    clean = clean.replaceAll('1000', 'ا');
-    clean = clean.replaceAll('١٠٠٠', 'ا');
-
-    clean = clean.replaceAll('ص', 'س');
-    clean = clean.replaceAll('ط', 'ت');
-    clean = clean.replaceAll('ظ', 'ز');
-    clean = clean.replaceAll('ذ', 'ز');
-    clean = clean.replaceAll('ث', 'س');
-    clean = clean.replaceAll('ق', 'ك');
-
-    Map<String, String> map = {
-      'الف': 'ا',
-      'لام': 'ل',
-      'ميم': 'م',
-      'كاف': 'ك',
-      'ها': 'ه',
-      'يا': 'ي',
-      'عين': 'ع',
-      'سين': 'س',
-      'نون': 'ن',
-      'طه': 'طه',
-      'يس': 'يس',
-      'حم': 'حم',
-    };
-    map.forEach((k, v) {
-      if (k.length > 1) clean = clean.replaceAll(RegExp(r'\b' + k + r'\b'), v);
-    });
-
-    clean = clean.replaceAll(RegExp(r'[إأآٱ]'), 'ا');
-    clean = clean.replaceAll(RegExp(r'[ىئ]'), 'ي');
-    clean = clean.replaceAll('ة', 'ه');
-    clean = clean.replaceAll('ؤ', 'و');
-
-    clean = clean.replaceAll(RegExp(r'[^\u0600-\u06FF]'), '');
-    clean = clean.replaceAll(
-      RegExp(r'[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]'),
-      '',
-    );
-    clean = clean.replaceAll(' ', '');
-
-    return clean.trim();
   }
 
   void _showBookmarkDialog() {
@@ -454,7 +438,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                             overflow: TextOverflow.ellipsis,
                           ),
                           subtitle: Text(
-                            "Page. ${bookmark.pageNumber} • ${bookmark.surahName}",
+                            bookmark.pageNumber == null
+                                ? "Surah • ${bookmark.surahName}"
+                                : "Page. ${bookmark.pageNumber} • ${bookmark.surahName}",
                             style: const TextStyle(fontSize: 11),
                           ),
                           onTap: () {
@@ -496,7 +482,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       surahId: _currentSurahId,
       surahName: _currentSurahName,
       ayahNumber: 1,
-      pageNumber: _currentPage,
+      pageNumber: _isSurahScope ? null : _currentPage,
     );
     await ref
         .read(bookmarkProvider.notifier)
@@ -521,20 +507,31 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
 
   @override
   Widget build(BuildContext context) {
-    final ayahsAsync = ref.watch(pageAyahsProvider(_currentPage));
+    final ayahsAsync =
+        _isSurahScope
+            ? ref.watch(surahAyahsProvider(_currentSurah))
+            : ref.watch(pageAyahsProvider(_currentPage));
     final settings = ref.watch(settingsProvider);
     final bookmarksMap = ref.watch(bookmarkProvider);
     final lang = settings.language;
     final isBookmarked = bookmarksMap.values.any(
-      (b) => b.type == BookmarkViewType.hafalan && b.pageNumber == _currentPage,
+      (b) =>
+          b.type == BookmarkViewType.hafalan &&
+          (_isSurahScope
+              ? b.pageNumber == null && b.surahId == _currentSurah
+              : b.pageNumber == _currentPage),
     );
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          lang == 'en'
-              ? "Memorization Pg. $_currentPage"
-              : "Hafalan Hal. $_currentPage",
+          _isSurahScope
+              ? (lang == 'en'
+                  ? "Memorization Surah $_currentSurah"
+                  : "Hafalan Surah $_currentSurah")
+              : (lang == 'en'
+                  ? "Memorization Pg. $_currentPage"
+                  : "Hafalan Hal. $_currentPage"),
         ),
         centerTitle: true,
         elevation: 0,
@@ -547,8 +544,16 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
             onPressed: _showBookmarkDialog,
           ),
           IconButton(
+            icon: const Icon(Icons.model_training_outlined),
+            tooltip:
+                lang == 'en'
+                    ? 'Offline recitation models'
+                    : 'Model hafalan offline',
+            onPressed: _openOfflineModelManager,
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () => _changePage(_currentPage),
+            onPressed: () => _changeUnit(_currentUnit),
           ),
         ],
       ),
@@ -646,7 +651,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, -5),
           ),
@@ -657,6 +662,21 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildLiveListeningPanel(),
+          if (!_isRecognizerReady) ...[
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.download_for_offline_outlined),
+                label: Text(
+                  lang == 'en'
+                      ? 'Download offline model'
+                      : 'Unduh model offline',
+                ),
+                onPressed: _openOfflineModelManager,
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: Text(
@@ -680,8 +700,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new),
                 onPressed:
-                    _currentPage < 604
-                        ? () => _changePage(_currentPage + 1)
+                    _currentUnit < _lastUnit
+                        ? () => _changeUnit(_currentUnit + 1)
                         : null,
               ),
 
@@ -691,8 +711,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                   GestureDetector(
                     onTap: () {
                       if (_isListening) {
-                        _speechToText.stop();
-                        setState(() => _isListening = false);
                         _stopListeningManual();
                       } else {
                         _startListening();
@@ -710,7 +728,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                             color: (_isListening
                                     ? Colors.redAccent
                                     : Colors.teal)
-                                .withOpacity(0.4),
+                                .withValues(alpha: 0.4),
                             blurRadius: 15,
                             spreadRadius: 2,
                           ),
@@ -776,8 +794,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
               IconButton(
                 icon: const Icon(Icons.arrow_forward_ios),
                 onPressed:
-                    _currentPage > 1
-                        ? () => _changePage(_currentPage - 1)
+                    _currentUnit > 1
+                        ? () => _changeUnit(_currentUnit - 1)
                         : null,
               ),
             ],
@@ -788,8 +806,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   }
 
   Widget _buildLiveListeningPanel() {
-    if (!_isListening && _liveRecognizedWords.isEmpty)
+    if (!_isListening && _liveRecognizedWords.isEmpty) {
       return const SizedBox.shrink();
+    }
 
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
@@ -798,9 +817,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.green.withOpacity(0.1),
+          color: Colors.green.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.green.withOpacity(0.3)),
+          border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
         ),
         child: Column(
           children: [
@@ -814,7 +833,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.green.withOpacity(0.4),
+                      color: Colors.green.withValues(alpha: 0.4),
                       blurRadius: 10,
                       spreadRadius: 2,
                     ),
@@ -842,10 +861,14 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     );
   }
 
-  void _changePage(int p) {
+  void _changeUnit(int value) {
     final lang = ref.read(settingsProvider).language;
     setState(() {
-      _currentPage = p;
+      if (_isSurahScope) {
+        _currentSurah = value;
+      } else {
+        _currentPage = value;
+      }
       _targetWords = [];
       _currentIndex = 0;
       _mistakeCount = 0;
@@ -855,6 +878,16 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       _statusMessage = lang == 'en' ? "Ready for recitation?" : "Siap hafalan?";
       _isListening = false;
     });
-    _speechToText.stop();
+    _recitationRecognizer.stop();
+  }
+
+  Future<void> _openOfflineModelManager() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const OfflineModelManagerScreen()),
+    );
+    if (mounted) {
+      _initOfflineRecognizer();
+    }
   }
 }

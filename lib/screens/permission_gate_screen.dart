@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:quran_app/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class PermissionGateScreen extends StatefulWidget {
   final Widget next;
@@ -41,10 +40,6 @@ class _PermissionGateScreenState extends State<PermissionGateScreen> {
         // Location permission (used for prayer time).
         await Geolocator.requestPermission();
 
-        // Microphone & speech recognition permission (used for hafalan/search).
-        final speech = stt.SpeechToText();
-        await speech.initialize();
-
         // Android 12+ exact alarms permission is requested in NotificationService.init(),
         // and may open a system dialog/settings screen.
         if (Platform.isAndroid) {
@@ -65,9 +60,9 @@ class _PermissionGateScreenState extends State<PermissionGateScreen> {
   }
 
   void _goNext() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => widget.next),
-    );
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => widget.next));
   }
 
   @override
@@ -117,8 +112,8 @@ class _PermissionGateScreenState extends State<PermissionGateScreen> {
             ),
             const _PermItem(
               icon: Icons.mic_none_outlined,
-              title: 'Mikrofon & Pengenalan Suara',
-              subtitle: 'Untuk fitur hafalan/pencarian suara.',
+              title: 'Mikrofon',
+              subtitle: 'Untuk fitur hafalan offline.',
             ),
             const _PermItem(
               icon: Icons.notifications_none_outlined,
@@ -192,4 +187,3 @@ class _PermItem extends StatelessWidget {
     );
   }
 }
-

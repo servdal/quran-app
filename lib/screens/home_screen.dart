@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/screens/deresan_view_screen.dart';
+import 'package:quran_app/screens/hafalan_entry_screen.dart';
 import 'package:quran_app/screens/hafalan_screen.dart';
 import 'package:quran_app/screens/language_selector_screen.dart';
 import 'package:quran_app/screens/page_view_screen.dart';
@@ -22,7 +24,6 @@ import 'package:quran_app/screens/page_list_screen.dart';
 import 'package:quran_app/screens/permission_gate_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,72 +35,125 @@ import 'package:quran_app/screens/qibla_screen.dart';
 
 // --- PROVIDER & LOGIC ---
 final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+  final prefs = await SharedPreferences.getInstance();
+
   try {
     Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
     );
-    final response = await http.get(
-      Uri.parse(
-        "http://api.aladhan.com/v1/timings?latitude=${position.latitude}&longitude=${position.longitude}",
-      ),
+    await prefs.setDouble('last_prayer_latitude', position.latitude);
+    await prefs.setDouble('last_prayer_longitude', position.longitude);
+
+    final location = await _resolveLocationName(
+      prefs,
+      position.latitude,
+      position.longitude,
     );
-
-    if (response.statusCode == 200) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('last_prayer_data', response.body);
-      final data = _processPrayerData(response.body);
-      try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(
-          position.latitude,
-          position.longitude,
-        );
-        if (placemarks.isNotEmpty) {
-          final p = placemarks.first;
-          String? city = p.locality;
-          String? subAdmin = p.subAdministrativeArea;
-          String? admin = p.administrativeArea;
-          String shortAddress = [
-                city,
-                if (city == null || city.isEmpty) subAdmin,
-                admin,
-              ]
-              .where((e) => e != null && e.isNotEmpty)
-              .map((e) => e!)
-              .toList()
-              .join(', ');
-
-          if (shortAddress.isEmpty) {
-            shortAddress =
-                "Koordinat (${position.latitude.toStringAsFixed(3)}, ${position.longitude.toStringAsFixed(3)})";
-          }
-
-          data["location"] = shortAddress;
-        }
-      } catch (_) {}
-      return data;
-    } else {
-      throw Exception("Gagal muat");
-    }
+    return _buildOfflinePrayerData(
+      latitude: position.latitude,
+      longitude: position.longitude,
+      location: location,
+    );
   } catch (e) {
-    final prefs = await SharedPreferences.getInstance();
+    final latitude = prefs.getDouble('last_prayer_latitude');
+    final longitude = prefs.getDouble('last_prayer_longitude');
+    if (latitude != null && longitude != null) {
+      final location =
+          prefs.getString('last_prayer_location') ??
+          _coordinateLabel(latitude, longitude);
+      return _buildOfflinePrayerData(
+        latitude: latitude,
+        longitude: longitude,
+        location: location,
+      );
+    }
+
     final offlineData = prefs.getString('last_prayer_data');
     if (offlineData != null) return _processPrayerData(offlineData);
     rethrow;
   }
 });
 
+Future<String> _resolveLocationName(
+  SharedPreferences prefs,
+  double latitude,
+  double longitude,
+) async {
+  try {
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      latitude,
+      longitude,
+    );
+    if (placemarks.isNotEmpty) {
+      final p = placemarks.first;
+      String? city = p.locality;
+      String? subAdmin = p.subAdministrativeArea;
+      String? admin = p.administrativeArea;
+      String shortAddress = [
+            city,
+            if (city == null || city.isEmpty) subAdmin,
+            admin,
+          ]
+          .where((e) => e != null && e.isNotEmpty)
+          .map((e) => e!)
+          .toList()
+          .join(', ');
+
+      if (shortAddress.isNotEmpty) {
+        await prefs.setString('last_prayer_location', shortAddress);
+        return shortAddress;
+      }
+    }
+  } catch (_) {}
+
+  final fallback = _coordinateLabel(latitude, longitude);
+  await prefs.setString('last_prayer_location', fallback);
+  return fallback;
+}
+
+String _coordinateLabel(double latitude, double longitude) {
+  return "Koordinat (${latitude.toStringAsFixed(3)}, ${longitude.toStringAsFixed(3)})";
+}
+
+Map<String, dynamic> _buildOfflinePrayerData({
+  required double latitude,
+  required double longitude,
+  required String location,
+}) {
+  final now = DateTime.now();
+  final timings = _calculatePrayerTimings(now, latitude, longitude);
+  return _processPrayerTimings(
+    timings: timings,
+    location: location,
+    hijriDate: _formatHijriDate(now),
+  );
+}
+
 Map<String, dynamic> _processPrayerData(String jsonData) {
   final data = jsonDecode(jsonData);
   final timings = data["data"]["timings"];
+  final hijriData = data["data"]["date"]["hijri"];
+  final hijriDateString =
+      "${hijriData['day']} ${hijriData['month']['en']} ${hijriData['year']}";
+
+  return _processPrayerTimings(
+    timings: timings,
+    location: data["data"]["meta"]["timezone"],
+    hijriDate: hijriDateString,
+  );
+}
+
+Map<String, dynamic> _processPrayerTimings({
+  required Map timings,
+  required String location,
+  required String hijriDate,
+}) {
   final prayerOrder = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
   final now = DateTime.now();
 
   String? nextName;
   DateTime? nextTime;
   DateTime? prevTime;
-  final hijriData = data["data"]["date"]["hijri"];
-  final hijriDateString =
-      "${hijriData['day']} ${hijriData['month']['en']} ${hijriData['year']}";
   for (int i = 0; i < prayerOrder.length; i++) {
     DateTime pTime = DateFormat("HH:mm").parse(timings[prayerOrder[i]]);
     pTime = DateTime(now.year, now.month, now.day, pTime.hour, pTime.minute);
@@ -135,13 +189,175 @@ Map<String, dynamic> _processPrayerData(String jsonData) {
   }
 
   return {
-    "location": data["data"]["meta"]["timezone"],
-    "hijriDate": hijriDateString,
+    "location": location,
+    "hijriDate": hijriDate,
     "timings": timings,
     "closestPrayer": nextName,
     "closestTime": nextTime,
     "prevTime": prevTime,
   };
+}
+
+Map<String, String> _calculatePrayerTimings(
+  DateTime date,
+  double latitude,
+  double longitude,
+) {
+  const fajrAngle = 20.0;
+  const ishaAngle = 18.0;
+  const asrShadowFactor = 1.0;
+  const ihtiyatMinutes = 2.0;
+
+  final midnight = DateTime(date.year, date.month, date.day);
+  final solar = _solarPosition(date);
+  final timezoneOffset = date.timeZoneOffset.inMinutes.toDouble();
+  final noonMinutes =
+      720 - (4 * longitude) - solar.equationOfTime + timezoneOffset;
+  final latitudeRad = _degToRad(latitude);
+
+  final fajr =
+      noonMinutes -
+      _hourAngleMinutes(latitudeRad, solar.declination, -fajrAngle) +
+      ihtiyatMinutes;
+  final sunrise =
+      noonMinutes - _hourAngleMinutes(latitudeRad, solar.declination, -0.833);
+  final dhuhr = noonMinutes + ihtiyatMinutes;
+  final asrAltitude = _radToDeg(
+    math.atan(
+      1 / (asrShadowFactor + math.tan((latitudeRad - solar.declination).abs())),
+    ),
+  );
+  final asr =
+      noonMinutes +
+      _hourAngleMinutes(latitudeRad, solar.declination, asrAltitude) +
+      ihtiyatMinutes;
+  final maghrib =
+      noonMinutes +
+      _hourAngleMinutes(latitudeRad, solar.declination, -0.833) +
+      ihtiyatMinutes;
+  final isha =
+      noonMinutes +
+      _hourAngleMinutes(latitudeRad, solar.declination, -ishaAngle) +
+      ihtiyatMinutes;
+
+  return {
+    'Fajr': _formatMinutes(midnight, fajr),
+    'Sunrise': _formatMinutes(midnight, sunrise),
+    'Dhuhr': _formatMinutes(midnight, dhuhr),
+    'Asr': _formatMinutes(midnight, asr),
+    'Maghrib': _formatMinutes(midnight, maghrib),
+    'Isha': _formatMinutes(midnight, isha),
+  };
+}
+
+_SolarPosition _solarPosition(DateTime date) {
+  final dayOfYear = date.difference(DateTime(date.year, 1, 1)).inDays + 1;
+  final gamma = (2 * math.pi / 365) * (dayOfYear - 1);
+  final equationOfTime =
+      229.18 *
+      (0.000075 +
+          0.001868 * math.cos(gamma) -
+          0.032077 * math.sin(gamma) -
+          0.014615 * math.cos(2 * gamma) -
+          0.040849 * math.sin(2 * gamma));
+  final declination =
+      0.006918 -
+      0.399912 * math.cos(gamma) +
+      0.070257 * math.sin(gamma) -
+      0.006758 * math.cos(2 * gamma) +
+      0.000907 * math.sin(2 * gamma) -
+      0.002697 * math.cos(3 * gamma) +
+      0.00148 * math.sin(3 * gamma);
+
+  return _SolarPosition(equationOfTime, declination);
+}
+
+double _hourAngleMinutes(
+  double latitudeRad,
+  double declinationRad,
+  double altitudeDegrees,
+) {
+  final altitudeRad = _degToRad(altitudeDegrees);
+  final cosHourAngle =
+      (math.sin(altitudeRad) -
+          (math.sin(latitudeRad) * math.sin(declinationRad))) /
+      (math.cos(latitudeRad) * math.cos(declinationRad));
+  final hourAngle = math.acos(cosHourAngle.clamp(-1.0, 1.0));
+  return _radToDeg(hourAngle) * 4;
+}
+
+String _formatMinutes(DateTime midnight, double minutes) {
+  final dateTime = midnight.add(Duration(minutes: minutes.round()));
+  return DateFormat('HH:mm').format(dateTime);
+}
+
+String _formatHijriDate(DateTime date) {
+  final hijri = _gregorianToHijri(date);
+  const monthNames = [
+    'Muharram',
+    'Safar',
+    'Rabi al-awwal',
+    'Rabi al-thani',
+    'Jumada al-awwal',
+    'Jumada al-thani',
+    'Rajab',
+    "Sha'ban",
+    'Ramadan',
+    'Shawwal',
+    'Dhu al-Qadah',
+    'Dhu al-Hijjah',
+  ];
+  return "${hijri.day} ${monthNames[hijri.month - 1]} ${hijri.year}";
+}
+
+_HijriDate _gregorianToHijri(DateTime date) {
+  final jd = _gregorianToJulianDay(date.year, date.month, date.day);
+  var l = jd - 1948440 + 10632;
+  final n = ((l - 1) / 10631).floor();
+  l = l - (10631 * n) + 354;
+  final j =
+      (((10985 - l) / 5316).floor() * ((50 * l) / 17719).floor()) +
+      ((l / 5670).floor() * ((43 * l) / 15238).floor());
+  l =
+      l -
+      (((30 - j) / 15).floor() * ((17719 * j) / 50).floor()) -
+      ((j / 16).floor() * ((15238 * j) / 43).floor()) +
+      29;
+  final month = ((24 * l) / 709).floor();
+  final day = l - ((709 * month) / 24).floor();
+  final year = (30 * n) + j - 30;
+  return _HijriDate(year, month, day);
+}
+
+int _gregorianToJulianDay(int year, int month, int day) {
+  final a = ((14 - month) / 12).floor();
+  final y = year + 4800 - a;
+  final m = month + (12 * a) - 3;
+  return day +
+      (((153 * m) + 2) / 5).floor() +
+      (365 * y) +
+      (y / 4).floor() -
+      (y / 100).floor() +
+      (y / 400).floor() -
+      32045;
+}
+
+double _degToRad(double degrees) => degrees * math.pi / 180;
+double _radToDeg(double radians) => radians * 180 / math.pi;
+
+class _SolarPosition {
+  const _SolarPosition(this.equationOfTime, this.declination);
+
+  final double equationOfTime;
+  final double declination;
+}
+
+class _HijriDate {
+  const _HijriDate(this.year, this.month, this.day);
+
+  final int year;
+  final int month;
+  final int day;
 }
 
 // --- MAIN SCREEN ---
@@ -228,8 +444,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           prayerTime: nextTime,
           isId: isId,
         );
-        if (Platform.isMacOS){
-
+        if (Platform.isMacOS) {
           await notificationService.showSticky(
             timings: data['timings'],
             nextPrayer: prayer,
@@ -568,12 +783,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap:
                 () => Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder:
-                        (_) => const PageListScreen(
-                          mode: PageListViewMode.hafalan,
-                        ),
-                  ),
+                  MaterialPageRoute(builder: (_) => const HafalanEntryScreen()),
                 ),
             theme: theme,
           ),
@@ -989,7 +1199,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           context,
           MaterialPageRoute(
             builder:
-                (_) => HafalanViewScreen(initialPage: bookmark.pageNumber!),
+                (_) =>
+                    bookmark.pageNumber == null
+                        ? HafalanViewScreen.bySurah(
+                          initialSurah: bookmark.surahId,
+                        )
+                        : HafalanViewScreen(initialPage: bookmark.pageNumber!),
           ),
         );
         break;

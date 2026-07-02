@@ -30,6 +30,8 @@
 	<string>NSApplication</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Aplikasi ini membutuhkan mikrofon untuk mendengarkan hafalan Anda.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Aplikasi ini membutuhkan pengenalan suara on-device untuk memverifikasi hafalan.</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Aplikasi membutuhkan lokasi untuk menghitung jadwal sholat dan arah kiblat.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

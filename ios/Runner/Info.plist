@@ -52,6 +52,8 @@
 	<string>Aplikasi membutuhkan lokasi Anda untuk menentukan jadwal sholat secara akurat.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Aplikasi ini membutuhkan akses mikrofon agar Anda dapat mengucapkan hafalan.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Aplikasi ini membutuhkan pengenalan suara on-device untuk memverifikasi hafalan.</string>
 
     <key>NSMotionUsageDescription</key>
     <string>Aplikasi membutuhkan akses sensor gerakan.</string>

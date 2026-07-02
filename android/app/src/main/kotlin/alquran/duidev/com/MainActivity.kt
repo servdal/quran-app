@@ -9,6 +9,7 @@ import io.flutter.plugin.common.MethodChannel
 import java.io.File
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import org.json.JSONArray
 import org.json.JSONObject
 import org.vosk.Model
 import org.vosk.Recognizer
@@ -25,6 +26,7 @@ class MainActivity : FlutterActivity(), RecognitionListener {
     private var speechService: SpeechService? = null
     private var modelPath: String? = null
     private var modelId: String? = null
+    private var grammarJson: String? = null
     private var isLoading = false
     private var pendingStartAfterPermission = false
 
@@ -51,6 +53,9 @@ class MainActivity : FlutterActivity(), RecognitionListener {
                     "configure" -> {
                         modelId = call.argument<String>("modelId")
                         modelPath = call.argument<String>("modelPath")
+                        val activeWords = call.argument<List<String>>("activeWords") ?: emptyList()
+                        val expectedPhrase = call.argument<String>("expectedPhrase") ?: ""
+                        grammarJson = buildGrammarJson(activeWords, expectedPhrase)
                         val path = modelPath
                         if (modelId != "vosk_arabic") {
                             result.error(
@@ -110,7 +115,15 @@ class MainActivity : FlutterActivity(), RecognitionListener {
                 if (model == null) {
                     model = Model(path)
                 }
-                recognizer = Recognizer(model, 16000.0f)
+                recognizer =
+                    if (grammarJson.isNullOrBlank()) {
+                        Recognizer(model, 16000.0f)
+                    } else {
+                        Recognizer(model, 16000.0f, grammarJson)
+                    }
+                recognizer?.setWords(true)
+                recognizer?.setPartialWords(true)
+                recognizer?.setMaxAlternatives(3)
                 speechService = SpeechService(recognizer, 16000.0f)
                 runOnUiThread {
                     isLoading = false
@@ -154,7 +167,7 @@ class MainActivity : FlutterActivity(), RecognitionListener {
     }
 
     override fun onResult(hypothesis: String?) {
-        emitJson(hypothesis, true)
+        emitJson(hypothesis, false)
     }
 
     override fun onFinalResult(hypothesis: String?) {
@@ -173,26 +186,85 @@ class MainActivity : FlutterActivity(), RecognitionListener {
     }
 
     private fun emitJson(hypothesis: String?, isFinal: Boolean) {
-        val text =
+        val parsed =
             try {
-                JSONObject(hypothesis ?: "{}").optString("text")
-                    .ifEmpty { JSONObject(hypothesis ?: "{}").optString("partial") }
+                JSONObject(hypothesis ?: "{}")
             } catch (_: Exception) {
-                hypothesis.orEmpty()
+                null
             }
-        emitResult(text, isFinal)
+        val text =
+            parsed
+                ?.optString("text")
+                ?.ifEmpty { parsed.optString("partial") }
+                ?: hypothesis.orEmpty()
+        val alternatives = mutableListOf<String>()
+        val altArray = parsed?.optJSONArray("alternatives")
+        if (altArray != null) {
+            for (i in 0 until altArray.length()) {
+                val altText = altArray.optJSONObject(i)?.optString("text").orEmpty()
+                if (altText.isNotBlank()) alternatives.add(altText)
+            }
+        }
+        emitResult(text, isFinal, alternatives)
     }
 
-    private fun emitResult(text: String, isFinal: Boolean) {
+    private fun emitResult(text: String, isFinal: Boolean, alternatives: List<String> = emptyList()) {
         eventSink?.success(
             mapOf(
                 "transcript" to text,
                 "phonemes" to text,
-                "alternatives" to emptyList<String>(),
+                "alternatives" to alternatives,
                 "confidence" to if (text.isBlank()) 0.0 else 1.0,
                 "isFinal" to isFinal,
             ),
         )
+    }
+
+    private fun buildGrammarJson(activeWords: List<String>, expectedPhrase: String): String? {
+        val normalizedWords =
+            activeWords
+                .map { normalizeArabic(it) }
+                .filter { it.isNotBlank() }
+
+        if (normalizedWords.isEmpty()) return null
+
+        val phrases = LinkedHashSet<String>()
+        val normalizedExpected = normalizeArabic(expectedPhrase)
+        if (normalizedExpected.isNotBlank()) {
+            phrases.add(normalizedExpected)
+        }
+
+        val maxPrefix = minOf(8, normalizedWords.size)
+        for (count in 1..maxPrefix) {
+            phrases.add(normalizedWords.take(count).joinToString(" "))
+        }
+
+        for (start in normalizedWords.indices) {
+            val maxCount = minOf(4, normalizedWords.size - start)
+            for (count in 1..maxCount) {
+                phrases.add(normalizedWords.drop(start).take(count).joinToString(" "))
+            }
+        }
+
+        phrases.add("[unk]")
+
+        val array = JSONArray()
+        phrases.forEach { array.put(it) }
+        return array.toString()
+    }
+
+    private fun normalizeArabic(value: String): String {
+        return value
+            .replace(Regex("[إأآٱ]"), "ا")
+            .replace(Regex("[ىئ]"), "ي")
+            .replace("ؤ", "و")
+            .replace("ة", "ه")
+            .replace("ـ", "")
+            .replace("ٰ", "ا")
+            .replace(Regex("[\\u0610-\\u061A\\u064B-\\u065F\\u06D6-\\u06ED]"), "")
+            .replace(Regex("[^\\u0600-\\u06FF ]"), " ")
+            .replace(Regex("\\s+"), " ")
+            .trim()
     }
 
     override fun onDestroy() {

@@ -991,87 +991,103 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
+      child: Material(
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(16),
-        gradient: LinearGradient(
-          colors:
-              isDarkMode
-                  ? [
-                    theme.colorScheme.surface,
-                    theme.colorScheme.surface.withOpacity(0.8),
-                  ]
-                  : [primaryColor.withOpacity(0.9), primaryColor],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: primaryColor.withOpacity(0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
+        clipBehavior: Clip.antiAlias,
+        child: Ink(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.bookmark_rounded,
-            color: Colors.white,
-            size: 28,
-          ),
-        ),
-        title: Row(
-          children: [
-            Expanded(
-              child: Text(
-                name,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+            borderRadius: BorderRadius.circular(16),
+            gradient: LinearGradient(
+              colors:
+                  isDarkMode
+                      ? [
+                        theme.colorScheme.surface,
+                        theme.colorScheme.surface.withOpacity(0.8),
+                      ]
+                      : [primaryColor.withOpacity(0.9), primaryColor],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            boxShadow: [
+              BoxShadow(
+                color: primaryColor.withOpacity(0.2),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            leading: Container(
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.white24,
-                borderRadius: BorderRadius.circular(8),
+                color: Colors.white.withOpacity(0.2),
+                shape: BoxShape.circle,
               ),
+              child: const Icon(
+                Icons.bookmark_rounded,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
+            title: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white24,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    getTypeName(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 4),
               child: Text(
-                getTypeName(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
+                getSubtitle(),
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.85),
+                  fontSize: 14,
                 ),
               ),
             ),
-          ],
-        ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Text(
-            getSubtitle(),
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.85),
-              fontSize: 14,
+            trailing: IconButton(
+              icon: const Icon(
+                Icons.delete_sweep_outlined,
+                color: Colors.white70,
+              ),
+              onPressed: () => _confirmDelete(context, ref, name, isId),
             ),
+            onTap: () {
+              _handleNavigation(context, bookmark);
+            },
           ),
         ),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete_sweep_outlined, color: Colors.white70),
-          onPressed: () => _confirmDelete(context, ref, name, isId),
-        ),
-        onTap: () {
-          _handleNavigation(context, bookmark);
-        },
       ),
     );
   }

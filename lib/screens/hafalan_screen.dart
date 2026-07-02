@@ -4,6 +4,7 @@ import 'dart:async';
 import '../services/quran_data_service.dart';
 import '../providers/settings_provider.dart';
 import '../providers/bookmark_provider.dart';
+import '../providers/offline_recitation_model_provider.dart';
 import '../models/ayah_model.dart';
 import '../services/offline_recitation_recognizer.dart';
 import '../utils/recitation_alignment.dart';
@@ -230,6 +231,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                 ? 'Install an offline Whisper tiny/base or Vosk Arabic model first'
                 : 'Pasang model offline Whisper tiny/base atau Vosk Arabic dulu';
       });
+      _openOfflineModelManager(autoStartDownload: true);
       return;
     }
 
@@ -252,10 +254,18 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
             .toList();
 
     try {
+      final modelService = ref.read(offlineRecitationModelServiceProvider);
+      final modelId = _selectRecognizerModelId(modelService.installedModelIds);
       await _recitationRecognizer.configure(
-        engine: OfflineRecitationEngine.whisper,
+        engine:
+            modelId == 'vosk_arabic'
+                ? OfflineRecitationEngine.vosk
+                : OfflineRecitationEngine.whisper,
         activeWords: activeWords,
         expectedPhrase: activeWords.join(' '),
+        modelId: modelId,
+        modelPath:
+            modelId == null ? null : modelService.installedModelPaths[modelId],
       );
       await _recitationRecognizer.start();
     } catch (error) {
@@ -672,7 +682,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                       ? 'Download offline model'
                       : 'Unduh model offline',
                 ),
-                onPressed: _openOfflineModelManager,
+                onPressed: () {
+                  _openOfflineModelManager(autoStartDownload: true);
+                },
               ),
             ),
             const SizedBox(height: 12),
@@ -881,13 +893,26 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     _recitationRecognizer.stop();
   }
 
-  Future<void> _openOfflineModelManager() async {
+  Future<void> _openOfflineModelManager({
+    bool autoStartDownload = false,
+  }) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => const OfflineModelManagerScreen()),
+      MaterialPageRoute(
+        builder:
+            (_) =>
+                OfflineModelManagerScreen(autoStartDownload: autoStartDownload),
+      ),
     );
     if (mounted) {
       _initOfflineRecognizer();
     }
+  }
+
+  String? _selectRecognizerModelId(Set<String> installedModelIds) {
+    if (installedModelIds.contains('vosk_arabic')) return 'vosk_arabic';
+    if (installedModelIds.contains('whisper_tiny_ar')) return 'whisper_tiny_ar';
+    if (installedModelIds.contains('whisper_base_ar')) return 'whisper_base_ar';
+    return installedModelIds.isEmpty ? null : installedModelIds.first;
   }
 }

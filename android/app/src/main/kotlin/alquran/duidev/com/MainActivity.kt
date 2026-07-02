@@ -1,5 +1,204 @@
 package alquran.duidev.com
 
+import android.Manifest
+import android.content.pm.PackageManager
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.EventChannel
+import io.flutter.plugin.common.MethodChannel
+import java.io.File
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import org.json.JSONObject
+import org.vosk.Model
+import org.vosk.Recognizer
+import org.vosk.android.RecognitionListener
+import org.vosk.android.SpeechService
 
-class MainActivity : FlutterActivity()
+class MainActivity : FlutterActivity(), RecognitionListener {
+    private val controlChannelName = "quran_app/offline_recitation/control"
+    private val eventChannelName = "quran_app/offline_recitation/events"
+
+    private var eventSink: EventChannel.EventSink? = null
+    private var model: Model? = null
+    private var recognizer: Recognizer? = null
+    private var speechService: SpeechService? = null
+    private var modelPath: String? = null
+    private var modelId: String? = null
+    private var isLoading = false
+    private var pendingStartAfterPermission = false
+
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+
+        EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannelName)
+            .setStreamHandler(
+                object : EventChannel.StreamHandler {
+                    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+                        eventSink = events
+                    }
+
+                    override fun onCancel(arguments: Any?) {
+                        eventSink = null
+                    }
+                },
+            )
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, controlChannelName)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "isAvailable" -> result.success(true)
+                    "configure" -> {
+                        modelId = call.argument<String>("modelId")
+                        modelPath = call.argument<String>("modelPath")
+                        val path = modelPath
+                        if (modelId != "vosk_arabic") {
+                            result.error(
+                                "UNSUPPORTED_MODEL",
+                                "Android recognizer saat ini memakai Vosk Arabic. Pilih model Vosk Arabic.",
+                                null,
+                            )
+                            return@setMethodCallHandler
+                        }
+                        if (path.isNullOrBlank() || !File(path).exists()) {
+                            result.error("MODEL_NOT_FOUND", "Model Vosk Arabic belum ditemukan.", path)
+                            return@setMethodCallHandler
+                        }
+                        result.success(null)
+                    }
+                    "start" -> startVosk(result)
+                    "stop" -> {
+                        stopVosk()
+                        result.success(null)
+                    }
+                    else -> result.notImplemented()
+                }
+            }
+    }
+
+    private fun startVosk(result: MethodChannel.Result) {
+        val path = modelPath
+        if (path.isNullOrBlank() || !File(path).exists()) {
+            result.error("MODEL_NOT_FOUND", "Model Vosk Arabic belum ditemukan.", path)
+            return
+        }
+        if (speechService != null || isLoading) {
+            result.success(null)
+            return
+        }
+
+        if (
+            ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
+                PackageManager.PERMISSION_GRANTED
+        ) {
+            pendingStartAfterPermission = true
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 9137)
+            result.success(null)
+            return
+        }
+
+        startVoskInternal(path)
+        result.success(null)
+    }
+
+    private fun startVoskInternal(path: String) {
+        if (speechService != null || isLoading) return
+
+        isLoading = true
+        Thread {
+            try {
+                if (model == null) {
+                    model = Model(path)
+                }
+                recognizer = Recognizer(model, 16000.0f)
+                speechService = SpeechService(recognizer, 16000.0f)
+                runOnUiThread {
+                    isLoading = false
+                    speechService?.startListening(this)
+                }
+            } catch (error: Exception) {
+                runOnUiThread {
+                    isLoading = false
+                    emitResult(error.message ?: "Gagal memuat model Vosk", true)
+                }
+            }
+        }.start()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode != 9137 || !pendingStartAfterPermission) return
+
+        pendingStartAfterPermission = false
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            modelPath?.let { startVoskInternal(it) }
+        } else {
+            emitResult("Izin mikrofon ditolak", true)
+        }
+    }
+
+    private fun stopVosk() {
+        speechService?.stop()
+        speechService?.shutdown()
+        speechService = null
+        recognizer?.close()
+        recognizer = null
+    }
+
+    override fun onPartialResult(hypothesis: String?) {
+        emitJson(hypothesis, false)
+    }
+
+    override fun onResult(hypothesis: String?) {
+        emitJson(hypothesis, true)
+    }
+
+    override fun onFinalResult(hypothesis: String?) {
+        emitJson(hypothesis, true)
+        stopVosk()
+    }
+
+    override fun onError(exception: Exception?) {
+        emitResult(exception?.message ?: "Pengenalan suara gagal", true)
+        stopVosk()
+    }
+
+    override fun onTimeout() {
+        emitResult("", true)
+        stopVosk()
+    }
+
+    private fun emitJson(hypothesis: String?, isFinal: Boolean) {
+        val text =
+            try {
+                JSONObject(hypothesis ?: "{}").optString("text")
+                    .ifEmpty { JSONObject(hypothesis ?: "{}").optString("partial") }
+            } catch (_: Exception) {
+                hypothesis.orEmpty()
+            }
+        emitResult(text, isFinal)
+    }
+
+    private fun emitResult(text: String, isFinal: Boolean) {
+        eventSink?.success(
+            mapOf(
+                "transcript" to text,
+                "phonemes" to text,
+                "alternatives" to emptyList<String>(),
+                "confidence" to if (text.isBlank()) 0.0 else 1.0,
+                "isFinal" to isFinal,
+            ),
+        )
+    }
+
+    override fun onDestroy() {
+        stopVosk()
+        model?.close()
+        model = null
+        super.onDestroy()
+    }
+}

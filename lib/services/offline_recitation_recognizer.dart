@@ -61,6 +61,8 @@ class OfflineRecitationRecognizer {
     OfflineRecitationEngine engine = OfflineRecitationEngine.whisper,
     required List<String> activeWords,
     required String expectedPhrase,
+    String? modelId,
+    String? modelPath,
   }) async {
     await _controlChannel.invokeMethod<void>('configure', {
       'engine': engine.name,
@@ -68,6 +70,8 @@ class OfflineRecitationRecognizer {
       'activeWords': activeWords,
       'expectedPhrase': expectedPhrase,
       'mode': 'guided_recitation_alignment',
+      if (modelId != null) 'modelId': modelId,
+      if (modelPath != null) 'modelPath': modelPath,
       'modelHints': const ['whisper_tiny', 'whisper_base', 'vosk_arabic'],
     });
   }

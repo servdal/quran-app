@@ -4,7 +4,9 @@ import 'package:quran_app/providers/offline_recitation_model_provider.dart';
 import 'package:quran_app/services/offline_recitation_model_service.dart';
 
 class OfflineModelManagerScreen extends ConsumerStatefulWidget {
-  const OfflineModelManagerScreen({super.key});
+  final bool autoStartDownload;
+
+  const OfflineModelManagerScreen({super.key, this.autoStartDownload = false});
 
   @override
   ConsumerState<OfflineModelManagerScreen> createState() =>
@@ -17,7 +19,12 @@ class _OfflineModelManagerScreenState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(offlineRecitationModelServiceProvider).refresh();
+      final service = ref.read(offlineRecitationModelServiceProvider);
+      if (widget.autoStartDownload) {
+        service.ensureRecommendedModel();
+      } else {
+        service.refresh();
+      }
     });
   }
 
@@ -46,6 +53,22 @@ class _OfflineModelManagerScreenState
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
         children: [
           _StatusHeader(service: service),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              icon: const Icon(Icons.auto_fix_high),
+              label: const Text('Siapkan Otomatis'),
+              onPressed:
+                  service.installedModelIds.isNotEmpty
+                      ? null
+                      : () {
+                        ref
+                            .read(offlineRecitationModelServiceProvider)
+                            .ensureRecommendedModel();
+                      },
+            ),
+          ),
           const SizedBox(height: 18),
           Text(
             'Pilihan Model',
@@ -72,11 +95,7 @@ class _StatusHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color =
-        service.installedModelIds.isNotEmpty
-            ? Colors.green
-            : service.nativeAvailable
-            ? Colors.orange
-            : theme.colorScheme.error;
+        service.installedModelIds.isNotEmpty ? Colors.green : Colors.orange;
 
     return Container(
       width: double.infinity,
@@ -92,9 +111,7 @@ class _StatusHeader extends StatelessWidget {
           Icon(
             service.installedModelIds.isNotEmpty
                 ? Icons.check_circle
-                : service.nativeAvailable
-                ? Icons.cloud_download_outlined
-                : Icons.extension_off_outlined,
+                : Icons.cloud_download_outlined,
             color: color,
           ),
           const SizedBox(width: 12),
@@ -111,7 +128,7 @@ class _StatusHeader extends StatelessWidget {
                 if (!service.nativeAvailable) ...[
                   const SizedBox(height: 6),
                   Text(
-                    'Pasang implementasi native untuk channel quran_app/offline_recitation/models agar unduhan berjalan.',
+                    'Downloader native belum tersedia, aplikasi akan mengunduh model langsung ke penyimpanan lokal.',
                     style: theme.textTheme.bodySmall,
                   ),
                 ],
@@ -192,7 +209,7 @@ class _ModelTile extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${model.engine} • ${model.sizeLabel}',
+                        '${model.engine} • ${model.sizeLabel} • unduhan otomatis',
                         style: theme.textTheme.bodySmall,
                       ),
                     ],

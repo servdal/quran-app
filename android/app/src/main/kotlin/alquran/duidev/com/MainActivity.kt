@@ -1,34 +1,41 @@
 package alquran.duidev.com
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.media.AudioFormat
+import android.media.AudioRecord
+import android.media.MediaRecorder
+import android.os.Looper
+import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
+import java.util.concurrent.atomic.AtomicBoolean
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import org.json.JSONArray
 import org.json.JSONObject
 import org.vosk.Model
 import org.vosk.Recognizer
-import org.vosk.android.RecognitionListener
-import org.vosk.android.SpeechService
 
-class MainActivity : FlutterActivity(), RecognitionListener {
+class MainActivity : FlutterActivity() {
     private val controlChannelName = "quran_app/offline_recitation/control"
     private val eventChannelName = "quran_app/offline_recitation/events"
 
     private var eventSink: EventChannel.EventSink? = null
     private var model: Model? = null
     private var recognizer: Recognizer? = null
-    private var speechService: SpeechService? = null
+    private var audioRecord: AudioRecord? = null
+    private var recognitionThread: Thread? = null
     private var modelPath: String? = null
     private var modelId: String? = null
-    private var grammarJson: String? = null
     private var isLoading = false
     private var pendingStartAfterPermission = false
+    private var lastAudioDebugAtMs = 0L
+    private val isListening = AtomicBoolean(false)
+    private val maxMicGain = 3.0f
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -53,9 +60,6 @@ class MainActivity : FlutterActivity(), RecognitionListener {
                     "configure" -> {
                         modelId = call.argument<String>("modelId")
                         modelPath = call.argument<String>("modelPath")
-                        val activeWords = call.argument<List<String>>("activeWords") ?: emptyList()
-                        val expectedPhrase = call.argument<String>("expectedPhrase") ?: ""
-                        grammarJson = buildGrammarJson(activeWords, expectedPhrase)
                         val path = modelPath
                         if (modelId != "vosk_arabic") {
                             result.error(
@@ -87,7 +91,7 @@ class MainActivity : FlutterActivity(), RecognitionListener {
             result.error("MODEL_NOT_FOUND", "Model Vosk Arabic belum ditemukan.", path)
             return
         }
-        if (speechService != null || isLoading) {
+        if (isListening.get() || isLoading) {
             result.success(null)
             return
         }
@@ -107,7 +111,7 @@ class MainActivity : FlutterActivity(), RecognitionListener {
     }
 
     private fun startVoskInternal(path: String) {
-        if (speechService != null || isLoading) return
+        if (isListening.get() || isLoading) return
 
         isLoading = true
         Thread {
@@ -115,19 +119,13 @@ class MainActivity : FlutterActivity(), RecognitionListener {
                 if (model == null) {
                     model = Model(path)
                 }
-                recognizer =
-                    if (grammarJson.isNullOrBlank()) {
-                        Recognizer(model, 16000.0f)
-                    } else {
-                        Recognizer(model, 16000.0f, grammarJson)
-                    }
+                recognizer = Recognizer(model, 16000.0f)
                 recognizer?.setWords(true)
                 recognizer?.setPartialWords(true)
                 recognizer?.setMaxAlternatives(3)
-                speechService = SpeechService(recognizer, 16000.0f)
                 runOnUiThread {
                     isLoading = false
-                    speechService?.startListening(this)
+                    startAudioLoop()
                 }
             } catch (error: Exception) {
                 runOnUiThread {
@@ -136,6 +134,137 @@ class MainActivity : FlutterActivity(), RecognitionListener {
                 }
             }
         }.start()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startAudioLoop() {
+        val currentRecognizer = recognizer ?: return
+        if (!isListening.compareAndSet(false, true)) return
+
+        recognitionThread =
+            Thread {
+                val sampleRate = 16000
+                var recorder: AudioRecord? = null
+
+                try {
+                    val minBuffer =
+                        AudioRecord.getMinBufferSize(
+                            sampleRate,
+                            AudioFormat.CHANNEL_IN_MONO,
+                            AudioFormat.ENCODING_PCM_16BIT,
+                        )
+                    if (minBuffer <= 0) {
+                        emitResult("Mikrofon belum siap", true)
+                        return@Thread
+                    }
+
+                    val recorderBufferSize = maxOf(minBuffer, sampleRate * 2)
+                    recorder =
+                        AudioRecord(
+                            MediaRecorder.AudioSource.VOICE_RECOGNITION,
+                            sampleRate,
+                            AudioFormat.CHANNEL_IN_MONO,
+                            AudioFormat.ENCODING_PCM_16BIT,
+                            recorderBufferSize,
+                        )
+                    audioRecord = recorder
+
+                    if (recorder.state != AudioRecord.STATE_INITIALIZED) {
+                        emitResult("Mikrofon gagal dibuka", true)
+                        return@Thread
+                    }
+
+                    recorder.startRecording()
+                    val buffer = ShortArray(sampleRate / 10)
+
+                    while (isListening.get()) {
+                        val read = recorder.read(buffer, 0, buffer.size)
+                        if (read <= 0) continue
+
+                        applyAdaptiveMicGain(buffer, read)
+                        emitAudioDebug(buffer, read)
+                        val accepted = currentRecognizer.acceptWaveForm(buffer, read)
+                        emitJson(
+                            if (accepted) currentRecognizer.result else currentRecognizer.partialResult,
+                            false,
+                        )
+                    }
+
+                    emitJson(currentRecognizer.finalResult, true)
+                } catch (error: Exception) {
+                    emitResult(error.message ?: "Pengenalan suara gagal", true)
+                } finally {
+                    try {
+                        recorder?.stop()
+                    } catch (_: Exception) {
+                    }
+                    recorder?.release()
+                    audioRecord = null
+                    isListening.set(false)
+                }
+            }
+        recognitionThread?.start()
+    }
+
+    private fun emitAudioDebug(buffer: ShortArray, length: Int) {
+        val now = System.currentTimeMillis()
+        if (now - lastAudioDebugAtMs < 250) return
+        lastAudioDebugAtMs = now
+
+        var peak = 0
+        var sumSquares = 0.0
+        for (index in 0 until length) {
+            val amplitude = kotlin.math.abs(buffer[index].toInt())
+            if (amplitude > peak) peak = amplitude
+            sumSquares += amplitude.toDouble() * amplitude.toDouble()
+        }
+
+        val rms =
+            kotlin.math.sqrt(sumSquares / length.toDouble()) /
+                Short.MAX_VALUE.toDouble()
+        val peakLevel = peak.toDouble() / Short.MAX_VALUE.toDouble()
+        val normalizedRms = rms.coerceIn(0.0, 1.0)
+        val normalizedPeak = peakLevel.coerceIn(0.0, 1.0)
+
+        Log.d(
+            "OfflineRecitation",
+            "mic samples=$length rms=${"%.4f".format(normalizedRms)} peak=${"%.4f".format(normalizedPeak)}",
+        )
+        emitResult(
+            text = "",
+            isFinal = false,
+            confidence = normalizedRms,
+            extras =
+                mapOf(
+                    "debugType" to "audio",
+                    "micLevel" to normalizedRms,
+                    "peakLevel" to normalizedPeak,
+                    "audioSamples" to length,
+                    "debugMessage" to "Mic aktif, audio masuk ke Vosk",
+                ),
+        )
+    }
+
+    private fun applyAdaptiveMicGain(buffer: ShortArray, length: Int) {
+        var peak = 0
+        for (index in 0 until length) {
+            val amplitude = kotlin.math.abs(buffer[index].toInt())
+            if (amplitude > peak) peak = amplitude
+        }
+
+        if (peak == 0) return
+
+        val peakLevel = peak.toFloat() / Short.MAX_VALUE.toFloat()
+        val targetPeak = 0.65f
+        val gain = (targetPeak / peakLevel).coerceIn(1.0f, maxMicGain)
+
+        for (index in 0 until length) {
+            buffer[index] =
+                (buffer[index] * gain)
+                    .toInt()
+                    .coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt())
+                    .toShort()
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -155,34 +284,21 @@ class MainActivity : FlutterActivity(), RecognitionListener {
     }
 
     private fun stopVosk() {
-        speechService?.stop()
-        speechService?.shutdown()
-        speechService = null
+        isListening.set(false)
+        try {
+            audioRecord?.stop()
+        } catch (_: Exception) {
+        }
+        if (Thread.currentThread() != recognitionThread) {
+            try {
+                recognitionThread?.join(700)
+            } catch (_: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }
+        recognitionThread = null
         recognizer?.close()
         recognizer = null
-    }
-
-    override fun onPartialResult(hypothesis: String?) {
-        emitJson(hypothesis, false)
-    }
-
-    override fun onResult(hypothesis: String?) {
-        emitJson(hypothesis, false)
-    }
-
-    override fun onFinalResult(hypothesis: String?) {
-        emitJson(hypothesis, true)
-        stopVosk()
-    }
-
-    override fun onError(exception: Exception?) {
-        emitResult(exception?.message ?: "Pengenalan suara gagal", true)
-        stopVosk()
-    }
-
-    override fun onTimeout() {
-        emitResult("", true)
-        stopVosk()
     }
 
     private fun emitJson(hypothesis: String?, isFinal: Boolean) {
@@ -208,63 +324,27 @@ class MainActivity : FlutterActivity(), RecognitionListener {
         emitResult(text, isFinal, alternatives)
     }
 
-    private fun emitResult(text: String, isFinal: Boolean, alternatives: List<String> = emptyList()) {
+    private fun emitResult(
+        text: String,
+        isFinal: Boolean,
+        alternatives: List<String> = emptyList(),
+        confidence: Double = if (text.isBlank()) 0.0 else 1.0,
+        extras: Map<String, Any> = emptyMap(),
+    ) {
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            runOnUiThread { emitResult(text, isFinal, alternatives, confidence, extras) }
+            return
+        }
+
         eventSink?.success(
             mapOf(
                 "transcript" to text,
                 "phonemes" to text,
                 "alternatives" to alternatives,
-                "confidence" to if (text.isBlank()) 0.0 else 1.0,
+                "confidence" to confidence,
                 "isFinal" to isFinal,
-            ),
+            ) + extras,
         )
-    }
-
-    private fun buildGrammarJson(activeWords: List<String>, expectedPhrase: String): String? {
-        val normalizedWords =
-            activeWords
-                .map { normalizeArabic(it) }
-                .filter { it.isNotBlank() }
-
-        if (normalizedWords.isEmpty()) return null
-
-        val phrases = LinkedHashSet<String>()
-        val normalizedExpected = normalizeArabic(expectedPhrase)
-        if (normalizedExpected.isNotBlank()) {
-            phrases.add(normalizedExpected)
-        }
-
-        val maxPrefix = minOf(8, normalizedWords.size)
-        for (count in 1..maxPrefix) {
-            phrases.add(normalizedWords.take(count).joinToString(" "))
-        }
-
-        for (start in normalizedWords.indices) {
-            val maxCount = minOf(4, normalizedWords.size - start)
-            for (count in 1..maxCount) {
-                phrases.add(normalizedWords.drop(start).take(count).joinToString(" "))
-            }
-        }
-
-        phrases.add("[unk]")
-
-        val array = JSONArray()
-        phrases.forEach { array.put(it) }
-        return array.toString()
-    }
-
-    private fun normalizeArabic(value: String): String {
-        return value
-            .replace(Regex("[إأآٱ]"), "ا")
-            .replace(Regex("[ىئ]"), "ي")
-            .replace("ؤ", "و")
-            .replace("ة", "ه")
-            .replace("ـ", "")
-            .replace("ٰ", "ا")
-            .replace(Regex("[\\u0610-\\u061A\\u064B-\\u065F\\u06D6-\\u06ED]"), "")
-            .replace(Regex("[^\\u0600-\\u06FF ]"), " ")
-            .replace(Regex("\\s+"), " ")
-            .trim()
     }
 
     override fun onDestroy() {

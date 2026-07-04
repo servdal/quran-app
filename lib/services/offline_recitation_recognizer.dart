@@ -10,6 +10,11 @@ class OfflineRecognitionResult {
   final List<String> alternatives;
   final double confidence;
   final bool isFinal;
+  final String debugType;
+  final String debugMessage;
+  final double micLevel;
+  final double peakLevel;
+  final int audioSamples;
 
   const OfflineRecognitionResult({
     required this.transcript,
@@ -17,6 +22,11 @@ class OfflineRecognitionResult {
     required this.alternatives,
     required this.confidence,
     required this.isFinal,
+    required this.debugType,
+    required this.debugMessage,
+    required this.micLevel,
+    required this.peakLevel,
+    required this.audioSamples,
   });
 
   factory OfflineRecognitionResult.fromMap(Map<dynamic, dynamic> map) {
@@ -29,6 +39,11 @@ class OfflineRecognitionResult {
               .toList(),
       confidence: ((map['confidence'] as num?) ?? 0).toDouble(),
       isFinal: (map['isFinal'] as bool?) ?? false,
+      debugType: (map['debugType'] ?? '') as String,
+      debugMessage: (map['debugMessage'] ?? '') as String,
+      micLevel: ((map['micLevel'] as num?) ?? 0).toDouble(),
+      peakLevel: ((map['peakLevel'] as num?) ?? 0).toDouble(),
+      audioSamples: ((map['audioSamples'] as num?) ?? 0).toInt(),
     );
   }
 }

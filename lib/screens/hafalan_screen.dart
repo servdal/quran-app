@@ -57,6 +57,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
   String _liveRecognizedWords = "";
+  double _debugMicLevel = 0;
+  double _debugPeakLevel = 0;
+  int _debugAudioSamples = 0;
+  String _debugAudioMessage = '';
 
   bool get _isSurahScope => widget.scope == HafalanScope.surah;
   int get _currentUnit => _isSurahScope ? _currentSurah : _currentPage;
@@ -240,6 +244,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     setState(() {
       _statusMessage = lang == 'en' ? "Listening..." : "Mendengarkan...";
       _liveRecognizedWords = "";
+      _debugMicLevel = 0;
+      _debugPeakLevel = 0;
+      _debugAudioSamples = 0;
+      _debugAudioMessage = '';
       _isListening = true;
     });
 
@@ -288,8 +296,17 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         result.transcript.isNotEmpty ? result.transcript : result.phonemes;
 
     setState(() {
-      _liveRecognizedWords = displayText;
+      if (result.debugType == 'audio') {
+        _debugMicLevel = result.micLevel;
+        _debugPeakLevel = result.peakLevel;
+        _debugAudioSamples = result.audioSamples;
+        _debugAudioMessage = result.debugMessage;
+      } else {
+        _liveRecognizedWords = displayText;
+      }
     });
+
+    if (result.debugType == 'audio') return;
 
     final matchFound = _verifyStream([
       result.transcript,
@@ -340,6 +357,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     setState(() {
       _isListening = false;
       _liveRecognizedWords = "";
+      _debugMicLevel = 0;
+      _debugPeakLevel = 0;
+      _debugAudioSamples = 0;
+      _debugAudioMessage = '';
     });
   }
 
@@ -867,8 +888,79 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                 fontFamily: 'LPMQ', // Pakai font arab jika ada
               ),
             ),
+            const SizedBox(height: 14),
+            _buildMicDebugMeter(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildMicDebugMeter() {
+    final levelPercent = (_debugMicLevel * 100)
+        .clamp(0, 100)
+        .toStringAsFixed(1);
+    final peakPercent = (_debugPeakLevel * 100)
+        .clamp(0, 100)
+        .toStringAsFixed(1);
+    final meterValue = _debugMicLevel.clamp(0.0, 1.0).toDouble();
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.04),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                _debugMicLevel > 0.01
+                    ? Icons.graphic_eq_rounded
+                    : Icons.mic_none_rounded,
+                size: 16,
+                color: _debugMicLevel > 0.01 ? Colors.green : Colors.orange,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  _debugAudioMessage.isEmpty
+                      ? 'Debug mic: menunggu audio...'
+                      : _debugAudioMessage,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: LinearProgressIndicator(
+              value: meterValue,
+              minHeight: 7,
+              backgroundColor: Colors.grey.withValues(alpha: 0.25),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                _debugMicLevel > 0.01 ? Colors.green : Colors.orange,
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'RMS $levelPercent% • peak $peakPercent% • samples $_debugAudioSamples',
+            style: const TextStyle(
+              fontSize: 10,
+              color: Colors.black45,
+              fontFeatures: [FontFeature.tabularFigures()],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -889,6 +981,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       _wordKeys = [];
       _statusMessage = lang == 'en' ? "Ready for recitation?" : "Siap hafalan?";
       _isListening = false;
+      _debugMicLevel = 0;
+      _debugPeakLevel = 0;
+      _debugAudioSamples = 0;
+      _debugAudioMessage = '';
     });
     _recitationRecognizer.stop();
   }

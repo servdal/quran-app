@@ -7,14 +7,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// 1. Model Data Qari/Syaikh dari Web
 class ReciterModel {
   final String name;
   final String zipUrl;
   ReciterModel({required this.name, required this.zipUrl});
 }
 
-// 2. Model Data Konfigurasi Playlist
 class PlaylistItem {
   final String reciterName;
   final int startSurah;
@@ -51,7 +49,6 @@ class PlaylistItem {
   );
 }
 
-// 3. Objek Blueprint State Data
 class DownloadState {
   final bool isDownloading;
   final double progress;
@@ -61,6 +58,9 @@ class DownloadState {
   final List<String> localAudioFiles;
   final bool showDownloaderList;
   final List<PlaylistItem> playlists;
+  final String downloadSpeed;
+  final String remainingTime;
+
 
   DownloadState({
     this.isDownloading = false,
@@ -71,6 +71,8 @@ class DownloadState {
     this.localAudioFiles = const [],
     this.showDownloaderList = false,
     this.playlists = const [],
+    this.downloadSpeed = "",
+    this.remainingTime = "",
   });
 
   DownloadState copyWith({
@@ -82,6 +84,8 @@ class DownloadState {
     List<String>? localAudioFiles,
     bool? showDownloaderList,
     List<PlaylistItem>? playlists,
+    String? downloadSpeed,
+    String? remainingTime,
   }) {
     return DownloadState(
       isDownloading: isDownloading ?? this.isDownloading,
@@ -92,16 +96,16 @@ class DownloadState {
       localAudioFiles: localAudioFiles ?? this.localAudioFiles,
       showDownloaderList: showDownloaderList ?? this.showDownloaderList,
       playlists: playlists ?? this.playlists,
+      downloadSpeed: downloadSpeed ?? this.downloadSpeed,
+      remainingTime: remainingTime ?? this.remainingTime,
     );
   }
 }
 
-// 4. Registrasi Global Provider ke Riverpod
 final downloadServiceProvider = StateNotifierProvider<DownloadService, DownloadState>((ref) {
   return DownloadService();
 });
 
-// 5. Brain Business Logic (Wajib extends StateNotifier agar mengenali objek 'state')
 class DownloadService extends StateNotifier<DownloadState> {
   DownloadService() : super(DownloadState()); // Inisialisasi awal State
 
@@ -194,38 +198,87 @@ class DownloadService extends StateNotifier<DownloadState> {
     }
   }
 
-  Future<void> downloadAndExtractZip(String url) async {
+  Future<void> downloadAndExtractZip(String url, String reciterName) async {
+    final folderName = reciterName
+        .trim()
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\w\s\-]'), '')
+        .replaceAll(' ', '_');
+
     final zipFileName = url.split('/').last; 
-    final folderName = zipFileName.replaceAll('.zip', ''); 
+    
+    File? tempZipFile;
+    Directory? targetDir;
 
     state = state.copyWith(
       isDownloading: true,
       progress: 0.0,
       currentFile: zipFileName,
-      statusMessage: "Mengunduh paket...",
+      statusMessage: "Mengunduh paket Syaikh $reciterName...",
+      downloadSpeed: "0 KB/s",
+      remainingTime: "--:--",
     );
 
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final targetDir = Directory('${directory.path}/quran_audio/$folderName');
+      
+      targetDir = Directory('${directory.path}/quran_audio/$folderName');
       if (!await targetDir.exists()) {
         await targetDir.create(recursive: true);
       }
 
+      tempZipFile = File('${directory.path}/quran_audio/${folderName}_temp.zip');
+
       final response = await http.Client().send(http.Request('GET', Uri.parse(url)));
       final totalLength = response.contentLength ?? 0;
-      List<int> bytes = [];
+      
+      final IOSink sink = tempZipFile.openWrite();
+      int downloadedBytes = 0;
+      final Stopwatch stopwatch = Stopwatch()..start();
 
       await response.stream.listen(
         (value) {
-          bytes.addAll(value);
+          sink.add(value);
+          downloadedBytes += value.length;
           if (totalLength > 0) {
-            state = state.copyWith(progress: bytes.length / totalLength);
+            final double currentProgress = downloadedBytes / totalLength;
+            final int millisecondsElapsed = stopwatch.elapsedMilliseconds;
+            
+            String speedText = "0 KB/s";
+            String etaText = "--:--";
+            if (millisecondsElapsed > 0) {
+              final double bytesPerSecond = (downloadedBytes / millisecondsElapsed) * 1000;
+              
+              if (bytesPerSecond >= 1024 * 1024) {
+                speedText = "${(bytesPerSecond / (1024 * 1024)).toStringAsFixed(1)} MB/s";
+              } else {
+                speedText = "${(bytesPerSecond / 1024).toStringAsFixed(0)} KB/s";
+              }
+
+              final int remainingBytes = totalLength - downloadedBytes;
+              if (bytesPerSecond > 0) {
+                final double secondsRemaining = remainingBytes / bytesPerSecond;
+                
+                final int minutes = (secondsRemaining / 60).floor();
+                final int seconds = (secondsRemaining % 60).floor();
+                etaText = "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+              }
+            }
+            state = state.copyWith(progress: currentProgress, downloadSpeed: speedText, remainingTime: etaText, statusMessage: "Mengunduh paket Syaikh $reciterName...");
           }
         },
         onDone: () async {
-          state = state.copyWith(statusMessage: "Mengekstrak berkas audio...", progress: 0.0);
+          stopwatch.stop();
+          await sink.close();
 
+          state = state.copyWith(
+            statusMessage: "Mengekstrak berkas audio Syaikh $reciterName...", 
+            progress: 0.0,
+            downloadSpeed: "0 KB/s",
+            remainingTime: "--:--",
+          );
+
+          final bytes = await tempZipFile!.readAsBytes();
           final archive = ZipDecoder().decodeBytes(bytes);
           List<String> newLocalPaths = [];
 
@@ -233,9 +286,11 @@ class DownloadService extends StateNotifier<DownloadState> {
             final filename = file.name;
             if (file.isFile && (filename.endsWith('.mp3') || filename.endsWith('.wav'))) {
               final data = file.content as List<int>;
-              final outFile = File('${targetDir.path}/$filename');
+              
+              final outFile = File('${targetDir!.path}/$filename');
               await outFile.create(recursive: true);
               await outFile.writeAsBytes(data);
+              
               newLocalPaths.add('$folderName/$filename'); 
             }
           }
@@ -250,25 +305,77 @@ class DownloadService extends StateNotifier<DownloadState> {
 
           state = state.copyWith(
             localAudioFiles: updatedFiles,
-            statusMessage: "Sukses menambahkan Syaikh baru!",
+            statusMessage: "Sukses mengunduh dan mengekstrak Syaikh $reciterName!",
             isDownloading: false,
             showDownloaderList: false,
+            downloadSpeed: "0 KB/s",
+            remainingTime: "--:--",
           );
+
+          _cleanUpTempFile(tempZipFile);
         },
-        onError: (e) {
-          throw e;
+        onError: (e) async {
+          stopwatch.stop();
+          await sink.close();
+          throw Exception("Koneksi terputus saat mengunduh: $e");
         },
         cancelOnError: true,
       );
     } catch (e) {
-      state = state.copyWith(statusMessage: "Gagal memproses: $e", isDownloading: false);
+      state = state.copyWith(statusMessage: "Gagal memproses: $e", isDownloading: false, downloadSpeed: "0 KB/s", remainingTime: "--:--");
+      
+      _cleanUpTempFile(tempZipFile);
+      _cleanUpCorruptedFolder(targetDir);
     }
   }
 
-  Future<bool> isZipDownloaded(String url) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('zip_downloaded_$url') ?? false;
+  void _cleanUpTempFile(File? file) {
+    if (file != null && file.existsSync()) {
+      try {
+        file.deleteSync();
+      } catch (e) {
+        state = state.copyWith(statusMessage: "Gagal menghapus berkas sementara: $e");
+      }
+    }
   }
+
+  void _cleanUpCorruptedFolder(Directory? dir) async {
+    if (dir != null && await dir.exists()) {
+      try {
+        await dir.delete(recursive: true);
+        state = state.copyWith(statusMessage: "🗑️ Folder korup/tidak lengkap berhasil dieliminasi otomatis.");
+      } catch (e) {
+        state = state.copyWith(statusMessage: "Gagal menghapus folder korup: $e");
+      }
+    }
+  }
+
+  Future<bool> isZipDownloaded(String url, String reciterName) async {
+    final folderName = reciterName
+        .trim()
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\w\s\-]'), '')
+        .replaceAll(' ', '_');
+
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final targetDir = Directory('${directory.path}/quran_audio/$folderName');
+      if (await targetDir.exists()) {
+        final List<FileSystemEntity> files = targetDir.listSync();        
+        final hasAudioFiles = files.any((file) => 
+            file is File && (file.path.endsWith('.mp3') || file.path.endsWith('.wav')));
+
+        if (hasAudioFiles) {
+          return true;
+        }
+      }
+    } catch (e) {
+      return false; 
+    }
+
+    return false;
+  }
+
   Future<void> deleteReciterFolder(String folderName) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
@@ -305,7 +412,6 @@ class DownloadService extends StateNotifier<DownloadState> {
     }
   }
 
-  // 🌟 FUNGSI BARU 2: Reset Total (Hapus semua berkas audio dan playlist)
   Future<void> resetAllData() async {
     try {
       final directory = await getApplicationDocumentsDirectory();

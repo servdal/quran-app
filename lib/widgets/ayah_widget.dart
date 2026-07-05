@@ -461,6 +461,12 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<PlayerUIState>(playerServiceProvider, (previous, next) {
+      if (next.errorMessage != null && next.errorMessage!.isNotEmpty) {
+        _snack(next.errorMessage!);        
+        ref.read(playerServiceProvider.notifier).clearError();
+      }
+    });
     final settings = ref.watch(settingsProvider);
     final theme = Theme.of(context);
     final panelFontSize = settings.ayahPanelFontSize;
@@ -739,23 +745,24 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   }
 
   Widget _tabAudio(bool isId) {
-      final downloader = ref.watch(downloadServiceProvider);
-      final player = ref.watch(playerServiceProvider);
-      final theme = Theme.of(context);
-      final Set<String> availableReciters = {};
-      for (var fileData in downloader.localAudioFiles) {
-        if (fileData.contains('/')) {
-          availableReciters.add(fileData.split('/').first);
-        }
+    final downloader = ref.watch(downloadServiceProvider);
+    final player = ref.watch(playerServiceProvider);
+    final theme = Theme.of(context);
+    
+    final Set<String> availableReciters = {};
+    for (var fileData in downloader.localAudioFiles) {
+      if (fileData.contains('/')) {
+        availableReciters.add(fileData.split('/').first);
       }
+    }
 
-      if (availableReciters.isEmpty) {
-        return Padding(
-          padding: const EdgeInsets.all(24),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+    if (availableReciters.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(24),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Icon(Icons.cloud_download_outlined, size: 48, color: theme.colorScheme.primary.withOpacity(0.6)),
               const SizedBox(height: 12),
               Text(
@@ -776,28 +783,31 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                 icon: const Icon(Icons.download_rounded, size: 18),
                 label: Text(isId ? 'Buka Manajer Audio' : 'Open Audio Manager'),
                 onPressed: () {
-                  // 🛠️ Buka halaman download manager Anda. 
-                  // Sesuaikan rute navigasi ini dengan nama class/rute aplikasi Anda.
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const DownloadManagerScreen(), // Pastikan di-import
+                      builder: (context) => const DownloadManagerScreen(),
                     ),
                   );
                 },
               ),
             ],
           ),
-        )
+        ),
       );
     }
+
+    // 🌟 PERBAIKAN 1: Inisialisasi awal jika null atau qari yang dipilih sudah tidak ada
     if (_selectedReciterForAudioTab == null || !availableReciters.contains(_selectedReciterForAudioTab)) {
       _selectedReciterForAudioTab = availableReciters.first;
     }
 
-    final String activeReciter = availableReciters.first;
+    // 🌟 PERBAIKAN 2: Menggunakan variabel state, BUKAN .first secara statis!
+    final String activeReciter = _selectedReciterForAudioTab!;
 
     final String currentAyahTitle = "Surah ${widget.ayah.surahId} : Ayat ${widget.ayah.number}";
+    
+    // Validasi kecocokan putar
     final bool isThisAyahAndQariPlaying = player.isPlaying && 
         player.title == currentAyahTitle && 
         player.subtitle.toLowerCase().replaceAll(' ', '_') == activeReciter;
@@ -817,139 +827,136 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.person_pin_rounded, 
-                    color: isThisAyahAndQariPlaying ? theme.colorScheme.primary : Colors.grey
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          isId ? "Pilih Qari Pemutar:" : "Select Reciter:",
-                          style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 2),
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: activeReciter,
-                            isDense: true,
-                            isExpanded: true,
-                            style: TextStyle(
-                              fontSize: 13, 
-                              fontWeight: FontWeight.bold, 
-                              color: theme.textTheme.bodyLarge?.color
-                            ),
-                            items: availableReciters.map((String qariFolder) {
-                              return DropdownMenuItem<String>(
-                                value: qariFolder,
-                                child: Text(qariFolder.replaceAll('_', ' ').toUpperCase()),
-                              );
-                            }).toList(),
-                            onChanged: (newQari) {
-                              if (newQari != null) {
-                                setState(() {
-                                  _selectedReciterForAudioTab = newQari;
-                                });
-                              }
-                            },
+                Row(
+                  children: [
+                    Icon(
+                      Icons.person_pin_rounded, 
+                      color: isThisAyahAndQariPlaying ? theme.colorScheme.primary : Colors.grey
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isId ? "Pilih Qari Pemutar:" : "Select Reciter:",
+                            style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const Divider(height: 24),
-              Text(
-                "Surah ${widget.ayah.surahName} : Ayat ${widget.ayah.number}",
-                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (isThisAyahAndQariPlaying) ...[
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundColor: theme.colorScheme.primary,
-                      child: IconButton(
-                        icon: const Icon(Icons.pause, color: Colors.white),
-                        onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
+                          const SizedBox(height: 2),
+                          DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: activeReciter,
+                              isDense: true,
+                              isExpanded: true,
+                              style: TextStyle(
+                                fontSize: 13, 
+                                fontWeight: FontWeight.bold, 
+                                color: theme.textTheme.bodyLarge?.color
+                              ),
+                              items: availableReciters.map((String qariFolder) {
+                                return DropdownMenuItem<String>(
+                                  value: qariFolder,
+                                  child: Text(qariFolder.replaceAll('_', ' ').toUpperCase()),
+                                );
+                              }).toList(),
+                              onChanged: (newQari) {
+                                if (newQari != null) {
+                                  setState(() {
+                                    _selectedReciterForAudioTab = newQari;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
-                      child: IconButton(
-                        icon: const Icon(Icons.stop, color: Colors.redAccent),
-                        onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
-                      ),
-                    ),
-                  ] 
-                  else if (player.title == currentAyahTitle && player.subtitle.toLowerCase().replaceAll(' ', '_') == activeReciter) ...[
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundColor: theme.colorScheme.primary,
-                      child: IconButton(
-                        icon: const Icon(Icons.play_arrow, color: Colors.white),
-                        onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
-                      child: IconButton(
-                        icon: const Icon(Icons.stop, color: Colors.redAccent),
-                        onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
-                      ),
-                    ),
-                  ]
-                  // Jika belum berputar sama sekali atau user memilih Qari yang berbeda, tampilkan tombol "Putar" baru
-                  else ...[
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.colorScheme.primary,
-                        foregroundColor: theme.colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      ),
-                      icon: const Icon(Icons.play_arrow_rounded),
-                      label: Text(isId ? 'Putar Ayat Ini' : 'Play This Ayah'),
-                      onPressed: () {
-                        final singleAyahPlaylist = PlaylistItem(
-                          reciterName: activeReciter,
-                          startSurah: widget.ayah.surahId,
-                          startAyah: widget.ayah.number,
-                          endSurah: widget.ayah.surahId,
-                          endAyah: widget.ayah.number,
-                          isRepeat: false,
-                        );
-                        
-                        ref.read(playerServiceProvider.notifier).playPlaylist(singleAyahPlaylist);
-                      },
                     ),
                   ],
-                ],
-              ),
-              
-              if (isThisAyahAndQariPlaying) ...[
-                const SizedBox(height: 12),
+                ),
+                const Divider(height: 24),
                 Text(
-                  isId ? "• Sedang melantunkan ayat..." : "• Now reciting...",
-                  style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: theme.colorScheme.primary),
-                )
+                  "Surah ${widget.ayah.surahName} : Ayat ${widget.ayah.number}",
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isThisAyahAndQariPlaying) ...[
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: theme.colorScheme.primary,
+                        child: IconButton(
+                          icon: const Icon(Icons.pause, color: Colors.white),
+                          onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
+                        child: IconButton(
+                          icon: const Icon(Icons.stop, color: Colors.redAccent),
+                          onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
+                        ),
+                      ),
+                    ] 
+                    else if (player.title == currentAyahTitle && player.subtitle.toLowerCase().replaceAll(' ', '_') == activeReciter) ...[
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: theme.colorScheme.primary,
+                        child: IconButton(
+                          icon: const Icon(Icons.play_arrow, color: Colors.white),
+                          onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
+                        child: IconButton(
+                          icon: const Icon(Icons.stop, color: Colors.redAccent),
+                          onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
+                        ),
+                      ),
+                    ]
+                    else ...[
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colorScheme.primary,
+                          foregroundColor: theme.colorScheme.onPrimary,
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        ),
+                        icon: const Icon(Icons.play_arrow_rounded),
+                        label: Text(isId ? 'Putar Ayat Ini' : 'Play This Ayah'),
+                        onPressed: () {
+                          final singleAyahPlaylist = PlaylistItem(
+                            reciterName: activeReciter,
+                            startSurah: widget.ayah.surahId,
+                            startAyah: widget.ayah.number,
+                            endSurah: widget.ayah.surahId,
+                            endAyah: widget.ayah.number,
+                            isRepeat: false,
+                          );
+                          
+                          ref.read(playerServiceProvider.notifier).playPlaylist(singleAyahPlaylist);
+                        },
+                      ),
+                    ],
+                  ],
+                ),
+                if (isThisAyahAndQariPlaying) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    isId ? "• Sedang melantunkan ayat..." : "• Now reciting...",
+                    style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: theme.colorScheme.primary),
+                  )
+                ],
               ],
-              
-            ],
+            ),
           ),
         ),
       ),
-    )
     );
   }
 

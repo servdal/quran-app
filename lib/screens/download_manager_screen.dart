@@ -90,10 +90,65 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (downloader.isDownloading) ...[
-              LinearProgressIndicator(value: downloader.progress > 0 ? downloader.progress : null),
-              const SizedBox(height: 4),
-              Text("Memproses: ${downloader.currentFile}", style: const TextStyle(fontSize: 11, color: Colors.grey)),
-              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.blue.shade200),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      downloader.statusMessage,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.blueGrey),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      "Berkas: ${downloader.currentFile}",
+                      style: const TextStyle(fontSize: 11, color: Colors.grey),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 10),
+                    LinearProgressIndicator(
+                      value: downloader.progress > 0 ? downloader.progress : null,
+                      backgroundColor: Colors.blue.shade100,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.shade700),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${(downloader.progress * 100).toStringAsFixed(0)}%",
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.blue),
+                        ),
+                        if (downloader.downloadSpeed.isNotEmpty && downloader.downloadSpeed != "0 KB/s")
+                          Row(
+                            children: [
+                              Icon(Icons.speed, size: 14, color: Colors.blue.shade700),
+                              const SizedBox(width: 4),
+                              Text(
+                                downloader.downloadSpeed,
+                                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(width: 12),
+                              Icon(Icons.timer_outlined, size: 14, color: Colors.orange.shade700),
+                              const SizedBox(width: 4),
+                              Text(
+                                "Sisa: ${downloader.remainingTime}",
+                                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Colors.orange.shade800),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ],
 
             if (downloader.showDownloaderList)
@@ -108,12 +163,12 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                             leading: const Icon(Icons.person, color: Colors.teal),
                             title: Text(reciter.name, maxLines: 1, overflow: TextOverflow.ellipsis),
                             trailing: FutureBuilder<bool>(
-                              future: ref.read(downloadServiceProvider.notifier).isZipDownloaded(reciter.zipUrl),
+                              future: ref.read(downloadServiceProvider.notifier).isZipDownloaded(reciter.zipUrl, reciter.name),
                               builder: (context, snap) {
                                 if (snap.data == true) return const Icon(Icons.check_circle, color: Colors.green);
                                 return IconButton(
                                   icon: const Icon(Icons.cloud_download, color: Colors.blue),
-                                  onPressed: downloader.isDownloading ? null : () => ref.read(downloadServiceProvider.notifier).downloadAndExtractZip(reciter.zipUrl),
+                                  onPressed: downloader.isDownloading ? null : () => ref.read(downloadServiceProvider.notifier).downloadAndExtractZip(reciter.zipUrl, reciter.name),
                                 );
                               },
                             ),
@@ -250,7 +305,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  // 🌟 TOMBOL PUTAR (KINI BERFUNGSI NYATA)
                                   IconButton(
                                     icon: const Icon(Icons.play_arrow, color: Colors.green),
                                     onPressed: () {

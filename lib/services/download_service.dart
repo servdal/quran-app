@@ -125,6 +125,7 @@ class DownloadService extends StateNotifier<DownloadState> {
       state = state.copyWith(statusMessage: "Gagal memproses: $e", isDownloading: false);
     }
   }
+  
   Future<bool> isZipDownloaded(String url) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('zip_downloaded_$url') ?? false;

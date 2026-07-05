@@ -37,6 +37,9 @@ android {
         versionName = flutter.versionName
         multiDexEnabled = true
         missingDimensionStrategy("store", "play")
+        ndk {
+            abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+        }
     }
     signingConfigs {
         create("release") {

@@ -35,6 +35,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       OfflineRecitationRecognizer();
   final ScrollController _scrollController = ScrollController();
   StreamSubscription<OfflineRecognitionResult>? _recognizerSubscription;
+  Timer? _silenceAutoStopTimer;
   late int _currentPage;
   late int _currentSurah;
   List<String> _targetWords = [];
@@ -94,6 +95,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   @override
   void dispose() {
     _recognizerSubscription?.cancel();
+    _silenceAutoStopTimer?.cancel();
     _recitationRecognizer.stop();
     _pulseController.stop();
     _pulseController.dispose();
@@ -200,6 +202,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     if (_currentIndex >= _targetWords.length) return;
 
     if (_mistakeCount < _skipThreshold) {
+      _resetSilenceAutoStopTimer();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -292,6 +295,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       _pulseController.stop();
       _pulseController.reset();
     }
+
   }
 
   void _handleRecognitionResult(OfflineRecognitionResult result) {
@@ -374,7 +378,23 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     }
   }
 
+  void _resetSilenceAutoStopTimer() {
+    _silenceAutoStopTimer?.cancel();
+    _silenceAutoStopTimer = Timer(const Duration(seconds: 10), () {
+      if (mounted && _isListening) {
+        _stopListeningManual();
+        final lang = ref.read(settingsProvider).language;
+        setState(() {
+          _statusMessage = lang == 'en'
+              ? "Stopped automatically due to silence"
+              : "Selesai (Berhenti otomatis)";
+        });
+      }
+    });
+  }
+
   void _stopListeningManual() {
+    _silenceAutoStopTimer?.cancel();
     _recitationRecognizer.stop();
     _pulseController.stop();
     _pulseController.reset();

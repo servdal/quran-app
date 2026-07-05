@@ -18,3 +18,11 @@
 -keep class com.google.android.play.core.splitcompat.** { *; }
 -keep class com.google.android.play.core.splitinstall.** { *; }
 -keep class com.google.android.play.core.tasks.** { *; }
+
+# Jaga agar library native Vosk tidak di-obfuscate atau dihapus oleh R8
+-keep class org.vosk.** { *; }
+-dontwarn org.vosk.**
+
+# Jika Anda menggunakan JNA (Java Native Access) bawaan Vosk
+-keep class com.sun.jna.** { *; }
+-dontwarn com.sun.jna.**

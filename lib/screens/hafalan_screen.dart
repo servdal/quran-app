@@ -43,6 +43,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
 
   int _mistakeCount = 0;
   int _totalSkipCount = 0;
+  int _sessionStartIndex = 0;
   final Set<int> _skippedIndices = {};
 
   static const int _hintThreshold = 3;
@@ -254,10 +255,11 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     });
 
     _pulseController.repeat(reverse: true);
+    _sessionStartIndex = _currentIndex;
     final activeWords =
         _targetWords
             .skip(_currentIndex)
-            .take(12)
+            .take(40)
             .where(
               (word) => RecitationAlignment.normalizePhonetic(word).isNotEmpty,
             )
@@ -401,41 +403,70 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       return true;
     }
 
-    final match = RecitationAlignment.align(
+    // --- STRATEGI BARU: EVALUASI PENCANTUMAN ULANG (REWIND DETECTION) ---
+    // Kita lakukan looping mundur dari _currentIndex sampai indeks 0 (atau awal ayat)
+    // untuk melihat apakah pengguna sebenarnya sedang mengulang bacaannya dari belakang.
+    int bestMatchIndex = _currentIndex;
+    var match = RecitationAlignment.align(
       hypotheses: hypotheses,
       targetWords: _targetWords,
       currentIndex: _currentIndex,
     );
 
-    if (match.isMatch) {
-      // 1. Langsung potong jalur mic native agar tidak mengirim sisa buffer noise
-      _recitationRecognizer.stop();
-
-      // 2. Update indeks dan bersihkan UI teks live
-      setState(() {
-        _currentIndex += match.matchedWordCount;
-        _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
-        _liveRecognizedWords = ""; 
-        _mistakeCount = 0;
-        // Kita set false dulu agar siklus kontrol bar sinkron dengan UI
-        _isListening = false; 
-      });
-
-      _pulseController.stop();
-      _pulseController.reset();
-
-      // 3. Cari kata berikutnya yang bisa diucapkan
-      _advanceToNextSpeakable();
-
-      // 4. BERIKAN WAKTU (400ms) untuk Flutter menyelesaikan animasi opacity teks di layar
-      // Sebelum kita paksa menyalakan miknya kembali
-      Future.delayed(const Duration(milliseconds: 400), () {
-        if (mounted && _currentIndex < _targetWords.length) {
-          _startListening();
+    // Jika di posisi current tidak cocok, periksa ke belakang (maksimal 8 kata ke belakang)
+    if (!match.isMatch) {
+      final lookBackLimit = (_currentIndex - 8).clamp(0, _currentIndex);
+      for (int checkIndex = _currentIndex - 1; checkIndex >= lookBackLimit; checkIndex--) {
+        final backMatch = RecitationAlignment.align(
+          hypotheses: hypotheses,
+          targetWords: _targetWords,
+          currentIndex: checkIndex,
+        );
+        if (backMatch.isMatch) {
+          match = backMatch;
+          bestMatchIndex = checkIndex;
+          break; // Temukan titik pengulangan terdekat!
         }
+      }
+    }
+    // --------------------------------------------------------------------
+
+    if (match.isMatch) {
+      // CONTINUOUS: Jangan stop recognizer agar user bisa bicara tanpa putus-putus.
+      // Recognizer hanya di-stop saat page complete atau manual stop.
+      setState(() {
+        _currentIndex = bestMatchIndex + match.matchedWordCount;
+        _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
+        // Jangan mengosongkan _liveRecognizedWords di sini agar teks yang sudah benar
+        // dan telah tampil di panel live tidak tiba-tiba menghilang (flicker/"...").
+        _mistakeCount = 0;
       });
 
+      _advanceToNextSpeakable();
       return true;
+    }
+
+    // Continuous mode recovery: jika final result hanya berisi kata-kata yang sudah termatch
+    // via non-final (tanpa kata baru), jangan hitung sebagai mistake.
+    if (_sessionStartIndex < _currentIndex) {
+      final matchedNorm = _targetWords
+          .sublist(_sessionStartIndex, _currentIndex)
+          .map((w) => RecitationAlignment.normalizePhonetic(w))
+          .where((w) => w.isNotEmpty)
+          .join('');
+      if (matchedNorm.isNotEmpty && hypotheses.isNotEmpty) {
+        // Hanya cek primary hypothesis (transcript utama) agar tidak terkecoh oleh
+        // alternatif-alternatif pendek yang memang ada di dalam kata yang sudah termatch.
+        final primaryHypothesis = hypotheses.first.isNotEmpty
+            ? hypotheses.first
+            : (hypotheses.length > 1 && hypotheses[1].isNotEmpty
+                ? hypotheses[1]
+                : '');
+        final primaryNorm = RecitationAlignment.normalizePhonetic(primaryHypothesis);
+        if (primaryNorm.isNotEmpty && matchedNorm.contains(primaryNorm)) {
+          return true;
+        }
+      }
     }
 
     return false;

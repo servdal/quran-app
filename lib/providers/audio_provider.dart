@@ -13,19 +13,16 @@ class DownloadService extends ChangeNotifier {
   String currentFile = "";
   
   List<String> zipLinks = []; 
-  List<String> localAudioFiles = []; // Menampung file lokal yang sudah terunduh
-  bool showDownloaderList = false;   // Mengontrol visibilitas daftar unduhan web
-
-  // Mengubah mode tampilan ke menu download web
+  List<String> localAudioFiles = [];
+  bool showDownloaderList = false;
   void toggleDownloaderMode(bool show) {
     showDownloaderList = show;
     if (show && zipLinks.isEmpty) {
-      scrapeZipLinks(); // Otomatis scrape jika list masih kosong
+      scrapeZipLinks();
     }
     notifyListeners();
   }
 
-  // Memuat daftar file lokal yang sudah tersimpan di SharedPreferences
   Future<void> loadDownloadedFiles() async {
     final prefs = await SharedPreferences.getInstance();
     localAudioFiles = prefs.getStringList('downloaded_audio_files') ?? [];
@@ -38,7 +35,6 @@ class DownloadService extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Scraping link .zip dari website
   Future<List<String>> scrapeZipLinks() async {
     statusMessage = "Mencari paket syaikh di website...";
     notifyListeners();
@@ -65,7 +61,6 @@ class DownloadService extends ChangeNotifier {
     return [];
   }
 
-  // Download, Ekstrak, dan Simpan
   Future<void> downloadAndExtractZip(String url) async {
     isDownloading = true;
     progress = 0.0;
@@ -108,18 +103,13 @@ class DownloadService extends ChangeNotifier {
               await outFile.create(recursive: true);
               await outFile.writeAsBytes(data);
               
-              // Menyimpan nama file saja atau full path. 
-              // Di sini kita simpan nama file-nya untuk struktur tampilan yang rapi.
               newLocalPaths.add(filename); 
             }
           }
-
-          // Update SharedPreferences
           final prefs = await SharedPreferences.getInstance();
           List<String> savedFiles = prefs.getStringList('downloaded_audio_files') ?? [];
           savedFiles.addAll(newLocalPaths);
           
-          // Hilangkan duplikasi jika ada file dengan nama sama
           localAudioFiles = savedFiles.toSet().toList();
           await prefs.setStringList('downloaded_audio_files', localAudioFiles);
           
@@ -127,7 +117,7 @@ class DownloadService extends ChangeNotifier {
 
           statusMessage = "Sukses menambahkan Syaikh baru!";
           isDownloading = false;
-          showDownloaderList = false; // Kembalikan ke halaman list file lokal setelah sukses
+          showDownloaderList = false;
           notifyListeners();
         },
         onError: (e) {

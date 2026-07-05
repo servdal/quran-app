@@ -1,12 +1,10 @@
 import 'dart:io';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quran_app/providers/download_provider.dart';
 
-// 1. Buat Handler Latar Belakang Utama
 class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final AudioPlayer _player = AudioPlayer();
   PlaylistItem? activePlaylist;
@@ -56,12 +54,11 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       String fullPath = '${directory.path}/quran_audio/$folder/$sPad$aPad.mp3';
 
       if (await File(fullPath).exists()) {
-        // Update tampilan Notifikasi Lock Screen Android
         mediaItem.add(MediaItem(
           id: fullPath,
           album: "Murottal Per Ayat",
           title: "Surah $currentSurah : Ayat $currentAyah",
-          artist: folder.split('_').join(' ').toUpperCase(), // Format nama qari agar rapi
+          artist: folder.split('_').join(' ').toUpperCase(),
         ));
 
         await _player.setFilePath(fullPath);
@@ -132,7 +129,6 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 }
 
-// 2. STATE RIVERPOD UNTUK KEBUTUHAN UI APP
 class PlayerUIState {
   final bool isPlaying;
   final String title;
@@ -147,7 +143,6 @@ class PlayerUIState {
   });
 }
 
-// Provider Global yang mengontrol jembatan UI dan Service Latar Belakang
 final playerServiceProvider = StateNotifierProvider<PlayerNotifier, PlayerUIState>((ref) {
   return PlayerNotifier();
 });
@@ -170,7 +165,6 @@ class PlayerNotifier extends StateNotifier<PlayerUIState> {
       ),
     );
 
-    // Pantau perubahan dari background untuk dioper ke UI Riverpod secara real-time
     _handler!.playbackState.listen((playbackState) {
       final isPlaying = playbackState.playing;
       state = PlayerUIState(

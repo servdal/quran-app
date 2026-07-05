@@ -29,7 +29,7 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
   @override
   Widget build(BuildContext context) {
     final downloader = ref.watch(downloadServiceProvider);
-    final player = ref.watch(playerServiceProvider); // 🎧 Dengarkan state audio player
+    final player = ref.watch(playerServiceProvider);
 
     final Set<String> availableReciters = {};
     for (var fileData in downloader.localAudioFiles) {
@@ -57,7 +57,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
               icon: const Icon(Icons.delete_forever, color: Colors.redAccent),
               tooltip: "Reset / Hapus Semua Data",
               onPressed: () {
-                // Tampilkan dialog konfirmasi sebelum menghapus total
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
@@ -270,8 +269,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                       ),
               ),
               const Divider(),
-
-              // --- SECTION C: STRUKTUR BERKAS LOKAL AUDIO DEVICE ---
               const Text("📁 Daftar Qari / Syaikh Terunduh (Lokal)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
               Expanded(
                 flex: 1,
@@ -281,8 +278,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                         itemCount: availableReciters.length,
                         itemBuilder: (context, index) {
                           final folderSyaikh = availableReciters.elementAt(index);
-
-                          // Hitung berapa jumlah file ayat milik Syaikh ini di local list
                           final jumlahAyat = downloader.localAudioFiles.where((file) => file.startsWith('$folderSyaikh/')).length;
 
                           return Card(
@@ -298,7 +293,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  // Klik folder untuk memilih syaikh ini ke form playlist di atas
                                   IconButton(
                                     icon: const Icon(Icons.check_circle_outline, color: Colors.teal),
                                     tooltip: "Pilih Qari ini",
@@ -306,7 +300,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                                       setState(() => _selectedReciter = folderSyaikh);
                                     },
                                   ),
-                                  // 🌟 TOMBOL HAPUS FOLDER SYAIKH TERTENTU
                                   IconButton(
                                     icon: const Icon(Icons.folder_delete, color: Colors.redAccent),
                                     tooltip: "Hapus Syaikh ini dari device",
@@ -324,7 +317,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                                             TextButton(
                                               onPressed: () {
                                                 ref.read(downloadServiceProvider.notifier).deleteReciterFolder(folderSyaikh);
-                                                // Reset dropdown select jika syaikh yang dihapus kebetulan sedang terpilih
                                                 if (_selectedReciter == folderSyaikh) {
                                                   setState(() => _selectedReciter = null);
                                                 }
@@ -363,7 +355,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              // 🔄 GANTI DI SINI: Langsung tampilkan teks dinamis dari background service
                               "Sedang Memutar: ${player.title}",
                               style: const TextStyle(
                                 color: Colors.white, 
@@ -372,7 +363,6 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                               ),
                             ),
                             Text(
-                              // 🔄 GANTI DI SINI: Menampilkan nama Syaikh/Qari yang dikirim background service
                               "Qari: ${player.subtitle}",
                               style: const TextStyle(color: Colors.white70, fontSize: 10),
                             ),

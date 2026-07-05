@@ -292,8 +292,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
 
   void _handleRecognitionResult(OfflineRecognitionResult result) {
     final lang = ref.read(settingsProvider).language;
-    final displayText =
-        result.transcript.isNotEmpty ? result.transcript : result.phonemes;
+    
+    final displayText = result.transcript.isNotEmpty 
+        ? result.transcript 
+        : (result.phonemes.isNotEmpty ? result.phonemes : "");
 
     setState(() {
       if (result.debugType == 'audio') {
@@ -302,22 +304,41 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         _debugAudioSamples = result.audioSamples;
         _debugAudioMessage = result.debugMessage;
       } else {
-        _liveRecognizedWords = displayText;
+        if (displayText.isNotEmpty) {
+          _liveRecognizedWords = displayText;
+        }
       }
     });
 
     if (result.debugType == 'audio') return;
 
+    // 1. Cek kecocokan teks yang masuk
     final matchFound = _verifyStream([
       result.transcript,
       result.phonemes,
       ...result.alternatives,
     ]);
 
-    if (!result.isFinal || matchFound) return;
+    // 2. JIKA BENAR: Hentikan proses pembacaan di sini.
+    // Jalur kelanjutan mic untuk kata berikutnya sudah ditangani dengan aman di dalam _verifyStream
+    if (matchFound) return; 
 
+    if (!result.isFinal) return;
+
+    // 3. Jika final tetapi teks kosong (silence/timeout)
+    if (displayText.trim().isEmpty) {
+      if (mounted && _isListening) {
+        _recitationRecognizer.stop();
+        Future.delayed(const Duration(milliseconds: 250), () {
+          if (mounted && _isListening) _startListening();
+        });
+      }
+      return; 
+    }
+
+    // 4. Pengguna benar-benar bicara sesuatu tapi SALAH
     setState(() {
-      _mistakeCount++;
+      _mistakeCount++; 
       final sisaSkip = _skipThreshold - _mistakeCount;
 
       if (_mistakeCount < _hintThreshold) {
@@ -349,10 +370,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     }
   }
 
-  // Update logika saat stop manual atau ganti halaman
   void _stopListeningManual() {
     _recitationRecognizer.stop();
-    _pulseController.stop(); // Stop animasi
+    _pulseController.stop();
     _pulseController.reset();
     setState(() {
       _isListening = false;
@@ -385,13 +405,25 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     );
 
     if (match.isMatch) {
+      // Hentikan recognizer sejenak agar tidak membaca sisa nafas/keheningan kata sebelumnya
+      _recitationRecognizer.stop();
+
       setState(() {
         _currentIndex += match.matchedWordCount;
         _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
+        _liveRecognizedWords = ""; // Bersihkan teks lama dari layar
         _mistakeCount = 0;
       });
 
       _advanceToNextSpeakable();
+
+      // Berikan jeda singkat (300ms) agar animasi opacity Flutter selesai merender kata baru,
+      // lalu otomatis aktifkan mikrofon kembali untuk kata selanjutnya.
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (mounted && _isListening) {
+          _startListening();
+        }
+      });
 
       return true;
     }

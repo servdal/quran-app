@@ -71,6 +71,7 @@ class TajweedParser {
     final StringBuffer buf = StringBuffer();
 
     Color colorForRule(String raw) {
+      if (!learningMode) return baseColor;
       String rule = raw;
       final int colon = rule.indexOf(':');
       if (colon != -1) {
@@ -81,6 +82,7 @@ class TajweedParser {
     }
 
     TextStyle styleForRule(String ruleKey, TextStyle style) {
+      if (!learningMode) return style;
       final color = AppTheme.tajweedColors[ruleKey];
       if (color == null) return style;
       return style.copyWith(

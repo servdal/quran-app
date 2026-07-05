@@ -34,7 +34,7 @@ import 'package:quran_app/screens/aqidah_screen.dart';
 import 'package:quran_app/screens/tafsir_surah_list_screen.dart';
 import 'package:quran_app/screens/qibla_screen.dart';
 
-// --- PROVIDER & LOGIC ---
+
 final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final prefs = await SharedPreferences.getInstance();
 
@@ -1363,7 +1363,6 @@ class GlossaryScreen extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        // Badge kecil untuk menunjukkan Key (opsional)
                         Align(
                           alignment: Alignment.centerRight,
                           child: Chip(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:quran_app/utils/uthmani_bridge_parser.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -297,7 +298,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                               style: TextStyle(
                                 fontFamily: 'LPMQ',
                                 fontSize: s(64),
-                                height: 1.9,
+                                height: 2.0,
                                 color: const Color(0xFF112A45),
                               ),
                             ),
@@ -474,7 +475,15 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
     final baseArabicStyle = TextStyle(
       fontFamily: 'LPMQ',
       fontSize: panelFontSize,
-      height: 2.2,
+      height: 2.0,
+      color: theme.colorScheme.onSurface,
+    );
+
+    // ignore: non_constant_identifier_names
+    final UstmaniTextStyle = TextStyle(
+      fontFamily: 'LPMQ_Isep_Misbah',
+      fontSize: panelFontSize,
+      height: 2.0,
       color: theme.colorScheme.onSurface,
     );
 
@@ -497,9 +506,10 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         context: context,
         learningMode: true,
       ),
-      ArabicSource.quranCloud => [
-        TextSpan(text: widget.ayah.arabicText, style: baseArabicStyle),
-      ],
+      ArabicSource.quranCloud => UthmaniBridgeParser.parseToPlainUthmani(
+          widget.ayah.tajweedText, 
+          UstmaniTextStyle,
+      ),
       ArabicSource.kemenag => [
         TextSpan(text: widget.ayah.ayaTextKemenag, style: baseArabicStyle),
       ],

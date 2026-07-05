@@ -70,11 +70,17 @@ Aplikasi Mushaf memanfaatkan dan mengolah data dari berbagai sumber terpercaya, 
 3. **Tafsir Jalalayn (English Translation)**  
    https://www.academia.edu/39891639/Al_Jalalain_Eng  
 
-4. **Audio Kajian & Murattal**  
-   KH. Bahauddin Nursalim (Gus Baha)  
-   https://www.youtube.com/@officiallp3ia  
+4. **Tafsir Jalalayn (PDF Indonesia)**  
+   https://www.alkhoirot.org/2017/11/terjemah-kitab-tafsir-jalalain.html  
 
-5. **Sumber-sumber lain**  
+5. **Audio Murottal**  
+   https://everyayah.com/  
+
+6. **Inspirasi**  
+   KH. Bahauddin Nursalim (Gus Baha)
+   https://www.youtube.com/@officiallp3ia
+
+7. **Sumber-sumber lain**  
    Beberapa data tambahan diperoleh dari referensi terbuka (open sources), literatur Islam, dan kontribusi komunitas yang belum seluruhnya tercatat secara eksplisit.  
    Apabila terdapat sumber yang terlewat, silakan menghubungi pengembang untuk penambahan atribusi yang sesuai.
 
@@ -157,7 +163,7 @@ Mushaf utilizes and processes data from several trusted sources, including:
 3. **Tafsir Jalalayn (English Translation)**  
    https://www.academia.edu/39891639/Al_Jalalain_Eng
 
-4. **Audio Lectures & Recitations**  
+4. **Inspiration**  
    KH. Bahauddin Nursalim (Gus Baha)  
    https://www.youtube.com/@officiallp3ia
 

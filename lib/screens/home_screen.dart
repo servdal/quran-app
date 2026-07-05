@@ -9,6 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:quran_app/providers/bookmark_provider.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/screens/deresan_view_screen.dart';
+import 'package:quran_app/screens/download_manager_screen.dart';
 import 'package:quran_app/screens/hafalan_entry_screen.dart';
 import 'package:quran_app/screens/hafalan_screen.dart';
 import 'package:quran_app/screens/language_selector_screen.dart';
@@ -720,6 +721,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         spacing: 12.0,
         runSpacing: 16.0,
         children: [
+           _menuItem(
+            context,
+            name: isId ? "Klasik" : "Classic",
+            icon: Icons.history_edu,
+            color: Colors.indigo,
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (_) => const PageListScreen(
+                          mode: PageListViewMode.classic,
+                        ),
+                  ),
+                ),
+            theme: theme,
+          ),
           _menuItem(
             context,
             name: isId ? 'Per Surah' : 'By Surah',
@@ -744,34 +762,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
             theme: theme,
           ),
-          _menuItem(
+           _menuItem(
             context,
-            name: "Nahwu",
-            icon: Icons.menu_book,
-            color: Colors.brown,
+            name: "Murotal",
+            icon: Icons.audio_file_rounded,
+            color: Colors.redAccent,
             onTap:
                 () => Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const TafsirSurahListScreen(),
-                  ),
-                ),
-            theme: theme,
-          ),
-          _menuItem(
-            context,
-            name: isId ? "Klasik" : "Classic",
-            icon: Icons.history_edu,
-            color: Colors.indigo,
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (_) => const PageListScreen(
-                          mode: PageListViewMode.classic,
-                        ),
-                  ),
+                  MaterialPageRoute(builder: (_) => const DownloadManagerScreen()),
                 ),
             theme: theme,
           ),
@@ -784,6 +783,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const HafalanEntryScreen()),
+                ),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: "Nahwu",
+            icon: Icons.menu_book,
+            color: Colors.brown,
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const TafsirSurahListScreen(),
+                  ),
                 ),
             theme: theme,
           ),
@@ -916,13 +929,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Indikator Status (seperti di referensi SMART ROOM)
               Align(
                 alignment: Alignment.topRight,
                 child: CircleAvatar(
                   radius: 4,
                   backgroundColor:
-                      color, // Menggunakan warna kategori sebagai status
+                      color,
                 ),
               ),
               const Spacer(),
@@ -1280,7 +1292,6 @@ class GlossaryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 1. Baca bahasa dari provider
     final lang = ref.watch(settingsProvider).language;
 
     return Scaffold(
@@ -1310,10 +1321,8 @@ class GlossaryScreen extends ConsumerWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: ExpansionTile(
-                // Menghilangkan garis default ExpansionTile
                 shape: const Border(),
                 collapsedShape: const Border(),
-                // Indikator Warna di samping (Vertical Line)
                 leading: Container(
                   width: 6,
                   height: 30,
@@ -1323,7 +1332,7 @@ class GlossaryScreen extends ConsumerWidget {
                   ),
                 ),
                 title: Text(
-                  rule.getName(lang), // BILINGUAL NAME
+                  rule.getName(lang),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -1344,7 +1353,7 @@ class GlossaryScreen extends ConsumerWidget {
                         const Divider(),
                         const SizedBox(height: 8),
                         Text(
-                          rule.getDescription(lang), // BILINGUAL DESCRIPTION
+                          rule.getDescription(lang),
                           style: TextStyle(
                             fontSize: 14,
                             height: 1.6,

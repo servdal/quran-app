@@ -15,7 +15,6 @@ import 'screens/language_selector_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // On desktop, sqflite needs ffi factory initialization before openDatabase.
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;

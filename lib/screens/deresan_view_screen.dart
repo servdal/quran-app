@@ -1,5 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdfrx/pdfrx.dart';
+import 'package:quran_app/utils/uthmani_bridge_parser.dart';
 
 import '../../providers/bookmark_provider.dart';
 import '../../providers/settings_provider.dart';
@@ -20,6 +25,7 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
   late final PageController _pageController;
   late int _currentPage;
   bool _showTafsir = false;
+  
   @override
   void initState() {
     super.initState();
@@ -106,13 +112,12 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
           size: 28,
         ),
       ),
-
       bottomNavigationBar: _DeresanBottomBar(controller: _pageController),
     );
   }
 }
 
-class DeresanPage extends ConsumerWidget {
+class DeresanPage extends ConsumerStatefulWidget {
   final int pageNumber;
   final bool showTafsir;
 
@@ -123,23 +128,50 @@ class DeresanPage extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DeresanPage> createState() => _DeresanPageState();
+}
+
+class _DeresanPageState extends ConsumerState<DeresanPage> {
+  bool _viewPdfMode = false;
+
+  // Fungsi pembantu untuk memformat 1 -> "001", 12 -> "012", dst.
+  String _formatPageNumber(int number) {
+    return number.toString().padLeft(3, '0');
+  }
+
+  // Mengunduh/load PDF dari Assets ke Path Lokal agar bisa dibaca oleh flutter_pdfview
+  Future<File> _loadPdfFromAsset(String assetPath) async {
+    try {
+      final data = await rootBundle.load(assetPath);
+      final bytes = data.buffer.asUint8List();
+      final dir = await getTemporaryDirectory();
+      final filename = assetPath.split('/').last;
+      final file = File('${dir.path}/$filename');
+
+      await file.writeAsBytes(bytes, flush: true);
+      return file;
+    } catch (e) {
+      throw Exception('Gagal memuat file PDF dari asset');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
     final lang = settings.language;
     final source = settings.arabicSource;
     final theme = Theme.of(context);
     final panelFontSize = settings.ayahPanelFontSize;
 
-    final ayahsAsync = ref.watch(pageAyahsProvider(pageNumber));
+    final ayahsAsync = ref.watch(pageAyahsProvider(widget.pageNumber));
 
     return ayahsAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error:
-          (e, _) => Center(
-            child: Text(
-              lang == 'en' ? 'Failed to load page' : 'Gagal memuat halaman',
-            ),
-          ),
+      error: (e, _) => Center(
+        child: Text(
+          lang == 'en' ? 'Failed to load page' : 'Gagal memuat halaman',
+        ),
+      ),
       data: (ayahs) {
         if (ayahs.isEmpty) {
           return Center(
@@ -147,49 +179,98 @@ class DeresanPage extends ConsumerWidget {
           );
         }
 
-        if (showTafsir) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:
-                  ayahs.map((ayah) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'QS ${ayah.surahId}:${ayah.number}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: theme.primaryColor,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            ayah.tafsir,
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              height: 1.6,
-                              fontSize: panelFontSize,
-                            ),
-                          ),
-                        ],
+        // KONDISI JIKA TOMBOL DI LIHAT TAFSIR AKTIF
+        if (widget.showTafsir) {
+          return Column(
+            children: [
+              // Tambahan bar tombol untuk beralih antara Mode Teks Tafsir & Mode Pandangan PDF
+              Container(
+                color: theme.primaryColor.withOpacity(0.05),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ChoiceChip(
+                      label: Text(lang == 'en' ? 'Text Tafsir' : 'Teks Tafsir'),
+                      selected: !_viewPdfMode,
+                      onSelected: (selected) {
+                        if (selected) setState(() => _viewPdfMode = false);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    ChoiceChip(
+                      label: Text(lang == 'en' ? 'View PDF' : 'Lihat PDF'),
+                      selected: _viewPdfMode,
+                      onSelected: (selected) {
+                        if (selected) setState(() => _viewPdfMode = true);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              
+              // TAMPILAN KONTEN UTAMA (PDF atau Teks)
+              Expanded(
+                child: _viewPdfMode
+                    ? PdfViewer.asset(
+                        'assets/pdf/${_formatPageNumber(widget.pageNumber)}.pdf',
+                        params: const PdfViewerParams(
+                          panEnabled: true,
+                          maxScale: 3.0,
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: ayahs.map((ayah) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'QS ${ayah.surahId}:${ayah.number}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.primaryColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    ayah.tafsir,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      height: 1.6,
+                                      fontSize: panelFontSize,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                    );
-                  }).toList(),
-            ),
+              )
+            ],
           );
         }
 
+        // TAMPILAN UTAMA MUSHAF (Al-Qur'an Teks Biasa)
         final List<Widget> pageWidgets = [];
         List<InlineSpan> currentSpans = [];
 
         final baseTextStyle = TextStyle(
           fontFamily: 'LPMQ',
           fontSize: panelFontSize,
-          height: 1.9,
+          height: 2.0,
+          color: theme.colorScheme.onSurface,
+        );
+
+        final UstmaniTextStyle = TextStyle(
+          fontFamily: 'LPMQ_Isep_Misbah',
+          fontSize: panelFontSize,
+          height: 2.0,
           color: theme.colorScheme.onSurface,
         );
 
@@ -228,9 +309,10 @@ class DeresanPage extends ConsumerWidget {
               context: context,
               learningMode: true,
             ),
-            ArabicSource.quranCloud => [
-              TextSpan(text: ayah.arabicText, style: baseTextStyle),
-            ],
+            ArabicSource.quranCloud => UthmaniBridgeParser.parseToPlainUthmani(
+                ayah.tajweedText, 
+                UstmaniTextStyle,
+            ),
             ArabicSource.kemenag => [
               TextSpan(text: ayah.ayaTextKemenag, style: baseTextStyle),
             ],
@@ -714,7 +796,7 @@ class _DeresanBottomBar extends StatelessWidget {
       color: Colors.grey.shade300,
       elevation: 8,
       child: SizedBox(
-        height: 64, // ⬅️ cukup tinggi untuk FAB 56
+        height: 64,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

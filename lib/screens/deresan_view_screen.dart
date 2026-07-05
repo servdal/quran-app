@@ -139,22 +139,6 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
     return number.toString().padLeft(3, '0');
   }
 
-  // Mengunduh/load PDF dari Assets ke Path Lokal agar bisa dibaca oleh flutter_pdfview
-  Future<File> _loadPdfFromAsset(String assetPath) async {
-    try {
-      final data = await rootBundle.load(assetPath);
-      final bytes = data.buffer.asUint8List();
-      final dir = await getTemporaryDirectory();
-      final filename = assetPath.split('/').last;
-      final file = File('${dir.path}/$filename');
-
-      await file.writeAsBytes(bytes, flush: true);
-      return file;
-    } catch (e) {
-      throw Exception('Gagal memuat file PDF dari asset');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);

@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:quran_app/providers/download_provider.dart';
+import 'package:quran_app/providers/player_provider.dart';
+import 'package:quran_app/screens/download_manager_screen.dart';
 import 'package:quran_app/utils/uthmani_bridge_parser.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -36,6 +39,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   String? _remoteFutureLang;
   bool _translationRequested = false;
   bool _tafsirRequested = false;
+  String? _selectedReciterForAudioTab;
 
   @override
   void initState() {
@@ -733,21 +737,218 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   }
 
   Widget _tabAudio(bool isId) {
-    final panelFontSize = ref.watch(settingsProvider).ayahPanelFontSize;
-    final videoId = YoutubePlayer.convertUrlToId(
-      'https://www.youtube.com/watch?v=fM7BQNV6koc&list=PLdfZWRI2eOVYYEkjAqrGm7AgWuPn_26jk',
-    );
+      final downloader = ref.watch(downloadServiceProvider);
+      final player = ref.watch(playerServiceProvider);
+      final theme = Theme.of(context);
+      final Set<String> availableReciters = {};
+      for (var fileData in downloader.localAudioFiles) {
+        if (fileData.contains('/')) {
+          availableReciters.add(fileData.split('/').first);
+        }
+      }
 
-    if (videoId == null) {
-      return Center(
-        child: Text(
-          'Video tidak valid',
-          style: TextStyle(fontSize: panelFontSize),
-        ),
+      if (availableReciters.isEmpty) {
+        return Padding(
+          padding: const EdgeInsets.all(24),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.cloud_download_outlined, size: 48, color: theme.colorScheme.primary.withOpacity(0.6)),
+              const SizedBox(height: 12),
+              Text(
+                isId ? 'Audio belum tersedia lokal' : 'Audio not available locally',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                isId 
+                    ? 'Silakan unduh paket audio Syaikh pilihan Anda terlebih dahulu melalui Manajer Audio.' 
+                    : 'Please download your preferred reciter bundle first via Audio Manager.',
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.download_rounded, size: 18),
+                label: Text(isId ? 'Buka Manajer Audio' : 'Open Audio Manager'),
+                onPressed: () {
+                  // 🛠️ Buka halaman download manager Anda. 
+                  // Sesuaikan rute navigasi ini dengan nama class/rute aplikasi Anda.
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DownloadManagerScreen(), // Pastikan di-import
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        )
       );
     }
+    if (_selectedReciterForAudioTab == null || !availableReciters.contains(_selectedReciterForAudioTab)) {
+      _selectedReciterForAudioTab = availableReciters.first;
+    }
 
-    return YoutubeAudioTab(videoId: videoId, isId: isId);
+    final String activeReciter = availableReciters.first;
+
+    final String currentAyahTitle = "Surah ${widget.ayah.surahId} : Ayat ${widget.ayah.number}";
+    final bool isThisAyahAndQariPlaying = player.isPlaying && 
+        player.title == currentAyahTitle && 
+        player.subtitle.toLowerCase().replaceAll(' ', '_') == activeReciter;
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Center(
+        child: Card(
+          color: isThisAyahAndQariPlaying ? theme.colorScheme.primaryContainer.withOpacity(0.3) : null,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: isThisAyahAndQariPlaying ? theme.colorScheme.primary : theme.dividerColor.withOpacity(0.2)),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.person_pin_rounded, 
+                    color: isThisAyahAndQariPlaying ? theme.colorScheme.primary : Colors.grey
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          isId ? "Pilih Qari Pemutar:" : "Select Reciter:",
+                          style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 2),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: activeReciter,
+                            isDense: true,
+                            isExpanded: true,
+                            style: TextStyle(
+                              fontSize: 13, 
+                              fontWeight: FontWeight.bold, 
+                              color: theme.textTheme.bodyLarge?.color
+                            ),
+                            items: availableReciters.map((String qariFolder) {
+                              return DropdownMenuItem<String>(
+                                value: qariFolder,
+                                child: Text(qariFolder.replaceAll('_', ' ').toUpperCase()),
+                              );
+                            }).toList(),
+                            onChanged: (newQari) {
+                              if (newQari != null) {
+                                setState(() {
+                                  _selectedReciterForAudioTab = newQari;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(height: 24),
+              Text(
+                "Surah ${widget.ayah.surahName} : Ayat ${widget.ayah.number}",
+                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (isThisAyahAndQariPlaying) ...[
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundColor: theme.colorScheme.primary,
+                      child: IconButton(
+                        icon: const Icon(Icons.pause, color: Colors.white),
+                        onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
+                      child: IconButton(
+                        icon: const Icon(Icons.stop, color: Colors.redAccent),
+                        onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
+                      ),
+                    ),
+                  ] 
+                  else if (player.title == currentAyahTitle && player.subtitle.toLowerCase().replaceAll(' ', '_') == activeReciter) ...[
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundColor: theme.colorScheme.primary,
+                      child: IconButton(
+                        icon: const Icon(Icons.play_arrow, color: Colors.white),
+                        onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
+                      child: IconButton(
+                        icon: const Icon(Icons.stop, color: Colors.redAccent),
+                        onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
+                      ),
+                    ),
+                  ]
+                  // Jika belum berputar sama sekali atau user memilih Qari yang berbeda, tampilkan tombol "Putar" baru
+                  else ...[
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                        foregroundColor: theme.colorScheme.onPrimary,
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      ),
+                      icon: const Icon(Icons.play_arrow_rounded),
+                      label: Text(isId ? 'Putar Ayat Ini' : 'Play This Ayah'),
+                      onPressed: () {
+                        final singleAyahPlaylist = PlaylistItem(
+                          reciterName: activeReciter,
+                          startSurah: widget.ayah.surahId,
+                          startAyah: widget.ayah.number,
+                          endSurah: widget.ayah.surahId,
+                          endAyah: widget.ayah.number,
+                          isRepeat: false,
+                        );
+                        
+                        ref.read(playerServiceProvider.notifier).playPlaylist(singleAyahPlaylist);
+                      },
+                    ),
+                  ],
+                ],
+              ),
+              
+              if (isThisAyahAndQariPlaying) ...[
+                const SizedBox(height: 12),
+                Text(
+                  isId ? "• Sedang melantunkan ayat..." : "• Now reciting...",
+                  style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: theme.colorScheme.primary),
+                )
+              ],
+              
+            ],
+          ),
+        ),
+      ),
+    )
+    );
   }
 
   void _snack(String msg) {

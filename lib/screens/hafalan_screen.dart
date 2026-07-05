@@ -139,7 +139,9 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   }
 
   void _prepareData(List<Ayah> ayahs) {
-    if (_targetWords.isEmpty && ayahs.isNotEmpty) {
+    if (_targetWords.isNotEmpty) return;
+
+    if (ayahs.isNotEmpty) {
       List<String> words = [];
       for (var ayah in ayahs) {
         if (ayah.arabicWords.isNotEmpty) {
@@ -388,13 +390,14 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     final lang = ref.read(settingsProvider).language;
     if (_currentIndex >= _targetWords.length) {
       _recitationRecognizer.stop();
-      setState(
-        () =>
-            _statusMessage =
-                lang == 'en'
-                    ? "Page Complete! Total Skip: $_totalSkipCount"
-                    : "Halaman Selesai! Total Skip: $_totalSkipCount",
-      );
+      setState(() {
+        _statusMessage = lang == 'en'
+            ? "Page Complete! Total Skip: $_totalSkipCount"
+            : "Halaman Selesai! Total Skip: $_totalSkipCount";
+        _isListening = false;
+      });
+      _pulseController.stop();
+      _pulseController.reset();
       return true;
     }
 
@@ -405,22 +408,29 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     );
 
     if (match.isMatch) {
-      // Hentikan recognizer sejenak agar tidak membaca sisa nafas/keheningan kata sebelumnya
+      // 1. Langsung potong jalur mic native agar tidak mengirim sisa buffer noise
       _recitationRecognizer.stop();
 
+      // 2. Update indeks dan bersihkan UI teks live
       setState(() {
         _currentIndex += match.matchedWordCount;
         _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
-        _liveRecognizedWords = ""; // Bersihkan teks lama dari layar
+        _liveRecognizedWords = ""; 
         _mistakeCount = 0;
+        // Kita set false dulu agar siklus kontrol bar sinkron dengan UI
+        _isListening = false; 
       });
 
+      _pulseController.stop();
+      _pulseController.reset();
+
+      // 3. Cari kata berikutnya yang bisa diucapkan
       _advanceToNextSpeakable();
 
-      // Berikan jeda singkat (300ms) agar animasi opacity Flutter selesai merender kata baru,
-      // lalu otomatis aktifkan mikrofon kembali untuk kata selanjutnya.
-      Future.delayed(const Duration(milliseconds: 300), () {
-        if (mounted && _isListening) {
+      // 4. BERIKAN WAKTU (400ms) untuk Flutter menyelesaikan animasi opacity teks di layar
+      // Sebelum kita paksa menyalakan miknya kembali
+      Future.delayed(const Duration(milliseconds: 400), () {
+        if (mounted && _currentIndex < _targetWords.length) {
           _startListening();
         }
       });

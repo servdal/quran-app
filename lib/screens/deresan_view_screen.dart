@@ -924,39 +924,6 @@ class _BismillahWidget extends StatelessWidget {
   }
 }
 
-class _SurahHeaderWidget extends StatelessWidget {
-  final String surahName;
-
-  const _SurahHeaderWidget({required this.surahName});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: theme.primaryColor.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.primaryColor),
-      ),
-      child: Center(
-        child: Text(
-          surahName,
-          style: TextStyle(
-            fontSize: 16,
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.bold,
-            color: theme.primaryColor,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _DeresanBottomBar extends StatelessWidget {
   final PageController controller;
 

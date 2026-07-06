@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import org.json.JSONObject
 import org.vosk.Model
 import org.vosk.Recognizer
+import com.ryanheise.audioservice.AudioServicePlugin
 
 class MainActivity : FlutterActivity() {
     private val controlChannelName = "quran_app/offline_recitation/control"
@@ -134,6 +135,9 @@ class MainActivity : FlutterActivity() {
                 }
             }
         }.start()
+    }
+    override fun provideFlutterEngine(context: android.content.Context): FlutterEngine? {
+        return AudioServicePlugin.getFlutterEngine(context)
     }
 
     @SuppressLint("MissingPermission")

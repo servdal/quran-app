@@ -797,12 +797,10 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
       );
     }
 
-    // 🌟 PERBAIKAN 1: Inisialisasi awal jika null atau qari yang dipilih sudah tidak ada
     if (_selectedReciterForAudioTab == null || !availableReciters.contains(_selectedReciterForAudioTab)) {
       _selectedReciterForAudioTab = availableReciters.first;
     }
 
-    // 🌟 PERBAIKAN 2: Menggunakan variabel state, BUKAN .first secara statis!
     final String activeReciter = _selectedReciterForAudioTab!;
 
     final String currentAyahTitle = "Surah ${widget.ayah.surahId} : Ayat ${widget.ayah.number}";

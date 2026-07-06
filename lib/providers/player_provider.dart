@@ -50,15 +50,13 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     try {
       final directory = await getApplicationDocumentsDirectory();
       String sPad = currentSurah.toString().padLeft(3, '0');
-      String aPad = currentAyah.toString().padLeft(3, '0'); // Format 3 digit pasti (contoh: 010)
-      String folder = activePlaylist!.reciterName;
-      
-      // Jalur file absolut yang sudah dipastikan seragam
+      String aPad = currentAyah.toString().padLeft(3, '0');
+      String folder = activePlaylist!.reciterName;      
       String fullPath = '${directory.path}/quran_audio/$folder/$sPad$aPad.mp3';
       final file = File(fullPath);
+      _notifyPlaybackError("Memutar berkas: Surah $currentSurah : Ayat $currentAyah");
 
       if (await file.exists()) {
-        // Pembaruan metadata untuk sistem notifikasi laci Android
         mediaItem.add(MediaItem(
           id: fullPath,
           album: "Murottal Per Ayat",
@@ -66,27 +64,19 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
           artist: folder.split('_').join(' ').toUpperCase(),
         ));
 
-        // Membuka berkas menggunakan AudioSource.file demi keamanan Scoped Storage Android
         await _player.setAudioSource(AudioSource.file(file.path));
         _player.play();
       } else {
-        debugPrint("⚠️ Berkas tidak ditemukan di storage: $fullPath");
-        
-        // Perbarui state UI sementara agar user tahu file sedang dilewati/hilang
+        _notifyPlaybackError("Berkas ayat $currentAyah tidak ditemukan, melewati...");        
         playbackState.add(playbackState.value.copyWith(
           errorMessage: "Berkas ayat $currentAyah tidak ditemukan, melewati...",
         ));
-        
-        // Auto-skip ke ayat berikutnya jika file lokal ternyata bolong
         _handleNextAyah();
       }
     } on PlayerException catch (e) {
-      // Menangkap eror spesifik dari JustAudio (misal: format audio rusak/corrupted berkas)
-      debugPrint("❌ Eror JustAudio Decoder: ${e.message}");
       _notifyPlaybackError("Gagal memutar berkas: Audio rusak.");
     } catch (e) {
       // Menangkap eror sistem lainnya
-      debugPrint("❌ Eror sistem pemutar: $e");
       _notifyPlaybackError("Terjadi kesalahan pemutaran lokal.");
     }
   }
@@ -157,6 +147,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       queueIndex: event.currentIndex,
     );
   }
+  
 }
 
 class PlayerUIState {
@@ -181,32 +172,58 @@ final playerServiceProvider = StateNotifierProvider<PlayerNotifier, PlayerUIStat
 
 class PlayerNotifier extends StateNotifier<PlayerUIState> {
   MyAudioHandler? _handler;
+  bool _isInitialized = false;
 
   PlayerNotifier() : super(PlayerUIState()) {
     _initAudioService();
   }
 
   Future<void> _initAudioService() async {
-    _handler = await AudioService.init(
-      builder: () => MyAudioHandler(),
-      config: const AudioServiceConfig(
-        androidNotificationChannelId: 'com.quranapp.audio.channel',
-        androidNotificationChannelName: 'Pemutar Murottal Al-Quran',
-        androidNotificationOngoing: true,
-        androidShowNotificationBadge: true,
-      ),
-    );
-
-    _handler!.playbackState.listen((playbackState) {
-      final isPlaying = playbackState.playing;
-      state = PlayerUIState(
-        isPlaying: isPlaying,
-        title: _handler!.mediaItem.value?.title ?? "",
-        subtitle: _handler!.mediaItem.value?.artist ?? "",
-        activePlaylist: _handler!.activePlaylist,
-        errorMessage: playbackState.errorMessage,
+    try {
+      _handler = await AudioService.init(
+        builder: () => MyAudioHandler(),
+        config: const AudioServiceConfig(
+          androidNotificationChannelId: 'alquran.duidev.com.audio.channel',
+          androidNotificationChannelName: 'Pemutar Murottal Al-Quran',
+          androidNotificationOngoing: true,
+          androidShowNotificationBadge: true,
+        ),
       );
-    });
+
+      _isInitialized = true;
+
+      _handler!.playbackState.listen((playbackState) {
+        state = PlayerUIState(
+          isPlaying: playbackState.playing,
+          title: _handler!.mediaItem.value?.title ?? "",
+          subtitle: _handler!.mediaItem.value?.artist ?? "",
+          activePlaylist: _handler!.activePlaylist,
+          errorMessage: playbackState.errorMessage,
+        );
+      });
+    } catch (e) {
+      debugPrint("Gagal memuat sistem audio: $e");
+      state = PlayerUIState(errorMessage: "Gagal memuat sistem audio: $e");
+    }
+  }
+
+  void playPlaylist(PlaylistItem playlist) {
+    if (!_isInitialized || _handler == null) {
+      state = PlayerUIState(
+        isPlaying: false,
+        errorMessage: "Sistem audio sedang bersiap, silakan coba lagi.",
+      );
+      return;
+    }
+    _handler!.startPlaylist(playlist);
+  }
+
+  void togglePausePlay() {
+    _handler?.pause();
+  }
+
+  void stop() {
+    _handler?.stop();
   }
 
   void clearError() {
@@ -215,23 +232,7 @@ class PlayerNotifier extends StateNotifier<PlayerUIState> {
       title: state.title,
       subtitle: state.subtitle,
       activePlaylist: state.activePlaylist,
-      errorMessage: null, // Reset menjadi null
+      errorMessage: null,
     );
-  }
-
-  void playPlaylist(PlaylistItem playlist) {
-    _handler?.startPlaylist(playlist);
-  }
-
-  void togglePausePlay() {
-    if (state.isPlaying) {
-      _handler?.pause();
-    } else {
-      _handler?.play();
-    }
-  }
-
-  void stop() {
-    _handler?.stop();
   }
 }

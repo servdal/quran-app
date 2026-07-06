@@ -26,7 +26,7 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   /// ================= INIT =================
-  Future<void> init() async {
+  Future<void> init({bool isBackground = false}) async {
     tz.initializeTimeZones();
 
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -58,7 +58,7 @@ class NotificationService {
     await _plugin.initialize(settings);
 
     /// Android permission
-    if (Platform.isAndroid) {
+    if (Platform.isAndroid && !isBackground) {
       final androidImplementation =
           _plugin.resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>();

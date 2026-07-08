@@ -13,7 +13,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   int currentAyah = 0;
 
   MyAudioHandler() {
-    _player.playbackEventStream.map(_transformEvent).pipe(playbackState);
+    _player.playbackEventStream.map(_transformEvent).listen(_setPlaybackState);
 
     _player.processingStateStream.listen((state) {
       if (state == ProcessingState.completed) {
@@ -31,10 +31,12 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   @override
   Future<void> stop() async {
     await _player.stop();
-    playbackState.add(playbackState.value.copyWith(
-      playing: false,
-      processingState: AudioProcessingState.idle,
-    ));
+    _setPlaybackState(
+      playbackState.value.copyWith(
+        playing: false,
+        processingState: AudioProcessingState.idle,
+      ),
+    );
   }
 
   Future<void> startPlaylist(PlaylistItem playlist) async {
@@ -51,44 +53,60 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       final directory = await getApplicationDocumentsDirectory();
       String sPad = currentSurah.toString().padLeft(3, '0');
       String aPad = currentAyah.toString().padLeft(3, '0');
-      String folder = activePlaylist!.reciterName;      
+      String folder = activePlaylist!.reciterName
+          .trim()
+          .toLowerCase()
+          .replaceAll(RegExp(r'[^\w\s\-]'), '')
+          .replaceAll(' ', '_');
       String fullPath = '${directory.path}/quran_audio/$folder/$sPad$aPad.mp3';
       final file = File(fullPath);
-      _notifyPlaybackError("Memutar berkas: Surah $currentSurah : Ayat $currentAyah");
 
       if (await file.exists()) {
-        mediaItem.add(MediaItem(
-          id: fullPath,
-          album: "Murottal Per Ayat",
-          title: "Surah $currentSurah : Ayat $currentAyah",
-          artist: folder.split('_').join(' ').toUpperCase(),
-        ));
+        mediaItem.add(
+          MediaItem(
+            id: fullPath,
+            album: "Murottal Per Ayat",
+            title: "Surah $currentSurah : Ayat $currentAyah",
+            artist: folder.split('_').join(' ').toUpperCase(),
+          ),
+        );
 
         await _player.setAudioSource(AudioSource.file(file.path));
         _player.play();
       } else {
-        _notifyPlaybackError("Berkas ayat $currentAyah tidak ditemukan, melewati...");        
-        playbackState.add(playbackState.value.copyWith(
-          errorMessage: "Berkas ayat $currentAyah tidak ditemukan, melewati...",
-        ));
+        _setPlaybackState(
+          playbackState.value.copyWith(
+            playing: false,
+            errorMessage:
+                "Berkas ayat $currentAyah tidak ditemukan, melewati...",
+          ),
+        );
         _handleNextAyah();
       }
-    } on PlayerException catch (e) {
-      _notifyPlaybackError("Gagal memutar berkas: Audio rusak.");
+    } on PlayerException {
+      await _notifyPlaybackError("Gagal memutar berkas: Audio rusak.");
     } catch (e) {
       // Menangkap eror sistem lainnya
-      _notifyPlaybackError("Terjadi kesalahan pemutaran lokal.");
+      await _notifyPlaybackError("Terjadi kesalahan pemutaran lokal.");
     }
   }
 
   // Fungsi pembantu untuk mengirim notifikasi eror ke laci Android dan sistem UI
-  void _notifyPlaybackError(String message) {
-    playbackState.add(playbackState.value.copyWith(
-      playing: false,
-      processingState: AudioProcessingState.error,
-      errorMessage: message,
-    ));
-    stop();
+  Future<void> _notifyPlaybackError(String message) async {
+    await _player.stop();
+    _setPlaybackState(
+      playbackState.value.copyWith(
+        playing: false,
+        processingState: AudioProcessingState.error,
+        errorMessage: message,
+      ),
+    );
+  }
+
+  void _setPlaybackState(PlaybackState state) {
+    if (!playbackState.isClosed) {
+      playbackState.add(state);
+    }
   }
 
   void _handleNextAyah() {
@@ -100,7 +118,8 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
     if (nextSurah > activePlaylist!.endSurah) {
       isFinished = true;
-    } else if (nextSurah == activePlaylist!.endSurah && nextAyah > activePlaylist!.endAyah) {
+    } else if (nextSurah == activePlaylist!.endSurah &&
+        nextAyah > activePlaylist!.endAyah) {
       isFinished = true;
     }
 
@@ -133,13 +152,14 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         MediaAction.seekBackward,
       },
       androidCompactActionIndices: const [1],
-      processingState: const {
-        ProcessingState.idle: AudioProcessingState.idle,
-        ProcessingState.loading: AudioProcessingState.loading,
-        ProcessingState.buffering: AudioProcessingState.buffering,
-        ProcessingState.ready: AudioProcessingState.ready,
-        ProcessingState.completed: AudioProcessingState.completed,
-      }[_player.processingState]!,
+      processingState:
+          const {
+            ProcessingState.idle: AudioProcessingState.idle,
+            ProcessingState.loading: AudioProcessingState.loading,
+            ProcessingState.buffering: AudioProcessingState.buffering,
+            ProcessingState.ready: AudioProcessingState.ready,
+            ProcessingState.completed: AudioProcessingState.completed,
+          }[_player.processingState]!,
       playing: _player.playing,
       updatePosition: _player.position,
       bufferedPosition: _player.bufferedPosition,
@@ -147,7 +167,6 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       queueIndex: event.currentIndex,
     );
   }
-  
 }
 
 class PlayerUIState {
@@ -166,9 +185,10 @@ class PlayerUIState {
   });
 }
 
-final playerServiceProvider = StateNotifierProvider<PlayerNotifier, PlayerUIState>((ref) {
-  return PlayerNotifier();
-});
+final playerServiceProvider =
+    StateNotifierProvider<PlayerNotifier, PlayerUIState>((ref) {
+      return PlayerNotifier();
+    });
 
 class PlayerNotifier extends StateNotifier<PlayerUIState> {
   MyAudioHandler? _handler;

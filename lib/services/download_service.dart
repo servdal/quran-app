@@ -93,11 +93,12 @@ class DownloadService extends StateNotifier<DownloadState> {
             final filename = file.name;
             if (file.isFile && (filename.endsWith('.mp3') || filename.endsWith('.wav'))) {
               final data = file.content as List<int>;
+              final justFileName = file.name.split('/').last;
               
-              final outFile = File('${targetDir.path}/$filename');
+              final outFile = File('${targetDir.path}/$justFileName');
               await outFile.create(recursive: true);
               await outFile.writeAsBytes(data);              
-              newLocalPaths.add('$folderName/$filename'); 
+              newLocalPaths.add('$folderName/$justFileName'); 
             }
           }
 

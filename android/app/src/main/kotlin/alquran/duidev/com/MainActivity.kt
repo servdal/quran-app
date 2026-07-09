@@ -13,9 +13,11 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
+import java.util.ArrayDeque
 import java.util.concurrent.atomic.AtomicBoolean
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import org.json.JSONArray
 import org.json.JSONObject
 import org.vosk.Model
 import org.vosk.Recognizer
@@ -32,6 +34,8 @@ class MainActivity : FlutterActivity() {
     private var recognitionThread: Thread? = null
     private var modelPath: String? = null
     private var modelId: String? = null
+    private var activeWords: List<String> = emptyList()
+    private var expectedPhrase: String = ""
     private var isLoading = false
     private var pendingStartAfterPermission = false
     private var lastAudioDebugAtMs = 0L
@@ -61,6 +65,11 @@ class MainActivity : FlutterActivity() {
                     "configure" -> {
                         modelId = call.argument<String>("modelId")
                         modelPath = call.argument<String>("modelPath")
+                        activeWords =
+                            (call.argument<List<Any>>("activeWords") ?: emptyList())
+                                .mapNotNull { it as? String }
+                                .filter { it.isNotBlank() }
+                        expectedPhrase = call.argument<String>("expectedPhrase").orEmpty()
                         val path = modelPath
                         if (modelId != "vosk_arabic") {
                             result.error(
@@ -70,9 +79,18 @@ class MainActivity : FlutterActivity() {
                             )
                             return@setMethodCallHandler
                         }
-                        if (path.isNullOrBlank() || !File(path).exists()) {
+                        val resolvedPath = resolveVoskModelPath(path)
+                        if (resolvedPath == null) {
                             result.error("MODEL_NOT_FOUND", "Model Vosk Arabic belum ditemukan.", path)
                             return@setMethodCallHandler
+                        }
+                        if (modelPath != resolvedPath) {
+                            stopVosk()
+                            model?.close()
+                            model = null
+                            modelPath = resolvedPath
+                        } else {
+                            stopVosk()
                         }
                         result.success(null)
                     }
@@ -88,7 +106,8 @@ class MainActivity : FlutterActivity() {
 
     private fun startVosk(result: MethodChannel.Result) {
         val path = modelPath
-        if (path.isNullOrBlank() || !File(path).exists()) {
+        val resolvedPath = resolveVoskModelPath(path)
+        if (resolvedPath == null) {
             result.error("MODEL_NOT_FOUND", "Model Vosk Arabic belum ditemukan.", path)
             return
         }
@@ -107,7 +126,8 @@ class MainActivity : FlutterActivity() {
             return
         }
 
-        startVoskInternal(path)
+        modelPath = resolvedPath
+        startVoskInternal(resolvedPath)
         result.success(null)
     }
 
@@ -120,7 +140,13 @@ class MainActivity : FlutterActivity() {
                 if (model == null) {
                     model = Model(path)
                 }
-                recognizer = Recognizer(model, 16000.0f)
+                val grammar = buildVoskGrammar()
+                recognizer =
+                    if (grammar == null) {
+                        Recognizer(model, 16000.0f)
+                    } else {
+                        Recognizer(model, 16000.0f, grammar)
+                    }
                 recognizer?.setWords(true)
                 recognizer?.setPartialWords(true)
                 recognizer?.setMaxAlternatives(3)
@@ -131,7 +157,7 @@ class MainActivity : FlutterActivity() {
             } catch (error: Exception) {
                 runOnUiThread {
                     isLoading = false
-                    emitResult(error.message ?: "Gagal memuat model Vosk", true)
+                    emitEngineError(error.message ?: "Gagal memuat model Vosk")
                 }
             }
         }.start()
@@ -188,10 +214,11 @@ class MainActivity : FlutterActivity() {
                         applyAdaptiveMicGain(buffer, read)
                         emitAudioDebug(buffer, read)
                         val accepted = currentRecognizer.acceptWaveForm(buffer, read)
-                        emitJson(
-                            if (accepted) currentRecognizer.result else currentRecognizer.partialResult,
-                            false,
-                        )
+                        val hypothesis =
+                            if (accepted) currentRecognizer.result else currentRecognizer.partialResult
+                        if (accepted || hasRecognizedText(hypothesis)) {
+                            emitJson(hypothesis, accepted)
+                        }
                     }
 
                     emitJson(currentRecognizer.finalResult, true)
@@ -328,6 +355,17 @@ class MainActivity : FlutterActivity() {
         emitResult(text, isFinal, alternatives)
     }
 
+    private fun hasRecognizedText(hypothesis: String?): Boolean {
+        val parsed =
+            try {
+                JSONObject(hypothesis ?: "{}")
+            } catch (_: Exception) {
+                null
+            }
+        return parsed?.optString("text")?.isNotBlank() == true ||
+            parsed?.optString("partial")?.isNotBlank() == true
+    }
+
     private fun emitResult(
         text: String,
         isFinal: Boolean,
@@ -349,6 +387,88 @@ class MainActivity : FlutterActivity() {
                 "isFinal" to isFinal,
             ) + extras,
         )
+    }
+
+    private fun emitEngineError(message: String) {
+        emitResult(
+            text = "",
+            isFinal = true,
+            extras =
+                mapOf(
+                    "debugType" to "error",
+                    "debugMessage" to message,
+                ),
+        )
+    }
+
+    private fun resolveVoskModelPath(path: String?): String? {
+        if (path.isNullOrBlank()) return null
+
+        val root = File(path)
+        if (!root.exists()) return null
+        if (isVoskModelRoot(root)) return root.absolutePath
+
+        val pending = ArrayDeque<File>()
+        pending.add(root)
+        var scanned = 0
+
+        while (pending.isNotEmpty() && scanned < 80) {
+            val current = pending.removeFirst()
+            scanned++
+            current.listFiles()?.forEach { child ->
+                if (!child.isDirectory) return@forEach
+                if (isVoskModelRoot(child)) return child.absolutePath
+                pending.add(child)
+            }
+        }
+
+        return null
+    }
+
+    private fun isVoskModelRoot(dir: File): Boolean {
+        return File(dir, "am").isDirectory &&
+            File(dir, "conf").isDirectory &&
+            File(dir, "graph").isDirectory
+    }
+
+    private fun buildVoskGrammar(): String? {
+        val phrases = linkedSetOf<String>()
+        val cleanWords =
+            activeWords
+                .map { normalizeArabicForGrammar(it) }
+                .filter { it.isNotEmpty() }
+
+        if (expectedPhrase.isNotBlank()) {
+            normalizeArabicForGrammar(expectedPhrase).takeIf { it.isNotEmpty() }?.let {
+                phrases.add(it)
+            }
+        }
+
+        for (index in cleanWords.indices) {
+            val maxEnd = minOf(cleanWords.size, index + 6)
+            for (end in index + 1..maxEnd) {
+                phrases.add(cleanWords.subList(index, end).joinToString(" "))
+            }
+        }
+
+        if (phrases.isEmpty()) return null
+        val grammar = JSONArray()
+        phrases.take(250).forEach { grammar.put(it) }
+        return grammar.toString()
+    }
+
+    private fun normalizeArabicForGrammar(value: String): String {
+        return value
+            .replace(Regex("[\\u0610-\\u061A\\u064B-\\u065F\\u06D6-\\u06ED]"), "")
+            .replace("ـ", "")
+            .replace("ٰ", "ا")
+            .replace(Regex("[إأآٱ]"), "ا")
+            .replace("ى", "ي")
+            .replace("ؤ", "و")
+            .replace("ئ", "ي")
+            .replace(Regex("[^\\u0600-\\u06FF\\s]"), " ")
+            .replace(Regex("\\s+"), " ")
+            .trim()
     }
 
     override fun onDestroy() {

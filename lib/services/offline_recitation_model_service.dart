@@ -63,7 +63,6 @@ class OfflineRecitationModelService extends ChangeNotifier {
       fileName: 'ggml-tiny.bin',
       sourceUrl:
           'https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin',
-      recommended: true,
     ),
     OfflineRecitationModel(
       id: 'whisper_base_ar',
@@ -83,6 +82,7 @@ class OfflineRecitationModelService extends ChangeNotifier {
       sourceUrl:
           'https://alphacephei.com/vosk/models/vosk-model-ar-mgb2-0.4.zip',
       archive: true,
+      recommended: true,
     ),
   ];
 
@@ -129,15 +129,18 @@ class OfflineRecitationModelService extends ChangeNotifier {
 
   Future<void> refresh() async {
     _isRefreshing = true;
+    _installedModelIds.clear();
+    _installedModelPaths.clear();
+    _downloads.removeWhere(
+      (_, info) => info.state == OfflineModelDownloadState.installed,
+    );
     notifyListeners();
 
     try {
       final ids = await _controlChannel.invokeMethod<List<dynamic>>(
         'installedModels',
       );
-      _installedModelIds
-        ..clear()
-        ..addAll((ids ?? const []).whereType<String>());
+      _installedModelIds.addAll((ids ?? const []).whereType<String>());
       await _loadLocalInstalledModels();
       _nativeAvailable = true;
       _statusMessage =
@@ -316,18 +319,28 @@ class OfflineRecitationModelService extends ChangeNotifier {
       final path = await marker.readAsString();
       if (path.trim().isEmpty) continue;
 
-      final exists =
+      final savedPath = path.trim();
+      final resolvedPath =
           model.archive
-              ? await Directory(path.trim()).exists()
-              : await File(path.trim()).exists();
-      if (!exists) continue;
+              ? await _resolveArchiveModelRoot(savedPath)
+              : await File(savedPath).exists()
+              ? savedPath
+              : null;
+      if (resolvedPath == null) {
+        await marker.delete();
+        _downloads.remove(model.id);
+        continue;
+      }
+      if (resolvedPath != savedPath) {
+        await _writeMarker(model, resolvedPath);
+      }
 
       _installedModelIds.add(model.id);
-      _installedModelPaths[model.id] = path.trim();
+      _installedModelPaths[model.id] = resolvedPath;
       _downloads[model.id] = OfflineModelDownloadInfo(
         state: OfflineModelDownloadState.installed,
         progress: 1,
-        message: path.trim(),
+        message: resolvedPath,
       );
     }
   }
@@ -346,7 +359,45 @@ class OfflineRecitationModelService extends ChangeNotifier {
 
     final rootName = model.fileName.replaceAll('.zip', '');
     final nestedRoot = Directory('${targetDir.path}/$rootName');
-    return await nestedRoot.exists() ? nestedRoot.path : targetDir.path;
+    final extractedPath =
+        await nestedRoot.exists() ? nestedRoot.path : targetDir.path;
+    final resolvedPath = await _resolveArchiveModelRoot(extractedPath);
+    if (resolvedPath == null) {
+      throw StateError('Folder model Vosk tidak valid setelah ekstraksi');
+    }
+    return resolvedPath;
+  }
+
+  Future<String?> _resolveArchiveModelRoot(String path) async {
+    final root = Directory(path);
+    if (!await root.exists()) return null;
+    if (await _isVoskModelRoot(root)) return root.path;
+
+    final pending = <Directory>[root];
+    var scanned = 0;
+    while (pending.isNotEmpty && scanned < 80) {
+      final current = pending.removeAt(0);
+      scanned++;
+      try {
+        await for (final entity in current.list(followLinks: false)) {
+          if (entity is! Directory) continue;
+          if (await _isVoskModelRoot(entity)) return entity.path;
+          pending.add(entity);
+        }
+      } catch (_) {
+        continue;
+      }
+    }
+
+    return null;
+  }
+
+  Future<bool> _isVoskModelRoot(Directory dir) async {
+    final requiredDirs = ['am', 'conf', 'graph'];
+    for (final name in requiredDirs) {
+      if (!await Directory('${dir.path}/$name').exists()) return false;
+    }
+    return true;
   }
 
   Future<void> _writeMarker(

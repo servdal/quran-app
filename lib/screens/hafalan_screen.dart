@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 import '../services/quran_data_service.dart';
 import '../providers/settings_provider.dart';
@@ -57,12 +58,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   String _currentSurahName = '';
   int _currentSurahId = 0;
   late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
   String _liveRecognizedWords = "";
-  double _debugMicLevel = 0;
-  double _debugPeakLevel = 0;
-  int _debugAudioSamples = 0;
-  String _debugAudioMessage = '';
 
   bool get _isSurahScope => widget.scope == HafalanScope.surah;
   int get _currentUnit => _isSurahScope ? _currentSurah : _currentPage;
@@ -86,9 +82,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
-    );
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
   }
 
@@ -250,10 +243,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     setState(() {
       _statusMessage = lang == 'en' ? "Listening..." : "Mendengarkan...";
       _liveRecognizedWords = "";
-      _debugMicLevel = 0;
-      _debugPeakLevel = 0;
-      _debugAudioSamples = 0;
-      _debugAudioMessage = '';
       _isListening = true;
     });
 
@@ -270,19 +259,45 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
 
     try {
       final modelService = ref.read(offlineRecitationModelServiceProvider);
+      await modelService.refresh();
       final modelId = _selectRecognizerModelId(modelService.installedModelIds);
+      final modelPath =
+          modelId == null ? null : modelService.installedModelPaths[modelId];
+      if (modelId == null || modelPath == null || modelPath.isEmpty) {
+        if (!mounted) return;
+        setState(() {
+          _isListening = false;
+          _statusMessage =
+              lang == 'en'
+                  ? 'Install the Vosk Arabic model first'
+                  : 'Pasang model Vosk Arabic dulu';
+        });
+        _pulseController.stop();
+        _pulseController.reset();
+        _openOfflineModelManager(autoStartDownload: true);
+        return;
+      }
+
       await _recitationRecognizer.configure(
-        engine:
-            modelId == 'vosk_arabic'
-                ? OfflineRecitationEngine.vosk
-                : OfflineRecitationEngine.whisper,
+        engine: OfflineRecitationEngine.vosk,
         activeWords: activeWords,
         expectedPhrase: activeWords.join(' '),
         modelId: modelId,
-        modelPath:
-            modelId == null ? null : modelService.installedModelPaths[modelId],
+        modelPath: modelPath,
       );
       await _recitationRecognizer.start();
+    } on PlatformException catch (error) {
+      if (!mounted) return;
+      final detail = error.message ?? error.code;
+      setState(() {
+        _isListening = false;
+        _statusMessage =
+            lang == 'en'
+                ? 'Offline recitation engine failed: $detail'
+                : 'Mesin hafalan offline gagal: $detail';
+      });
+      _pulseController.stop();
+      _pulseController.reset();
     } catch (error) {
       if (!mounted) return;
       setState(() {
@@ -295,58 +310,59 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       _pulseController.stop();
       _pulseController.reset();
     }
-
   }
 
   void _handleRecognitionResult(OfflineRecognitionResult result) {
     final lang = ref.read(settingsProvider).language;
-    
-    final displayText = result.transcript.isNotEmpty 
-        ? result.transcript 
-        : (result.phonemes.isNotEmpty ? result.phonemes : "");
 
-    setState(() {
-      if (result.debugType == 'audio') {
-        _debugMicLevel = result.micLevel;
-        _debugPeakLevel = result.peakLevel;
-        _debugAudioSamples = result.audioSamples;
-        _debugAudioMessage = result.debugMessage;
-      } else {
-        if (displayText.isNotEmpty) {
-          _liveRecognizedWords = displayText;
-        }
-      }
-    });
+    final displayText =
+        result.transcript.isNotEmpty
+            ? result.transcript
+            : (result.phonemes.isNotEmpty ? result.phonemes : "");
+
+    if (result.debugType == 'error') {
+      setState(() {
+        _isListening = false;
+        _statusMessage =
+            lang == 'en'
+                ? 'Offline recitation engine failed: ${result.debugMessage}'
+                : 'Mesin hafalan offline gagal: ${result.debugMessage}';
+      });
+      _pulseController.stop();
+      _pulseController.reset();
+      return;
+    }
 
     if (result.debugType == 'audio') return;
 
-    // 1. Cek kecocokan teks yang masuk
+    if (displayText.isNotEmpty) {
+      setState(() {
+        _liveRecognizedWords = displayText;
+      });
+    }
+
+    // 1. Cek kecocokan teks yang masuk (baik bersifat sementara/interim maupun final)
     final matchFound = _verifyStream([
       result.transcript,
       result.phonemes,
       ...result.alternatives,
     ]);
 
-    // 2. JIKA BENAR: Hentikan proses pembacaan di sini.
-    // Jalur kelanjutan mic untuk kata berikutnya sudah ditangani dengan aman di dalam _verifyStream
-    if (matchFound) return; 
+    // JIKA BENAR: Alur dilanjutkan langsung dari _verifyStream tanpa menghentikan mic.
+    if (matchFound) return;
 
+    // JIKA SALAH TAPI BARU HASIL INTERIM: Jangan potong flow, biarkan pengguna menyelesaikan lantunannya.
     if (!result.isFinal) return;
 
-    // 3. Jika final tetapi teks kosong (silence/timeout)
+    // 2. Jika engine sudah memutus status Final tetapi teksnya kosong (silence / jeda panjang)
     if (displayText.trim().isEmpty) {
-      if (mounted && _isListening) {
-        _recitationRecognizer.stop();
-        Future.delayed(const Duration(milliseconds: 250), () {
-          if (mounted && _isListening) _startListening();
-        });
-      }
-      return; 
+      _resetSilenceAutoStopTimer();
+      return;
     }
 
-    // 4. Pengguna benar-benar bicara sesuatu tapi SALAH
+    // 3. Pengguna benar-benar selesai melantunkan potongan kata (isFinal = true) dan setelah divalidasi MEMANG SALAH
     setState(() {
-      _mistakeCount++; 
+      _mistakeCount++;
       final sisaSkip = _skipThreshold - _mistakeCount;
 
       if (_mistakeCount < _hintThreshold) {
@@ -365,17 +381,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                 ? "6 mistakes. Skip button ACTIVE."
                 : "Sudah 6x salah. Tombol Skip AKTIF.";
       }
-      _isListening = false;
+
+      // PENTING: Jangan set _isListening = false di sini agar mikrofon tidak mati mendadak
+      // dan menginterupsi kelancaran melantunkan ayat berikutnya.
     });
-
-    _pulseController.stop();
-    _pulseController.reset();
-
-    if (_mistakeCount < 10) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted && !_isListening) _startListening();
-      });
-    }
   }
 
   void _resetSilenceAutoStopTimer() {
@@ -385,9 +394,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         _stopListeningManual();
         final lang = ref.read(settingsProvider).language;
         setState(() {
-          _statusMessage = lang == 'en'
-              ? "Stopped automatically due to silence"
-              : "Selesai (Berhenti otomatis)";
+          _statusMessage =
+              lang == 'en'
+                  ? "Stopped automatically due to silence"
+                  : "Selesai (Berhenti otomatis)";
         });
       }
     });
@@ -401,10 +411,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     setState(() {
       _isListening = false;
       _liveRecognizedWords = "";
-      _debugMicLevel = 0;
-      _debugPeakLevel = 0;
-      _debugAudioSamples = 0;
-      _debugAudioMessage = '';
     });
   }
 
@@ -413,9 +419,10 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     if (_currentIndex >= _targetWords.length) {
       _recitationRecognizer.stop();
       setState(() {
-        _statusMessage = lang == 'en'
-            ? "Page Complete! Total Skip: $_totalSkipCount"
-            : "Halaman Selesai! Total Skip: $_totalSkipCount";
+        _statusMessage =
+            lang == 'en'
+                ? "Page Complete! Total Skip: $_totalSkipCount"
+                : "Halaman Selesai! Total Skip: $_totalSkipCount";
         _isListening = false;
       });
       _pulseController.stop();
@@ -423,9 +430,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       return true;
     }
 
-    // --- STRATEGI BARU: EVALUASI PENCANTUMAN ULANG (REWIND DETECTION) ---
-    // Kita lakukan looping mundur dari _currentIndex sampai indeks 0 (atau awal ayat)
-    // untuk melihat apakah pengguna sebenarnya sedang mengulang bacaannya dari belakang.
     int bestMatchIndex = _currentIndex;
     var match = RecitationAlignment.align(
       hypotheses: hypotheses,
@@ -433,10 +437,14 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       currentIndex: _currentIndex,
     );
 
-    // Jika di posisi current tidak cocok, periksa ke belakang (maksimal 8 kata ke belakang)
+    // Jalur strategi deteksi rewind / pembacaan ulang ke belakang
     if (!match.isMatch) {
       final lookBackLimit = (_currentIndex - 8).clamp(0, _currentIndex);
-      for (int checkIndex = _currentIndex - 1; checkIndex >= lookBackLimit; checkIndex--) {
+      for (
+        int checkIndex = _currentIndex - 1;
+        checkIndex >= lookBackLimit;
+        checkIndex--
+      ) {
         final backMatch = RecitationAlignment.align(
           hypotheses: hypotheses,
           targetWords: _targetWords,
@@ -445,29 +453,25 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         if (backMatch.isMatch) {
           match = backMatch;
           bestMatchIndex = checkIndex;
-          break; // Temukan titik pengulangan terdekat!
+          break;
         }
       }
     }
-    // --------------------------------------------------------------------
 
     if (match.isMatch) {
-      // CONTINUOUS: Jangan stop recognizer agar user bisa bicara tanpa putus-putus.
-      // Recognizer hanya di-stop saat page complete atau manual stop.
+      // CONTINUOUS: Biarkan engine tetap berjalan agar lantunan kata berikutnya terekam tanpa putus jeda mic.
       setState(() {
         _currentIndex = bestMatchIndex + match.matchedWordCount;
         _statusMessage = lang == 'en' ? "Correct!" : "Benar!";
-        // Jangan mengosongkan _liveRecognizedWords di sini agar teks yang sudah benar
-        // dan telah tampil di panel live tidak tiba-tiba menghilang (flicker/"...").
         _mistakeCount = 0;
       });
 
       _advanceToNextSpeakable();
+      _resetSilenceAutoStopTimer(); // Segarkan timer keheningan setiap kali ada kata yang berhasil ditebak
       return true;
     }
 
-    // Continuous mode recovery: jika final result hanya berisi kata-kata yang sudah termatch
-    // via non-final (tanpa kata baru), jangan hitung sebagai mistake.
+    // Pemulihan continuous mode recovery untuk mencegah deteksi salah (mistake) berulang
     if (_sessionStartIndex < _currentIndex) {
       final matchedNorm = _targetWords
           .sublist(_sessionStartIndex, _currentIndex)
@@ -475,14 +479,11 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
           .where((w) => w.isNotEmpty)
           .join('');
       if (matchedNorm.isNotEmpty && hypotheses.isNotEmpty) {
-        // Hanya cek primary hypothesis (transcript utama) agar tidak terkecoh oleh
-        // alternatif-alternatif pendek yang memang ada di dalam kata yang sudah termatch.
-        final primaryHypothesis = hypotheses.first.isNotEmpty
-            ? hypotheses.first
-            : (hypotheses.length > 1 && hypotheses[1].isNotEmpty
-                ? hypotheses[1]
-                : '');
-        final primaryNorm = RecitationAlignment.normalizePhonetic(primaryHypothesis);
+        final primaryHypothesis =
+            hypotheses.first.isNotEmpty ? hypotheses.first : '';
+        final primaryNorm = RecitationAlignment.normalizePhonetic(
+          primaryHypothesis,
+        );
         if (primaryNorm.isNotEmpty && matchedNorm.contains(primaryNorm)) {
           return true;
         }
@@ -629,6 +630,35 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     }
   }
 
+  void _changeUnit(int unit) {
+    _stopListeningManual();
+    setState(() {
+      if (_isSurahScope) {
+        _currentSurah = unit;
+      } else {
+        _currentPage = unit;
+      }
+      _targetWords = [];
+      _currentIndex = 0;
+    });
+  }
+
+  void _openOfflineModelManager({bool autoStartDownload = false}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) =>
+                OfflineModelManagerScreen(autoStartDownload: autoStartDownload),
+      ),
+    ).then((_) => _initOfflineRecognizer());
+  }
+
+  String? _selectRecognizerModelId(Iterable<String> installedModelIds) {
+    if (installedModelIds.contains('vosk_arabic')) return 'vosk_arabic';
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final ayahsAsync =
@@ -673,7 +703,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                 lang == 'en'
                     ? 'Offline recitation models'
                     : 'Model hafalan offline',
-            onPressed: _openOfflineModelManager,
+            onPressed: () => _openOfflineModelManager(),
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -754,7 +784,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                   ),
                 ),
               ),
-
               _buildControlBar(),
             ],
           );
@@ -819,7 +848,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
             ),
           ),
           const SizedBox(height: 20),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -830,7 +858,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                         ? () => _changeUnit(_currentUnit + 1)
                         : null,
               ),
-
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -867,7 +894,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                       ),
                     ),
                   ),
-
                   const SizedBox(width: 16),
                   Container(
                     decoration: BoxDecoration(
@@ -916,7 +942,6 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
                   ),
                 ],
               ),
-
               IconButton(
                 icon: const Icon(Icons.arrow_forward_ios),
                 onPressed:
@@ -937,171 +962,27 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     }
 
     return AnimatedSize(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
       child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.green.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
+          color: Colors.teal.shade50,
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
-          children: [
-            // Ikon berdenyut
-            ScaleTransition(
-              scale: _pulseAnimation,
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.green.withValues(alpha: 0.4),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.mic, color: Colors.white, size: 24),
-              ),
-            ),
-            const SizedBox(height: 12),
-            // Teks Live
-            Text(
-              _liveRecognizedWords.isEmpty ? "..." : _liveRecognizedWords,
-              textAlign: TextAlign.center,
-              textDirection: TextDirection.rtl, // Karena bahasa Arab
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-                fontFamily: 'LPMQ', // Pakai font arab jika ada
-              ),
-            ),
-            const SizedBox(height: 14),
-            _buildMicDebugMeter(),
-          ],
+        child: Text(
+          _liveRecognizedWords.isEmpty ? "..." : _liveRecognizedWords,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.teal.shade900,
+            fontStyle:
+                _liveRecognizedWords.isEmpty
+                    ? FontStyle.italic
+                    : FontStyle.normal,
+          ),
         ),
       ),
     );
-  }
-
-  Widget _buildMicDebugMeter() {
-    final levelPercent = (_debugMicLevel * 100)
-        .clamp(0, 100)
-        .toStringAsFixed(1);
-    final peakPercent = (_debugPeakLevel * 100)
-        .clamp(0, 100)
-        .toStringAsFixed(1);
-    final meterValue = _debugMicLevel.clamp(0.0, 1.0).toDouble();
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                _debugMicLevel > 0.01
-                    ? Icons.graphic_eq_rounded
-                    : Icons.mic_none_rounded,
-                size: 16,
-                color: _debugMicLevel > 0.01 ? Colors.green : Colors.orange,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  _debugAudioMessage.isEmpty
-                      ? 'Debug mic: menunggu audio...'
-                      : _debugAudioMessage,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(
-              value: meterValue,
-              minHeight: 7,
-              backgroundColor: Colors.grey.withValues(alpha: 0.25),
-              valueColor: AlwaysStoppedAnimation<Color>(
-                _debugMicLevel > 0.01 ? Colors.green : Colors.orange,
-              ),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'RMS $levelPercent% • peak $peakPercent% • samples $_debugAudioSamples',
-            style: const TextStyle(
-              fontSize: 10,
-              color: Colors.black45,
-              fontFeatures: [FontFeature.tabularFigures()],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _changeUnit(int value) {
-    final lang = ref.read(settingsProvider).language;
-    setState(() {
-      if (_isSurahScope) {
-        _currentSurah = value;
-      } else {
-        _currentPage = value;
-      }
-      _targetWords = [];
-      _currentIndex = 0;
-      _mistakeCount = 0;
-      _totalSkipCount = 0;
-      _skippedIndices.clear();
-      _wordKeys = [];
-      _statusMessage = lang == 'en' ? "Ready for recitation?" : "Siap hafalan?";
-      _isListening = false;
-      _debugMicLevel = 0;
-      _debugPeakLevel = 0;
-      _debugAudioSamples = 0;
-      _debugAudioMessage = '';
-    });
-    _recitationRecognizer.stop();
-  }
-
-  Future<void> _openOfflineModelManager({
-    bool autoStartDownload = false,
-  }) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder:
-            (_) =>
-                OfflineModelManagerScreen(autoStartDownload: autoStartDownload),
-      ),
-    );
-    if (mounted) {
-      _initOfflineRecognizer();
-    }
-  }
-
-  String? _selectRecognizerModelId(Set<String> installedModelIds) {
-    if (installedModelIds.contains('vosk_arabic')) return 'vosk_arabic';
-    if (installedModelIds.contains('whisper_tiny_ar')) return 'whisper_tiny_ar';
-    if (installedModelIds.contains('whisper_base_ar')) return 'whisper_base_ar';
-    return installedModelIds.isEmpty ? null : installedModelIds.first;
   }
 }

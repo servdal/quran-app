@@ -56,33 +56,25 @@ class OfflineRecitationModelService extends ChangeNotifier {
 
   static const List<OfflineRecitationModel> availableModels = [
     OfflineRecitationModel(
-      id: 'whisper_tiny_ar',
-      name: 'Whisper Tiny Arabic',
-      engine: 'Whisper',
-      sizeLabel: '~44 MB',
-      fileName: 'ggml-tiny.bin',
+      id: 'sherpa_whisper_tiny_ar',
+      name: 'Sherpa-ONNX Arabic Tiny',
+      engine: 'Sherpa-ONNX',
+      sizeLabel: '~95 MB',
+      fileName: 'sherpa-onnx-whisper-tiny.tar.bz2',
       sourceUrl:
-          'https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin',
-    ),
-    OfflineRecitationModel(
-      id: 'whisper_base_ar',
-      name: 'Whisper Base Arabic',
-      engine: 'Whisper',
-      sizeLabel: '~148 MB',
-      fileName: 'ggml-base.bin',
-      sourceUrl:
-          'https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.bin',
-    ),
-    OfflineRecitationModel(
-      id: 'vosk_arabic',
-      name: 'Vosk Arabic',
-      engine: 'Vosk',
-      sizeLabel: '~318 MB',
-      fileName: 'vosk-model-ar-mgb2-0.4.zip',
-      sourceUrl:
-          'https://alphacephei.com/vosk/models/vosk-model-ar-mgb2-0.4.zip',
+          'https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-tiny.tar.bz2',
       archive: true,
       recommended: true,
+    ),
+    OfflineRecitationModel(
+      id: 'sherpa_whisper_base_ar',
+      name: 'Sherpa-ONNX Arabic Base',
+      engine: 'Sherpa-ONNX',
+      sizeLabel: '~280 MB',
+      fileName: 'sherpa-onnx-whisper-base.tar.bz2',
+      sourceUrl:
+          'https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.tar.bz2',
+      archive: true,
     ),
   ];
 
@@ -141,6 +133,7 @@ class OfflineRecitationModelService extends ChangeNotifier {
         'installedModels',
       );
       _installedModelIds.addAll((ids ?? const []).whereType<String>());
+      await _deleteLegacyModels();
       await _loadLocalInstalledModels();
       _nativeAvailable = true;
       _statusMessage =
@@ -149,6 +142,7 @@ class OfflineRecitationModelService extends ChangeNotifier {
               : 'Model offline siap digunakan';
     } on MissingPluginException {
       _nativeAvailable = false;
+      await _deleteLegacyModels();
       await _loadLocalInstalledModels();
       _statusMessage =
           _installedModelIds.isEmpty
@@ -156,6 +150,7 @@ class OfflineRecitationModelService extends ChangeNotifier {
               : 'Model offline sudah tersimpan';
     } catch (error) {
       _nativeAvailable = false;
+      await _deleteLegacyModels();
       await _loadLocalInstalledModels();
       _statusMessage = 'Gagal memeriksa model: $error';
     } finally {
@@ -357,13 +352,19 @@ class OfflineRecitationModelService extends ChangeNotifier {
 
     await extractFileToDisk(archivePath, targetDir.path, bufferSize: 1024 * 64);
 
-    final rootName = model.fileName.replaceAll('.zip', '');
+    final rootName = model.fileName
+        .replaceAll('.tar.bz2', '')
+        .replaceAll('.tar.gz', '')
+        .replaceAll('.tgz', '')
+        .replaceAll('.zip', '');
     final nestedRoot = Directory('${targetDir.path}/$rootName');
     final extractedPath =
         await nestedRoot.exists() ? nestedRoot.path : targetDir.path;
     final resolvedPath = await _resolveArchiveModelRoot(extractedPath);
     if (resolvedPath == null) {
-      throw StateError('Folder model Vosk tidak valid setelah ekstraksi');
+      throw StateError(
+        'Folder model Sherpa-ONNX tidak valid setelah ekstraksi',
+      );
     }
     return resolvedPath;
   }
@@ -371,7 +372,7 @@ class OfflineRecitationModelService extends ChangeNotifier {
   Future<String?> _resolveArchiveModelRoot(String path) async {
     final root = Directory(path);
     if (!await root.exists()) return null;
-    if (await _isVoskModelRoot(root)) return root.path;
+    if (await _isSherpaModelRoot(root)) return root.path;
 
     final pending = <Directory>[root];
     var scanned = 0;
@@ -381,7 +382,7 @@ class OfflineRecitationModelService extends ChangeNotifier {
       try {
         await for (final entity in current.list(followLinks: false)) {
           if (entity is! Directory) continue;
-          if (await _isVoskModelRoot(entity)) return entity.path;
+          if (await _isSherpaModelRoot(entity)) return entity.path;
           pending.add(entity);
         }
       } catch (_) {
@@ -392,12 +393,33 @@ class OfflineRecitationModelService extends ChangeNotifier {
     return null;
   }
 
-  Future<bool> _isVoskModelRoot(Directory dir) async {
-    final requiredDirs = ['am', 'conf', 'graph'];
-    for (final name in requiredDirs) {
-      if (!await Directory('${dir.path}/$name').exists()) return false;
+  Future<bool> _isSherpaModelRoot(Directory dir) async {
+    return await _findSherpaFile(
+              dir,
+              (name) =>
+                  name.endsWith('encoder.int8.onnx') || name == 'encoder.onnx',
+            ) !=
+            null &&
+        await _findSherpaFile(
+              dir,
+              (name) =>
+                  name.endsWith('decoder.int8.onnx') || name == 'decoder.onnx',
+            ) !=
+            null &&
+        await _findSherpaFile(dir, (name) => name.endsWith('tokens.txt')) !=
+            null;
+  }
+
+  Future<File?> _findSherpaFile(
+    Directory dir,
+    bool Function(String name) matches,
+  ) async {
+    await for (final entity in dir.list(followLinks: false)) {
+      if (entity is! File) continue;
+      final name = entity.uri.pathSegments.last;
+      if (matches(name)) return entity;
     }
-    return true;
+    return null;
   }
 
   Future<void> _writeMarker(
@@ -427,11 +449,6 @@ class OfflineRecitationModelService extends ChangeNotifier {
       return false;
     }
 
-    if (model.archive && !await _zipCanOpen(filePath)) {
-      await file.delete();
-      return false;
-    }
-
     await _writeDownloadedChecksum(model, filePath);
     return true;
   }
@@ -450,19 +467,6 @@ class OfflineRecitationModelService extends ChangeNotifier {
     return digest.toString();
   }
 
-  Future<bool> _zipCanOpen(String filePath) async {
-    InputFileStream? input;
-    try {
-      input = InputFileStream(filePath);
-      ZipDecoder().decodeStream(input);
-      return true;
-    } catch (_) {
-      return false;
-    } finally {
-      await input?.close();
-    }
-  }
-
   Future<void> _registerLocalModelWithNative(
     OfflineRecitationModel model,
     String installedPath,
@@ -478,6 +482,29 @@ class OfflineRecitationModelService extends ChangeNotifier {
       return;
     } catch (_) {
       return;
+    }
+  }
+
+  Future<void> _deleteLegacyModels() async {
+    final root = await _modelsRootDirectory();
+    if (!await root.exists()) return;
+
+    const legacyIds = {
+      'whisper_tiny_ar',
+      'whisper_base_ar',
+      'vosk_arabic',
+      'vosk_arabic_small',
+    };
+
+    await for (final entity in root.list(followLinks: false)) {
+      if (entity is! Directory) continue;
+      final name =
+          entity.uri.pathSegments.where((part) => part.isNotEmpty).last;
+      if (legacyIds.contains(name) ||
+          name.startsWith('whisper_') ||
+          name.startsWith('vosk_')) {
+        await entity.delete(recursive: true);
+      }
     }
   }
 

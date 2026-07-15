@@ -128,8 +128,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       if (!available) {
         _statusMessage =
             lang == 'en'
-                ? 'Offline Whisper/Vosk model is not ready'
-                : 'Model offline Whisper/Vosk belum siap';
+                ? 'Offline Sherpa-ONNX model is not ready'
+                : 'Model offline Sherpa-ONNX belum siap';
       }
     });
   }
@@ -231,8 +231,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       setState(() {
         _statusMessage =
             lang == 'en'
-                ? 'Install an offline Whisper tiny/base or Vosk Arabic model first'
-                : 'Pasang model offline Whisper tiny/base atau Vosk Arabic dulu';
+                ? 'Install an offline Sherpa-ONNX model first'
+                : 'Pasang model offline Sherpa-ONNX dulu';
       });
       _openOfflineModelManager(autoStartDownload: true);
       return;
@@ -269,8 +269,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
           _isListening = false;
           _statusMessage =
               lang == 'en'
-                  ? 'Install the Vosk Arabic model first'
-                  : 'Pasang model Vosk Arabic dulu';
+                  ? 'Install the Sherpa-ONNX model first'
+                  : 'Pasang model Sherpa-ONNX dulu';
         });
         _pulseController.stop();
         _pulseController.reset();
@@ -279,13 +279,14 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       }
 
       await _recitationRecognizer.configure(
-        engine: OfflineRecitationEngine.vosk,
+        engine: OfflineRecitationEngine.sherpaOnnx,
         activeWords: activeWords,
         expectedPhrase: activeWords.join(' '),
         modelId: modelId,
         modelPath: modelPath,
       );
       await _recitationRecognizer.start();
+      _resetSilenceAutoStopTimer();
     } on PlatformException catch (error) {
       if (!mounted) return;
       final detail = error.message ?? error.code;
@@ -389,16 +390,16 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
 
   void _resetSilenceAutoStopTimer() {
     _silenceAutoStopTimer?.cancel();
-    _silenceAutoStopTimer = Timer(const Duration(seconds: 10), () {
+    _silenceAutoStopTimer = Timer(const Duration(seconds: 25), () {
       if (mounted && _isListening) {
-        _stopListeningManual();
         final lang = ref.read(settingsProvider).language;
         setState(() {
           _statusMessage =
               lang == 'en'
-                  ? "Stopped automatically due to silence"
-                  : "Selesai (Berhenti otomatis)";
+                  ? "Still listening. Continue reciting or tap stop."
+                  : "Masih mendengarkan. Lanjutkan bacaan atau tekan stop.";
         });
+        _resetSilenceAutoStopTimer();
       }
     });
   }
@@ -655,7 +656,12 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   }
 
   String? _selectRecognizerModelId(Iterable<String> installedModelIds) {
-    if (installedModelIds.contains('vosk_arabic')) return 'vosk_arabic';
+    if (installedModelIds.contains('sherpa_whisper_tiny_ar')) {
+      return 'sherpa_whisper_tiny_ar';
+    }
+    if (installedModelIds.contains('sherpa_whisper_base_ar')) {
+      return 'sherpa_whisper_base_ar';
+    }
     return null;
   }
 
@@ -796,7 +802,8 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     final settings = ref.watch(settingsProvider);
     final lang = settings.language;
 
-    bool canSkip = _mistakeCount >= _skipThreshold;
+    final canSkip =
+        _mistakeCount >= _skipThreshold && _currentIndex < _targetWords.length;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),

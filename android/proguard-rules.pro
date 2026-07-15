@@ -28,25 +28,7 @@
 # Jika Anda menggunakan AndroidX media (diperlukan oleh audio_service terbaru)
 -keep class androidx.media.** { *; }
 
-# =====================================================================
-# ATURAN PROGUARD UNTUK VOSK DAN JNA (ANTI-CRASH PEER FIELD ID)
-# =====================================================================
-
-# 1. Jaga agar struktur internal JNA tidak di-obfuscate atau dihapus
--keep class com.sun.jna.** { *; }
--keep class * implements com.sun.jna.** { *; }
--dontwarn com.sun.jna.**
-
-# Sangat Krusial: Cegah modifikasi field 'peer' yang dicari oleh JNI
--keepclassmembers class com.sun.jna.Pointer {
-    private long peer;
-}
-
-# 2. Jaga agar Vosk SDK tidak diacak strukturnya
--keep class org.vosk.** { *; }
--dontwarn org.vosk.**
-
-# 3. Jaga agar library native .so tidak dilepas saat runtime optimization
+# Menjaga metadata yang dibutuhkan beberapa plugin native saat release build
 -keepattributes Signature,InnerClasses,EnclosingMethod,AnnotationDefault,*Annotation*,EnclosingMethod
 
 # =====================================================================

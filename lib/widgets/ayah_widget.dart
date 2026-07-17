@@ -488,14 +488,6 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
       color: theme.colorScheme.onSurface,
     );
 
-    // ignore: non_constant_identifier_names
-    final UstmaniTextStyle = TextStyle(
-      fontFamily: 'Uthmani',
-      fontSize: panelFontSize,
-      height: 2.0,
-      color: theme.colorScheme.onSurface,
-    );
-
     final isId = settings.language == 'id';
     final sumber = settings.arabicSource;
     final lang = settings.language;
@@ -515,13 +507,9 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         context: context,
         learningMode: true,
       ),
-      ArabicSource.quranCloud => TajweedParser.parse(
-        widget.ayah.tajweedText,
-        UstmaniTextStyle,
-        lang: lang,
-        context: context,
-        learningMode: false,
-      ),
+      ArabicSource.quranCloud => [
+        TextSpan(text: widget.ayah.arabicText, style: baseArabicStyle),
+      ],
       ArabicSource.kemenag => [
         TextSpan(text: widget.ayah.ayaTextKemenag, style: baseArabicStyle),
       ],

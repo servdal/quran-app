@@ -18,7 +18,6 @@ class DoaUIData {
 
 final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
   final dataService = ref.watch(quranDataServiceProvider);
-  // Re-fetch saat bahasa berubah agar translasi ayat dari DB ikut berubah
   ref.watch(settingsProvider);
 
   List<DoaUIData> uiDataList = [];
@@ -35,7 +34,7 @@ final doaProvider = FutureProvider<List<DoaUIData>>((ref) async {
         );
         fetchedAyahs.add(foundAyah);
       } catch (e) {
-        continue; // Skip jika tidak ketemu
+        continue;
       }
     }
     if (fetchedAyahs.isNotEmpty) {
@@ -123,7 +122,6 @@ class _DoaList extends ConsumerWidget {
               color: theme.colorScheme.onSurface,
             );
 
-            // Gunakan AutoTajweed jika Indonesia, TajweedParser jika Inggris
             final textSpans =
                 lang == 'id'
                     ? AutoTajweedParser.parse(
@@ -253,7 +251,6 @@ class _AdabList extends ConsumerWidget {
         return IntrinsicHeight(
           child: Row(
             children: [
-              // Garis Timeline
               Column(
                 children: [
                   Container(

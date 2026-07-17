@@ -430,14 +430,6 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
           color: theme.colorScheme.onSurface,
         );
 
-        // ignore: non_constant_identifier_names
-        final UstmaniTextStyle = TextStyle(
-          fontFamily: 'Uthmani',
-          fontSize: panelFontSize,
-          height: 2.0,
-          color: theme.colorScheme.onSurface,
-        );
-
         for (int i = 0; i < ayahs.length; i++) {
           final ayah = ayahs[i];
 
@@ -472,13 +464,9 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
               context: context,
               learningMode: true,
             ),
-            ArabicSource.quranCloud => TajweedParser.parse(
-              ayah.tajweedText,
-              UstmaniTextStyle,
-              lang: lang,
-              context: context,
-              learningMode: false,
-            ),
+            ArabicSource.quranCloud => [
+              TextSpan(text: ayah.arabicText, style: baseTextStyle),
+            ],
             ArabicSource.kemenag => [
               TextSpan(text: ayah.ayaTextKemenag, style: baseTextStyle),
             ],

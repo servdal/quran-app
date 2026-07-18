@@ -34,7 +34,6 @@ import 'package:quran_app/screens/aqidah_screen.dart';
 import 'package:quran_app/screens/tafsir_surah_list_screen.dart';
 import 'package:quran_app/screens/qibla_screen.dart';
 
-
 final prayerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final prefs = await SharedPreferences.getInstance();
 
@@ -81,10 +80,17 @@ Future<String> _resolveLocationName(
   double longitude,
 ) async {
   try {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-      latitude,
-      longitude,
-    );
+    // placemarkFromCoordinates may not be available on all platforms; use
+    // GeocodingPlatform when possible and fallback to empty on web.
+    List<Placemark> placemarks;
+    if (kIsWeb) {
+      placemarks = <Placemark>[];
+    } else {
+      placemarks = await Geocoding().placemarkFromCoordinates(
+        latitude,
+        longitude,
+      );
+    }
     if (placemarks.isNotEmpty) {
       final p = placemarks.first;
       String? city = p.locality;
@@ -721,7 +727,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         spacing: 12.0,
         runSpacing: 16.0,
         children: [
-           _menuItem(
+          _menuItem(
             context,
             name: isId ? "Klasik" : "Classic",
             icon: Icons.history_edu,
@@ -762,7 +768,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
             theme: theme,
           ),
-           _menuItem(
+          _menuItem(
             context,
             name: "Murotal",
             icon: Icons.audio_file_rounded,
@@ -770,7 +776,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap:
                 () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const DownloadManagerScreen()),
+                  MaterialPageRoute(
+                    builder: (_) => const DownloadManagerScreen(),
+                  ),
                 ),
             theme: theme,
           ),
@@ -931,11 +939,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [
               Align(
                 alignment: Alignment.topRight,
-                child: CircleAvatar(
-                  radius: 4,
-                  backgroundColor:
-                      color,
-                ),
+                child: CircleAvatar(radius: 4, backgroundColor: color),
               ),
               const Spacer(),
               // Icon Tengah

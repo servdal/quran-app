@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -463,7 +464,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   Widget build(BuildContext context) {
     ref.listen<PlayerUIState>(playerServiceProvider, (previous, next) {
       if (next.errorMessage != null && next.errorMessage!.isNotEmpty) {
-        _snack(next.errorMessage!);        
+        _snack(next.errorMessage!);
         ref.read(playerServiceProvider.notifier).clearError();
       }
     });
@@ -736,7 +737,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
     final downloader = ref.watch(downloadServiceProvider);
     final player = ref.watch(playerServiceProvider);
     final theme = Theme.of(context);
-    
+
     final Set<String> availableReciters = {};
     for (var fileData in downloader.localAudioFiles) {
       if (fileData.contains('/')) {
@@ -751,17 +752,26 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.cloud_download_outlined, size: 48, color: theme.colorScheme.primary.withOpacity(0.6)),
+              Icon(
+                Icons.cloud_download_outlined,
+                size: 48,
+                color: theme.colorScheme.primary.withOpacity(0.6),
+              ),
               const SizedBox(height: 12),
               Text(
-                isId ? 'Audio belum tersedia lokal' : 'Audio not available locally',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                isId
+                    ? 'Audio belum tersedia lokal'
+                    : 'Audio not available locally',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 4),
               Text(
-                isId 
-                    ? 'Silakan unduh paket audio Syaikh pilihan Anda terlebih dahulu melalui Manajer Audio.' 
+                isId
+                    ? 'Silakan unduh paket audio Syaikh pilihan Anda terlebih dahulu melalui Manajer Audio.'
                     : 'Please download your preferred reciter bundle first via Audio Manager.',
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                 textAlign: TextAlign.center,
@@ -785,27 +795,38 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
       );
     }
 
-    if (_selectedReciterForAudioTab == null || !availableReciters.contains(_selectedReciterForAudioTab)) {
+    if (_selectedReciterForAudioTab == null ||
+        !availableReciters.contains(_selectedReciterForAudioTab)) {
       _selectedReciterForAudioTab = availableReciters.first;
     }
 
     final String activeReciter = _selectedReciterForAudioTab!;
 
-    final String currentAyahTitle = "Surah ${widget.ayah.surahId} : Ayat ${widget.ayah.number}";
-    
+    final String currentAyahTitle =
+        "Surah ${widget.ayah.surahId} : Ayat ${widget.ayah.number}";
+
     // Validasi kecocokan putar
-    final bool isThisAyahAndQariPlaying = player.isPlaying && 
-        player.title == currentAyahTitle && 
+    final bool isThisAyahAndQariPlaying =
+        player.isPlaying &&
+        player.title == currentAyahTitle &&
         player.subtitle.toLowerCase().replaceAll(' ', '_') == activeReciter;
 
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Center(
         child: Card(
-          color: isThisAyahAndQariPlaying ? theme.colorScheme.primaryContainer.withOpacity(0.3) : null,
+          color:
+              isThisAyahAndQariPlaying
+                  ? theme.colorScheme.primaryContainer.withOpacity(0.3)
+                  : null,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: isThisAyahAndQariPlaying ? theme.colorScheme.primary : theme.dividerColor.withOpacity(0.2)),
+            side: BorderSide(
+              color:
+                  isThisAyahAndQariPlaying
+                      ? theme.colorScheme.primary
+                      : theme.dividerColor.withOpacity(0.2),
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
@@ -816,8 +837,11 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                 Row(
                   children: [
                     Icon(
-                      Icons.person_pin_rounded, 
-                      color: isThisAyahAndQariPlaying ? theme.colorScheme.primary : Colors.grey
+                      Icons.person_pin_rounded,
+                      color:
+                          isThisAyahAndQariPlaying
+                              ? theme.colorScheme.primary
+                              : Colors.grey,
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -826,7 +850,11 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                         children: [
                           Text(
                             isId ? "Pilih Qari Pemutar:" : "Select Reciter:",
-                            style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 2),
                           DropdownButtonHideUnderline(
@@ -835,16 +863,21 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                               isDense: true,
                               isExpanded: true,
                               style: TextStyle(
-                                fontSize: 13, 
-                                fontWeight: FontWeight.bold, 
-                                color: theme.textTheme.bodyLarge?.color
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: theme.textTheme.bodyLarge?.color,
                               ),
-                              items: availableReciters.map((String qariFolder) {
-                                return DropdownMenuItem<String>(
-                                  value: qariFolder,
-                                  child: Text(qariFolder.replaceAll('_', ' ').toUpperCase()),
-                                );
-                              }).toList(),
+                              items:
+                                  availableReciters.map((String qariFolder) {
+                                    return DropdownMenuItem<String>(
+                                      value: qariFolder,
+                                      child: Text(
+                                        qariFolder
+                                            .replaceAll('_', ' ')
+                                            .toUpperCase(),
+                                      ),
+                                    );
+                                  }).toList(),
                               onChanged: (newQari) {
                                 if (newQari != null) {
                                   setState(() {
@@ -862,7 +895,10 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                 const Divider(height: 24),
                 Text(
                   "Surah ${widget.ayah.surahName} : Ayat ${widget.ayah.number}",
-                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 13,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -874,44 +910,70 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                         backgroundColor: theme.colorScheme.primary,
                         child: IconButton(
                           icon: const Icon(Icons.pause, color: Colors.white),
-                          onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
+                          onPressed:
+                              () =>
+                                  ref
+                                      .read(playerServiceProvider.notifier)
+                                      .togglePausePlay(),
                         ),
                       ),
                       const SizedBox(width: 16),
                       CircleAvatar(
                         radius: 24,
-                        backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
+                        backgroundColor: Colors.redAccent.shade100.withOpacity(
+                          0.2,
+                        ),
                         child: IconButton(
                           icon: const Icon(Icons.stop, color: Colors.redAccent),
-                          onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
+                          onPressed:
+                              () =>
+                                  ref
+                                      .read(playerServiceProvider.notifier)
+                                      .stop(),
                         ),
                       ),
-                    ] 
-                    else if (player.title == currentAyahTitle && player.subtitle.toLowerCase().replaceAll(' ', '_') == activeReciter) ...[
+                    ] else if (player.title == currentAyahTitle &&
+                        player.subtitle.toLowerCase().replaceAll(' ', '_') ==
+                            activeReciter) ...[
                       CircleAvatar(
                         radius: 24,
                         backgroundColor: theme.colorScheme.primary,
                         child: IconButton(
-                          icon: const Icon(Icons.play_arrow, color: Colors.white),
-                          onPressed: () => ref.read(playerServiceProvider.notifier).togglePausePlay(),
+                          icon: const Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                          ),
+                          onPressed:
+                              () =>
+                                  ref
+                                      .read(playerServiceProvider.notifier)
+                                      .togglePausePlay(),
                         ),
                       ),
                       const SizedBox(width: 16),
                       CircleAvatar(
                         radius: 24,
-                        backgroundColor: Colors.redAccent.shade100.withOpacity(0.2),
+                        backgroundColor: Colors.redAccent.shade100.withOpacity(
+                          0.2,
+                        ),
                         child: IconButton(
                           icon: const Icon(Icons.stop, color: Colors.redAccent),
-                          onPressed: () => ref.read(playerServiceProvider.notifier).stop(),
+                          onPressed:
+                              () =>
+                                  ref
+                                      .read(playerServiceProvider.notifier)
+                                      .stop(),
                         ),
                       ),
-                    ]
-                    else ...[
+                    ] else ...[
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,
                           foregroundColor: theme.colorScheme.onPrimary,
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
                         ),
                         icon: const Icon(Icons.play_arrow_rounded),
                         label: Text(isId ? 'Putar Ayat Ini' : 'Play This Ayah'),
@@ -924,8 +986,10 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                             endAyah: widget.ayah.number,
                             isRepeat: false,
                           );
-                          
-                          ref.read(playerServiceProvider.notifier).playPlaylist(singleAyahPlaylist);
+
+                          ref
+                              .read(playerServiceProvider.notifier)
+                              .playPlaylist(singleAyahPlaylist);
                         },
                       ),
                     ],
@@ -935,8 +999,12 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                   const SizedBox(height: 12),
                   Text(
                     isId ? "• Sedang melantunkan ayat..." : "• Now reciting...",
-                    style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: theme.colorScheme.primary),
-                  )
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontStyle: FontStyle.italic,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
                 ],
               ],
             ),
@@ -1077,20 +1145,20 @@ class _YoutubeAudioTabState extends State<YoutubeAudioTab> {
   @override
   void initState() {
     super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: widget.videoId,
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
+    _controller = YoutubePlayerController.fromVideoId(
+      videoId: widget.videoId,
+      autoPlay: false,
+      params: const YoutubePlayerParams(
         mute: false,
-        disableDragSeek: false,
         loop: false,
+        showControls: true,
       ),
     );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    unawaited(_controller.close());
     super.dispose();
   }
 
@@ -1108,11 +1176,7 @@ class _YoutubeAudioTabState extends State<YoutubeAudioTab> {
           child: Center(
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: YoutubePlayer(
-                controller: _controller,
-                showVideoProgressIndicator: true,
-                progressIndicatorColor: Theme.of(context).primaryColor,
-              ),
+              child: YoutubePlayer(controller: _controller),
             ),
           ),
         ),

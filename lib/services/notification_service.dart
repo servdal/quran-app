@@ -55,7 +55,7 @@ class NotificationService {
       windows: windows,
     );
 
-    await _plugin.initialize(settings);
+    await _plugin.initialize(settings: settings);
 
     /// Android permission
     if (Platform.isAndroid && !isBackground) {
@@ -164,12 +164,12 @@ class NotificationService {
     const windows = WindowsNotificationDetails();
 
     await _plugin.show(
-      2002,
-      isId ? 'Waktu Istima' : 'Istima Time',
-      isId
+      id: 2002,
+      title: isId ? 'Waktu Istima' : 'Istima Time',
+      body: isId
           ? 'Bersiaplah adzan akan segera berkumandang'
           : 'Get ready, adzan will soon sound',
-      NotificationDetails(
+      notificationDetails: NotificationDetails(
         android: android,
         iOS: DarwinNotificationDetails(presentSound: cfg.enabled),
         macOS: DarwinNotificationDetails(presentSound: cfg.enabled),
@@ -207,10 +207,10 @@ class NotificationService {
     const windows = WindowsNotificationDetails();
 
     await _plugin.show(
-      1001,
-      isId ? 'Waktu Sholat' : 'Prayer Time',
-      isId ? 'Telah masuk waktu $prayerName' : 'It is time for $prayerName',
-      NotificationDetails(
+      id: 1001,
+      title: isId ? 'Waktu Sholat' : 'Prayer Time',
+      body: isId ? 'Telah masuk waktu $prayerName' : 'It is time for $prayerName',
+      notificationDetails: NotificationDetails(
         android: android,
         iOS: DarwinNotificationDetails(presentSound: cfg.enabled),
         macOS: DarwinNotificationDetails(presentSound: cfg.enabled),
@@ -241,13 +241,13 @@ class NotificationService {
     );
 
     await _plugin.zonedSchedule(
-      2002,
-      isId ? 'Waktu Istima' : 'Istima Time',
-      isId
+      id: 2002,
+      title: isId ? 'Waktu Istima' : 'Istima Time',
+      body: isId
           ? 'Bersiaplah adzan akan segera berkumandang'
           : 'Get ready, adzan will soon sound',
-      tz.TZDateTime.from(istimaTime, tz.local),
-      NotificationDetails(
+      scheduledDate: tz.TZDateTime.from(istimaTime, tz.local),
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           channelId,
           'Istima',
@@ -284,11 +284,11 @@ class NotificationService {
     );
 
     await _plugin.zonedSchedule(
-      1001,
-      isId ? 'Waktu Sholat' : 'Prayer Time',
-      isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
-      tz.TZDateTime.from(time, tz.local),
-      NotificationDetails(
+      id: 1001,
+      title: isId ? 'Waktu Sholat' : 'Prayer Time',
+      body: isId ? 'Telah masuk waktu $prayer' : 'It is time for $prayer',
+      scheduledDate: tz.TZDateTime.from(time, tz.local),
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           channelId,
           'Adzan',
@@ -337,14 +337,14 @@ ${isId ? 'Berikutnya' : 'Next'}: $nextPrayer ${_fmt(nextTime)}
     );
 
     await _plugin.show(
-      9999,
-      isId ? 'Jadwal Sholat' : 'Prayer Schedule',
-      tableContent,
-      const NotificationDetails(
+      id: 9999,
+      title: isId ? 'Jadwal Sholat' : 'Prayer Schedule',
+      body: tableContent,
+      notificationDetails: NotificationDetails(
         android: android,
-        macOS: DarwinNotificationDetails(presentSound: false),
-        linux: LinuxNotificationDetails(defaultActionName: 'Open'),
-        windows: WindowsNotificationDetails(),
+        macOS: const DarwinNotificationDetails(presentSound: false),
+        linux: const LinuxNotificationDetails(defaultActionName: 'Open'),
+        windows: const WindowsNotificationDetails(),
       ),
     );
   }

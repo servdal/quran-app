@@ -46,10 +46,10 @@ void adzanAlarmCallback() async {
   );
 
   await plugin.show(
-    1001,
-    'Waktu Sholat',
-    'Sudah masuk waktu sholat',
-    NotificationDetails(
+    id: 1001,
+    title: 'Waktu Sholat',
+    body: 'Sudah masuk waktu sholat',
+    notificationDetails: NotificationDetails(
       android: android,
       iOS: DarwinNotificationDetails(presentSound: enabled),
       macOS: DarwinNotificationDetails(presentSound: enabled),

@@ -3,18 +3,11 @@ import 'package:sqflite/sqflite.dart';
 import '../database/db_helper.dart';
 import '../../models/page_index_model.dart';
 import '../models/grammar_model.dart';
-import '../providers/settings_provider.dart';
 
 class QuranRepository {
   Future<String> _getLanguage() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('selected_language') ?? 'id';
-  }
-
-  Future<String> _getArabicTextColumn() async {
-    final prefs = await SharedPreferences.getInstance();
-    final arabicSource = readArabicSourcePreference(prefs);
-    return arabicSource.usesQuranCloudText ? 'aya_text' : 'aya_text_kemenag';
   }
 
   Future<Database> get _db async => DBHelper.database;
@@ -66,7 +59,6 @@ class QuranRepository {
   Future<List<Map<String, dynamic>>> getAyahRowsBySurah(int surahId) async {
     final db = await _db;
     final lang = await _getLanguage();
-    final textCol = await _getArabicTextColumn();
 
     final translationCol =
         lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
@@ -81,7 +73,7 @@ class QuranRepository {
         sura_id,
         page_number,
         juz_id,
-        $textCol AS aya_text,
+        aya_text,
         $translationCol AS translation,
         $translitCol AS transliteration,
         transliteration_kemenag,
@@ -102,7 +94,6 @@ class QuranRepository {
   Future<List<Map<String, dynamic>>> getAyahRowsByPage(int pageNumber) async {
     final db = await _db;
     final lang = await _getLanguage();
-    final textCol = await _getArabicTextColumn();
 
     final translationCol =
         lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
@@ -117,7 +108,7 @@ class QuranRepository {
         sura_id,
         page_number,
         juz_id,
-        $textCol AS aya_text,
+        aya_text,
         $translationCol AS translation,
         $translitCol AS transliteration,
         transliteration_kemenag,
@@ -158,7 +149,6 @@ class QuranRepository {
     );
   }
 
-  /// Word-by-word dari master_edited
   Future<List<Map<String, dynamic>>> getWordByAyah(
     int surahId,
     int ayahNumber,

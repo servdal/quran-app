@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/offline_recitation_model_provider.dart';
@@ -15,12 +16,17 @@ class OfflineModelManagerScreen extends ConsumerStatefulWidget {
 
 class _OfflineModelManagerScreenState
     extends ConsumerState<OfflineModelManagerScreen> {
+  bool get _isAndroid => defaultTargetPlatform == TargetPlatform.android;
+  bool get _supportsSherpa =>
+      defaultTargetPlatform == TargetPlatform.iOS ||
+      defaultTargetPlatform == TargetPlatform.macOS;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final service = ref.read(offlineRecitationModelServiceProvider);
-      if (widget.autoStartDownload) {
+      if (widget.autoStartDownload && _supportsSherpa) {
         service.ensureRecommendedModel();
       } else {
         service.refresh();
@@ -52,34 +58,183 @@ class _OfflineModelManagerScreenState
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
         children: [
-          _StatusHeader(service: service),
-          const SizedBox(height: 12),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(
-              icon: const Icon(Icons.auto_fix_high),
-              label: const Text('Siapkan Otomatis'),
-              onPressed:
-                  service.installedModelIds.isNotEmpty
-                      ? null
-                      : () {
-                        ref
-                            .read(offlineRecitationModelServiceProvider)
-                            .ensureRecommendedModel();
-                      },
+          if (_isAndroid) ...[
+            const _AndroidSpeechInstructionCard(),
+            const SizedBox(height: 12),
+          ] else if (_supportsSherpa) ...[
+            const _SherpaAppleInstructionCard(),
+            const SizedBox(height: 12),
+          ] else ...[
+            const _UnsupportedPlatformInstructionCard(),
+            const SizedBox(height: 12),
+          ],
+          if (_supportsSherpa) ...[
+            _StatusHeader(service: service),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                icon: const Icon(Icons.auto_fix_high),
+                label: const Text('Siapkan Otomatis'),
+                onPressed:
+                    service.installedModelIds.isNotEmpty
+                        ? null
+                        : () {
+                          ref
+                              .read(offlineRecitationModelServiceProvider)
+                              .ensureRecommendedModel();
+                        },
+              ),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              'Pilihan Model',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ...OfflineRecitationModelService.availableModels.map((model) {
+              return _ModelTile(model: model);
+            }),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _AndroidSpeechInstructionCard extends StatelessWidget {
+  const _AndroidSpeechInstructionCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = theme.colorScheme.primary;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.25)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.settings_voice_outlined, color: color),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Catatan khusus Android',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Mode Hafalan di Android memakai Android SpeechRecognizer, bukan model Sherpa-ONNX. Pastikan layanan pengenal suara/voice input aktif, izin mikrofon diberikan, dan bahasa Arab dipilih atau diunduh di pengaturan bahasa suara Android.',
+                  style: theme.textTheme.bodySmall,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Jika teks tidak muncul atau tidak akurat: buka Settings > General management > Keyboard list and default > Voice input, pilih Google voice typing atau Samsung voice input, lalu atur bahasa ke Arabic/العربية. Nama menu bisa berbeda sesuai merek Android.',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 18),
-          Text(
-            'Pilihan Model',
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
+        ],
+      ),
+    );
+  }
+}
+
+class _SherpaAppleInstructionCard extends StatelessWidget {
+  const _SherpaAppleInstructionCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = theme.colorScheme.primary;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.25)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.offline_bolt_outlined, color: color),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Sherpa-ONNX untuk iOS dan macOS',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Model ini dipakai untuk pengenalan suara offline di iPhone, iPad, dan Mac. Gunakan model Tiny untuk respons lebih cepat; Base bisa lebih akurat tetapi lebih berat.',
+                  style: theme.textTheme.bodySmall,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Sebelum mulai Hafalan, beri izin mikrofon. Untuk hasil terbaik, pakai ruangan tenang dan ucapkan potongan ayat dengan jeda pendek.',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 8),
-          ...OfflineRecitationModelService.availableModels.map((model) {
-            return _ModelTile(model: model);
-          }),
+        ],
+      ),
+    );
+  }
+}
+
+class _UnsupportedPlatformInstructionCard extends StatelessWidget {
+  const _UnsupportedPlatformInstructionCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = theme.colorScheme.error;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.25)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.info_outline, color: color),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Download model Sherpa-ONNX saat ini difokuskan untuk iOS dan macOS. Android memakai SpeechRecognizer bawaan sistem.',
+              style: theme.textTheme.bodySmall,
+            ),
+          ),
         ],
       ),
     );

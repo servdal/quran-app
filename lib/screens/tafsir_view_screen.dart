@@ -159,10 +159,11 @@ class _AyahBlock extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
+    final source = settings.arabicSource;
 
     final baseStyle = TextStyle(
-      fontFamily: 'LPMQ',
-      fontSize: ref.watch(settingsProvider).arabicFontSize,
+      fontFamily: source.arabicFontFamily,
+      fontSize: settings.arabicFontSize,
       height: 2.1,
       color: Theme.of(context).colorScheme.onSurface,
     );

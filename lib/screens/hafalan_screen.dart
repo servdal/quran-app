@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import '../services/quran_data_service.dart';
 import '../providers/settings_provider.dart';
@@ -63,6 +64,11 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
   bool get _isSurahScope => widget.scope == HafalanScope.surah;
   int get _currentUnit => _isSurahScope ? _currentSurah : _currentPage;
   int get _lastUnit => _isSurahScope ? 114 : 604;
+  bool get _useAndroidSpeechRecognizer =>
+      defaultTargetPlatform == TargetPlatform.android;
+  bool get _useSherpaRecognizer =>
+      defaultTargetPlatform == TargetPlatform.iOS ||
+      defaultTargetPlatform == TargetPlatform.macOS;
 
   @override
   void initState() {
@@ -127,9 +133,17 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
       _isRecognizerReady = available;
       if (!available) {
         _statusMessage =
-            lang == 'en'
-                ? 'Offline Sherpa-ONNX model is not ready'
-                : 'Model offline Sherpa-ONNX belum siap';
+            _useAndroidSpeechRecognizer
+                ? (lang == 'en'
+                    ? 'Android speech recognizer is not ready'
+                    : 'SpeechRecognizer Android belum siap')
+                : _useSherpaRecognizer
+                ? (lang == 'en'
+                    ? 'Offline Sherpa-ONNX model is not ready'
+                    : 'Model offline Sherpa-ONNX belum siap')
+                : (lang == 'en'
+                    ? 'This memorization voice engine is only available on Android, iOS, and macOS'
+                    : 'Mesin suara hafalan hanya tersedia di Android, iOS, dan macOS');
       }
     });
   }
@@ -230,11 +244,21 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
     if (!_isRecognizerReady) {
       setState(() {
         _statusMessage =
-            lang == 'en'
-                ? 'Install an offline Sherpa-ONNX model first'
-                : 'Pasang model offline Sherpa-ONNX dulu';
+            _useAndroidSpeechRecognizer
+                ? (lang == 'en'
+                    ? 'Android speech recognizer is not available'
+                    : 'SpeechRecognizer Android tidak tersedia')
+                : _useSherpaRecognizer
+                ? (lang == 'en'
+                    ? 'Install an offline Sherpa-ONNX model first'
+                    : 'Pasang model offline Sherpa-ONNX dulu')
+                : (lang == 'en'
+                    ? 'Voice memorization is only available on Android, iOS, and macOS'
+                    : 'Hafalan suara hanya tersedia di Android, iOS, dan macOS');
       });
-      _openOfflineModelManager(autoStartDownload: true);
+      if (_useSherpaRecognizer) {
+        _openOfflineModelManager(autoStartDownload: true);
+      }
       return;
     }
 
@@ -258,33 +282,47 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
             .toList();
 
     try {
-      final modelService = ref.read(offlineRecitationModelServiceProvider);
-      await modelService.refresh();
-      final modelId = _selectRecognizerModelId(modelService.installedModelIds);
-      final modelPath =
-          modelId == null ? null : modelService.installedModelPaths[modelId];
-      if (modelId == null || modelPath == null || modelPath.isEmpty) {
-        if (!mounted) return;
-        setState(() {
-          _isListening = false;
-          _statusMessage =
-              lang == 'en'
-                  ? 'Install the Sherpa-ONNX model first'
-                  : 'Pasang model Sherpa-ONNX dulu';
-        });
-        _pulseController.stop();
-        _pulseController.reset();
-        _openOfflineModelManager(autoStartDownload: true);
-        return;
-      }
+      if (_useAndroidSpeechRecognizer) {
+        await _recitationRecognizer.configure(
+          engine: OfflineRecitationEngine.androidSpeechRecognizer,
+          activeWords: activeWords,
+          expectedPhrase: activeWords.join(' '),
+        );
+      } else if (_useSherpaRecognizer) {
+        final modelService = ref.read(offlineRecitationModelServiceProvider);
+        await modelService.refresh();
+        final modelId = _selectRecognizerModelId(
+          modelService.installedModelIds,
+        );
+        final modelPath =
+            modelId == null ? null : modelService.installedModelPaths[modelId];
+        if (modelId == null || modelPath == null || modelPath.isEmpty) {
+          if (!mounted) return;
+          setState(() {
+            _isListening = false;
+            _statusMessage =
+                lang == 'en'
+                    ? 'Install the Sherpa-ONNX model first'
+                    : 'Pasang model Sherpa-ONNX dulu';
+          });
+          _pulseController.stop();
+          _pulseController.reset();
+          _openOfflineModelManager(autoStartDownload: true);
+          return;
+        }
 
-      await _recitationRecognizer.configure(
-        engine: OfflineRecitationEngine.sherpaOnnx,
-        activeWords: activeWords,
-        expectedPhrase: activeWords.join(' '),
-        modelId: modelId,
-        modelPath: modelPath,
-      );
+        await _recitationRecognizer.configure(
+          engine: OfflineRecitationEngine.sherpaOnnx,
+          activeWords: activeWords,
+          expectedPhrase: activeWords.join(' '),
+          modelId: modelId,
+          modelPath: modelPath,
+        );
+      } else {
+        throw StateError(
+          lang == 'en' ? 'Unsupported platform' : 'Platform belum didukung',
+        );
+      }
       await _recitationRecognizer.start();
       _resetSilenceAutoStopTimer();
     } on PlatformException catch (error) {
@@ -703,14 +741,15 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
             ),
             onPressed: _showBookmarkDialog,
           ),
-          IconButton(
-            icon: const Icon(Icons.model_training_outlined),
-            tooltip:
-                lang == 'en'
-                    ? 'Offline recitation models'
-                    : 'Model hafalan offline',
-            onPressed: () => _openOfflineModelManager(),
-          ),
+          if (_useSherpaRecognizer)
+            IconButton(
+              icon: const Icon(Icons.model_training_outlined),
+              tooltip:
+                  lang == 'en'
+                      ? 'Offline recitation models'
+                      : 'Model hafalan offline',
+              onPressed: () => _openOfflineModelManager(),
+            ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => _changeUnit(_currentUnit),
@@ -822,7 +861,7 @@ class _HafalanViewScreenState extends ConsumerState<HafalanViewScreen>
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildLiveListeningPanel(),
-          if (!_isRecognizerReady) ...[
+          if (!_isRecognizerReady && _useSherpaRecognizer) ...[
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(

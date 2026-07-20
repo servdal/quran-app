@@ -278,7 +278,11 @@ class _DzikrCardState extends State<DzikrCard> {
     );
     final rawText =
         widget.uiData.ayahs.isNotEmpty
-            ? widget.uiData.ayahs.first.arabicText
+            ? widget.uiData.ayahs.map((ayah) => ayah.arabicText).join(' ')
+            : (widget.uiData.dzikrInfo.arabicText ?? "");
+    final tajweedText =
+        widget.uiData.ayahs.isNotEmpty
+            ? widget.uiData.ayahs.map((ayah) => ayah.tajweedText).join(' ')
             : (widget.uiData.dzikrInfo.arabicText ?? "");
 
     final spans =
@@ -291,9 +295,7 @@ class _DzikrCardState extends State<DzikrCard> {
               learningMode: true,
             )
             : TajweedParser.parse(
-              widget.uiData.ayahs.isNotEmpty
-                  ? widget.uiData.ayahs.first.tajweedText
-                  : widget.uiData.dzikrInfo.arabicText ?? "",
+              tajweedText,
               baseTextStyle,
               lang: widget.lang,
               context: context,
@@ -303,11 +305,11 @@ class _DzikrCardState extends State<DzikrCard> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: isDone ? Colors.green.withOpacity(0.05) : theme.cardColor,
+        color: isDone ? Colors.green.withValues(alpha: 0.05) : theme.cardColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -319,6 +321,30 @@ class _DzikrCardState extends State<DzikrCard> {
             title: Text(
               widget.uiData.dzikrInfo.getTitle(widget.lang),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    _buildRepetitionLabel(),
+                    style: TextStyle(
+                      color: theme.colorScheme.primary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
             ),
             trailing: _buildCounterCircle(isDone),
           ),
@@ -342,6 +368,15 @@ class _DzikrCardState extends State<DzikrCard> {
         ],
       ),
     );
+  }
+
+  String _buildRepetitionLabel() {
+    final repetitions = widget.uiData.dzikrInfo.repetitions;
+    if (widget.lang == 'en') {
+      return repetitions == 1 ? 'Read 1 time' : 'Read $repetitions times';
+    }
+
+    return 'Dibaca $repetitions kali';
   }
 
   Widget _buildCounterCircle(bool isDone) {

@@ -3,10 +3,11 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart';
 import 'package:record/record.dart';
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa;
 
-enum OfflineRecitationEngine { sherpaOnnx }
+enum OfflineRecitationEngine { androidSpeechRecognizer, sherpaOnnx }
 
 class OfflineRecognitionResult {
   final String transcript;
@@ -32,13 +33,36 @@ class OfflineRecognitionResult {
     required this.peakLevel,
     required this.audioSamples,
   });
+
+  factory OfflineRecognitionResult.fromMap(dynamic value) {
+    final map = value as Map<dynamic, dynamic>;
+    return OfflineRecognitionResult(
+      transcript: (map['transcript'] ?? '') as String,
+      phonemes: (map['phonemes'] ?? '') as String,
+      alternatives:
+          ((map['alternatives'] as List?) ?? const [])
+              .whereType<String>()
+              .toList(),
+      confidence: ((map['confidence'] as num?) ?? 0).toDouble(),
+      isFinal: (map['isFinal'] as bool?) ?? false,
+      debugType: (map['debugType'] ?? '') as String,
+      debugMessage: (map['debugMessage'] ?? '') as String,
+      micLevel: ((map['micLevel'] as num?) ?? 0).toDouble(),
+      peakLevel: ((map['peakLevel'] as num?) ?? 0).toDouble(),
+      audioSamples: ((map['audioSamples'] as num?) ?? 0).toInt(),
+    );
+  }
 }
 
 class OfflineRecitationRecognizer {
+  static const MethodChannel _androidControlChannel = MethodChannel(
+    'quran_app/android_speech_recognizer/control',
+  );
+  static const EventChannel _androidEventChannel = EventChannel(
+    'quran_app/android_speech_recognizer/events',
+  );
+
   static const int _sampleRate = 16000;
-  static const int _maxSpeechSamples = _sampleRate * 8;
-  static const int _minDecodeSamples = _sampleRate * 1;
-  static const Duration _decodeInterval = Duration(milliseconds: 1800);
   static const double _speechRmsThreshold = 0.006;
   static const double _speechPeakThreshold = 0.025;
 
@@ -52,6 +76,7 @@ class OfflineRecitationRecognizer {
   sherpa.OfflineRecognizer? _recognizer;
   AudioRecorder? _recorder;
   StreamSubscription<Uint8List>? _audioSubscription;
+  StreamSubscription<dynamic>? _androidSpeechSubscription;
   Timer? _finalTimer;
 
   String? _configuredModelPath;
@@ -62,7 +87,25 @@ class OfflineRecitationRecognizer {
 
   Stream<OfflineRecognitionResult> get results => _resultsController.stream;
 
+  static bool get supportsAndroidSpeechRecognizer => Platform.isAndroid;
+
+  static bool get supportsSherpaOnnx => Platform.isIOS || Platform.isMacOS;
+
+  static bool get supportsCurrentPlatform =>
+      supportsAndroidSpeechRecognizer || supportsSherpaOnnx;
+
   Future<bool> isAvailable() async {
+    if (Platform.isAndroid) {
+      try {
+        return await _androidControlChannel.invokeMethod<bool>('isAvailable') ??
+            false;
+      } on MissingPluginException {
+        return false;
+      }
+    }
+
+    if (!supportsSherpaOnnx) return false;
+
     try {
       _initSherpaBindings();
       return true;
@@ -78,6 +121,15 @@ class OfflineRecitationRecognizer {
     String? modelId,
     String? modelPath,
   }) async {
+    if (Platform.isAndroid) {
+      await _configureAndroidSpeechRecognizer(activeWords, expectedPhrase);
+      return;
+    }
+
+    if (!supportsSherpaOnnx) {
+      throw StateError('Sherpa-ONNX hanya diaktifkan untuk iOS dan macOS.');
+    }
+
     if (modelPath == null || modelPath.isEmpty) {
       throw StateError('Model Sherpa-ONNX belum dipilih.');
     }
@@ -106,7 +158,7 @@ class OfflineRecitationRecognizer {
             tailPaddings: -1,
           ),
           tokens: modelFiles.tokens.path,
-          numThreads: math.max(1, Platform.numberOfProcessors ~/ 2),
+          numThreads: _sherpaThreadCount,
           debug: false,
           provider: 'cpu',
         ),
@@ -116,6 +168,15 @@ class OfflineRecitationRecognizer {
   }
 
   Future<void> start() async {
+    if (Platform.isAndroid) {
+      await _androidControlChannel.invokeMethod<void>('start');
+      return;
+    }
+
+    if (!supportsSherpaOnnx) {
+      throw StateError('Sherpa-ONNX hanya diaktifkan untuk iOS dan macOS.');
+    }
+
     if (_isListening) return;
     if (_recognizer == null) {
       throw StateError('Recognizer Sherpa-ONNX belum dikonfigurasi.');
@@ -159,6 +220,11 @@ class OfflineRecitationRecognizer {
   }
 
   Future<void> stop() async {
+    if (Platform.isAndroid) {
+      await _androidControlChannel.invokeMethod<void>('stop');
+      return;
+    }
+
     _isListening = false;
     _finalTimer?.cancel();
     _finalTimer = null;
@@ -178,9 +244,30 @@ class OfflineRecitationRecognizer {
 
   void dispose() {
     unawaited(stop());
+    unawaited(_androidSpeechSubscription?.cancel());
+    _androidSpeechSubscription = null;
     _recognizer?.free();
     _recognizer = null;
     unawaited(_resultsController.close());
+  }
+
+  Future<void> _configureAndroidSpeechRecognizer(
+    List<String> activeWords,
+    String expectedPhrase,
+  ) async {
+    _androidSpeechSubscription ??= _androidEventChannel
+        .receiveBroadcastStream()
+        .map((event) => OfflineRecognitionResult.fromMap(event))
+        .listen(
+          _resultsController.add,
+          onError: (Object error) => _emitError(error.toString()),
+        );
+
+    await _androidControlChannel.invokeMethod<void>('configure', {
+      'language': 'ar-SA',
+      'activeWords': activeWords,
+      'expectedPhrase': expectedPhrase,
+    });
   }
 
   void _handleAudioChunk(Uint8List bytes) {
@@ -210,12 +297,13 @@ class OfflineRecitationRecognizer {
 
     _hasSpeechSinceLastFinal = true;
     _speechSamples.addAll(samples);
-    if (_speechSamples.length > _maxSpeechSamples) {
-      _speechSamples.removeRange(0, _speechSamples.length - _maxSpeechSamples);
+    final maxSamples = _maxSpeechSamples;
+    if (_speechSamples.length > maxSamples) {
+      _speechSamples.removeRange(0, _speechSamples.length - maxSamples);
     }
 
     _finalTimer?.cancel();
-    _finalTimer = Timer(const Duration(milliseconds: 1100), () {
+    _finalTimer = Timer(_finalDecodeDelay, () {
       if (_hasSpeechSinceLastFinal) {
         unawaited(_decodeCurrentBuffer(isFinal: true));
       }
@@ -385,6 +473,25 @@ class OfflineRecitationRecognizer {
     if (_bindingsInitialized) return;
     sherpa.initBindings();
     _bindingsInitialized = true;
+  }
+
+  int get _maxSpeechSamples => _sampleRate * (Platform.isMacOS ? 6 : 7);
+
+  int get _minDecodeSamples =>
+      (_sampleRate * (Platform.isMacOS ? 0.7 : 0.9)).round();
+
+  Duration get _decodeInterval =>
+      Duration(milliseconds: Platform.isMacOS ? 1000 : 1300);
+
+  Duration get _finalDecodeDelay =>
+      Duration(milliseconds: Platform.isMacOS ? 800 : 1000);
+
+  int get _sherpaThreadCount {
+    final processors = Platform.numberOfProcessors;
+    if (Platform.isMacOS) {
+      return processors.clamp(2, 4).toInt();
+    }
+    return processors.clamp(1, 2).toInt();
   }
 }
 

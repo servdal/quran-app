@@ -9,140 +9,138 @@ import '../../utils/tajweed_parser.dart';
 import '../../utils/auto_tajweed_parser.dart';
 
 void _showBookmarkDialog(
-    BuildContext context,
-    WidgetRef ref,
-    int currentPage,
-    String lang,
-  ) async {
-    final textController = TextEditingController();
-    final bookmarks = ref.read(bookmarkProvider);
-    final existingNames = bookmarks.keys.toList();
-    final ayahs = await ref.read(pageAyahsProvider(currentPage).future);
-    if (ayahs.isEmpty) return;
+  BuildContext context,
+  WidgetRef ref,
+  int currentPage,
+  String lang,
+) async {
+  final textController = TextEditingController();
+  final bookmarks = ref.read(bookmarkProvider);
+  final existingNames = bookmarks.keys.toList();
+  final ayahs = await ref.read(pageAyahsProvider(currentPage).future);
+  if (ayahs.isEmpty) return;
 
-    final firstAyah = ayahs.first;
+  final firstAyah = ayahs.first;
 
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: Text(
-            lang == 'en' ? 'Bookmark Classic Page' : 'Tandai Halaman Klasik',
-          ),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: textController,
-                  decoration: InputDecoration(
-                    labelText:
-                        lang == 'en'
-                            ? 'New Bookmark Name'
-                            : 'Nama Bookmark Baru',
-                    hintText:
-                        lang == 'en'
-                            ? 'e.g., Night Tahsin'
-                            : 'Contoh: Tahsin Malam',
+  showDialog(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: Text(
+          lang == 'en' ? 'Bookmark Classic Page' : 'Tandai Halaman Klasik',
+        ),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: textController,
+                decoration: InputDecoration(
+                  labelText:
+                      lang == 'en' ? 'New Bookmark Name' : 'Nama Bookmark Baru',
+                  hintText:
+                      lang == 'en'
+                          ? 'e.g., Night Tahsin'
+                          : 'Contoh: Tahsin Malam',
+                ),
+              ),
+              if (existingNames.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Text(
+                  lang == 'en'
+                      ? 'Or overwrite existing:'
+                      : 'Atau timpa yang sudah ada:',
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const Divider(),
+                SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: existingNames.length,
+                    itemBuilder: (context, index) {
+                      final name = existingNames[index];
+                      final bookmark = bookmarks[name]!;
+                      return ListTile(
+                        title: Text(name),
+                        subtitle:
+                            bookmark.pageNumber != null
+                                ? Text(
+                                  lang == 'en'
+                                      ? 'Page ${bookmark.pageNumber}'
+                                      : 'Halaman ${bookmark.pageNumber}',
+                                )
+                                : null,
+                        onTap: () async {
+                          final newBookmark = Bookmark(
+                            type: BookmarkViewType.classic,
+                            surahId: firstAyah.surahId,
+                            surahName: firstAyah.surahName,
+                            ayahNumber: firstAyah.number,
+                            pageNumber: currentPage,
+                          );
+                          await ref
+                              .read(bookmarkProvider.notifier)
+                              .addOrUpdateBookmark(name, newBookmark);
+                          Navigator.of(dialogContext).pop();
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                lang == 'en'
+                                    ? 'Bookmark "$name" updated'
+                                    : 'Bookmark "$name" diperbarui',
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
-                if (existingNames.isNotEmpty) ...[
-                  const SizedBox(height: 16),
-                  Text(
-                    lang == 'en'
-                        ? 'Or overwrite existing:'
-                        : 'Atau timpa yang sudah ada:',
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  const Divider(),
-                  SizedBox(
-                    height: 200,
-                    child: ListView.builder(
-                      itemCount: existingNames.length,
-                      itemBuilder: (context, index) {
-                        final name = existingNames[index];
-                        final bookmark = bookmarks[name]!;
-                        return ListTile(
-                          title: Text(name),
-                          subtitle:
-                              bookmark.pageNumber != null
-                                  ? Text(
-                                    lang == 'en'
-                                        ? 'Page ${bookmark.pageNumber}'
-                                        : 'Halaman ${bookmark.pageNumber}',
-                                  )
-                                  : null,
-                          onTap: () async {
-                            final newBookmark = Bookmark(
-                              type: BookmarkViewType.classic,
-                              surahId: firstAyah.surahId,
-                              surahName: firstAyah.surahName,
-                              ayahNumber: firstAyah.number,
-                              pageNumber: currentPage,
-                            );
-                            await ref
-                                .read(bookmarkProvider.notifier)
-                                .addOrUpdateBookmark(name, newBookmark);
-                            Navigator.of(dialogContext).pop();
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  lang == 'en'
-                                      ? 'Bookmark "$name" updated'
-                                      : 'Bookmark "$name" diperbarui',
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
               ],
-            ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(lang == 'en' ? 'Cancel' : 'Batal'),
-            ),
-            ElevatedButton(
-              child: Text(lang == 'en' ? 'Save New' : 'Simpan Baru'),
-              onPressed: () async {
-                final name = textController.text.trim();
-                if (name.isEmpty) return;
-                final newBookmark = Bookmark(
-                  type: BookmarkViewType.classic,
-                  surahId: firstAyah.surahId,
-                  surahName: firstAyah.surahName,
-                  ayahNumber: firstAyah.number,
-                  pageNumber: currentPage,
-                );
-                await ref
-                    .read(bookmarkProvider.notifier)
-                    .addOrUpdateBookmark(name, newBookmark);
-                Navigator.of(dialogContext).pop();
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      lang == 'en'
-                          ? 'Bookmark "$name" saved'
-                          : 'Bookmark "$name" disimpan',
-                    ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(lang == 'en' ? 'Cancel' : 'Batal'),
+          ),
+          ElevatedButton(
+            child: Text(lang == 'en' ? 'Save New' : 'Simpan Baru'),
+            onPressed: () async {
+              final name = textController.text.trim();
+              if (name.isEmpty) return;
+              final newBookmark = Bookmark(
+                type: BookmarkViewType.classic,
+                surahId: firstAyah.surahId,
+                surahName: firstAyah.surahName,
+                ayahNumber: firstAyah.number,
+                pageNumber: currentPage,
+              );
+              await ref
+                  .read(bookmarkProvider.notifier)
+                  .addOrUpdateBookmark(name, newBookmark);
+              Navigator.of(dialogContext).pop();
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    lang == 'en'
+                        ? 'Bookmark "$name" saved'
+                        : 'Bookmark "$name" disimpan',
                   ),
-                );
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+                ),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
 class DeresanViewScreen extends ConsumerStatefulWidget {
   final int initialPage;
@@ -157,7 +155,7 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
   late final PageController _pageController;
   late int _currentPage;
   bool _showTafsir = false;
-  
+
   @override
   void initState() {
     super.initState();
@@ -182,7 +180,7 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final juzAsync = ref.watch(juzFromPageProvider(_currentPage));    
+    final juzAsync = ref.watch(juzFromPageProvider(_currentPage));
     final surahAsync = ref.watch(surahFromPageProvider(_currentPage));
     final bookmarksMap = ref.watch(bookmarkProvider);
     final settings = ref.watch(settingsProvider);
@@ -190,9 +188,12 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
     final isPageBookmarked = bookmarksMap.values.any(
       (bookmark) => bookmark.pageNumber == _currentPage,
     );
-    final String? existingBookmarkName = isPageBookmarked
-      ? bookmarksMap.keys.firstWhere((key) => bookmarksMap[key]?.pageNumber == _currentPage)
-      : null;
+    final String? existingBookmarkName =
+        isPageBookmarked
+            ? bookmarksMap.keys.firstWhere(
+              (key) => bookmarksMap[key]?.pageNumber == _currentPage,
+            )
+            : null;
 
     return Scaffold(
       body: SafeArea(
@@ -201,36 +202,39 @@ class _DeresanViewScreenState extends ConsumerState<DeresanViewScreen> {
             surahAsync.when(
               loading: () => _buildHeaderSkeleton(juzAsync),
               error: (_, __) => _buildHeaderSkeleton(juzAsync),
-              data: (surahMeta) => _DeresanHeader(
-                currentPage: _currentPage,
-                juzAsync: juzAsync,
-                onBack: () => Navigator.pop(context),
-                onTextSize: () => _showSettingsModal(context),                
-                surahNumber: surahMeta.number,
-                surahNameArabic: surahMeta.nameArabic,
-                surahNameLatin: surahMeta.nameLatin,
-                surahRevelation: surahMeta.revelation,
-                isBookmarked: isPageBookmarked,
-                onBookmark: () {
-                if (isPageBookmarked && existingBookmarkName != null) {
-                  ref.read(bookmarkProvider.notifier).removeBookmark(existingBookmarkName);
-                  
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        lang == 'en'
-                            ? 'Bookmark "$existingBookmarkName" removed'
-                            : 'Bookmark "$existingBookmarkName" dihapus',
-                      ),
-                    ),
-                  );
-                } else {
-                  _showBookmarkDialog(context, ref, _currentPage, lang);
-                }
-              },
-              ),
+              data:
+                  (surahMeta) => _DeresanHeader(
+                    currentPage: _currentPage,
+                    juzAsync: juzAsync,
+                    onBack: () => Navigator.pop(context),
+                    onTextSize: () => _showSettingsModal(context),
+                    surahNumber: surahMeta.number,
+                    surahNameArabic: surahMeta.nameArabic,
+                    surahNameLatin: surahMeta.nameLatin,
+                    surahRevelation: surahMeta.revelation,
+                    isBookmarked: isPageBookmarked,
+                    onBookmark: () {
+                      if (isPageBookmarked && existingBookmarkName != null) {
+                        ref
+                            .read(bookmarkProvider.notifier)
+                            .removeBookmark(existingBookmarkName);
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              lang == 'en'
+                                  ? 'Bookmark "$existingBookmarkName" removed'
+                                  : 'Bookmark "$existingBookmarkName" dihapus',
+                            ),
+                          ),
+                        );
+                      } else {
+                        _showBookmarkDialog(context, ref, _currentPage, lang);
+                      }
+                    },
+                  ),
             ),
-            
+
             Expanded(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
@@ -334,11 +338,12 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
 
     return ayahsAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(
-        child: Text(
-          lang == 'en' ? 'Failed to load page' : 'Gagal memuat halaman',
-        ),
-      ),
+      error:
+          (e, _) => Center(
+            child: Text(
+              lang == 'en' ? 'Failed to load page' : 'Gagal memuat halaman',
+            ),
+          ),
       data: (ayahs) {
         if (ayahs.isEmpty) {
           return Center(
@@ -351,7 +356,10 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
             children: [
               Container(
                 color: theme.primaryColor.withOpacity(0.05),
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 16,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -373,49 +381,52 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
                   ],
                 ),
               ),
-              
+
               Expanded(
-                child: _viewPdfMode
-                    ? PdfViewer.asset(
-                        'assets/pdf/${_formatPageNumber(widget.pageNumber)}.pdf',
-                        params: const PdfViewerParams(
-                          panEnabled: true,
-                          maxScale: 3.0,
-                        ),
-                      )
-                    : SingleChildScrollView(
-                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: ayahs.map((ayah) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'QS ${ayah.surahId}:${ayah.number}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: theme.primaryColor,
+                child:
+                    _viewPdfMode
+                        ? PdfViewer.asset(
+                          'assets/pdf/${_formatPageNumber(widget.pageNumber)}.pdf',
+                          params: const PdfViewerParams(
+                            panEnabled: true,
+                            maxScale: 3.0,
+                          ),
+                        )
+                        : SingleChildScrollView(
+                          padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:
+                                ayahs.map((ayah) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'QS ${ayah.surahId}:${ayah.number}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: theme.primaryColor,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          ayah.tafsir,
+                                          textAlign: TextAlign.justify,
+                                          style: TextStyle(
+                                            height: 1.6,
+                                            fontSize: panelFontSize,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    ayah.tafsir,
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      height: 1.6,
-                                      fontSize: panelFontSize,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
+                                  );
+                                }).toList(),
+                          ),
                         ),
-                      ),
-              )
+              ),
             ],
           );
         }
@@ -424,7 +435,7 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
         List<InlineSpan> currentSpans = [];
 
         final baseTextStyle = TextStyle(
-          fontFamily: 'LPMQ',
+          fontFamily: source.arabicFontFamily,
           fontSize: panelFontSize,
           height: 2.0,
           color: theme.colorScheme.onSurface,
@@ -505,12 +516,12 @@ class _DeresanHeader extends ConsumerWidget {
   final AsyncValue<int> juzAsync;
   final VoidCallback onBack;
   final VoidCallback onTextSize;
-  final int surahNumber;         
+  final int surahNumber;
   final String surahNameArabic;
   final String surahNameLatin;
-  final String surahRevelation;  
-  final bool isBookmarked;       
-  final VoidCallback onBookmark; 
+  final String surahRevelation;
+  final bool isBookmarked;
+  final VoidCallback onBookmark;
 
   const _DeresanHeader({
     required this.currentPage,
@@ -529,7 +540,7 @@ class _DeresanHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     final lang = settings.language;
-    final isDark = Theme.of(context).brightness == Brightness.dark;    
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = Theme.of(context).primaryColor;
 
     return Container(
@@ -568,21 +579,26 @@ class _DeresanHeader extends ConsumerWidget {
                     ),
                   ),
                   juzAsync.when(
-                    loading: () => const Text('—', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                    loading:
+                        () => const Text(
+                          '—',
+                          style: TextStyle(fontSize: 11, color: Colors.grey),
+                        ),
                     error: (_, __) => const SizedBox.shrink(),
-                    data: (juz) => Text(
-                      'Juz $juz'.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: primaryColor,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    data:
+                        (juz) => Text(
+                          'Juz $juz'.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: primaryColor,
+                            letterSpacing: 1.2,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                   ),
                 ],
               ),
-              const Spacer(),              
+              const Spacer(),
               Container(
                 decoration: BoxDecoration(
                   color: isDark ? Colors.white10 : Colors.grey.shade100,
@@ -594,28 +610,42 @@ class _DeresanHeader extends ConsumerWidget {
                     IconButton(
                       icon: const Icon(Icons.format_size, size: 22),
                       onPressed: onTextSize,
-                      style: IconButton.styleFrom(visualDensity: VisualDensity.compact),
+                      style: IconButton.styleFrom(
+                        visualDensity: VisualDensity.compact,
+                      ),
                       tooltip: lang == 'en' ? 'Text size' : 'Ukuran teks',
                     ),
                     IconButton(
                       icon: Icon(
-                        isBookmarked ? Icons.bookmark : Icons.bookmark_border, 
+                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
                         size: 22,
                         color: isBookmarked ? Colors.green.shade600 : null,
                       ),
                       onPressed: onBookmark,
-                      style: IconButton.styleFrom(visualDensity: VisualDensity.compact),
+                      style: IconButton.styleFrom(
+                        visualDensity: VisualDensity.compact,
+                      ),
                       tooltip: lang == 'en' ? 'Bookmark' : 'Simpan penanda',
                     ),
-                    Container(width: 1, height: 20, color: isDark ? Colors.white24 : Colors.grey.shade300),
+                    Container(
+                      width: 1,
+                      height: 20,
+                      color: isDark ? Colors.white24 : Colors.grey.shade300,
+                    ),
                     PopupMenuButton<ArabicSource>(
                       icon: const Icon(Icons.menu_book_outlined, size: 22),
-                      onSelected: (value) => ref.read(settingsProvider.notifier).setArabicSource(value),
+                      onSelected:
+                          (value) => ref
+                              .read(settingsProvider.notifier)
+                              .setArabicSource(value),
                       itemBuilder: (context) => _buildSourceMenu(settings),
                     ),
                     PopupMenuButton<AppThemeType>(
                       icon: const Icon(Icons.palette_outlined, size: 22),
-                      onSelected: (value) => ref.read(settingsProvider.notifier).setTheme(value),
+                      onSelected:
+                          (value) => ref
+                              .read(settingsProvider.notifier)
+                              .setTheme(value),
                       itemBuilder: (context) => _buildThemeMenu(settings),
                     ),
                   ],
@@ -623,15 +653,16 @@ class _DeresanHeader extends ConsumerWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 14),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: isDark 
-                    ? [Colors.grey.shade900, Colors.grey.shade50] 
-                    : [Colors.grey.shade50, Colors.white],
+                colors:
+                    isDark
+                        ? [Colors.grey.shade900, Colors.grey.shade50]
+                        : [Colors.grey.shade50, Colors.white],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
               ),
@@ -667,11 +698,15 @@ class _DeresanHeader extends ConsumerWidget {
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
-                          color: _isMeccan(surahRevelation) 
-                              ? Colors.orange.withOpacity(0.1) 
-                              : Colors.blue.withOpacity(0.1),
+                          color:
+                              _isMeccan(surahRevelation)
+                                  ? Colors.orange.withOpacity(0.1)
+                                  : Colors.blue.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -679,38 +714,45 @@ class _DeresanHeader extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
-                            color: _isMeccan(surahRevelation) 
-                                ? Colors.orange.shade800 
-                                : Colors.blue.shade800,
+                            color:
+                                _isMeccan(surahRevelation)
+                                    ? Colors.orange.shade800
+                                    : Colors.blue.shade800,
+                          ),
                         ),
                       ),
-                    ),
                     ],
                   ),
-                ),                
+                ),
                 Expanded(
                   flex: 3,
                   child: Center(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: primaryColor.withOpacity(0.05),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        surahNameLatin, 
+                        surahNameLatin,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.green.shade300 : Colors.green.shade800,
+                          color:
+                              isDark
+                                  ? Colors.green.shade300
+                                  : Colors.green.shade800,
                           letterSpacing: 0.5,
                         ),
                       ),
                     ),
                   ),
                 ),
-                
+
                 Expanded(
                   flex: 2,
                   child: Text(
@@ -732,7 +774,9 @@ class _DeresanHeader extends ConsumerWidget {
   }
 
   // Fungsi evaluasi tempat turun surah
-  bool _isMeccan(String type) => type.toLowerCase().contains('mecca') || type.toLowerCase().contains('makki');
+  bool _isMeccan(String type) =>
+      type.toLowerCase().contains('mecca') ||
+      type.toLowerCase().contains('makki');
 
   String _getTranslatedRevelation(String type, String lang) {
     if (lang == 'en') {
@@ -822,7 +866,6 @@ class SettingsModalContent extends ConsumerWidget {
       ),
     );
   }
-
 }
 
 TextSpan buildAyahNumberSpan(

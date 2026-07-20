@@ -231,6 +231,7 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
   }
 
   Widget _buildShareImageWidget(bool isId) {
+    final settings = ref.watch(settingsProvider);
     final tafsir = widget.ayah.tafsir.trim();
     final translation = widget.ayah.translation.trim();
 
@@ -300,7 +301,8 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
                               maxLines: 8,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontFamily: 'LPMQ',
+                                fontFamily:
+                                    settings.arabicSource.arabicFontFamily,
                                 fontSize: s(64),
                                 height: 2.0,
                                 color: const Color(0xFF112A45),
@@ -482,16 +484,17 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
             .length;
     final isBookmarked = matchingBookmarkCount > 0;
 
+    final isId = settings.language == 'id';
+    final sumber = settings.arabicSource;
+    final lang = settings.language;
+
     final baseArabicStyle = TextStyle(
-      fontFamily: 'LPMQ',
+      fontFamily: sumber.arabicFontFamily,
       fontSize: panelFontSize,
       height: 2.0,
       color: theme.colorScheme.onSurface,
     );
 
-    final isId = settings.language == 'id';
-    final sumber = settings.arabicSource;
-    final lang = settings.language;
     _resetRemoteFutureIfLanguageChanged(lang);
     final spans = switch (sumber) {
       ArabicSource.quranCloudTajweed => TajweedParser.parse(

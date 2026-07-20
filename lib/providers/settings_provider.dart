@@ -7,12 +7,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 enum AppThemeType { light, dark, pink }
 
-enum ArabicSource {
-  quranCloudTajweed,
-  kemenagTajweed,
-  quranCloud,
-  kemenag,
-}
+enum ArabicSource { quranCloudTajweed, kemenagTajweed, quranCloud, kemenag }
 
 extension ArabicSourceX on ArabicSource {
   String get storageKey => switch (this) {
@@ -31,6 +26,8 @@ extension ArabicSourceX on ArabicSource {
 
   bool get usesQuranCloudText =>
       this == ArabicSource.quranCloudTajweed || this == ArabicSource.quranCloud;
+
+  String get arabicFontFamily => usesQuranCloudText ? 'Uthmani' : 'LPMQ';
 
   bool get usesTajweedParser =>
       this == ArabicSource.quranCloudTajweed ||

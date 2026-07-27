@@ -7,8 +7,7 @@ import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
-import 'package:quran_app/utils/tajweed_parser.dart';
-import '../../utils/auto_tajweed_parser.dart';
+import 'package:quran_app/utils/arabic_source_spans.dart';
 
 class DoaUIData {
   final List<Ayah> ayahs;
@@ -108,36 +107,37 @@ class _DoaList extends ConsumerWidget {
           itemCount: uiDataList.length,
           itemBuilder: (context, index) {
             final doaData = uiDataList[index];
-            final combinedArabicText = doaData.ayahs
+            final source = settings.arabicSource;
+            final combinedQuranCloudText = doaData.ayahs
                 .map((a) => a.arabicText)
+                .join(' ');
+            final combinedQuranCloudTajweedText = doaData.ayahs
+                .map((a) => a.tajweedText)
+                .join(' ');
+            final combinedKemenagText = doaData.ayahs
+                .map((a) => a.ayaTextKemenag)
                 .join(' ');
             final combinedTranslation = doaData.ayahs
                 .map((a) => a.translation)
                 .join(' ');
 
             final baseTextStyle = TextStyle(
-              fontFamily: 'LPMQ',
+              fontFamily: source.arabicFontFamily,
               fontSize: settings.arabicFontSize,
               height: 2.0,
               color: theme.colorScheme.onSurface,
             );
 
-            final textSpans =
-                lang == 'id'
-                    ? AutoTajweedParser.parse(
-                      combinedArabicText,
-                      baseTextStyle,
-                      lang: lang,
-                      context: context,
-                      learningMode: true,
-                    )
-                    : TajweedParser.parse(
-                      doaData.ayahs.map((a) => a.tajweedText).join(' '),
-                      baseTextStyle,
-                      lang: lang,
-                      context: context,
-                      learningMode: true,
-                    );
+            final textSpans = buildArabicSourceSpans(
+              source: source,
+              quranCloudText: combinedQuranCloudText,
+              quranCloudTajweedText: combinedQuranCloudTajweedText,
+              kemenagText: combinedKemenagText,
+              baseStyle: baseTextStyle,
+              lang: lang,
+              context: context,
+              learningMode: true,
+            );
 
             return Container(
               margin: const EdgeInsets.only(bottom: 20),

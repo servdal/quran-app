@@ -511,9 +511,13 @@ class _AyahWidgetState extends ConsumerState<AyahWidget>
         context: context,
         learningMode: true,
       ),
-      ArabicSource.quranCloud => [
-        TextSpan(text: widget.ayah.arabicText, style: baseArabicStyle),
-      ],
+      ArabicSource.quranCloud => TajweedParser.parse(
+        widget.ayah.tajweedText,
+        baseArabicStyle,
+        lang: lang,
+        context: context,
+        learningMode: false,
+      ),
       ArabicSource.kemenag => [
         TextSpan(text: widget.ayah.ayaTextKemenag, style: baseArabicStyle),
       ],

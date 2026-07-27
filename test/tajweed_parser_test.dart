@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:quran_app/utils/auto_tajweed_parser.dart';
 import 'package:quran_app/utils/tajweed_parser.dart';
 
 void main() {
@@ -66,5 +67,22 @@ void main() {
     expect(plainText, contains('كَانُوا۟ فِيهِ'));
     expect(plainText, isNot(contains('[s')));
     expect(spans.any((span) => (span.text ?? '').contains('فُوٓا۟')), isTrue);
+  });
+
+  test('keeps plain Kemenag Arabic words in one span for shaping', () {
+    const ayaText = 'هَلْ هُنَّ مُمْسِكٰتُ رَحْمَتِهٖۗ';
+
+    final spans = AutoTajweedParser.parse(
+      ayaText,
+      const TextStyle(color: Colors.black),
+      lang: 'id',
+    );
+    final plainText = TextSpan(children: spans).toPlainText();
+
+    expect(plainText, contains('هَلْ هُنَّ مُمْسِكٰتُ رَحْمَتِهٖۗ'));
+    expect(
+      spans.any((span) => (span.text ?? '').contains('مُمْسِكٰتُ')),
+      isTrue,
+    );
   });
 }

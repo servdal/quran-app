@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:quran_app/models/grammar_model.dart';
-import 'package:quran_app/utils/auto_tajweed_parser.dart';
+import 'package:quran_app/utils/arabic_source_spans.dart';
 
 import '../models/ayah_model.dart';
 import '../widgets/grammar_popup.dart';
 import '../providers/settings_provider.dart';
 import '../services/quran_data_service.dart';
-import '../utils/tajweed_parser.dart';
 
 /* ============================================================
    ENUM & HELPER
@@ -167,33 +166,23 @@ class _AyahBlock extends ConsumerWidget {
       height: 2.1,
       color: Theme.of(context).colorScheme.onSurface,
     );
-    final isId = settings.language == 'id';
 
     final ui = ref.watch(grammarUiProvider);
     final notifier = ref.read(grammarUiProvider.notifier);
     final lang = ref.watch(settingsProvider).language;
-    final spans =
-        isId
-            ? AutoTajweedParser.parse(
-              ayah.ayaTextKemenag,
-              baseStyle,
-              lang: lang,
-              learningMode: ui.learningMode,
-              activeKey: ui.activeTajweedKey,
-              onTapRule: (key) => notifier.setActiveTajweed(key),
-              onClosePopup: () => notifier.setActiveTajweed(null),
-              context: context,
-            )
-            : TajweedParser.parse(
-              ayah.tajweedText,
-              baseStyle,
-              lang: lang,
-              learningMode: ui.learningMode,
-              activeKey: ui.activeTajweedKey,
-              onTapRule: (key) => notifier.setActiveTajweed(key),
-              onClosePopup: () => notifier.setActiveTajweed(null),
-              context: context,
-            );
+    final spans = buildArabicSourceSpans(
+      source: source,
+      quranCloudText: ayah.arabicText,
+      quranCloudTajweedText: ayah.tajweedText,
+      kemenagText: ayah.ayaTextKemenag,
+      baseStyle: baseStyle,
+      lang: lang,
+      learningMode: ui.learningMode,
+      activeKey: ui.activeTajweedKey,
+      onTapRule: (key) => notifier.setActiveTajweed(key),
+      onClosePopup: () => notifier.setActiveTajweed(null),
+      context: context,
+    );
 
     return Card(
       margin: const EdgeInsets.only(bottom: 32),

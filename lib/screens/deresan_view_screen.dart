@@ -475,9 +475,13 @@ class _DeresanPageState extends ConsumerState<DeresanPage> {
               context: context,
               learningMode: true,
             ),
-            ArabicSource.quranCloud => [
-              TextSpan(text: ayah.arabicText, style: baseTextStyle),
-            ],
+            ArabicSource.quranCloud => TajweedParser.parse(
+              ayah.tajweedText,
+              baseTextStyle,
+              lang: lang,
+              context: context,
+              learningMode: false,
+            ),
             ArabicSource.kemenag => [
               TextSpan(text: ayah.ayaTextKemenag, style: baseTextStyle),
             ],

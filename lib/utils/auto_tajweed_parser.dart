@@ -30,20 +30,20 @@ class _Token {
   _Token(this.base, [this.diacritics = '']);
 
   String get full => '$base$diacritics';
-  
+
   int get baseCode => base.runes.first;
-  
+
   // Helpers
   bool get hasSukun => diacritics.contains(String.fromCharCode(cpSukun));
   bool get hasShadda => diacritics.contains(String.fromCharCode(cpShadda));
   bool get hasTanwin => diacritics.runes.any(_isTanwin);
-  
+
   bool get isNun => baseCode == cpNun;
   bool get isMim => baseCode == cpMim;
-  
+
   // Cek Nun Mati (Nun Sukun)
-  bool get isNunSakina => isNun && hasSukun; 
-  
+  bool get isNunSakina => isNun && hasSukun;
+
   bool get hasFatha => diacritics.contains(String.fromCharCode(cpFatha));
   bool get hasKasra => diacritics.contains(String.fromCharCode(cpKasra));
   bool get hasDhamma => diacritics.contains(String.fromCharCode(cpDhamma));
@@ -62,7 +62,21 @@ class AutoTajweedParser {
 
   static final Set<int> _ikhfaLetters =
       {
-        'ت', 'ث', 'ج', 'د', 'ذ', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ف', 'ق', 'ك'
+        'ت',
+        'ث',
+        'ج',
+        'د',
+        'ذ',
+        'ز',
+        'س',
+        'ش',
+        'ص',
+        'ض',
+        'ط',
+        'ظ',
+        'ف',
+        'ق',
+        'ك',
       }.map((e) => e.codeUnitAt(0)).toSet();
 
   static final Set<int> _qalqalahLetters =
@@ -97,14 +111,16 @@ class AutoTajweedParser {
     BuildContext? context,
   }) {
     if (ayaText.isEmpty) return [];
-    
+
     final Color fallbackColor =
         baseStyle.color ??
         (context != null
             ? Theme.of(context).colorScheme.onSurface
             : Colors.black);
     final effectiveStyle =
-        baseStyle.color == null ? baseStyle.copyWith(color: fallbackColor) : baseStyle;
+        baseStyle.color == null
+            ? baseStyle.copyWith(color: fallbackColor)
+            : baseStyle;
 
     ayaText = ayaText.replaceAll('\u200c', '').replaceAll('\u200b', '');
 
@@ -117,7 +133,18 @@ class AutoTajweedParser {
       final after = ayaText.substring(match.end);
 
       if (before.isNotEmpty) {
-        combinedSpans.addAll(parse(before, effectiveStyle, lang: lang, learningMode: learningMode, activeKey: activeKey, onTapRule: onTapRule, onClosePopup: onClosePopup, context: context));
+        combinedSpans.addAll(
+          parse(
+            before,
+            effectiveStyle,
+            lang: lang,
+            learningMode: learningMode,
+            activeKey: activeKey,
+            onTapRule: onTapRule,
+            onClosePopup: onClosePopup,
+            context: context,
+          ),
+        );
       }
 
       // Span Lafadz Allah
@@ -126,16 +153,35 @@ class AutoTajweedParser {
           text: lafz, // Langsung isi text, jangan kosong
           style: effectiveStyle.copyWith(
             color: AppTheme.tajweedColors['jalalah'],
-            backgroundColor: activeKey == 'jalalah'
+            backgroundColor:
+                activeKey == 'jalalah'
                     ? AppTheme.tajweedColors['jalalah']?.withOpacity(0.15)
                     : null,
           ),
-          recognizer: _getRecognizer(context, learningMode, 'jalalah', lang, onTapRule, onClosePopup),
+          recognizer: _getRecognizer(
+            context,
+            learningMode,
+            'jalalah',
+            lang,
+            onTapRule,
+            onClosePopup,
+          ),
         ),
       );
 
       if (after.isNotEmpty) {
-        combinedSpans.addAll(parse(after, effectiveStyle, lang: lang, learningMode: learningMode, activeKey: activeKey, onTapRule: onTapRule, onClosePopup: onClosePopup, context: context));
+        combinedSpans.addAll(
+          parse(
+            after,
+            effectiveStyle,
+            lang: lang,
+            learningMode: learningMode,
+            activeKey: activeKey,
+            onTapRule: onTapRule,
+            onClosePopup: onClosePopup,
+            context: context,
+          ),
+        );
       }
       return combinedSpans;
     }
@@ -143,17 +189,26 @@ class AutoTajweedParser {
     // 2. TOKENISASI UNTUK TAJWID LAIN
     final tokens = _tokenize(ayaText);
     final List<TextSpan> spans = [];
+    final StringBuffer plainTextBuffer = StringBuffer();
     int i = 0;
+
+    void flushPlainText() {
+      if (plainTextBuffer.isEmpty) return;
+      spans.add(
+        TextSpan(text: plainTextBuffer.toString(), style: effectiveStyle),
+      );
+      plainTextBuffer.clear();
+    }
 
     while (i < tokens.length) {
       final curr = tokens[i];
       final next = (i + 1 < tokens.length) ? tokens[i + 1] : null;
-      
+
       String? ruleKey;
       bool involvesNextToken = false; // Flag apakah aturan ini memakan 2 huruf
 
       // --- LOGIKA DETEKSI (DIPERBAIKI) ---
-      
+
       // A. Ghunnah Musyaddadah (Nun/Mim Tasydid)
       // Cek ini dulu karena hanya melibatkan 1 huruf
       if (curr.hasShadda && (curr.isNun || curr.isMim)) {
@@ -161,19 +216,22 @@ class AutoTajweedParser {
       }
       // B. ALIF LAM SYAMSIYAH (Aturan Baru)
       // Logika: Jika ada Alif (biasanya Hamzah Washal), lalu Lam (tak berharakat), lalu huruf depannya Tasydid
-      else if (next != null && curr.baseCode == 0x0644 && !curr.hasSukun && !curr.hasFatha && !curr.hasKasra && !curr.hasDhamma) {
-         // Cek apakah huruf ini Lam, dan huruf depannya bertasydid (Tanda Syamsiyah)
-         if (next.hasShadda) {
-           ruleKey = 'l'; // Lam Syamsiyah (Huruf Lam dianggap lebur)
-           involvesNextToken = true; 
-         }
+      else if (next != null &&
+          curr.baseCode == 0x0644 &&
+          !curr.hasSukun &&
+          !curr.hasFatha &&
+          !curr.hasKasra &&
+          !curr.hasDhamma) {
+        // Cek apakah huruf ini Lam, dan huruf depannya bertasydid (Tanda Syamsiyah)
+        if (next.hasShadda) {
+          ruleKey = 'l'; // Lam Syamsiyah (Huruf Lam dianggap lebur)
+          involvesNextToken = true;
+        }
       }
-      
       // B. Qalqalah (Hanya huruf Qalqalah + Sukun)
       else if (curr.hasSukun && _qalqalahLetters.contains(curr.baseCode)) {
         ruleKey = 'q';
       }
-
       // C. Hukum Mim Mati (Mim Sukun + Huruf Berikutnya)
       else if (next != null && curr.isMim && curr.hasSukun) {
         if (next.isMim) {
@@ -185,12 +243,11 @@ class AutoTajweedParser {
         }
         // Izhar Syafawi biasanya tidak diwarnai khusus, jadi skip
       }
-
       // D. Hukum Nun Mati & Tanwin (Syarat Utama: Nun Sukun ATAU Tanwin)
       // INI PERBAIKAN LOGIKA UTAMANYA
       else if (next != null && (curr.isNunSakina || curr.hasTanwin)) {
         final nextCp = next.baseCode;
-        
+
         if (_idghamBighunnah.contains(nextCp)) {
           ruleKey = 'a'; // Idgham Bighunnah
           involvesNextToken = true;
@@ -205,37 +262,50 @@ class AutoTajweedParser {
           involvesNextToken = true;
         }
       }
-
       // F. Mad (Penyempurnaan Sedikit)
       else if (next != null) {
         // Cek Mad Wajib/Jaiz (Sangat basic: Cek jika ketemu Hamzah)
         bool isMad = false;
-        if (curr.hasFatha && next.baseCode == cpAlef) isMad = true;
-        else if (curr.hasKasra && next.baseCode == cpYa && next.hasSukun) isMad = true;
-        else if (curr.hasDhamma && next.baseCode == cpWaw && next.hasSukun) isMad = true;
+        if (curr.hasFatha && next.baseCode == cpAlef) {
+          isMad = true;
+        } else if (curr.hasKasra && next.baseCode == cpYa && next.hasSukun) {
+          isMad = true;
+        } else if (curr.hasDhamma &&
+            next.baseCode == cpWaw &&
+            next.hasSukun) {
+          isMad = true;
+        }
 
         if (isMad) {
-           // Intip huruf setelah Mad (next+1)
-           // Ini butuh logika 3 huruf (curr, next, nextNext)
-           // Untuk saat ini kita tetapkan 'n' (Mad Thobi'i) agar aman
-           ruleKey = 'n'; 
-           involvesNextToken = true;
+          // Intip huruf setelah Mad (next+1)
+          // Ini butuh logika 3 huruf (curr, next, nextNext)
+          // Untuk saat ini kita tetapkan 'n' (Mad Thobi'i) agar aman
+          ruleKey = 'n';
+          involvesNextToken = true;
         }
       }
 
       // --- PEMBUATAN SPAN ---
-      
+
       if (ruleKey != null) {
+        flushPlainText();
         if (involvesNextToken && next != null) {
           // GABUNGKAN TEKS (FIX CLICK ISSUE)
           // Daripada children, kita gabung stringnya agar hit-test area solid
           final combinedText = curr.full + next.full;
-          
+
           spans.add(
             TextSpan(
               text: combinedText,
               style: _style(effectiveStyle, ruleKey, activeKey == ruleKey),
-              recognizer: _getRecognizer(context, learningMode, ruleKey, lang, onTapRule, onClosePopup),
+              recognizer: _getRecognizer(
+                context,
+                learningMode,
+                ruleKey,
+                lang,
+                onTapRule,
+                onClosePopup,
+              ),
             ),
           );
           i += 2; // Lompat 2 token
@@ -245,18 +315,27 @@ class AutoTajweedParser {
             TextSpan(
               text: curr.full,
               style: _style(effectiveStyle, ruleKey, activeKey == ruleKey),
-              recognizer: _getRecognizer(context, learningMode, ruleKey, lang, onTapRule, onClosePopup),
+              recognizer: _getRecognizer(
+                context,
+                learningMode,
+                ruleKey,
+                lang,
+                onTapRule,
+                onClosePopup,
+              ),
             ),
           );
           i += 1; // Lompat 1 token
         }
       } else {
-        // Tidak ada hukum tajwid
-        spans.add(TextSpan(text: curr.full, style: effectiveStyle));
+        // Tidak ada hukum tajwid: gabungkan agar shaping huruf Arab tidak
+        // terputus oleh TextSpan per huruf.
+        plainTextBuffer.write(curr.full);
         i++;
       }
     }
 
+    flushPlainText();
     return spans;
   }
 
@@ -284,7 +363,7 @@ class AutoTajweedParser {
     return TapGestureRecognizer()
       ..onTap = () {
         onTapRule?.call(key);
-        
+
         final rule = AppTheme.tajweedRules.firstWhere(
           (r) => r.key == key,
           orElse: () => AppTheme.tajweedRules.first,
@@ -295,34 +374,40 @@ class AutoTajweedParser {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           ),
-          builder: (_) => Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          builder:
+              (_) => Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 14,
-                      height: 14,
-                      decoration: BoxDecoration(
-                        color: rule.color,
-                        shape: BoxShape.circle,
-                      ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 14,
+                          height: 14,
+                          decoration: BoxDecoration(
+                            color: rule.color,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          lang == 'id' ? rule.nameId : rule.nameEn,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(height: 12),
                     Text(
-                      lang == 'id' ? rule.nameId : rule.nameEn,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      lang == 'id' ? rule.descriptionId : rule.descriptionEn,
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                Text(lang == 'id' ? rule.descriptionId : rule.descriptionEn),
-              ],
-            ),
-          ),
+              ),
         ).whenComplete(() => onClosePopup?.call());
       };
   }
@@ -330,8 +415,8 @@ class AutoTajweedParser {
   static bool _isDiacritic(int cp) {
     // Range harakat umum + shadda + superscript alif
     if (cp >= 0x064B && cp <= 0x0652) return true;
-    if (cp == 0x0651) return true; 
-    if (cp == 0x0670) return true; 
+    if (cp == 0x0651) return true;
+    if (cp == 0x0670) return true;
     return false;
   }
 

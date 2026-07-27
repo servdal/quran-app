@@ -7,8 +7,7 @@ import 'package:quran_app/models/ayah_model.dart';
 import 'package:quran_app/providers/settings_provider.dart';
 import 'package:quran_app/services/quran_data_service.dart';
 import 'package:quran_app/screens/surah_detail_screen.dart';
-import 'package:quran_app/utils/auto_tajweed_parser.dart';
-import 'package:quran_app/utils/tajweed_parser.dart';
+import 'package:quran_app/utils/arabic_source_spans.dart';
 
 enum DzikrType { pagi, petang }
 
@@ -248,7 +247,7 @@ class DzikirListView extends ConsumerWidget {
 
 class DzikrCard extends StatefulWidget {
   final DzikrUIData uiData;
-  final dynamic settings;
+  final Settings settings;
   final String lang;
 
   const DzikrCard({
@@ -269,38 +268,37 @@ class _DzikrCardState extends State<DzikrCard> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDone = _counter >= widget.uiData.dzikrInfo.repetitions;
+    final source = widget.settings.arabicSource;
 
     final baseTextStyle = TextStyle(
-      fontFamily: 'LPMQ',
+      fontFamily: source.arabicFontFamily,
       fontSize: widget.settings.arabicFontSize,
       height: 2.2,
       color: theme.colorScheme.onSurface,
     );
-    final rawText =
+    final quranCloudText =
         widget.uiData.ayahs.isNotEmpty
             ? widget.uiData.ayahs.map((ayah) => ayah.arabicText).join(' ')
             : (widget.uiData.dzikrInfo.arabicText ?? "");
-    final tajweedText =
+    final quranCloudTajweedText =
         widget.uiData.ayahs.isNotEmpty
             ? widget.uiData.ayahs.map((ayah) => ayah.tajweedText).join(' ')
             : (widget.uiData.dzikrInfo.arabicText ?? "");
+    final kemenagText =
+        widget.uiData.ayahs.isNotEmpty
+            ? widget.uiData.ayahs.map((ayah) => ayah.ayaTextKemenag).join(' ')
+            : (widget.uiData.dzikrInfo.arabicText ?? "");
 
-    final spans =
-        widget.lang == 'id'
-            ? AutoTajweedParser.parse(
-              rawText,
-              baseTextStyle,
-              lang: widget.lang,
-              context: context,
-              learningMode: true,
-            )
-            : TajweedParser.parse(
-              tajweedText,
-              baseTextStyle,
-              lang: widget.lang,
-              context: context,
-              learningMode: true,
-            );
+    final spans = buildArabicSourceSpans(
+      source: source,
+      quranCloudText: quranCloudText,
+      quranCloudTajweedText: quranCloudTajweedText,
+      kemenagText: kemenagText,
+      baseStyle: baseTextStyle,
+      lang: widget.lang,
+      context: context,
+      learningMode: true,
+    );
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),

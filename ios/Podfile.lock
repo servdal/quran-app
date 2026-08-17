@@ -2,49 +2,32 @@ PODS:
   - Flutter (1.0.0)
   - flutter_compass_v2 (0.0.1):
     - Flutter
-  - flutter_inappwebview_ios (0.0.1):
-    - Flutter
-    - flutter_inappwebview_ios/Core (= 0.0.1)
-    - OrderedSet (~> 6.0.3)
-  - flutter_inappwebview_ios/Core (0.0.1):
-    - Flutter
-    - OrderedSet (~> 6.0.3)
   - flutter_qiblah (0.0.1):
     - Flutter
-  - home_widget (0.0.1):
+  - sherpa_onnx_ios (1.13.4):
     - Flutter
-  - OrderedSet (6.0.3)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_compass_v2 (from `.symlinks/plugins/flutter_compass_v2/ios`)
-  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_qiblah (from `.symlinks/plugins/flutter_qiblah/ios`)
-  - home_widget (from `.symlinks/plugins/home_widget/ios`)
-
-SPEC REPOS:
-  trunk:
-    - OrderedSet
+  - sherpa_onnx_ios (from `.symlinks/plugins/sherpa_onnx_ios/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   flutter_compass_v2:
     :path: ".symlinks/plugins/flutter_compass_v2/ios"
-  flutter_inappwebview_ios:
-    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   flutter_qiblah:
     :path: ".symlinks/plugins/flutter_qiblah/ios"
-  home_widget:
-    :path: ".symlinks/plugins/home_widget/ios"
+  sherpa_onnx_ios:
+    :path: ".symlinks/plugins/sherpa_onnx_ios/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_compass_v2: f7704b078814b705e76ae2bd48fe48ae6cd067df
-  flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
   flutter_qiblah: f69eeb708d127a2634073ab1f27771c979928f50
-  home_widget: 0434835a4c9a75704264feff6be17ea40e0f0d57
-  OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
+  sherpa_onnx_ios: 741d7077c38fb6d575f03f560bf44575d6cf9b9b
 
 PODFILE CHECKSUM: 4b612fa4eb5a4073b47c77868632daeb854794d3
 

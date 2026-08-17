@@ -12,7 +12,7 @@ import 'package:quran_app/main.dart';
 
 void main() {
   testWidgets('App boots into permission gate', (WidgetTester tester) async {
-    await tester.pumpWidget(const ProviderScope(child: MyApp(initialLang: null)));
+    await tester.pumpWidget(const ProviderScope(child: MyApp()));
     await tester.pump();
 
     final hasLoading =

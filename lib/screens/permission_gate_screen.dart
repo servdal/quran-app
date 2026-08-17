@@ -28,6 +28,12 @@ class _PermissionGateScreenState extends State<PermissionGateScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final done = prefs.getBool('initial_permissions_done') ?? false;
+      if (!kIsWeb && !(Platform.isAndroid || Platform.isIOS)) {
+        if (!mounted) return;
+        _goNext();
+        return;
+      }
+
       if (done) {
         if (!mounted) return;
         _goNext();
@@ -36,7 +42,7 @@ class _PermissionGateScreenState extends State<PermissionGateScreen> {
 
       await notificationService.requestPermissions();
 
-      if (!kIsWeb) {
+      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
         // Location permission (used for prayer time).
         await Geolocator.requestPermission();
 

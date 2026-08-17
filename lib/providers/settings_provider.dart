@@ -140,7 +140,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('keep_screen_awake', enabled);
     state = state.copyWith(keepScreenAwake: enabled);
-    await _applyKeepScreenAwake(enabled);
+    await _applyKeepScreenAwakeSafely(enabled);
   }
 
   Future<void> setLanguage(String lang) async {
@@ -200,15 +200,19 @@ class SettingsNotifier extends StateNotifier<Settings> {
       adzanSoundMode: AdzanSoundMode.values[adzanSoundModeIndex],
       adzanSoundName: adzanSoundName,
     );
-    await _applyKeepScreenAwake(keepScreenAwake);
+    await _applyKeepScreenAwakeSafely(keepScreenAwake);
   }
 
-  Future<void> _applyKeepScreenAwake(bool enabled) async {
+  Future<void> _applyKeepScreenAwakeSafely(bool enabled) async {
     if (kIsWeb || !Platform.isMacOS) return;
-    if (enabled) {
-      await WakelockPlus.enable();
-    } else {
-      await WakelockPlus.disable();
+    try {
+      if (enabled) {
+        await WakelockPlus.enable();
+      } else {
+        await WakelockPlus.disable();
+      }
+    } catch (e) {
+      // Keep the UI alive if macOS rejects or delays the native wakelock call.
     }
   }
 }

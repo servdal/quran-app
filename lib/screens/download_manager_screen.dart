@@ -137,6 +137,9 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
   final _endAyahCtrl = TextEditingController(text: "7");
   bool _isRepeat = false;
   String? _selectedReciter;
+  bool _showPlaylistForm = true;
+  bool _showSavedPlaylists = false;
+  bool _showDownloadedReciters = false;
 
   @override
   void initState() {
@@ -144,6 +147,15 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(downloadServiceProvider.notifier).loadDownloadedFiles();
     });
+  }
+
+  @override
+  void dispose() {
+    _startSurahCtrl.dispose();
+    _startAyahCtrl.dispose();
+    _endSurahCtrl.dispose();
+    _endAyahCtrl.dispose();
+    super.dispose();
   }
 
   String? _validatePlaylistRange({
@@ -396,6 +408,80 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
               ),
             ],
 
+            if (player.title.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(bottom: 8),
+                decoration: BoxDecoration(
+                  color: Colors.teal.shade800,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.music_note, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Sedang Memutar: ${player.title}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                          Text(
+                            "Qari: ${player.subtitle}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Shortcut kecil ke mode Murottal landscape.
+                    if (player.isPlaying)
+                      IconButton(
+                        icon: const Icon(
+                          Icons.fullscreen_rounded,
+                          color: Colors.cyanAccent,
+                        ),
+                        tooltip: 'Buka Mode Murottal',
+                        onPressed: _offerMurottalMode,
+                      ),
+
+                    // Tombol Pause / Play
+                    IconButton(
+                      icon: Icon(
+                        player.isPlaying ? Icons.pause : Icons.play_arrow,
+                        color: Colors.white,
+                      ),
+                      onPressed:
+                          () =>
+                              ref
+                                  .read(playerServiceProvider.notifier)
+                                  .togglePausePlay(),
+                    ),
+                    // Tombol Stop
+                    IconButton(
+                      icon: const Icon(Icons.stop, color: Colors.white),
+                      onPressed:
+                          () =>
+                              ref.read(playerServiceProvider.notifier).stop(),
+                    ),
+                  ],
+                ),
+              ),
+
+
             if (downloader.showDownloaderList)
               Expanded(
                 child:
@@ -453,493 +539,668 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                           },
                         ),
               )
-            else ...[
-              const Text(
-                "🎵 Atur Kontrol Daftar Putar (Playlist)",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              const SizedBox(height: 6),
-              Card(
-                color: Colors.teal.shade50,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Pilih Qari / Syaikh:",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.teal,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.teal.shade200),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: _selectedReciter,
-                            isExpanded: true,
-                            hint: const Text(
-                              "Belum ada Syaikh terunduh",
-                              style: TextStyle(fontSize: 13),
+            else
+              Expanded(
+                child: ListView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  padding: const EdgeInsets.only(bottom: 16),
+                  children: [
+                    _ExpandableSection(
+                      title: 'Buat Playlist',
+                      subtitle: 'Atur rentang ayat dan Qari',
+                      icon: Icons.queue_music_rounded,
+                      expanded: _showPlaylistForm,
+                      onTap: () {
+                        setState(() {
+                          _showPlaylistForm = !_showPlaylistForm;
+                        });
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Pilih Qari / Syaikh',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                             ),
-                            items:
-                                availableReciters.map((String value) {
+                          ),
+                          const SizedBox(height: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.surface,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .outlineVariant,
+                              ),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: _selectedReciter,
+                                isExpanded: true,
+                                hint: const Text(
+                                  'Belum ada Syaikh terunduh',
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                                items: availableReciters.map((value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
-                                      value,
+                                      value.replaceAll('_', ' ').toUpperCase(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(fontSize: 13),
                                     ),
                                   );
                                 }).toList(),
-                            onChanged:
-                                (newValue) =>
-                                    setState(() => _selectedReciter = newValue),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _startSurahCtrl,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: "Mulai Surah",
-                                isDense: true,
+                                onChanged: (newValue) {
+                                  setState(() => _selectedReciter = newValue);
+                                },
                               ),
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: TextField(
-                              controller: _startAyahCtrl,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: "Mulai Ayat",
-                                isDense: true,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _endSurahCtrl,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: "Sampai Surah",
-                                isDense: true,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: TextField(
-                              controller: _endAyahCtrl,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: "Sampai Ayat",
-                                isDense: true,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                          const SizedBox(height: 12),
                           Row(
                             children: [
-                              const Text(
-                                "Ulangi (Repeat):",
-                                style: TextStyle(fontSize: 13),
+                              Expanded(
+                                child: TextField(
+                                  controller: _startSurahCtrl,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Mulai Surah',
+                                    isDense: true,
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
                               ),
-                              Switch(
-                                value: _isRepeat,
-                                onChanged:
-                                    (val) => setState(() => _isRepeat = val),
-                              ),
-                              Text(
-                                _isRepeat ? "YES" : "NO",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: _isRepeat ? Colors.green : Colors.red,
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: TextField(
+                                  controller: _startAyahCtrl,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Mulai Ayat',
+                                    isDense: true,
+                                    border: OutlineInputBorder(),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.teal,
-                              foregroundColor: Colors.white,
-                            ),
-                            onPressed:
-                                _selectedReciter == null
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: _endSurahCtrl,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Sampai Surah',
+                                    isDense: true,
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: TextField(
+                                  controller: _endAyahCtrl,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Sampai Ayat',
+                                    isDense: true,
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Switch.adaptive(
+                                      value: _isRepeat,
+                                      onChanged: (value) {
+                                        setState(() => _isRepeat = value);
+                                      },
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        _isRepeat ? 'Repeat aktif' : 'Tanpa repeat',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              FilledButton.icon(
+                                onPressed: _selectedReciter == null
                                     ? null
                                     : () {
-                                      final startSurah = int.tryParse(
-                                        _startSurahCtrl.text,
-                                      );
-                                      final startAyah = int.tryParse(
-                                        _startAyahCtrl.text,
-                                      );
-                                      final endSurah = int.tryParse(
-                                        _endSurahCtrl.text,
-                                      );
-                                      final endAyah = int.tryParse(
-                                        _endAyahCtrl.text,
-                                      );
-                                      final validationMessage =
-                                          _validatePlaylistRange(
-                                            startSurah: startSurah,
-                                            startAyah: startAyah,
-                                            endSurah: endSurah,
-                                            endAyah: endAyah,
-                                          );
+                                        final startSurah = int.tryParse(
+                                          _startSurahCtrl.text,
+                                        );
+                                        final startAyah = int.tryParse(
+                                          _startAyahCtrl.text,
+                                        );
+                                        final endSurah = int.tryParse(
+                                          _endSurahCtrl.text,
+                                        );
+                                        final endAyah = int.tryParse(
+                                          _endAyahCtrl.text,
+                                        );
+                                        final validationMessage =
+                                            _validatePlaylistRange(
+                                          startSurah: startSurah,
+                                          startAyah: startAyah,
+                                          endSurah: endSurah,
+                                          endAyah: endAyah,
+                                        );
 
-                                      if (validationMessage != null) {
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            content: Text(validationMessage),
+                                        if (validationMessage != null) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(validationMessage),
+                                            ),
+                                          );
+                                          return;
+                                        }
+
+                                        ref
+                                            .read(
+                                              downloadServiceProvider.notifier,
+                                            )
+                                            .addPlaylistItem(
+                                              reciterName: _selectedReciter!,
+                                              startSurah: startSurah!,
+                                              startAyah: startAyah!,
+                                              endSurah: endSurah!,
+                                              endAyah: endAyah!,
+                                              isRepeat: _isRepeat,
+                                            );
+                                        setState(() {
+                                          _showSavedPlaylists = true;
+                                        });
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Daftar putar berhasil disimpan!',
+                                            ),
                                           ),
                                         );
-                                        return;
-                                      }
-
-                                      ref
-                                          .read(
-                                            downloadServiceProvider.notifier,
-                                          )
-                                          .addPlaylistItem(
-                                            reciterName: _selectedReciter!,
-                                            startSurah: startSurah!,
-                                            startAyah: startAyah!,
-                                            endSurah: endSurah!,
-                                            endAyah: endAyah!,
-                                            isRepeat: _isRepeat,
-                                          );
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            "Daftar putar berhasil disimpan!",
-                                          ),
-                                        ),
-                                      );
-                                    },
-                            child: const Text("Simpan"),
+                                      },
+                                icon: const Icon(Icons.save_rounded, size: 18),
+                                label: const Text('Simpan'),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              const Text(
-                "📋 Playlist Aktif Tersimpan",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              Expanded(
-                flex: 2,
-                child:
-                    downloader.playlists.isEmpty
-                        ? const Center(
-                          child: Text(
-                            "Belum ada playlist diatur.",
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
-                          ),
-                        )
-                        : ListView.builder(
-                          itemCount: downloader.playlists.length,
-                          itemBuilder: (context, index) {
-                            final p = downloader.playlists[index];
-                            return Card(
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              child: ListTile(
-                                leading: const Icon(
-                                  Icons.playlist_play,
-                                  color: Colors.teal,
-                                ),
-                                title: Text(
-                                  "Surah ${p.startSurah}:${p.startAyah} s/d Surah ${p.endSurah}:${p.endAyah}",
-                                ),
-                                subtitle: Text(
-                                  "Repeat: ${p.isRepeat ? 'YES' : 'NO'} | Qari: ${p.reciterName}",
-                                  style: const TextStyle(fontSize: 11),
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.play_arrow,
-                                        color: Colors.green,
-                                      ),
-                                      onPressed: () {
-                                        ref
-                                            .read(
-                                              playerServiceProvider.notifier,
-                                            )
-                                            .playPlaylist(p);
-                                      },
+                    ),
+                    _ExpandableSection(
+                      title: 'Playlist Tersimpan',
+                      subtitle: downloader.playlists.isEmpty
+                          ? 'Belum ada playlist'
+                          : '${downloader.playlists.length} playlist tersedia',
+                      badge: '${downloader.playlists.length}',
+                      icon: Icons.playlist_play_rounded,
+                      expanded: _showSavedPlaylists,
+                      onTap: () {
+                        setState(() {
+                          _showSavedPlaylists = !_showSavedPlaylists;
+                        });
+                      },
+                      child: downloader.playlists.isEmpty
+                          ? const _EmptySection(
+                              icon: Icons.playlist_remove_rounded,
+                              message: 'Belum ada playlist diatur.',
+                            )
+                          : Column(
+                              children: List.generate(
+                                downloader.playlists.length,
+                                (index) {
+                                  final p = downloader.playlists[index];
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: index ==
+                                              downloader.playlists.length - 1
+                                          ? 0
+                                          : 8,
                                     ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.delete_outline,
-                                        color: Colors.red,
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
                                       ),
-                                      onPressed:
-                                          () => ref
-                                              .read(
-                                                downloadServiceProvider
-                                                    .notifier,
-                                              )
-                                              .deletePlaylistItem(index),
+                                      leading: CircleAvatar(
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        child: Icon(
+                                          Icons.play_arrow_rounded,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        'Surah ${p.startSurah}:${p.startAyah} → '
+                                        '${p.endSurah}:${p.endAyah}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        '${p.reciterName.replaceAll('_', ' ')} • '
+                                        '${p.isRepeat ? 'Repeat' : 'Sekali putar'}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(fontSize: 11),
+                                      ),
+                                      trailing: PopupMenuButton<String>(
+                                        onSelected: (value) {
+                                          if (value == 'play') {
+                                            ref
+                                                .read(
+                                                  playerServiceProvider.notifier,
+                                                )
+                                                .playPlaylist(p);
+                                          } else if (value == 'delete') {
+                                            ref
+                                                .read(
+                                                  downloadServiceProvider
+                                                      .notifier,
+                                                )
+                                                .deletePlaylistItem(index);
+                                          }
+                                        },
+                                        itemBuilder: (context) => const [
+                                          PopupMenuItem(
+                                            value: 'play',
+                                            child: ListTile(
+                                              contentPadding: EdgeInsets.zero,
+                                              leading: Icon(
+                                                Icons.play_arrow_rounded,
+                                              ),
+                                              title: Text('Putar'),
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            value: 'delete',
+                                            child: ListTile(
+                                              contentPadding: EdgeInsets.zero,
+                                              leading: Icon(
+                                                Icons.delete_outline_rounded,
+                                                color: Colors.redAccent,
+                                              ),
+                                              title: Text('Hapus'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
-              ),
-              const Divider(),
-              const Text(
-                "📁 Daftar Qari / Syaikh Terunduh (Lokal)",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              Expanded(
-                flex: 1,
-                child:
-                    availableReciters.isEmpty
-                        ? const Center(
-                          child: Text(
-                            "Kosong. Silakan tambah Syaikh baru.",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        )
-                        : ListView.builder(
-                          itemCount: availableReciters.length,
-                          itemBuilder: (context, index) {
-                            final folderSyaikh = availableReciters.elementAt(
-                              index,
-                            );
-                            final jumlahAyat =
-                                downloader.localAudioFiles
-                                    .where(
-                                      (file) =>
-                                          file.startsWith('$folderSyaikh/'),
-                                    )
-                                    .length;
+                            ),
+                    ),
+                    _ExpandableSection(
+                      title: 'Qari Terunduh',
+                      subtitle: availableReciters.isEmpty
+                          ? 'Belum ada Qari lokal'
+                          : '${availableReciters.length} Qari tersedia',
+                      badge: '${availableReciters.length}',
+                      icon: Icons.library_music_rounded,
+                      expanded: _showDownloadedReciters,
+                      onTap: () {
+                        setState(() {
+                          _showDownloadedReciters =
+                              !_showDownloadedReciters;
+                        });
+                      },
+                      child: Column(
+                        children: [
+                          if (availableReciters.isEmpty)
+                            const _EmptySection(
+                              icon: Icons.cloud_download_outlined,
+                              message: 'Belum ada Qari yang diunduh.',
+                            )
+                          else
+                            ...availableReciters.map((folderSyaikh) {
+                              final jumlahAyat = downloader.localAudioFiles
+                                  .where(
+                                    (file) =>
+                                        file.startsWith('$folderSyaikh/'),
+                                  )
+                                  .length;
+                              final selected =
+                                  _selectedReciter == folderSyaikh;
 
-                            return Card(
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              child: ListTile(
-                                dense: true,
-                                leading: const Icon(
-                                  Icons.folder,
-                                  size: 24,
-                                  color: Colors.amber,
-                                ),
-                                title: Text(
-                                  folderSyaikh
-                                      .replaceAll('_', ' ')
-                                      .toUpperCase(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: ListTile(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                ),
-                                subtitle: Text(
-                                  "$jumlahAyat berkas audio ayat tersimpan",
-                                  style: const TextStyle(fontSize: 11),
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.check_circle_outline,
-                                        color: Colors.teal,
-                                      ),
-                                      tooltip: "Pilih Qari ini",
-                                      onPressed: () {
-                                        setState(
-                                          () => _selectedReciter = folderSyaikh,
-                                        );
-                                      },
+                                  tileColor: selected
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer
+                                          .withValues(alpha: .45)
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .surfaceContainerHighest
+                                          .withValues(alpha: .45),
+                                  leading: Icon(
+                                    selected
+                                        ? Icons.check_circle_rounded
+                                        : Icons.folder_rounded,
+                                    color: selected
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Colors.amber.shade700,
+                                  ),
+                                  title: Text(
+                                    folderSyaikh
+                                        .replaceAll('_', ' ')
+                                        .toUpperCase(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
                                     ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.folder_delete,
-                                        color: Colors.redAccent,
-                                      ),
-                                      tooltip: "Hapus Syaikh ini dari device",
-                                      onPressed: () {
+                                  ),
+                                  subtitle: Text(
+                                    '$jumlahAyat berkas audio tersimpan',
+                                    style: const TextStyle(fontSize: 11),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedReciter = folderSyaikh;
+                                    });
+                                  },
+                                  trailing: PopupMenuButton<String>(
+                                    onSelected: (value) {
+                                      if (value == 'select') {
+                                        setState(() {
+                                          _selectedReciter = folderSyaikh;
+                                        });
+                                      } else if (value == 'delete') {
                                         showDialog(
                                           context: context,
-                                          builder:
-                                              (context) => AlertDialog(
-                                                title: const Text(
-                                                  "Hapus Qari?",
-                                                ),
-                                                content: Text(
-                                                  "Apakah Anda yakin ingin menghapus seluruh file audio dari Syaikh $folderSyaikh?",
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed:
-                                                        () => Navigator.pop(
-                                                          context,
-                                                        ),
-                                                    child: const Text("Batal"),
-                                                  ),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      ref
-                                                          .read(
-                                                            downloadServiceProvider
-                                                                .notifier,
-                                                          )
-                                                          .deleteReciterFolder(
-                                                            folderSyaikh,
-                                                          );
-                                                      if (_selectedReciter ==
-                                                          folderSyaikh) {
-                                                        setState(
-                                                          () =>
-                                                              _selectedReciter =
-                                                                  null,
-                                                        );
-                                                      }
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text(
-                                                      "Hapus",
-                                                      style: TextStyle(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                          builder: (context) => AlertDialog(
+                                            title: const Text('Hapus Qari?'),
+                                            content: Text(
+                                              'Hapus seluruh file audio dari '
+                                              '$folderSyaikh?',
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: const Text('Batal'),
                                               ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  ref
+                                                      .read(
+                                                        downloadServiceProvider
+                                                            .notifier,
+                                                      )
+                                                      .deleteReciterFolder(
+                                                        folderSyaikh,
+                                                      );
+                                                  if (_selectedReciter ==
+                                                      folderSyaikh) {
+                                                    setState(() {
+                                                      _selectedReciter = null;
+                                                    });
+                                                  }
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Hapus',
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         );
-                                      },
-                                    ),
-                                  ],
+                                      }
+                                    },
+                                    itemBuilder: (context) => const [
+                                      PopupMenuItem(
+                                        value: 'select',
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          leading: Icon(
+                                            Icons.check_circle_outline_rounded,
+                                          ),
+                                          title: Text('Pilih Qari'),
+                                        ),
+                                      ),
+                                      PopupMenuItem(
+                                        value: 'delete',
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          leading: Icon(
+                                            Icons.delete_outline_rounded,
+                                            color: Colors.redAccent,
+                                          ),
+                                          title: Text('Hapus dari device'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                              );
+                            }),
+                          const SizedBox(height: 4),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton.icon(
+                              icon: const Icon(Icons.person_add_alt_1_rounded),
+                              label: const Text(
+                                'Tambah Qari / Syaikh Lain',
                               ),
-                            );
-                          },
-                        ),
-              ),
-
-              if (player.title.isNotEmpty)
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  margin: const EdgeInsets.only(bottom: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.teal.shade800,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.music_note, color: Colors.white),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Sedang Memutar: ${player.title}",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
+                              onPressed: downloader.isDownloading
+                                  ? null
+                                  : () => ref
+                                      .read(
+                                        downloadServiceProvider.notifier,
+                                      )
+                                      .toggleDownloaderMode(true),
                             ),
-                            Text(
-                              "Qari: ${player.subtitle}",
-                              style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Shortcut kecil ke mode Murottal landscape.
-                      if (player.isPlaying)
-                        IconButton(
-                          icon: const Icon(
-                            Icons.fullscreen_rounded,
-                            color: Colors.cyanAccent,
                           ),
-                          tooltip: 'Buka Mode Murottal',
-                          onPressed: _offerMurottalMode,
-                        ),
-
-                      // Tombol Pause / Play
-                      IconButton(
-                        icon: Icon(
-                          player.isPlaying ? Icons.pause : Icons.play_arrow,
-                          color: Colors.white,
-                        ),
-                        onPressed:
-                            () =>
-                                ref
-                                    .read(playerServiceProvider.notifier)
-                                    .togglePausePlay(),
+                        ],
                       ),
-                      // Tombol Stop
-                      IconButton(
-                        icon: const Icon(Icons.stop, color: Colors.white),
-                        onPressed:
-                            () =>
-                                ref.read(playerServiceProvider.notifier).stop(),
-                      ),
-                    ],
-                  ),
-                ),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal.shade700,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.person_add),
-                  label: const Text('Tambah Qari / Syaikh Lain (Online)'),
-                  onPressed:
-                      downloader.isDownloading
-                          ? null
-                          : () => ref
-                              .read(downloadServiceProvider.notifier)
-                              .toggleDownloaderMode(true),
+                    ),
+                  ],
                 ),
               ),
-            ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+class _ExpandableSection extends StatelessWidget {
+  const _ExpandableSection({
+    required this.title,
+    required this.icon,
+    required this.expanded,
+    required this.onTap,
+    required this.child,
+    this.subtitle,
+    this.badge,
+  });
+
+  final String title;
+  final String? subtitle;
+  final String? badge;
+  final IconData icon;
+  final bool expanded;
+  final VoidCallback onTap;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      elevation: expanded ? 1 : 0,
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 12,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      color: scheme.primaryContainer.withValues(alpha: .65),
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                    child: Icon(
+                      icon,
+                      size: 20,
+                      color: scheme.onPrimaryContainer,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
+                        ),
+                        if (subtitle != null) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            subtitle!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  if (badge != null) ...[
+                    Container(
+                      constraints: const BoxConstraints(minWidth: 28),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: scheme.secondaryContainer,
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Text(
+                        badge!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: scheme.onSecondaryContainer,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  AnimatedRotation(
+                    turns: expanded ? .5 : 0,
+                    duration: const Duration(milliseconds: 180),
+                    child: const Icon(Icons.keyboard_arrow_down_rounded),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            alignment: Alignment.topCenter,
+            child: expanded
+                ? Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(14, 2, 14, 14),
+                    child: child,
+                  )
+                : const SizedBox(width: double.infinity),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmptySection extends StatelessWidget {
+  const _EmptySection({
+    required this.icon,
+    required this.message,
+  });
+
+  final IconData icon;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            size: 34,
+            color: scheme.outline,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: scheme.onSurfaceVariant,
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
     );
   }

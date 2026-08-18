@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,20 +18,46 @@ final quranRepositoryProvider = Provider<QuranRepository>((ref) {
 });
 
 final currentPlayerAyahProvider = FutureProvider<Ayah?>((ref) async {
-  final player = ref.watch(playerServiceProvider);
+  final currentSurah = ref.watch(
+    playerServiceProvider.select((player) => player.currentSurah),
+  );
+  final currentAyah = ref.watch(
+    playerServiceProvider.select((player) => player.currentAyah),
+  );
 
-  if (player.currentSurah <= 0 || player.currentAyah <= 0) {
+  if (currentSurah <= 0 || currentAyah <= 0) {
     return null;
   }
 
   return ref.read(quranRepositoryProvider).getAyah(
-        surahId: player.currentSurah,
-        ayahNumber: player.currentAyah,
+        surahId: currentSurah,
+        ayahNumber: currentAyah,
       );
 });
 
 class MurottalPlayerScreen extends ConsumerStatefulWidget {
   const MurottalPlayerScreen({super.key});
+
+  static Future<T?> open<T>(BuildContext context) async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    await SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersiveSticky,
+    );
+
+    if (!context.mounted) return null;
+
+    return Navigator.of(context).push<T>(
+      PageRouteBuilder<T>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        pageBuilder: (_, __, ___) => const MurottalPlayerScreen(),
+      ),
+    );
+  }
 
   @override
   ConsumerState<MurottalPlayerScreen> createState() =>
@@ -43,6 +69,7 @@ class _MurottalPlayerScreenState
     with TickerProviderStateMixin {
   late final AnimationController _beatController;
   late final AnimationController _phaseController;
+  bool? _lastAnimationPlayingState;
 
   bool _showArabic = true;
   bool _showTransliteration = true;
@@ -57,18 +84,18 @@ class _MurottalPlayerScreenState
       'asset': null,
     },
     {
-      'title': 'Laut Dalam',
-      'subtitle': 'assets/video/video1.mp4',
+      'title': 'Dunia Bawah Laut',
+      'subtitle': 'Keindahan bawah laut yang menenangkan',
       'asset': 'assets/video/video1.mp4',
     },
     {
       'title': 'Sungai',
-      'subtitle': 'assets/video/video2.mp4',
+      'subtitle': 'Tenang, asri dan menenangkan',
       'asset': 'assets/video/video2.mp4',
     },
     {
-      'title': 'Laut',
-      'subtitle': 'assets/video/video3.mp4',
+      'title': 'Deburan Ombak',
+      'subtitle': 'Damai dan menenangkan, cocok untuk fokus',
       'asset': 'assets/video/video3.mp4',
     },
   ];
@@ -77,28 +104,98 @@ class _MurottalPlayerScreenState
   String? _backgroundVideoAsset;
   bool _useVideoBackground = false;
   bool _isChangingBackground = false;
+  bool _isRestartingBackgroundLoop = false;
+
+  Timer? _controlsTimer;
+  bool _showControls = true;
+  bool _screenReady = false;
+
+  static const Duration _controlsVisibleDuration = Duration(seconds: 3);
 
   @override
   void initState() {
     super.initState();
 
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
     _beatController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 780),
-    )..repeat(reverse: true);
+    );
 
     _phaseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1800),
-    )..repeat();
+    );
 
-    _restoreSavedBackground();
+    _prepareScreen();
+  }
+
+
+  void _syncBeatAnimations(bool isPlaying) {
+    if (_lastAnimationPlayingState == isPlaying) return;
+    _lastAnimationPlayingState = isPlaying;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      if (isPlaying) {
+        if (!_beatController.isAnimating) {
+          _beatController.repeat(reverse: true);
+        }
+        if (!_phaseController.isAnimating) {
+          _phaseController.repeat();
+        }
+      } else {
+        _beatController.stop();
+        _phaseController.stop();
+      }
+    });
+  }
+
+  Future<void> _prepareScreen() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    await SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersiveSticky,
+    );
+
+    await _restoreSavedBackground();
+
+    if (!mounted) return;
+
+    setState(() {
+      _screenReady = true;
+      _showControls = true;
+    });
+
+    _restartControlsTimer();
+  }
+
+  void _restartControlsTimer() {
+    _controlsTimer?.cancel();
+
+    if (!_showControls && mounted) {
+      setState(() => _showControls = true);
+    }
+
+    _controlsTimer = Timer(_controlsVisibleDuration, () {
+      if (!mounted) return;
+      setState(() => _showControls = false);
+    });
+  }
+
+  void _toggleControls() {
+    if (!_screenReady) return;
+
+    if (_showControls) {
+      _controlsTimer?.cancel();
+      setState(() => _showControls = false);
+    } else {
+      setState(() => _showControls = true);
+      _restartControlsTimer();
+    }
   }
 
   Future<void> _restoreSavedBackground() async {
@@ -135,7 +232,12 @@ class _MurottalPlayerScreenState
     VideoPlayerController? newController;
 
     try {
-      newController = VideoPlayerController.asset(assetPath);
+      newController = VideoPlayerController.asset(
+        assetPath,
+        videoPlayerOptions: VideoPlayerOptions(
+          mixWithOthers: true,
+        ),
+      );
 
       await newController.initialize();
       await newController.setLooping(true);
@@ -143,26 +245,44 @@ class _MurottalPlayerScreenState
       // Background video SELALU mute agar tidak bercampur
       // dengan audio murottal.
       await newController.setVolume(0);
-      await newController.play();
 
       if (!mounted) {
         await newController.dispose();
         return;
       }
 
+      // Pasang controller ke widget tree terlebih dahulu. Pada sebagian
+      // perangkat Android, memanggil play() sebelum VideoPlayer terpasang
+      // dapat membuat playback pertama berhenti di akhir dan looping baru
+      // normal setelah terjadi rebuild berikutnya.
       setState(() {
         _backgroundVideoAsset = assetPath;
         _backgroundVideoController = newController;
         _useVideoBackground = true;
       });
 
+      newController.addListener(_backgroundVideoLoopGuard);
+
+      // Tunggu sampai texture VideoPlayer benar-benar terpasang ke frame.
+      await WidgetsBinding.instance.endOfFrame;
+      if (!mounted || _backgroundVideoController != newController) {
+        newController.removeListener(_backgroundVideoLoopGuard);
+        await newController.dispose();
+        return;
+      }
+
+      await newController.seekTo(Duration.zero);
+      await newController.play();
+
       if (persist) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString(_backgroundPrefKey, assetPath);
       }
 
+      oldController?.removeListener(_backgroundVideoLoopGuard);
       await oldController?.dispose();
     } catch (e) {
+      newController?.removeListener(_backgroundVideoLoopGuard);
       await newController?.dispose();
 
       if (mounted) {
@@ -178,6 +298,54 @@ class _MurottalPlayerScreenState
       if (mounted) {
         setState(() => _isChangingBackground = false);
       }
+    }
+  }
+
+
+  void _backgroundVideoLoopGuard() {
+    final controller = _backgroundVideoController;
+    if (controller == null ||
+        !controller.value.isInitialized ||
+        _isChangingBackground ||
+        _isRestartingBackgroundLoop) {
+      return;
+    }
+
+    final value = controller.value;
+    final duration = value.duration;
+    if (duration <= Duration.zero) return;
+
+    // setLooping(true) tetap menjadi mekanisme utama. Guard ini hanya
+    // menangani kasus Android tertentu ketika playback pertama berhenti
+    // tepat di ujung video walaupun looping sudah aktif.
+    final remaining = duration - value.position;
+    final reachedEnd =
+        remaining <= const Duration(milliseconds: 120) && !value.isPlaying;
+
+    if (reachedEnd) {
+      unawaited(_restartBackgroundVideoLoop(controller));
+    }
+  }
+
+  Future<void> _restartBackgroundVideoLoop(
+    VideoPlayerController controller,
+  ) async {
+    if (_isRestartingBackgroundLoop ||
+        !mounted ||
+        _backgroundVideoController != controller) {
+      return;
+    }
+
+    _isRestartingBackgroundLoop = true;
+    try {
+      await controller.seekTo(Duration.zero);
+      if (mounted && _backgroundVideoController == controller) {
+        await controller.play();
+      }
+    } catch (_) {
+      // Biarkan video_player mencoba pulih pada update berikutnya.
+    } finally {
+      _isRestartingBackgroundLoop = false;
     }
   }
 
@@ -203,6 +371,7 @@ class _MurottalPlayerScreenState
       await prefs.remove(_backgroundPrefKey);
     }
 
+    oldController?.removeListener(_backgroundVideoLoopGuard);
     await oldController?.dispose();
 
     if (mounted) {
@@ -251,8 +420,10 @@ class _MurottalPlayerScreenState
 
   @override
   void dispose() {
+    _controlsTimer?.cancel();
     _beatController.dispose();
     _phaseController.dispose();
+    _backgroundVideoController?.removeListener(_backgroundVideoLoopGuard);
     _backgroundVideoController?.dispose();
 
     // Screen lain boleh kembali memakai orientasi normal.
@@ -349,7 +520,16 @@ class _MurottalPlayerScreenState
   Widget build(BuildContext context) {
     final player = ref.watch(playerServiceProvider);
     final ayahAsync = ref.watch(currentPlayerAyahProvider);
-    final size = MediaQuery.sizeOf(context);
+
+    // Beat/equalizer hanya berjalan ketika murottal benar-benar playing.
+    _syncBeatAnimations(player.isPlaying);
+
+    if (!_screenReady) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF020817),
+        body: SizedBox.expand(),
+      );
+    }
 
     final durationMs = player.duration.inMilliseconds;
     final positionMs = player.position.inMilliseconds;
@@ -359,68 +539,143 @@ class _MurottalPlayerScreenState
 
     return Scaffold(
       backgroundColor: const Color(0xFF020817),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: _MurottalBackground(
-              videoController:
-                  _useVideoBackground ? _backgroundVideoController : null,
-            ),
-          ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 14, 24, 18),
-              child: Column(
-                children: [
-                  _TopBar(
-                    player: player,
-                    onClose: () => Navigator.of(context).maybePop(),
-                    onTextOptions: _openTextOptions,
-                    onBackgroundOptions: _openBackgroundSelector,
+      body: Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerDown: (_) {
+          if (_showControls) {
+            _restartControlsTimer();
+          }
+        },
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: _toggleControls,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: _MurottalBackground(
+                  videoController:
+                      _useVideoBackground ? _backgroundVideoController : null,
+                ),
+              ),
+
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 8, 18, 10),
+                  child: ayahAsync.when(
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (error, _) => Center(
+                      child: Text(
+                        'Gagal membaca data ayat:\\n$error',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    data: (ayah) => _buildMainContent(
+                      player: player,
+                      ayah: ayah,
+                      controlsVisible: _showControls,
+                    ),
                   ),
-                  const SizedBox(height: 4),
-                  Expanded(
-                    child: ayahAsync.when(
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      error: (error, _) => Center(
-                        child: Text(
-                          'Gagal membaca data ayat:\n$error',
-                          textAlign: TextAlign.center,
+                ),
+              ),
+
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: IgnorePointer(
+                  ignoring: !_showControls,
+                  child: AnimatedSlide(
+                    duration: const Duration(milliseconds: 260),
+                    curve: Curves.easeOutCubic,
+                    offset: _showControls
+                        ? Offset.zero
+                        : const Offset(0, -1.15),
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 220),
+                      opacity: _showControls ? 1 : 0,
+                      child: SafeArea(
+                        bottom: false,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                          child: _TopBar(
+                            player: player,
+                            onClose: () => Navigator.of(context).maybePop(),
+                            onTextOptions: () {
+                              _controlsTimer?.cancel();
+                              _openTextOptions();
+                            },
+                            onBackgroundOptions: () {
+                              _controlsTimer?.cancel();
+                              _openBackgroundSelector();
+                            },
+                          ),
                         ),
-                      ),
-                      data: (ayah) => _buildMainContent(
-                        player: player,
-                        ayah: ayah,
                       ),
                     ),
                   ),
-                  _PlayerBar(
-                    player: player,
-                    progress: progress,
-                    formatDuration: _formatDuration,
-                    onSeek: (value) {
-                      if (player.duration <= Duration.zero) return;
-                      final target = Duration(
-                        milliseconds:
-                            (player.duration.inMilliseconds * value).round(),
-                      );
-                      ref.read(playerServiceProvider.notifier).seek(target);
-                    },
-                    onPrevious: () =>
-                        ref.read(playerServiceProvider.notifier).previous(),
-                    onPlayPause: () =>
-                        ref.read(playerServiceProvider.notifier).togglePausePlay(),
-                    onNext: () =>
-                        ref.read(playerServiceProvider.notifier).next(),
-                    onTextOptions: _openTextOptions,
-                  ),
-                ],
+                ),
               ),
-            ),
+
+              Positioned(
+                left: 18,
+                right: 18,
+                bottom: 10,
+                child: IgnorePointer(
+                  ignoring: !_showControls,
+                  child: AnimatedSlide(
+                    duration: const Duration(milliseconds: 260),
+                    curve: Curves.easeOutCubic,
+                    offset: _showControls
+                        ? Offset.zero
+                        : const Offset(0, 1.25),
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 220),
+                      opacity: _showControls ? 1 : 0,
+                      child: SafeArea(
+                        top: false,
+                        child: _PlayerBar(
+                          player: player,
+                          progress: progress,
+                          formatDuration: _formatDuration,
+                          onSeek: (value) {
+                            _restartControlsTimer();
+                            if (player.duration <= Duration.zero) return;
+                            final target = Duration(
+                              milliseconds:
+                                  (player.duration.inMilliseconds * value)
+                                      .round(),
+                            );
+                            ref.read(playerServiceProvider.notifier).seek(target);
+                          },
+                          onPrevious: () {
+                            _restartControlsTimer();
+                            ref.read(playerServiceProvider.notifier).previous();
+                          },
+                          onPlayPause: () {
+                            _restartControlsTimer();
+                            ref
+                                .read(playerServiceProvider.notifier)
+                                .togglePausePlay();
+                          },
+                          onNext: () {
+                            _restartControlsTimer();
+                            ref.read(playerServiceProvider.notifier).next();
+                          },
+                          onTextOptions: () {
+                            _controlsTimer?.cancel();
+                            _openTextOptions();
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -428,6 +683,7 @@ class _MurottalPlayerScreenState
   Widget _buildMainContent({
     required PlayerUIState player,
     required Ayah? ayah,
+    required bool controlsVisible,
   }) {
     final surahName = ayah?.surahName.trim().isNotEmpty == true
         ? ayah!.surahName
@@ -452,15 +708,24 @@ class _MurottalPlayerScreenState
 
         return Row(
           children: [
-            SizedBox(
-              width: compact ? 58 : 74,
-              child: Center(
-                child: _SideButton(
-                  icon: Icons.chevron_left_rounded,
-                  tooltip: 'Ayat sebelumnya',
-                  size: compact ? 50 : 58,
-                  onTap: () =>
-                      ref.read(playerServiceProvider.notifier).previous(),
+            IgnorePointer(
+              ignoring: !controlsVisible,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 220),
+                opacity: controlsVisible ? 1 : 0,
+                child: SizedBox(
+                  width: compact ? 58 : 74,
+                  child: Center(
+                    child: _SideButton(
+                      icon: Icons.chevron_left_rounded,
+                      tooltip: 'Ayat sebelumnya',
+                      size: compact ? 50 : 58,
+                      onTap: () {
+                        _restartControlsTimer();
+                        ref.read(playerServiceProvider.notifier).previous();
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -517,7 +782,9 @@ class _MurottalPlayerScreenState
                               beat: player.isPlaying
                                   ? _beatController.value
                                   : .12,
-                              phase: _phaseController.value,
+                              phase: player.isPlaying
+                                  ? _phaseController.value
+                                  : 0,
                             ),
                           );
                         },
@@ -638,15 +905,24 @@ class _MurottalPlayerScreenState
                 ),
               ),
             ),
-            SizedBox(
-              width: compact ? 58 : 74,
-              child: Center(
-                child: _SideButton(
-                  icon: Icons.chevron_right_rounded,
-                  tooltip: 'Ayat berikutnya',
-                  size: compact ? 50 : 58,
-                  onTap: () =>
-                      ref.read(playerServiceProvider.notifier).next(),
+            IgnorePointer(
+              ignoring: !controlsVisible,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 220),
+                opacity: controlsVisible ? 1 : 0,
+                child: SizedBox(
+                  width: compact ? 58 : 74,
+                  child: Center(
+                    child: _SideButton(
+                      icon: Icons.chevron_right_rounded,
+                      tooltip: 'Ayat berikutnya',
+                      size: compact ? 50 : 58,
+                      onTap: () {
+                        _restartControlsTimer();
+                        ref.read(playerServiceProvider.notifier).next();
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -1229,7 +1505,12 @@ class _VideoThumbnailState extends State<_VideoThumbnail> {
   }
 
   Future<void> _loadPreview() async {
-    final controller = VideoPlayerController.asset(widget.assetPath);
+    final controller = VideoPlayerController.asset(
+      widget.assetPath,
+      videoPlayerOptions: VideoPlayerOptions(
+        mixWithOthers: true,
+      ),
+    );
 
     try {
       await controller.initialize();

@@ -20,6 +20,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   ];
 
   final AudioPlayer _player = AudioPlayer();
+  bool _isChangingTrack = false;
 
   PlaylistItem? activePlaylist;
   int currentSurah = 0;
@@ -32,7 +33,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     _player.playbackEventStream.map(_transformEvent).listen(_setPlaybackState);
     _player.processingStateStream.listen((state) {
       if (state == ProcessingState.completed) {
-        unawaited(skipToNext());
+        unawaited(_runTrackChange(_skipToNextUnlocked));
       }
     });
   }
@@ -58,10 +59,23 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Future<void> startPlaylist(PlaylistItem playlist) async {
-    activePlaylist = playlist;
-    currentSurah = playlist.startSurah;
-    currentAyah = playlist.startAyah;
-    await _playCurrentFile();
+    await _runTrackChange(() async {
+      activePlaylist = playlist;
+      currentSurah = playlist.startSurah;
+      currentAyah = playlist.startAyah;
+      await _playCurrentFile();
+    });
+  }
+
+  Future<void> _runTrackChange(Future<void> Function() action) async {
+    if (_isChangingTrack) return;
+
+    _isChangingTrack = true;
+    try {
+      await action();
+    } finally {
+      _isChangingTrack = false;
+    }
   }
 
   static String buildAudioFileName(int surah, int ayah) {
@@ -100,7 +114,13 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
           ),
         );
 
-        await _player.setAudioSource(AudioSource.file(file.path));
+        // File murottal adalah file lokal. setFilePath lebih langsung dan
+        // menghindari pembuatan AudioSource baru yang tidak diperlukan.
+        await _player.setFilePath(file.path);
+
+        // Volume video background diatur 0 secara terpisah. Pastikan volume
+        // player murottal sendiri selalu penuh.
+        await _player.setVolume(1.0);
         await _player.play();
       } else {
         _setPlaybackState(
@@ -109,7 +129,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
             errorMessage: 'Berkas $fileName tidak ditemukan, melewati ayat ini...',
           ),
         );
-        await skipToNext();
+        await _skipToNextUnlocked();
       }
     } on PlayerException catch (e) {
       debugPrint('PlayerException: ${e.message}');
@@ -169,8 +189,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     return (surah: 1, ayah: 1);
   }
 
-  @override
-  Future<void> skipToNext() async {
+  Future<void> _skipToNextUnlocked() async {
     if (activePlaylist == null) return;
 
     final next = _nextAyahPosition(currentSurah, currentAyah);
@@ -191,8 +210,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await _playCurrentFile();
   }
 
-  @override
-  Future<void> skipToPrevious() async {
+  Future<void> _skipToPreviousUnlocked() async {
     if (activePlaylist == null) return;
 
     final previous = _previousAyahPosition(currentSurah, currentAyah);
@@ -207,6 +225,12 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
     await _playCurrentFile();
   }
+
+  @override
+  Future<void> skipToNext() => _runTrackChange(_skipToNextUnlocked);
+
+  @override
+  Future<void> skipToPrevious() => _runTrackChange(_skipToPreviousUnlocked);
 
   PlaybackState _transformEvent(PlaybackEvent event) {
     return PlaybackState(
@@ -300,6 +324,7 @@ class PlayerNotifier extends StateNotifier<PlayerUIState> {
   StreamSubscription<MediaItem?>? _mediaItemSubscription;
   StreamSubscription<Duration>? _positionSubscription;
   StreamSubscription<Duration?>? _durationSubscription;
+  Duration _lastPublishedPosition = Duration.zero;
 
   PlayerNotifier() : super(const PlayerUIState()) {
     unawaited(_initAudioService());
@@ -332,6 +357,8 @@ class PlayerNotifier extends StateNotifier<PlayerUIState> {
 
         final extras = item.extras ?? const <String, dynamic>{};
 
+        _lastPublishedPosition = Duration.zero;
+
         state = state.copyWith(
           title: item.title,
           subtitle: item.artist ?? '',
@@ -344,6 +371,15 @@ class PlayerNotifier extends StateNotifier<PlayerUIState> {
       });
 
       _positionSubscription = _handler!.positionStream.listen((position) {
+        // Position stream dapat sangat sering mengirim event. Batasi update UI
+        // supaya seluruh screen tidak rebuild puluhan kali per detik.
+        final delta = (position - _lastPublishedPosition).abs();
+        if (position != Duration.zero &&
+            delta < const Duration(milliseconds: 200)) {
+          return;
+        }
+
+        _lastPublishedPosition = position;
         state = state.copyWith(position: position);
       });
 

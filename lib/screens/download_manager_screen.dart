@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_app/providers/download_provider.dart';
 import 'package:quran_app/providers/player_provider.dart';
+import 'package:quran_app/screens/murottal_player_screen.dart';
 
 class DownloadManagerScreen extends ConsumerStatefulWidget {
   const DownloadManagerScreen({super.key});
@@ -183,6 +184,42 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
     }
 
     return null;
+  }
+
+
+  Future<void> _offerMurottalMode() async {
+    final player = ref.read(playerServiceProvider);
+
+    if (!player.isPlaying) return;
+
+    final switchMode = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Mode Murottal'),
+        content: const Text(
+          'Audio sedang diputar. Beralih ke tampilan Murottal Player landscape?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Tetap di sini'),
+          ),
+          FilledButton.icon(
+            onPressed: () => Navigator.pop(context, true),
+            icon: const Icon(Icons.fullscreen_rounded),
+            label: const Text('Buka Player'),
+          ),
+        ],
+      ),
+    );
+
+    if (switchMode != true || !mounted) return;
+
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const MurottalPlayerScreen(),
+      ),
+    );
   }
 
   @override
@@ -849,6 +886,17 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                           ],
                         ),
                       ),
+                      // Shortcut kecil ke mode Murottal landscape.
+                      if (player.isPlaying)
+                        IconButton(
+                          icon: const Icon(
+                            Icons.fullscreen_rounded,
+                            color: Colors.cyanAccent,
+                          ),
+                          tooltip: 'Buka Mode Murottal',
+                          onPressed: _offerMurottalMode,
+                        ),
+
                       // Tombol Pause / Play
                       IconButton(
                         icon: Icon(

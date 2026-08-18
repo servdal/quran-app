@@ -1,8 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import '../database/db_helper.dart';
-import '../../models/page_index_model.dart';
-import '../models/grammar_model.dart';
+import 'package:quran_app/database/db_helper.dart';
+import 'package:quran_app/models/page_index_model.dart';
+import 'package:quran_app/models/grammar_model.dart';
+import 'package:quran_app/models/ayah_model.dart';
 
 class QuranRepository {
   Future<String> _getLanguage() async {
@@ -36,7 +37,6 @@ class QuranRepository {
     ''');
   }
 
-  /// Daftar halaman (page index)
   Future<List<PageIndexInfo>> getAllPages() async {
     final db = await _db;
     final rows = await db.rawQuery('''
@@ -55,7 +55,6 @@ class QuranRepository {
     }).toList();
   }
 
-  /// Ayat per surah
   Future<List<Map<String, dynamic>>> getAyahRowsBySurah(int surahId) async {
     final db = await _db;
     final lang = await _getLanguage();
@@ -90,7 +89,6 @@ class QuranRepository {
     );
   }
 
-  /// Ayat per halaman
   Future<List<Map<String, dynamic>>> getAyahRowsByPage(int pageNumber) async {
     final db = await _db;
     final lang = await _getLanguage();
@@ -125,7 +123,6 @@ class QuranRepository {
     );
   }
 
-  /// Search ayat (sederhana, bisa di-upgrade ke FTS)
   Future<List<Map<String, dynamic>>> searchAyah(String query) async {
     final db = await _db;
     final lang = await _getLanguage();
@@ -205,7 +202,71 @@ class QuranRepository {
     };
   }
 
-  /// 🔹 Grammar per ayat (master_edited)
+  Future<Map<String, dynamic>?> getAyahRow({
+    required int surahId,
+    required int ayahNumber,
+  }) async {
+    final db = await _db;
+    final lang = await _getLanguage();
+
+    final translationCol =
+        lang == 'id'
+            ? 'translation_aya_text_kemenag'
+            : 'translation_aya_text';
+
+    final translitCol =
+        lang == 'id'
+            ? 'transliteration_kemenag'
+            : 'transliteration';
+
+    final tafsirCol =
+        lang == 'id'
+            ? 'tafsir_jalalayn'
+            : 'tafsir_jalalayn_en';
+
+    final rows = await db.rawQuery(
+      '''
+      SELECT
+        aya_id,
+        aya_number,
+        sura_id,
+        page_number,
+        juz_id,
+        aya_text,
+        $translationCol AS translation,
+        $translitCol AS transliteration,
+        transliteration_kemenag,
+        $tafsirCol AS tafsir,
+        tajweed_text,
+        aya_text_kemenag,
+        arabic_words,
+        sura_name
+      FROM merged_aya
+      WHERE sura_id = ?
+        AND aya_number = ?
+      LIMIT 1
+      ''',
+      [surahId, ayahNumber],
+    );
+
+    if (rows.isEmpty) return null;
+
+    return rows.first;
+  }
+  Future<Ayah?> getAyah({
+    required int surahId,
+    required int ayahNumber,
+  }) async {
+    final row = await getAyahRow(
+      surahId: surahId,
+      ayahNumber: ayahNumber,
+    );
+
+    if (row == null) return null;
+
+    return Ayah.fromDb(row);
+  }
+
   Future<List<Grammar>> getGrammarByAyah({
     required int surahId,
     required int ayahNumber,

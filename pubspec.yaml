@@ -3,7 +3,7 @@ description: "Digital Qur’an & Islamic Companion"
 
 publish_to: 'none'
 
-version: 3.5.6+69
+version: 3.5.7+70
 
 environment:
   sdk: ^3.7.2
@@ -52,6 +52,7 @@ dependencies:
   pdfrx: ^2.4.7
   record: ^7.1.1
   sherpa_onnx: ^1.13.4
+  video_player: ^2.14.0
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,9 @@ flutter:
     - assets/database/quran.db
     - assets/lottie/
     - assets/pdf/
+    - assets/video/video1.mp4
+    - assets/video/video2.mp4
+    - assets/video/video3.mp4
   fonts:
     - family: Poppins
       fonts:

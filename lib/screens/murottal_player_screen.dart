@@ -104,7 +104,6 @@ class _MurottalPlayerScreenState
   String? _backgroundVideoAsset;
   bool _useVideoBackground = false;
   bool _isChangingBackground = false;
-  bool _isRestartingBackgroundLoop = false;
 
   Timer? _controlsTimer;
   bool _showControls = true;
@@ -152,6 +151,10 @@ class _MurottalPlayerScreenState
   }
 
   Future<void> _prepareScreen() async {
+    // Stabilkan orientasi + immersive mode sebelum membuat Texture/Surface
+    // VideoPlayer. Di Android emulator/perangkat tertentu, membuat decoder
+    // saat viewport masih berubah dapat membuat playback pertama tidak loop
+    // sampai terjadi rebuild berikutnya.
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
@@ -160,6 +163,14 @@ class _MurottalPlayerScreenState
     await SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky,
     );
+
+    if (!mounted) return;
+
+    // Beri Flutter dua frame agar perubahan WindowInsets/viewport selesai.
+    await WidgetsBinding.instance.endOfFrame;
+    if (!mounted) return;
+    await WidgetsBinding.instance.endOfFrame;
+    if (!mounted) return;
 
     await _restoreSavedBackground();
 
@@ -226,9 +237,27 @@ class _MurottalPlayerScreenState
   }) async {
     if (_isChangingBackground) return;
 
-    setState(() => _isChangingBackground = true);
+    // Jangan membuat ulang ExoPlayer/MediaCodec bila background yang sama
+    // sudah aktif. Rebuild ayat, progress, play/pause, dan toolbar tidak boleh
+    // memicu re-inisialisasi video.
+    final currentController = _backgroundVideoController;
+    if (_useVideoBackground &&
+        _backgroundVideoAsset == assetPath &&
+        currentController != null &&
+        currentController.value.isInitialized) {
+      if (!currentController.value.isPlaying) {
+        await currentController.play();
+      }
+      return;
+    }
+
+    if (mounted) {
+      setState(() => _isChangingBackground = true);
+    }
 
     final oldController = _backgroundVideoController;
+    final oldAsset = _backgroundVideoAsset;
+    final oldUseVideoBackground = _useVideoBackground;
     VideoPlayerController? newController;
 
     try {
@@ -239,38 +268,32 @@ class _MurottalPlayerScreenState
         ),
       );
 
+      // Siapkan decoder lebih dahulu, tetapi jangan play sebelum Texture
+      // benar-benar terpasang pada widget tree.
       await newController.initialize();
-      await newController.setLooping(true);
-
-      // Background video SELALU mute agar tidak bercampur
-      // dengan audio murottal.
       await newController.setVolume(0);
+      await newController.setLooping(true);
 
       if (!mounted) {
         await newController.dispose();
         return;
       }
 
-      // Pasang controller ke widget tree terlebih dahulu. Pada sebagian
-      // perangkat Android, memanggil play() sebelum VideoPlayer terpasang
-      // dapat membuat playback pertama berhenti di akhir dan looping baru
-      // normal setelah terjadi rebuild berikutnya.
       setState(() {
         _backgroundVideoAsset = assetPath;
         _backgroundVideoController = newController;
         _useVideoBackground = true;
       });
 
-      newController.addListener(_backgroundVideoLoopGuard);
-
-      // Tunggu sampai texture VideoPlayer benar-benar terpasang ke frame.
+      // Frame ini memasang VideoPlayer/Texture ke Surface Android.
       await WidgetsBinding.instance.endOfFrame;
+
       if (!mounted || _backgroundVideoController != newController) {
-        newController.removeListener(_backgroundVideoLoopGuard);
         await newController.dispose();
         return;
       }
 
+      // Mulai selalu dari frame pertama setelah Surface siap.
       await newController.seekTo(Duration.zero);
       await newController.play();
 
@@ -279,11 +302,23 @@ class _MurottalPlayerScreenState
         await prefs.setString(_backgroundPrefKey, assetPath);
       }
 
-      oldController?.removeListener(_backgroundVideoLoopGuard);
-      await oldController?.dispose();
+      // Controller lama baru dilepas sesudah controller baru sudah hidup,
+      // sehingga perpindahan background tidak menghasilkan frame kosong.
+      if (oldController != null && oldController != newController) {
+        await oldController.dispose();
+      }
     } catch (e) {
-      newController?.removeListener(_backgroundVideoLoopGuard);
       await newController?.dispose();
+
+      // Bila controller baru gagal, jangan menyisakan referensi ke controller
+      // yang sudah dibuang.
+      if (mounted && _backgroundVideoController == newController) {
+        setState(() {
+          _backgroundVideoController = oldController;
+          _backgroundVideoAsset = oldAsset;
+          _useVideoBackground = oldUseVideoBackground;
+        });
+      }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -298,54 +333,6 @@ class _MurottalPlayerScreenState
       if (mounted) {
         setState(() => _isChangingBackground = false);
       }
-    }
-  }
-
-
-  void _backgroundVideoLoopGuard() {
-    final controller = _backgroundVideoController;
-    if (controller == null ||
-        !controller.value.isInitialized ||
-        _isChangingBackground ||
-        _isRestartingBackgroundLoop) {
-      return;
-    }
-
-    final value = controller.value;
-    final duration = value.duration;
-    if (duration <= Duration.zero) return;
-
-    // setLooping(true) tetap menjadi mekanisme utama. Guard ini hanya
-    // menangani kasus Android tertentu ketika playback pertama berhenti
-    // tepat di ujung video walaupun looping sudah aktif.
-    final remaining = duration - value.position;
-    final reachedEnd =
-        remaining <= const Duration(milliseconds: 120) && !value.isPlaying;
-
-    if (reachedEnd) {
-      unawaited(_restartBackgroundVideoLoop(controller));
-    }
-  }
-
-  Future<void> _restartBackgroundVideoLoop(
-    VideoPlayerController controller,
-  ) async {
-    if (_isRestartingBackgroundLoop ||
-        !mounted ||
-        _backgroundVideoController != controller) {
-      return;
-    }
-
-    _isRestartingBackgroundLoop = true;
-    try {
-      await controller.seekTo(Duration.zero);
-      if (mounted && _backgroundVideoController == controller) {
-        await controller.play();
-      }
-    } catch (_) {
-      // Biarkan video_player mencoba pulih pada update berikutnya.
-    } finally {
-      _isRestartingBackgroundLoop = false;
     }
   }
 
@@ -371,7 +358,6 @@ class _MurottalPlayerScreenState
       await prefs.remove(_backgroundPrefKey);
     }
 
-    oldController?.removeListener(_backgroundVideoLoopGuard);
     await oldController?.dispose();
 
     if (mounted) {
@@ -423,7 +409,6 @@ class _MurottalPlayerScreenState
     _controlsTimer?.cancel();
     _beatController.dispose();
     _phaseController.dispose();
-    _backgroundVideoController?.removeListener(_backgroundVideoLoopGuard);
     _backgroundVideoController?.dispose();
 
     // Screen lain boleh kembali memakai orientasi normal.

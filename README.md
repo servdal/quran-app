@@ -89,6 +89,8 @@ Aplikasi Mushaf memanfaatkan dan mengolah data dari berbagai sumber terpercaya, 
 ### 🚀 Distribusi
 - **Android**  
   https://play.google.com/store/apps/details?id=alquran.duidev.com  
+- **iOS and MAC**  
+  https://apps.apple.com/us/app/mushaf/id6799260550  
 - **Web**  
   https://duidev-project.web.app  
 
@@ -173,11 +175,13 @@ Mushaf utilizes and processes data from several trusted sources, including:
 
 ---
 
-### 👨‍💻 Contributors
-This project is a collaboration between **human creativity** and **artificial intelligence**.
-
-- **Built with**: Gemini & ChatGPT  
-- **Prompt & Direction**: Duidev Software House  
+### 👨‍💻 Distribution
+- **Android**  
+  https://play.google.com/store/apps/details?id=alquran.duidev.com  
+- **iOS and MAC**  
+  https://apps.apple.com/us/app/mushaf/id6799260550  
+- **Web**  
+  https://duidev-project.web.app  
 
 ---
 

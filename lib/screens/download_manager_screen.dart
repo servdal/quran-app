@@ -416,71 +416,95 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                   color: Colors.teal.shade800,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
+                child: Column(
                   children: [
-                    const Icon(Icons.music_note, color: Colors.white),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Sedang Memutar: ${player.title}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
+                    Row(
+                      children: [
+                        const Icon(Icons.music_note, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Sedang Memutar: ${player.title}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                "Qari: ${player.subtitle}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Qari: ${player.subtitle}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white70,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Shortcut kecil ke mode Murottal landscape.
-                    if (player.isPlaying)
-                      IconButton(
-                        icon: const Icon(
-                          Icons.fullscreen_rounded,
-                          color: Colors.cyanAccent,
                         ),
-                        tooltip: 'Buka Mode Murottal',
-                        onPressed: _offerMurottalMode,
-                      ),
-
-                    // Tombol Pause / Play
-                    IconButton(
-                      icon: Icon(
-                        player.isPlaying ? Icons.pause : Icons.play_arrow,
-                        color: Colors.white,
-                      ),
-                      onPressed:
-                          () =>
-                              ref
-                                  .read(playerServiceProvider.notifier)
-                                  .togglePausePlay(),
+                      ],
                     ),
-                    // Tombol Stop
-                    IconButton(
-                      icon: const Icon(Icons.stop, color: Colors.white),
-                      onPressed:
-                          () =>
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        // Shortcut kecil ke mode Murottal landscape.
+                        if (player.isPlaying)
+                          IconButton(
+                            icon: const Icon(
+                              Icons.fullscreen_rounded,
+                              color: Colors.cyanAccent,
+                            ),
+                            tooltip: 'Buka Mode Murottal',
+                            onPressed: _offerMurottalMode,
+                          ),
+
+                        IconButton(
+                          tooltip: 'Ayat sebelumnya',
+                          icon: const Icon(
+                            Icons.skip_previous,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => ref
+                              .read(playerServiceProvider.notifier)
+                              .previous(),
+                        ),
+                        // Tombol Pause / Play
+                        IconButton(
+                          icon: Icon(
+                            player.isPlaying ? Icons.pause : Icons.play_arrow,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => ref
+                              .read(playerServiceProvider.notifier)
+                              .togglePausePlay(),
+                        ),
+                        IconButton(
+                          tooltip: 'Ayat berikutnya',
+                          icon: const Icon(
+                            Icons.skip_next,
+                            color: Colors.white,
+                          ),
+                          onPressed: () =>
+                              ref.read(playerServiceProvider.notifier).next(),
+                        ),
+                        // Tombol Stop
+                        IconButton(
+                          icon: const Icon(Icons.stop, color: Colors.white),
+                          onPressed: () =>
                               ref.read(playerServiceProvider.notifier).stop(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-
 
             if (downloader.showDownloaderList)
               Expanded(
@@ -765,94 +789,62 @@ class _DownloadManagerScreenState extends ConsumerState<DownloadManagerScreen> {
                               message: 'Belum ada playlist diatur.',
                             )
                           : Column(
-                              children: List.generate(
-                                downloader.playlists.length,
-                                (index) {
-                                  final p = downloader.playlists[index];
-                                  return Padding(
-                                    padding: EdgeInsets.only(
-                                      bottom: index ==
-                                              downloader.playlists.length - 1
-                                          ? 0
-                                          : 8,
+                              children: List.generate(downloader.playlists.length, (
+                                index,
+                              ) {
+                                final p = downloader.playlists[index];
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom:
+                                        index == downloader.playlists.length - 1
+                                        ? 0
+                                        : 8,
+                                  ),
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 4,
                                     ),
-                                    child: ListTile(
-                                      contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 4,
+                                    leading: IconButton.filledTonal(
+                                      tooltip: 'Putar playlist',
+                                      icon: const Icon(
+                                        Icons.play_arrow_rounded,
                                       ),
-                                      leading: CircleAvatar(
-                                        backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        child: Icon(
-                                          Icons.play_arrow_rounded,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimaryContainer,
-                                        ),
-                                      ),
-                                      title: Text(
-                                        'Surah ${p.startSurah}:${p.startAyah} → '
-                                        '${p.endSurah}:${p.endAyah}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        '${p.reciterName.replaceAll('_', ' ')} • '
-                                        '${p.isRepeat ? 'Repeat' : 'Sekali putar'}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
-                                      trailing: PopupMenuButton<String>(
-                                        onSelected: (value) {
-                                          if (value == 'play') {
-                                            ref
-                                                .read(
-                                                  playerServiceProvider.notifier,
-                                                )
-                                                .playPlaylist(p);
-                                          } else if (value == 'delete') {
-                                            ref
-                                                .read(
-                                                  downloadServiceProvider
-                                                      .notifier,
-                                                )
-                                                .deletePlaylistItem(index);
-                                          }
-                                        },
-                                        itemBuilder: (context) => const [
-                                          PopupMenuItem(
-                                            value: 'play',
-                                            child: ListTile(
-                                              contentPadding: EdgeInsets.zero,
-                                              leading: Icon(
-                                                Icons.play_arrow_rounded,
-                                              ),
-                                              title: Text('Putar'),
-                                            ),
-                                          ),
-                                          PopupMenuItem(
-                                            value: 'delete',
-                                            child: ListTile(
-                                              contentPadding: EdgeInsets.zero,
-                                              leading: Icon(
-                                                Icons.delete_outline_rounded,
-                                                color: Colors.redAccent,
-                                              ),
-                                              title: Text('Hapus'),
-                                            ),
-                                          ),
-                                        ],
+                                      onPressed: () => ref
+                                          .read(playerServiceProvider.notifier)
+                                          .playPlaylist(p),
+                                    ),
+                                    title: Text(
+                                      'Surah ${p.startSurah}:${p.startAyah} → '
+                                      '${p.endSurah}:${p.endAyah}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
+                                    subtitle: Text(
+                                      '${p.reciterName.replaceAll('_', ' ')} • '
+                                      '${p.isRepeat ? 'Repeat' : 'Sekali putar'}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(fontSize: 11),
+                                    ),
+                                    trailing: IconButton(
+                                      tooltip: 'Hapus playlist',
+                                      icon: const Icon(
+                                        Icons.delete_outline_rounded,
+                                        color: Colors.redAccent,
+                                      ),
+                                      onPressed: () => ref
+                                          .read(
+                                            downloadServiceProvider.notifier,
+                                          )
+                                          .deletePlaylistItem(index),
+                                    ),
+                                  ),
+                                );
+                              }),
                             ),
                     ),
                     _ExpandableSection(

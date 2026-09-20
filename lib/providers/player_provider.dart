@@ -121,7 +121,9 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         // Volume video background diatur 0 secara terpisah. Pastikan volume
         // player murottal sendiri selalu penuh.
         await _player.setVolume(1.0);
-        await _player.play();
+        // play() completes only when playback ends, pauses, or stops. Keep
+        // the track-change lock scoped to loading so completion can advance.
+        unawaited(_playWithErrorHandling());
       } else {
         _setPlaybackState(
           playbackState.value.copyWith(
@@ -131,6 +133,18 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         );
         await _skipToNextUnlocked();
       }
+    } on PlayerException catch (e) {
+      debugPrint('PlayerException: ${e.message}');
+      await _notifyPlaybackError('Gagal memutar berkas: Audio rusak.');
+    } catch (e) {
+      debugPrint('Audio error: $e');
+      await _notifyPlaybackError('Terjadi kesalahan pemutaran lokal.');
+    }
+  }
+
+  Future<void> _playWithErrorHandling() async {
+    try {
+      await _player.play();
     } on PlayerException catch (e) {
       debugPrint('PlayerException: ${e.message}');
       await _notifyPlaybackError('Gagal memutar berkas: Audio rusak.');

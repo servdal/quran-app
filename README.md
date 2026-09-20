@@ -11,6 +11,14 @@ Aplikasi ini dibangun menggunakan **Flutter** dan dirancang agar **intuitif, cep
 
 ---
 
+### 🆕 Apa yang Baru
+
+- **Playlist tersimpan lebih sederhana**: tombol Play di kiri dan Hapus di kanan, tanpa menu titik tiga atau pilihan Play ganda.
+- **Navigasi mini player**: tombol Previous dan Next untuk berpindah ke ayat sebelumnya atau berikutnya. Kontrol berada di baris bawah agar judul tetap terbaca pada layar kecil.
+- **Perbaikan pemutaran otomatis**: memperbaiki audio yang berhenti setelah ayat pertama saat playlist pertama kali diputar, sehingga perpindahan ayat dan pengulangan playlist tidak perlu dipicu dengan menekan Next terlebih dahulu.
+
+---
+
 ### ✨ Fitur Utama
 
 #### 📖 Mode Membaca Al-Qur’an
@@ -116,6 +124,14 @@ Jika Mushaf bermanfaat bagi Anda, silakan berdonasi untuk mendukung pengembangan
 **Mushaf** is an **open-source digital Islamic companion app** designed to help Muslims read, study, and reflect upon the Qur’an, while also supporting daily worship activities in a single, integrated application.
 
 Built with **Flutter**, Mushaf delivers a **fast, intuitive, and modern** experience across multiple platforms.
+
+---
+
+### 🆕 What's New
+
+- **Simpler saved playlists**: a Play button on the left and a Delete button on the right, without a three-dot menu or duplicate Play options.
+- **Mini player navigation**: Previous and Next buttons to move between verses. Controls sit below the track information to keep the title readable on small screens.
+- **Automatic playback fix**: fixed playback stopping after the first verse when starting a playlist for the first time, so verse transitions and playlist repeat no longer require pressing Next first.
 
 ---
 

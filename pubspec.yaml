@@ -3,7 +3,7 @@ description: "Digital Qur’an & Islamic Companion"
 
 publish_to: 'none'
 
-version: 3.5.9+72
+version: 3.6.0+73
 
 environment:
   sdk: ^3.7.2
@@ -49,6 +49,7 @@ dependencies:
   audioplayers: ^6.0.0
   just_audio: ^0.10.6
   audio_service: ^0.18.19
+  audio_session: ^0.2.4
   pdfrx: ^2.4.7
   record: ^7.1.1
   sherpa_onnx: ^1.13.4

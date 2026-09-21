@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:just_audio/just_audio.dart';
@@ -39,7 +40,15 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   @override
-  Future<void> play() => _player.play();
+  Future<void> play() async {
+    if (!kIsWeb && Platform.isIOS) {
+      // Recording and video share this session on iOS. Restore playback
+      // before starting or resuming audio, including lock-screen controls.
+      final session = await AudioSession.instance;
+      await session.configure(const AudioSessionConfiguration.music());
+    }
+    await _player.play();
+  }
 
   @override
   Future<void> pause() => _player.pause();
@@ -144,7 +153,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   Future<void> _playWithErrorHandling() async {
     try {
-      await _player.play();
+      await play();
     } on PlayerException catch (e) {
       debugPrint('PlayerException: ${e.message}');
       await _notifyPlaybackError('Gagal memutar berkas: Audio rusak.');

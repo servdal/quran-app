@@ -569,35 +569,22 @@ class _MurottalPlayerScreenState
                 top: 0,
                 left: 0,
                 right: 0,
-                child: IgnorePointer(
-                  ignoring: !_showControls,
-                  child: AnimatedSlide(
-                    duration: const Duration(milliseconds: 260),
-                    curve: Curves.easeOutCubic,
-                    offset: _showControls
-                        ? Offset.zero
-                        : const Offset(0, -1.15),
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 220),
-                      opacity: _showControls ? 1 : 0,
-                      child: SafeArea(
-                        bottom: false,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
-                          child: _TopBar(
-                            player: player,
-                            onClose: () => Navigator.of(context).maybePop(),
-                            onTextOptions: () {
-                              _controlsTimer?.cancel();
-                              _openTextOptions();
-                            },
-                            onBackgroundOptions: () {
-                              _controlsTimer?.cancel();
-                              _openBackgroundSelector();
-                            },
-                          ),
-                        ),
-                      ),
+                child: SafeArea(
+                  bottom: false,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                    child: _TopBar(
+                      player: player,
+                      controlsVisible: _showControls,
+                      onClose: () => Navigator.of(context).maybePop(),
+                      onTextOptions: () {
+                        _controlsTimer?.cancel();
+                        _openTextOptions();
+                      },
+                      onBackgroundOptions: () {
+                        _controlsTimer?.cancel();
+                        _openBackgroundSelector();
+                      },
                     ),
                   ),
                 ),
@@ -922,71 +909,45 @@ class _MurottalPlayerScreenState
 class _TopBar extends StatelessWidget {
   const _TopBar({
     required this.player,
+    required this.controlsVisible,
     required this.onClose,
     required this.onTextOptions,
     required this.onBackgroundOptions,
   });
 
   final PlayerUIState player;
+  final bool controlsVisible;
   final VoidCallback onClose;
   final VoidCallback onTextOptions;
   final VoidCallback onBackgroundOptions;
+
+  Widget _control(Widget child) {
+    return IgnorePointer(
+      ignoring: !controlsVisible,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 220),
+        opacity: controlsVisible ? 1 : 0,
+        child: child,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _SideButton(
+        _control(_SideButton(
           icon: Icons.keyboard_arrow_down_rounded,
           tooltip: 'Kembali',
           onTap: onClose,
           size: 50,
-        ),
+        )),
         const SizedBox(width: 12),
-        SizedBox(
-          width: 48,
-          height: 48,
-          child: Image.asset(
-            kMurottalMascotAsset,
-            fit: BoxFit.contain,
-            errorBuilder: (_, __, ___) => const Icon(
-              Icons.smart_toy_outlined,
-              color: Colors.cyanAccent,
-              size: 34,
-            ),
-          ),
-        ),
-        const SizedBox(width: 9),
-        const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'DuiDev',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                height: 1,
-                fontWeight: FontWeight.w800,
-                shadows: [
-                  Shadow(color: Colors.black54, blurRadius: 6),
-                ],
-              ),
-            ),
-            SizedBox(height: 3),
-            Text(
-              'MUROTTAL PLAYER',
-              style: TextStyle(
-                fontSize: 9,
-                letterSpacing: 1.45,
-                color: Colors.cyanAccent,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
+        // Keep the clock in the former logo area, outside control animations.
+        const _PlayerClock(),
         const Spacer(),
         if (player.currentSurah > 0)
-          Text(
+          _control(Text(
             '${player.currentSurah.toString().padLeft(3, '0')}'
             '${player.currentAyah.toString().padLeft(3, '0')}.mp3',
             style: TextStyle(
@@ -994,22 +955,90 @@ class _TopBar extends StatelessWidget {
               fontSize: 11,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
-          ),
+          )),
         const SizedBox(width: 15),
-        _SideButton(
+        _control(_SideButton(
           icon: Icons.video_library_outlined,
           tooltip: 'Pilih background video',
           onTap: onBackgroundOptions,
           size: 50,
-        ),
+        )),
         const SizedBox(width: 8),
-        _SideButton(
+        _control(_SideButton(
           icon: Icons.visibility_outlined,
           tooltip: 'Show / hide teks',
           onTap: onTextOptions,
           size: 50,
-        ),
+        )),
       ],
+    );
+  }
+}
+
+class _PlayerClock extends StatefulWidget {
+  const _PlayerClock();
+
+  @override
+  State<_PlayerClock> createState() => _PlayerClockState();
+}
+
+class _PlayerClockState extends State<_PlayerClock> {
+  late final Timer _timer;
+  DateTime _now = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() => _now = DateTime.now());
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const months = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
+    ];
+    final time = '${_now.hour.toString().padLeft(2, '0')}:'
+        '${_now.minute.toString().padLeft(2, '0')}';
+    final date = '${_now.day} ${months[_now.month - 1]} ${_now.year}';
+
+    return IgnorePointer(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              time,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                fontFeatures: [FontFeature.tabularFigures()],
+                shadows: [Shadow(color: Colors.black87, blurRadius: 8)],
+              ),
+            ),
+            Text(
+              date,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                shadows: [Shadow(color: Colors.black87, blurRadius: 8)],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

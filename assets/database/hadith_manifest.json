@@ -1,0 +1,54 @@
+{
+  "source": "https://github.com/irsyadulibad/hadits-database",
+  "revision": "db43bdaa70ee528a0e663c089d3dab5bb4d855f0",
+  "schema_version": 2,
+  "books": [
+    {
+      "id": "bukhari",
+      "title": "Shahih Bukhari",
+      "count": 7008,
+      "file": "shahih-bukhari.sql",
+      "sha256": "4b8385fcffcee224173278881a43eb9b43e2db4cdc8b3a0c86fb7010a46acc73"
+    },
+    {
+      "id": "muslim",
+      "title": "Shahih Muslim",
+      "count": 5362,
+      "file": "shahih-muslim.sql",
+      "sha256": "3c9976e0438a28ef83979714b550001398dec2129c617210eb973af0267918b0"
+    },
+    {
+      "id": "abu-daud",
+      "title": "Sunan Abu Daud",
+      "count": 4590,
+      "file": "sunan-abu-daud.sql",
+      "sha256": "29cdfbcdcc06ecf4d6b6fa79e9121aae86f6840dbf62e91557554d9ee919f084"
+    },
+    {
+      "id": "ibnu-majah",
+      "title": "Sunan Ibnu Majah",
+      "count": 4332,
+      "file": "sunan-ibnu-majah.sql",
+      "sha256": "b017e6cfe6df02ac84a8f9245ad0c23b9935dbbc1e45bd4ab1db8bd89b507b00"
+    },
+    {
+      "id": "nasai",
+      "title": "Sunan Nasa’i",
+      "count": 5662,
+      "file": "sunan-nasai.sql",
+      "sha256": "27a38643817e58dcdc1d0b5f446c74fd836178c90aadcc7059167ed7a9372752"
+    },
+    {
+      "id": "tirmidzi",
+      "title": "Sunan Tirmidzi",
+      "count": 3891,
+      "file": "sunan-tirmidzi.sql",
+      "sha256": "79c5710963a1505787178e48c97a6220f91bb7b3e35c0d8429f7ba9bdb2748fc"
+    }
+  ],
+  "enrichment": {
+    "source": "https://github.com/fawazahmed0/hadith-api",
+    "revision": "df57907be35291c91ad6a6691180e22ca9920784",
+    "audit": "hadith_enrichment_audit.json"
+  }
+}

@@ -1,3 +1,4 @@
+import 'package:quran_app/screens/hadith_screen.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -858,6 +859,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   context,
                   MaterialPageRoute(builder: (_) => const DoaScreen()),
                 ),
+            theme: theme,
+          ),
+          _menuItem(
+            context,
+            name: isId ? 'Hadist' : 'Hadith',
+            icon: Icons.library_books_rounded,
+            color: Colors.teal,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const HadithScreen()),
+            ),
             theme: theme,
           ),
           _menuItem(

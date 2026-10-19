@@ -104,6 +104,73 @@ Aplikasi Mushaf memanfaatkan dan mengolah data dari berbagai sumber terpercaya, 
 
 ---
 
+### 📚 Database Hadist Offline
+
+Fitur Hadist menyediakan enam koleksi Arab–Indonesia: Shahih Bukhari (7.008),
+Shahih Muslim (5.362), Sunan Abu Daud (4.590), Sunan Ibnu Majah (4.332),
+Sunan Nasa’i (5.662), dan Sunan Tirmidzi (3.891), total **30.845 entri**.
+Pengguna dapat memilih kitab, mencari teks atau nomor, dan membaca hadis secara offline.
+
+- **Sumber:** [irsyadulibad/hadits-database](https://github.com/irsyadulibad/hadits-database).
+- **Revisi sumber:** `db43bdaa70ee528a0e663c089d3dab5bb4d855f0`.
+- **Lisensi repository dataset:** MIT, Copyright (c) 2020 Ahmad Irsyadul Ibad.
+  Salinan lengkap dipertahankan di `assets/database/HADITH_LICENSE.txt`.
+- **Database hasil konversi:** `assets/database/hadith.db` (SQLite), terpisah dari Al-Qur’an.
+- **Manifest:** `assets/database/hadith_manifest.json`, berisi jumlah entri dan SHA-256 file sumber.
+
+Nomor hadis mengikuti dataset sumber, bukan pemetaan otomatis ke penomoran edisi lain.
+Dataset dasar tidak menyediakan judul bab atau derajat hadis. Metadata tambahan
+berasal dari [fawazahmed0/hadith-api](https://github.com/fawazahmed0/hadith-api),
+revisi `df57907be35291c91ad6a6691180e22ca9920784`, dengan lisensi repository
+Unlicense (salinan di `assets/database/HADITH_ENRICHMENT_LICENSE.txt`).
+Metadata penerjemah Indonesia di sumber tambahan tercatat sebagai `Unknown`;
+teks Indonesia lokal tetap dipertahankan tanpa penggantian.
+
+Pengayaan versi 2 mencocokkan **24.047** dari 30.845 entri berdasarkan kesamaan
+seluruh teks Arab dan/atau Indonesia setelah normalisasi tanda baca, diakritik,
+dan huruf besar. Nomor lokal tidak dipakai sebagai dasar pencocokan. Teks pendek,
+nomor sumber duplikat, pasangan ambigu, penggunaan ulang pasangan sumber oleh
+beberapa entri lokal, referensi antarbahasa yang berbeda, serta kecocokan Arab dan
+Indonesia yang bertentangan ditolak. Ini pemetaan otomatis konservatif, bukan
+klaim verifikasi ilmiah/manual seluruh riwayat.
+
+- **24.020** entri memiliki terjemahan Inggris lokal dari sumber.
+- **24.036** entri memiliki relasi bagian/bab, dalam **323** kelompok judul.
+- **10** kelompok memiliki hadis dari lebih dari satu kitab.
+- **14.354** entri memiliki penilaian, ditampilkan bersama nama penilainya.
+- Entri lainnya tetap tersedia dengan teks asli; metadata yang belum cocok dibiarkan kosong.
+
+Tab Bab dapat dicari dan dibuka lintas kitab. Tombol Pilih bab pada daftar kitab
+membatasi bab dan hadis ke kitab tersebut. Pengelompokan hanya menyatukan judul
+sumber yang sama setelah normalisasi; judul berbeda tidak dipaksakan menjadi tema
+yang sama. Label Indonesia tersedia untuk sejumlah judul umum; lainnya menampilkan
+judul sumber. Cakupan bab bersifat parsial dan dijelaskan di layar.
+
+`hadith_enrichment_audit.json` menyimpan hash SHA-256 ke-18 file masukan, revisi,
+metode pencocokan, cakupan per kitab, serta nomor lokal yang belum cocok.
+Tabel `hadith_source_matches` menyimpan nomor sumber dan metode untuk setiap
+pasangan; `source_reference` tidak menggantikan nomor lokal. Database runtime
+memakai nama `hadith-v2.db`, sehingga pemasangan lama mendapatkan aset pengayaan.
+
+Untuk membangun ulang, unduh repository sumber pada revisi di atas, lalu jalankan:
+
+```sh
+python3 tools/data/build_hadith_database.py /path/to/hadits-database
+```
+
+Lalu unduh 18 file `ara-`, `ind-`, dan `eng-` untuk Bukhari, Muslim, Abu Dawud,
+Tirmidzi, Ibnu Majah, dan Nasa’i dari revisi pengayaan di atas. Simpan bersama
+`LICENSE` dan `revision.txt` (berisi SHA revisi), kemudian jalankan:
+
+```sh
+python3 tools/data/enrich_hadith_database.py /path/to/pinned/editions
+```
+
+Konverter membaca nilai SQL sebagai data tanpa menjalankan dump, mempertahankan teks,
+serta memvalidasi jumlah entri, urutan nomor, isian kosong, integritas SQLite, dan relasi.
+
+---
+
 ### 📜 Lisensi
 Mushaf adalah aplikasi **GRATIS & Open-Source**.  
 Anda bebas menggunakan, memodifikasi, dan mendistribusikan ulang aplikasi ini untuk tujuan apa pun.
@@ -209,3 +276,70 @@ You are free to use, modify, and redistribute it for any purpose.
 
 🙏  
 May **Mushaf** become a source of benefit, guidance, and blessing for all.
+
+### Tampilan dan informasi koleksi Hadist
+
+Halaman koleksi menampilkan statistik dari database: jumlah hadis, ketersediaan
+Inggris offline, penilaian, serta cakupan bab per kitab. Kartu daftar menampilkan
+cuplikan Arab–terjemahan dan indikator metadata. Layout koleksi memakai dua kolom
+pada layar lebar dan satu kolom di ponsel, mengikuti tema terang/gelap aplikasi.
+
+Tombol **Informasi hadis** di detail membuka bab terkait (dapat dibuka lintas kitab),
+nomor utama dan referensi tambahan yang dibedakan, serta penilaian dengan nama
+penilainya. Metadata yang belum tersedia dijelaskan tanpa mengasumsikan status
+hadis. Panel **Tentang koleksi** menjelaskan sumber, lisensi, pemetaan parsial,
+perbedaan penomoran, dan bahasa yang dapat dibaca offline.
+
+### Bookmark dan tampilan Hadist
+
+- Ikon bookmark tersedia pada daftar dan detail hadis. Identitasnya adalah pasangan
+  kitab dan nomor lokal; misalnya Bukhari nomor 1 berbeda dari Muslim nomor 1.
+- Tab Bookmark menyediakan filter kitab dan membuka langsung hadis yang disimpan.
+- Ikon **Tampilan teks** pada detail menyediakan mode tab, Arab saja, terjemah saja,
+  atau Arab dan terjemah dalam satu halaman. Teks tetap dapat dipilih/disalin.
+- Font Arab: LPMQ, KFGQPC, dan UthmanicHafs. Ukuran Arab 18–60 dan terjemah 12–32,
+  dengan pratinjau sebelum menekan Terapkan.
+- Bookmark dan pilihan tampilan disimpan di preferensi `hadith_reader_v1`, terpisah
+  dari bookmark Al-Qur’an. Sebelum ukuran khusus dipilih, ukuran mengikuti setting
+  Arab dan panel ayat aplikasi. Setelah diterapkan, setelan Hadist berlaku untuk
+  seluruh kitab dan bertahan setelah aplikasi dibuka kembali.
+
+### Bahasa dan terjemahan Hadist
+
+Label layar mengikuti pengaturan bahasa aplikasi: Indonesia untuk `id`, Inggris
+untuk pilihan lainnya, mengikuti pola layar Al-Qur’an. Detail Hadist memiliki tab
+Teks Arab dan Terjemah; ukuran teks mengikuti pengaturan font Arab dan panel ayat.
+Terjemahan Indonesia tersedia offline. Untuk bahasa lain, permintaan hanya dibuat
+saat tab Terjemah dibuka dan hasil berhasil disimpan dalam cache sesi per hadis
+serta bahasa. Pencarian lokal mencari teks Arab, Indonesia, Inggris yang tersedia, serta nomor lokal.
+Bahasa Inggris mengutamakan teks sumber yang tersedia offline, lalu memakai backend
+jika belum ada pasangan Inggris. Bahasa lain tetap memakai backend terjemahan.
+
+Backend Laravel menyediakan endpoint hadis `/api/translate/hadiths`. Endpoint Al-Qur’an `/api/translate/ayahs`
+tidak digunakan untuk hadis karena identitas dan cache ayat berbeda. Adapter hadis
+memakai `https://duidev.com/api/translate/hadiths` secara default; alamat dapat diganti
+dengan `HADITH_TRANSLATE_ENDPOINT` saat build. Kontrak request berikut (harus HTTPS; header `X-API-Key` memakai `CORE_TRANSLATE_API_KEY`
+bila tersedia):
+
+```json
+{
+  "source_lang": "id",
+  "target_lang": "en",
+  "items": [{
+    "book_id": "bukhari",
+    "hadith_number": 1,
+    "translation": "Teks terjemahan Indonesia dari dataset"
+  }]
+}
+```
+
+Respons yang didukung berupa array, atau array dalam `data`, `items`, atau `results`,
+dengan field `translation` atau `translated_translation`. Jika endpoint belum
+dikonfigurasi atau permintaan gagal, tab secara eksplisit menampilkan terjemahan
+Indonesia sebagai fallback. Source backend berada di `/Users/duidev/htdocs/duidev`, modul Core. Sebelum dipakai
+di produksi, deploy perubahan backend dan jalankan migrasi
+`2026_10_19_000001_create_core_hadith_translation_caches_table.php`. Tabel cache hadis
+terpisah dari cache ayat; perubahan teks sumber menghasilkan cache baru. Endpoint
+menerima satu hadis per request dan menerjemahkan Indonesia ke bahasa pilihan,
+termasuk Inggris. Hasil gagal tidak disimpan; tombol Coba lagi dapat mengulang request.
+Terjemahan tambahan merupakan hasil layanan mesin yang sama dengan fitur Al-Qur’an.

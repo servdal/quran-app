@@ -3,7 +3,7 @@ description: "Digital Qur’an & Islamic Companion"
 
 publish_to: 'none'
 
-version: 3.6.1+74
+version: 3.6.3+76
 
 environment:
   sdk: ^3.7.2
@@ -84,6 +84,9 @@ flutter:
     - assets/audio/
     - assets/audio/audio_index.json
     - assets/database/quran.db
+    - assets/database/hadith.db
+    - assets/database/HADITH_LICENSE.txt
+    - assets/database/HADITH_ENRICHMENT_LICENSE.txt
     - assets/lottie/
     - assets/pdf/
     - assets/video/video1.mp4
@@ -101,3 +104,9 @@ flutter:
     - family: Uthmani
       fonts:
         - asset: assets/fonts/LPMQ.ttf
+    - family: KFGQPC
+      fonts:
+        - asset: assets/fonts/KFGQPC.ttf
+    - family: UthmanicHafs
+      fonts:
+        - asset: assets/fonts/UthmanicHafs.otf

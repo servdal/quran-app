@@ -91,7 +91,10 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('word-2-5-1')));
       await tester.pumpAndSettle();
       expect(find.byType(AlertDialog), findsOneWidget);
-      expect(find.textContaining('Arti belum tersedia', findRichText: true), findsWidgets);
+      expect(
+        find.textContaining('Arti belum tersedia', findRichText: true),
+        findsWidgets,
+      );
       await tester.tap(find.text('Tutup'));
       await tester.pumpAndSettle();
       await tester.ensureVisible(find.text('Fi’il'));
@@ -129,8 +132,35 @@ void main() {
     await showScreen(tester, [second, missing]);
     expect(
       tester.getCenter(find.byKey(const ValueKey('word-2-5-1'))).dx,
-      greaterThan(tester.getCenter(find.byKey(const ValueKey('word-2-5-2'))).dx),
+      greaterThan(
+        tester.getCenter(find.byKey(const ValueKey('word-2-5-2'))).dx,
+      ),
     );
     expect(tester.takeException(), isNull);
   });
+  testWidgets(
+    'font controls resize Arabic and meanings and persist preferences',
+    (tester) async {
+      await showScreen(tester, [missing]);
+      await tester.tap(find.byTooltip('Ukuran teks'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Teks Arab +'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Arti dan tafsir +'));
+      await tester.pumpAndSettle();
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getDouble('arabic_font_size'), 30);
+      expect(prefs.getDouble('ayah_panel_font_size'), 18);
+      final tile = find.byKey(const ValueKey('word-2-5-1'));
+      final arabic = tester.widget<Text>(
+        find.descendant(of: tile, matching: find.text('هُدًى')),
+      );
+      expect(arabic.style?.fontSize, 30);
+      await tester.tap(find.text('Kembalikan ukuran awal'));
+      await tester.pumpAndSettle();
+      expect(prefs.getDouble('arabic_font_size'), 28);
+      expect(prefs.getDouble('ayah_panel_font_size'), 16);
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

@@ -110,6 +110,19 @@ class TafsirViewScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            tooltip: tr(ref, id: 'Ukuran teks', en: 'Text size'),
+            icon: const Icon(Icons.text_fields_rounded),
+            onPressed:
+                () => showModalBottomSheet<void>(
+                  context: context,
+                  showDragHandle: true,
+                  builder: (_) => const _FontSizePanel(),
+                ),
+          ),
+          const SizedBox(width: 8),
+        ],
         title: surahAsync.when(
           data:
               (s) => Text(
@@ -139,7 +152,12 @@ class TafsirViewScreen extends ConsumerWidget {
               itemCount: surah.ayahs.length,
               itemBuilder: (context, index) {
                 final ayah = surah.ayahs[index];
-                return _AyahBlock(ayah: ayah, surahName: surah.surahName);
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1080),
+                    child: _AyahBlock(ayah: ayah, surahName: surah.surahName),
+                  ),
+                );
               },
             ),
       ),
@@ -186,15 +204,17 @@ class _AyahBlock extends ConsumerWidget {
       context: context,
     );
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 32),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
-        ),
+    return Card(
+      margin: const EdgeInsets.only(bottom: 20),
+      elevation: 0,
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.5)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -208,33 +228,42 @@ class _AyahBlock extends ConsumerWidget {
             const SizedBox(height: 24),
             _GrammarSection(ayah: ayah),
             const SizedBox(height: 24),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.format_quote_rounded,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    ayah.translation.trim().isEmpty
-                        ? tr(
-                          ref,
-                          id: 'Terjemahan belum tersedia.',
-                          en: 'Translation is not available yet.',
-                        )
-                        : ayah.translation,
-                    style: TextStyle(
-                      fontSize: settings.ayahPanelFontSize,
-                      height: 1.7,
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(
+                  context,
+                ).colorScheme.primaryContainer.withValues(alpha: 0.22),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.format_quote_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      ayah.translation.trim().isEmpty
+                          ? tr(
+                            ref,
+                            id: 'Terjemahan belum tersedia.',
+                            en: 'Translation is not available yet.',
+                          )
+                          : ayah.translation,
+                      style: TextStyle(
+                        fontSize: settings.ayahPanelFontSize,
+                        height: 1.7,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: 16),
-            OutlinedButton(
+            OutlinedButton.icon(
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
@@ -280,7 +309,8 @@ class _AyahBlock extends ConsumerWidget {
                               ),
                         ),
                   ),
-              child: const Text('Tafsir'),
+              icon: const Icon(Icons.auto_stories_outlined, size: 19),
+              label: const Text('Tafsir'),
             ),
           ],
         ),
@@ -357,14 +387,22 @@ class _GrammarSection extends ConsumerWidget {
               ),
             LayoutBuilder(
               builder: (context, constraints) {
+                final settings = ref.watch(settingsProvider);
+                final scale = MediaQuery.textScalerOf(context).scale(1);
+                final preferredWidth =
+                    (settings.arabicFontSize * 3.5 +
+                        settings.ayahPanelFontSize * 2) *
+                    scale;
+                final columns = ((constraints.maxWidth + 12) /
+                        (preferredWidth + 12))
+                    .floor()
+                    .clamp(1, 7);
                 final tileWidth =
-                    constraints.maxWidth < 500
-                        ? (constraints.maxWidth - 24) / 3
-                        : 170.0;
+                    (constraints.maxWidth - (columns - 1) * 12) / columns;
                 return Wrap(
                   textDirection: TextDirection.rtl,
                   alignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.start,
                   spacing: 12,
                   runSpacing: 20,
                   children: [
@@ -507,7 +545,9 @@ class _WordTile extends ConsumerWidget {
     final description = isId ? grammar.grammarDescId : grammar.grammarDescEn;
     final colors = Theme.of(context).colorScheme;
     return Semantics(
-      key: ValueKey('word-${grammar.surahId}-${grammar.ayahNumber}-${grammar.wordNumber}'),
+      key: ValueKey(
+        'word-${grammar.surahId}-${grammar.ayahNumber}-${grammar.wordNumber}',
+      ),
       button: true,
       label: '${isId ? 'Kata' : 'Word'} ${grammar.wordNumber}',
       child: InkWell(
@@ -547,13 +587,19 @@ class _WordTile extends ConsumerWidget {
                           ),
             ),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
           decoration: BoxDecoration(
             color:
                 highlightRoot
                     ? colors.primaryContainer.withValues(alpha: 0.5)
-                    : null,
-            border: Border(bottom: BorderSide(color: colors.outlineVariant)),
+                    : colors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color:
+                  highlightRoot
+                      ? colors.primary
+                      : colors.outlineVariant.withValues(alpha: 0.5),
+            ),
           ),
           child: Column(
             children: [
@@ -615,12 +661,121 @@ class _AyahHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          'QS ${ayah.surahId}:${ayah.number}',
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            'QS ${ayah.surahId}:${ayah.number}',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
+          ),
         ),
-        Icon(Icons.menu_book_outlined, color: Theme.of(context).primaryColor),
+        Icon(
+          Icons.menu_book_outlined,
+          size: 20,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ],
     );
   }
+}
+
+class _FontSizePanel extends ConsumerWidget {
+  const _FontSizePanel();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsProvider);
+    final notifier = ref.read(settingsProvider.notifier);
+    final isId = settings.language == 'id';
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 4, 24, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              isId ? 'Ukuran teks' : 'Text size',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 20),
+            Text(isId ? 'Teks Arab' : 'Arabic text'),
+            _SizeControl(
+              label: isId ? 'Teks Arab' : 'Arabic text',
+              value: settings.arabicFontSize.clamp(20, 48),
+              min: 20,
+              max: 48,
+              onChanged: notifier.setFontSize,
+            ),
+            const SizedBox(height: 12),
+            Text(isId ? 'Arti dan tafsir' : 'Meanings and tafsir'),
+            _SizeControl(
+              label: isId ? 'Arti dan tafsir' : 'Meanings and tafsir',
+              value: settings.ayahPanelFontSize.clamp(12, 28),
+              min: 12,
+              max: 28,
+              onChanged: notifier.setAyahPanelFontSize,
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              onPressed: () {
+                notifier.setFontSize(28);
+                notifier.setAyahPanelFontSize(16);
+              },
+              child: Text(isId ? 'Kembalikan ukuran awal' : 'Reset text size'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SizeControl extends StatelessWidget {
+  final String label;
+  final double value, min, max;
+  final ValueChanged<double> onChanged;
+  const _SizeControl({
+    required this.label,
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      IconButton(
+        tooltip: '$label −',
+        onPressed:
+            value > min ? () => onChanged((value - 2).clamp(min, max)) : null,
+        icon: const Icon(Icons.remove_rounded),
+      ),
+      Expanded(
+        child: Slider(
+          label: value.round().toString(),
+          value: value,
+          min: min,
+          max: max,
+          divisions: ((max - min) / 2).round(),
+          semanticFormatterCallback: (value) => '$label ${value.round()}',
+          onChanged: onChanged,
+        ),
+      ),
+      Text('${value.round()}', style: Theme.of(context).textTheme.labelLarge),
+      IconButton(
+        tooltip: '$label +',
+        onPressed:
+            value < max ? () => onChanged((value + 2).clamp(min, max)) : null,
+        icon: const Icon(Icons.add_rounded),
+      ),
+    ],
+  );
 }

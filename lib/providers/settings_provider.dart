@@ -126,8 +126,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
       ) {
     _loadSettings();
   }
-  void setFontSize(double size) {
+  Future<void> setFontSize(double size) async {
     state = state.copyWith(arabicFontSize: size);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('arabic_font_size', size);
   }
 
   Future<void> setAyahPanelFontSize(double size) async {
@@ -188,9 +190,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final adzanSoundModeIndex = prefs.getInt('adzan_sound_mode') ?? 0;
     final adzanSoundName = prefs.getString('adzan_sound_name') ?? 'azan1';
     final ayahPanelFontSize = prefs.getDouble('ayah_panel_font_size') ?? 16;
+    final arabicFontSize = prefs.getDouble('arabic_font_size') ?? 28;
     final keepScreenAwake =
         prefs.getBool('keep_screen_awake') ?? (!kIsWeb && Platform.isMacOS);
     state = state.copyWith(
+      arabicFontSize: arabicFontSize,
       ayahPanelFontSize: ayahPanelFontSize,
       keepScreenAwake: keepScreenAwake,
       language: lang,

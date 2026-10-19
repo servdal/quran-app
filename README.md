@@ -171,6 +171,39 @@ serta memvalidasi jumlah entri, urutan nomor, isian kosong, integritas SQLite, d
 
 ---
 
+### Kelengkapan data per kata Al-Qur’an
+
+Aset `assets/database/quran.db` versi 4 memuat **77.429 posisi kata** dalam
+`master_edited` untuk 6.236 ayat. Jumlah baris 77.430 karena dua analisis akar
+asli pada 20:94:2 dipertahankan. Sebanyak 23.721 posisi ditambahkan dari
+[UmmahAPI Word-by-Word](https://ummahapi.com/api/docs); seluruh `merged_aya`,
+id lama dan variasi penulisan yang tidak rusak tetap dipertahankan.
+
+RootWordId dan atribut akar dipakai kembali hanya melalui kecocokan lokal yang
+konsisten. RootWordId tidak digunakan untuk menebak kelas nahwu atau arti konteks.
+Kolom Indonesia/akar/nahwu yang belum mempunyai padanan tetap NULL. Sebanyak
+53.878 baris lengkap seluruh isian dan 23.552 masih parsial; “lengkap” di sini
+berarti kelengkapan field, bukan tinjauan linguistik manual.
+
+Laporan tersedia di `reports/quran_master_completion/summary.md`, termasuk CSV
+baris lengkap, baris parsial beserta kolom kosong, padanan RootWordId, perubahan,
+dan rekap per surah. Provenance per perubahan tersimpan dalam tabel
+`master_edited_completion_log`. Audit sebelum dan sesudah disimpan terpisah pada
+`reports/quran_word_audit/` dan `reports/quran_word_audit_after_completion/`.
+Cadangan sebelum perubahan tersimpan lokal di `backups/` dan diabaikan Git.
+
+Untuk membangun ulang dari cadangan dan cache respons yang sama:
+
+```sh
+python3 tools/data/complete_quran_master.py --cache /tmp/quran-word-audit \
+  --baseline backups/quran-before-master-completion-602bb0e5077e.db
+```
+
+Tutup dan buka kembali aplikasi setelah build baru agar salinan database lokal
+memuat pembaruan versi 4.
+
+---
+
 ### 📜 Lisensi
 Mushaf adalah aplikasi **GRATIS & Open-Source**.  
 Anda bebas menggunakan, memodifikasi, dan mendistribusikan ulang aplikasi ini untuk tujuan apa pun.
@@ -343,3 +376,12 @@ terpisah dari cache ayat; perubahan teks sumber menghasilkan cache baru. Endpoin
 menerima satu hadis per request dan menerjemahkan Indonesia ke bahasa pilihan,
 termasuk Inggris. Hasil gagal tidak disimpan; tombol Coba lagi dapat mengulang request.
 Terjemahan tambahan merupakan hasil layanan mesin yang sama dengan fitur Al-Qur’an.
+
+### Penanganan data kata yang belum tersedia
+
+Aset Quran versi 5 mempertahankan nilai analisis yang belum diketahui sebagai `NULL`.
+Layar tafsir dan popup menampilkan keterangan sesuai bahasa pengaturan saat arti,
+akar kata, analisis atau tafsir kosong. Kata tanpa akar tidak ikut disorot sebagai
+kelompok akar yang sama. Data `WordNo <= 0` tidak dimuat sebagai kata valid.
+Perapian spasi dapat direproduksi dengan `python3 tools/data/tidy_quran_master.py`;
+rincian dan cadangan tercatat di `reports/quran_master_completion/cleanup.json`.

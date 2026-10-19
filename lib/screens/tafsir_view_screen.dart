@@ -16,7 +16,9 @@ import '../services/quran_data_service.dart';
 enum GrammarType { fiil, isim, harf, other }
 
 GrammarType detectGrammarType({required Grammar g, required bool isId}) {
-  final d = (isId ? g.grammarDescId : g.grammarDescEn).toLowerCase();
+  final localized = isId ? g.grammarDescId : g.grammarDescEn;
+  final d =
+      (localized.trim().isEmpty ? g.grammarDescEn : localized).toLowerCase();
 
   if (d.contains('fi') || d.contains('verb')) return GrammarType.fiil;
   if (d.contains('isim') || d.contains('noun')) return GrammarType.isim;
@@ -124,7 +126,7 @@ class TafsirViewScreen extends ConsumerWidget {
                 style: const TextStyle(fontFamily: 'Roboto'),
               ),
           error:
-              (_, __) =>
+              (_, _) =>
                   const Text('Error', style: TextStyle(fontFamily: 'Roboto')),
         ),
       ),
@@ -184,8 +186,13 @@ class _AyahBlock extends ConsumerWidget {
       context: context,
     );
 
-    return Card(
+    return Container(
       margin: const EdgeInsets.only(bottom: 32),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -198,10 +205,83 @@ class _AyahBlock extends ConsumerWidget {
               textAlign: TextAlign.right,
               text: TextSpan(style: baseStyle, children: spans),
             ),
-            const SizedBox(height: 12),
-            Text(ayah.tafsir, textAlign: TextAlign.justify),
-            const Divider(height: 32),
+            const SizedBox(height: 24),
             _GrammarSection(ayah: ayah),
+            const SizedBox(height: 24),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.format_quote_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    ayah.translation.trim().isEmpty
+                        ? tr(
+                          ref,
+                          id: 'Terjemahan belum tersedia.',
+                          en: 'Translation is not available yet.',
+                        )
+                        : ayah.translation,
+                    style: TextStyle(
+                      fontSize: settings.ayahPanelFontSize,
+                      height: 1.7,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              onPressed:
+                  () => showModalBottomSheet<void>(
+                    context: context,
+                    showDragHandle: true,
+                    isScrollControlled: true,
+                    builder:
+                        (context) => DraggableScrollableSheet(
+                          expand: false,
+                          initialChildSize: 0.55,
+                          builder:
+                              (context, controller) => ListView(
+                                controller: controller,
+                                padding: const EdgeInsets.fromLTRB(
+                                  24,
+                                  8,
+                                  24,
+                                  32,
+                                ),
+                                children: [
+                                  Text(
+                                    'Tafsir • $surahName ${ayah.surahId}:${ayah.number}',
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    ayah.tafsir.trim().isEmpty
+                                        ? tr(
+                                          ref,
+                                          id: 'Tafsir belum tersedia.',
+                                          en: 'Tafsir is not available yet.',
+                                        )
+                                        : ayah.tafsir,
+                                    style: TextStyle(
+                                      fontSize: settings.ayahPanelFontSize,
+                                      height: 1.8,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                        ),
+                  ),
+              child: const Text('Tafsir'),
+            ),
           ],
         ),
       ),
@@ -232,7 +312,15 @@ class _GrammarSection extends ConsumerWidget {
             '${tr(ref, id: 'Gagal memuat analisis', en: 'Failed to load analysis')}: $e',
           ),
       data: (words) {
-        if (words.isEmpty) return const SizedBox.shrink();
+        if (words.isEmpty) {
+          return Text(
+            tr(
+              ref,
+              id: 'Analisis kata belum tersedia.',
+              en: 'Word analysis is not available yet.',
+            ),
+          );
+        }
 
         final filtered =
             ui.filter == null
@@ -243,25 +331,71 @@ class _GrammarSection extends ConsumerWidget {
                     )
                     .toList();
 
-        final rootCount = <String, int>{};
+        final rootCount = <int, int>{};
         for (var g in words) {
-          rootCount[g.rootAr] = (rootCount[g.rootAr] ?? 0) + 1;
+          if (g.hasRoot) {
+            rootCount[g.rootWordId] = (rootCount[g.rootWordId] ?? 0) + 1;
+          }
         }
 
+        // One tile per word position; multiple root annotations stay in its popup.
+        final grouped = <int, List<Grammar>>{};
+        for (final word in filtered) {
+          grouped.putIfAbsent(word.wordNumber, () => []).add(word);
+        }
+        final positions = grouped.keys.toList()..sort();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _GrammarToolbar(),
-            const SizedBox(height: 8),
-            ...filtered.map((g) {
-              final sameRoot = rootCount[g.rootAr]! > 1;
-              return _GrammarCard(
-                grammar: g,
-                type: detectGrammarType(g: g, isId: isId),
-                highlightRoot: ui.highlightRoot && sameRoot,
-                learningMode: ui.learningMode,
-              );
-            }),
+            if (filtered.isEmpty)
+              Text(
+                tr(
+                  ref,
+                  id: 'Tidak ada kata dalam kategori ini.',
+                  en: 'No words in this category.',
+                ),
+              ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final tileWidth =
+                    constraints.maxWidth < 500
+                        ? (constraints.maxWidth - 24) / 3
+                        : 170.0;
+                return Wrap(
+                  textDirection: TextDirection.rtl,
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 12,
+                  runSpacing: 20,
+                  children: [
+                    for (final position in positions)
+                      SizedBox(
+                        width: tileWidth,
+                        child: _WordTile(
+                          analyses: grouped[position]!,
+                          highlightRoot:
+                              ui.highlightRoot &&
+                              grouped[position]!.any(
+                                (g) =>
+                                    g.hasRoot &&
+                                    (rootCount[g.rootWordId] ?? 0) > 1,
+                              ),
+                          learningMode: ui.learningMode,
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+            ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              title: Text(
+                tr(ref, id: 'Pilihan belajar', en: 'Study options'),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              children: [_GrammarToolbar()],
+            ),
           ],
         );
       },
@@ -315,15 +449,16 @@ class _GrammarToolbar extends ConsumerWidget {
         const SizedBox(height: 8),
 
         // ===== MODE BAR =====
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+        Wrap(
+          alignment: WrapAlignment.end,
+          spacing: 8,
+          runSpacing: 8,
           children: [
             FilterChip(
               label: Text(tr(ref, id: 'Sorot Akar Kata', en: 'Highlight Root')),
               selected: ui.highlightRoot,
               onSelected: (_) => n.toggleHighlightRoot(),
             ),
-            const SizedBox(width: 8),
             FilterChip(
               label: Text(tr(ref, id: 'Mode Belajar', en: 'Learning Mode')),
               selected: ui.learningMode,
@@ -351,101 +486,111 @@ class _GrammarToolbar extends ConsumerWidget {
    GRAMMAR CARD
 ============================================================ */
 
-class _GrammarCard extends ConsumerWidget {
-  final Grammar grammar;
-  final GrammarType type;
+class _WordTile extends ConsumerWidget {
+  final List<Grammar> analyses;
   final bool highlightRoot;
   final bool learningMode;
 
-  const _GrammarCard({
-    required this.grammar,
-    required this.type,
+  const _WordTile({
+    required this.analyses,
     required this.highlightRoot,
     required this.learningMode,
   });
 
-  Color _color(BuildContext context) {
-    switch (type) {
-      case GrammarType.fiil:
-        return Colors.red;
-      case GrammarType.isim:
-        return Colors.blue;
-      case GrammarType.harf:
-        return Colors.green;
-      default:
-        return Colors.grey;
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isId = ref.watch(settingsProvider).language == 'id';
+    final thisContext = context;
+    final settings = ref.watch(settingsProvider);
+    final isId = settings.language == 'id';
+    final grammar = analyses.first;
     final meaning = isId ? grammar.meaningId : grammar.meaningEn;
-    final grammarDesc = isId ? grammar.grammarDescId : grammar.grammarDescEn;
-
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
-      onTap:
-          () => showDialog(
-            context: context,
-            builder: (_) => GrammarPopup(grammar: grammar),
+    final description = isId ? grammar.grammarDescId : grammar.grammarDescEn;
+    final colors = Theme.of(context).colorScheme;
+    return Semantics(
+      key: ValueKey('word-${grammar.surahId}-${grammar.ayahNumber}-${grammar.wordNumber}'),
+      button: true,
+      label: '${isId ? 'Kata' : 'Word'} ${grammar.wordNumber}',
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap:
+            () => showDialog<void>(
+              context: context,
+              builder:
+                  (context) =>
+                      analyses.length == 1
+                          ? GrammarPopup(grammar: grammar)
+                          : SimpleDialog(
+                            title: Text(
+                              tr(
+                                ref,
+                                id: 'Analisis akar kata',
+                                en: 'Root analyses',
+                              ),
+                            ),
+                            children: [
+                              for (final item in analyses)
+                                SimpleDialogOption(
+                                  child: Text(
+                                    item.rootAr.isEmpty ? '—' : item.rootAr,
+                                    textDirection: TextDirection.rtl,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    showDialog<void>(
+                                      context: thisContext,
+                                      builder:
+                                          (_) => GrammarPopup(grammar: item),
+                                    );
+                                  },
+                                ),
+                            ],
+                          ),
+            ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+          decoration: BoxDecoration(
+            color:
+                highlightRoot
+                    ? colors.primaryContainer.withValues(alpha: 0.5)
+                    : null,
+            border: Border(bottom: BorderSide(color: colors.outlineVariant)),
           ),
-      child: Card(
-        elevation: 1,
-        margin: const EdgeInsets.symmetric(vertical: 6),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        color:
-            highlightRoot
-                ? Theme.of(context).colorScheme.primary.withOpacity(0.08)
-                : null,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // ===== WORD =====
               Text(
-                grammar.wordAr,
+                grammar.wordAr.isEmpty ? '—' : grammar.wordAr,
                 textDirection: TextDirection.rtl,
-                style: const TextStyle(
-                  fontFamily: 'LPMQ',
-                  fontSize: 26,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-
-              const SizedBox(height: 6),
-
-              // ===== MEANING =====
-              Text(
-                meaning.isEmpty ? '-' : meaning,
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Roboto',
-                  color: Colors.grey.shade700,
+                  fontFamily: 'LPMQ',
+                  fontSize: settings.arabicFontSize,
+                  height: 2,
                 ),
               ),
-
+              const SizedBox(height: 8),
+              Text(
+                meaning.trim().isEmpty ? '—' : meaning,
+                textDirection: TextDirection.ltr,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: settings.ayahPanelFontSize,
+                  height: 1.5,
+                  color: colors.onSurfaceVariant,
+                ),
+              ),
               if (learningMode) ...[
-                const Divider(height: 16),
-
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Chip(
-                    label: Text(grammarDesc),
-                    backgroundColor: _color(context).withOpacity(0.15),
-                  ),
-                ),
-
-                const SizedBox(height: 4),
-
+                const SizedBox(height: 8),
                 Text(
-                  isId
-                      ? 'Akar: ${grammar.rootAr} (${grammar.rootCode})'
-                      : 'Root: ${grammar.rootAr} (${grammar.rootEn})',
-                  style: const TextStyle(fontSize: 12, fontFamily: 'Roboto'),
+                  description.isEmpty ? '—' : description,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
+                if (grammar.hasRoot)
+                  Text(
+                    grammar.rootAr,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(color: colors.primary),
+                  ),
               ],
             ],
           ),
@@ -471,7 +616,7 @@ class _AyahHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'QS ${ayah.id}:${ayah.number}',
+          'QS ${ayah.surahId}:${ayah.number}',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         Icon(Icons.menu_book_outlined, color: Theme.of(context).primaryColor),

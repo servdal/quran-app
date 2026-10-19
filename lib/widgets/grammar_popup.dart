@@ -9,10 +9,7 @@ import '../providers/settings_provider.dart';
 class GrammarPopup extends ConsumerWidget {
   final Grammar grammar;
 
-  const GrammarPopup({
-    super.key,
-    required this.grammar,
-  });
+  const GrammarPopup({super.key, required this.grammar});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,26 +17,29 @@ class GrammarPopup extends ConsumerWidget {
     final isId = settings.language == 'id';
 
     final meaning = isId ? grammar.meaningId : grammar.meaningEn;
-    final grammarDesc =
-        isId ? grammar.grammarDescId : grammar.grammarDescEn;
+    final grammarDesc = isId ? grammar.grammarDescId : grammar.grammarDescEn;
 
     return AlertDialog(
       title: Column(
         children: [
           Text(
-            grammar.wordAr,
+            grammar.wordAr.trim().isEmpty ? '—' : grammar.wordAr,
             textDirection: TextDirection.rtl,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: 'LPMQ',
-              fontSize: 32,
-            ),
+            style: const TextStyle(fontFamily: 'LPMQ', fontSize: 32),
           ),
           const SizedBox(height: 8),
           Chip(
-            label: Text(grammarDesc.isEmpty ? '-' : grammarDesc),
-            backgroundColor:
-                Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            label: Text(
+              grammarDesc.trim().isEmpty
+                  ? (isId
+                      ? 'Analisis belum tersedia'
+                      : 'Analysis not available')
+                  : grammarDesc,
+            ),
+            backgroundColor: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.1),
           ),
         ],
       ),
@@ -50,7 +50,9 @@ class GrammarPopup extends ConsumerWidget {
             _info(
               context,
               isId ? 'Arti' : 'Meaning',
-              meaning,
+              meaning.trim().isEmpty
+                  ? (isId ? 'Arti belum tersedia' : 'Meaning not available')
+                  : meaning,
             ),
             const Divider(),
 
@@ -64,11 +66,7 @@ class GrammarPopup extends ConsumerWidget {
               isId ? 'Akar Kata (English)' : 'Root (English)',
               grammar.rootEn,
             ),
-            _info(
-              context,
-              isId ? 'Kode Akar' : 'Root Code',
-              grammar.rootCode,
-            ),
+            _info(context, isId ? 'Kode Akar' : 'Root Code', grammar.rootCode),
             const Divider(),
 
             _info(
@@ -103,15 +101,13 @@ class GrammarPopup extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: RichText(
         text: TextSpan(
-          style: DefaultTextStyle.of(context)
-              .style
-              .copyWith(fontSize: 15),
+          style: DefaultTextStyle.of(context).style.copyWith(fontSize: 15),
           children: [
             TextSpan(
               text: '$title:\n',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            TextSpan(text: value.isEmpty ? '-' : value),
+            TextSpan(text: value.trim().isEmpty ? '—' : value),
           ],
         ),
       ),

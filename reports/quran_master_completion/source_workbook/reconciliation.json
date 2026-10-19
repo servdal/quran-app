@@ -1,0 +1,16 @@
+{
+  "source_path": "/Users/duidev/Documents/kreatif project/Alquran/Quran Data Sheet/master_filled.xlsx",
+  "source_sha256": "0329b04c9cccdf778f41977639439996939602e4aefa0ee90546d8de19afdfb2",
+  "sheet": "master_filled",
+  "source_rows": 53924,
+  "wordno_zero_rows": 151,
+  "positive_wordno_rows": 53773,
+  "baseline_rows": 53709,
+  "exact_positive_rows_matched": 53681,
+  "positive_rows_not_exactly_matched": 92,
+  "baseline_rows_not_in_positive_source": 28,
+  "zero_rows_matching_other_fields_in_baseline": 0,
+  "zero_matching_database_ids": [],
+  "completion_logs_using_those_ids": [],
+  "note": "Excel has no id column. Match by all twelve field values, normalizing numeric storage to strings. Excel row numbers are not database ids."
+}

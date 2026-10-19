@@ -5,7 +5,8 @@ import 'package:sqflite/sqflite.dart';
 
 class DBHelper {
   static Database? _db;
-  static const int _dbVersion = 3;
+  // v5 refreshes word data with normalized optional fields and cleanup provenance.
+  static const int _dbVersion = 5;
   static const String _dbName = 'quran.db';
   static const String _assetDbPath = 'assets/database/quran.db';
 

@@ -1,12 +1,7 @@
 // lib/models/grammar_model.dart
 
 /// Jenis kata Nahwu
-enum GrammarType {
-  fiil,
-  isim,
-  harf,
-  unknown,
-}
+enum GrammarType { fiil, isim, harf, unknown }
 
 class Grammar {
   final int id;
@@ -53,26 +48,31 @@ class Grammar {
   /// Factory dari SQLite
   /// =========================
   factory Grammar.fromDb(Map<String, dynamic> row) {
+    int number(String key) => int.tryParse('${row[key] ?? ''}') ?? 0;
+    String text(String key) => row[key]?.toString().trim() ?? '';
+
     return Grammar(
-      id: row['id'] as int,
-      rootAr: (row['RootAr'] ?? '') as String,
-      rootCode: (row['RootCode'] ?? '') as String,
-      rootEn: (row['RootEn'] ?? '') as String,
-      rootWordId: (row['RootWordId'] ?? 0) as int,
-      surahId: row['ChapterNo'] as int,
-      ayahNumber: row['VerseNo'] as int,
-      wordAr: (row['WordAr'] ?? '') as String,
-      wordNumber: (row['WordNo'] ?? 0) as int,
-      meaningEn: (row['MeaningEn'] ?? '') as String,
-      meaningId: (row['MeaningId'] ?? '') as String,
-      grammarDescEn: (row['GrammarFormDesc'] ?? '') as String,
-      grammarDescId: (row['GrammarFormDescID'] ?? '') as String,
+      id: number('id'),
+      rootAr: text('RootAr'),
+      rootCode: text('RootCode'),
+      rootEn: text('RootEn'),
+      rootWordId: number('RootWordId'),
+      surahId: number('ChapterNo'),
+      ayahNumber: number('VerseNo'),
+      wordAr: text('WordAr'),
+      wordNumber: number('WordNo'),
+      meaningEn: text('MeaningEn'),
+      meaningId: text('MeaningId'),
+      grammarDescEn: text('GrammarFormDesc'),
+      grammarDescId: text('GrammarFormDescID'),
     );
   }
 
   /// =========================
   /// Helper untuk UI
   /// =========================
+
+  bool get hasRoot => rootWordId > 0 && rootAr.trim().isNotEmpty;
 
   GrammarType get type {
     final t = grammarDescEn.toLowerCase();

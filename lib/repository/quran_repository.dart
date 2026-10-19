@@ -210,19 +210,12 @@ class QuranRepository {
     final lang = await _getLanguage();
 
     final translationCol =
-        lang == 'id'
-            ? 'translation_aya_text_kemenag'
-            : 'translation_aya_text';
+        lang == 'id' ? 'translation_aya_text_kemenag' : 'translation_aya_text';
 
     final translitCol =
-        lang == 'id'
-            ? 'transliteration_kemenag'
-            : 'transliteration';
+        lang == 'id' ? 'transliteration_kemenag' : 'transliteration';
 
-    final tafsirCol =
-        lang == 'id'
-            ? 'tafsir_jalalayn'
-            : 'tafsir_jalalayn_en';
+    final tafsirCol = lang == 'id' ? 'tafsir_jalalayn' : 'tafsir_jalalayn_en';
 
     final rows = await db.rawQuery(
       '''
@@ -253,14 +246,9 @@ class QuranRepository {
 
     return rows.first;
   }
-  Future<Ayah?> getAyah({
-    required int surahId,
-    required int ayahNumber,
-  }) async {
-    final row = await getAyahRow(
-      surahId: surahId,
-      ayahNumber: ayahNumber,
-    );
+
+  Future<Ayah?> getAyah({required int surahId, required int ayahNumber}) async {
+    final row = await getAyahRow(surahId: surahId, ayahNumber: ayahNumber);
 
     if (row == null) return null;
 
@@ -292,7 +280,8 @@ class QuranRepository {
       FROM master_edited
       WHERE ChapterNo = ?
         AND VerseNo = ?
-      ORDER BY WordNo
+        AND WordNo > 0
+      ORDER BY WordNo, id
     ''',
       [surahId, ayahNumber],
     );

@@ -55,13 +55,33 @@ class HadithChapter {
   final String title;
   final int count;
   final int bookCount;
+  final String? titleId;
+  final String? titleEn;
+  final List<String> sourceIds;
+  final List<String> sourceTitles;
 
-  const HadithChapter(this.id, this.title, this.count, this.bookCount);
+  const HadithChapter(
+    this.id,
+    this.title,
+    this.count,
+    this.bookCount, {
+    this.titleId,
+    this.titleEn,
+    this.sourceIds = const [],
+    this.sourceTitles = const [],
+  });
+
+  String label(String language) => switch (language) {
+    'id' => titleId ?? title,
+    'en' => titleEn ?? title,
+    _ => titleEn ?? title,
+  };
 }
 
 class HadithRepository {
   static final instance = HadithRepository();
   Future<Database>? _opening;
+  Future<List<Map<String, Object?>>>? _chapterMappings;
 
   HadithRepository({Database? database})
     : _opening = database == null ? null : Future.value(database);
@@ -70,7 +90,7 @@ class HadithRepository {
 
   Future<Database> _openWithRetry() async {
     try {
-      final path = p.join(await getDatabasesPath(), 'hadith-v2.db');
+      final path = p.join(await getDatabasesPath(), 'hadith-v3.db');
       if (!await File(path).exists()) {
         await Directory(p.dirname(path)).create(recursive: true);
         final data = await rootBundle.load('assets/database/hadith.db');
@@ -102,6 +122,11 @@ class HadithRepository {
           COUNT(DISTINCT number) AS mapped_count FROM hadith_chapters GROUP BY book_id
       ) c ON c.book_id=b.id ORDER BY b.sort_order
     ''');
+    final chapterCounts = <String, int>{};
+    for (final row in rows) {
+      chapterCounts[row['id'] as String] =
+          (await chapters(bookId: row['id'] as String)).length;
+    }
     return rows
         .map(
           (r) => HadithBook(
@@ -110,46 +135,65 @@ class HadithRepository {
             r['hadith_count'] as int,
             englishCount: r['english_count'] as int,
             gradedCount: r['graded_count'] as int,
-            chapterCount: r['chapter_count'] as int,
+            chapterCount: chapterCounts[r['id']]!,
             mappedCount: r['mapped_count'] as int,
           ),
         )
         .toList();
   }
 
+  Future<List<Map<String, Object?>>> _mappings() async =>
+      _chapterMappings ??= (await database).rawQuery(
+        'SELECT c.*, hc.book_id, hc.number FROM chapters c '
+        'JOIN hadith_chapters hc ON hc.chapter_id=c.id ORDER BY c.title, c.id',
+      );
+
   Future<List<HadithChapter>> chapters({String? bookId}) async {
-    final rows = await (await database).rawQuery('''
-      SELECT c.id, c.title, COUNT(*) AS total, COUNT(DISTINCT hc.book_id) AS book_count FROM chapters c
-      JOIN hadith_chapters hc ON hc.chapter_id = c.id
-      ${bookId == null ? '' : 'WHERE hc.book_id = ?'}
-      GROUP BY c.id, c.title ORDER BY c.title
-    ''', bookId == null ? [] : [bookId]);
-    return rows
-        .map(
-          (r) => HadithChapter(
-            r['id'] as String,
-            r['title'] as String,
-            r['total'] as int,
-            r['book_count'] as int,
-          ),
-        )
-        .toList();
+    final groups = <String, List<Map<String, Object?>>>{};
+    for (final row in await _mappings()) {
+      final key = jsonEncode([
+        row['title_id'] ?? row['title'],
+        row['title_en'] ?? row['title'],
+      ]);
+      groups.putIfAbsent(key, () => []).add(row);
+    }
+    final result = <HadithChapter>[];
+    for (final rows in groups.values) {
+      final visible =
+          rows.where((r) => bookId == null || r['book_id'] == bookId).toList();
+      if (visible.isEmpty) continue;
+      final first = rows.first;
+      result.add(
+        HadithChapter(
+          first['id'] as String,
+          first['title'] as String,
+          visible
+              .map((r) => jsonEncode([r['book_id'], r['number']]))
+              .toSet()
+              .length,
+          visible.map((r) => r['book_id']).toSet().length,
+          titleId: first['title_id'] as String?,
+          titleEn: first['title_en'] as String?,
+          sourceIds: rows.map((r) => r['id'] as String).toSet().toList(),
+          sourceTitles: rows.map((r) => r['title'] as String).toSet().toList(),
+        ),
+      );
+    }
+    return result;
   }
 
   Future<List<HadithChapter>> chaptersForEntry(
     String bookId,
     int number,
   ) async {
-    final rows = await (await database).rawQuery(
-      'SELECT c.id, c.title FROM chapters c JOIN hadith_chapters hc ON hc.chapter_id=c.id '
-      'WHERE hc.book_id=? AND hc.number=? ORDER BY c.title',
-      [bookId, number],
-    );
-    return rows
-        .map(
-          (r) => HadithChapter(r['id'] as String, r['title'] as String, 1, 1),
-        )
-        .toList();
+    final ids =
+        (await _mappings())
+            .where((r) => r['book_id'] == bookId && r['number'] == number)
+            .map((r) => r['id'])
+            .toSet();
+    return (await chapters(
+      bookId: bookId,
+    )).where((c) => c.sourceIds.any(ids.contains)).toList();
   }
 
   Future<HadithEntry?> entry(String bookId, int number) async {
@@ -175,11 +219,18 @@ class HadithRepository {
       args.add(bookId);
     }
     if (chapterId != null) {
+      var ids = [chapterId];
+      for (final chapter in await chapters()) {
+        if (chapter.sourceIds.contains(chapterId)) {
+          ids = chapter.sourceIds;
+          break;
+        }
+      }
       conditions.add(
         'EXISTS (SELECT 1 FROM hadith_chapters hc WHERE '
-        'hc.book_id = h.book_id AND hc.number = h.number AND hc.chapter_id = ?)',
+        'hc.book_id = h.book_id AND hc.number = h.number AND hc.chapter_id IN (${List.filled(ids.length, '?').join(',')}))',
       );
-      args.add(chapterId);
+      args.addAll(ids);
     }
     final keyword = query.trim();
     if (keyword.isNotEmpty) {

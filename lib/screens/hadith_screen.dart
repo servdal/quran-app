@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:quran_app/providers/hadith_reader_provider.dart';
-import 'package:quran_app/data/hadith_chapter_labels.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -120,23 +119,11 @@ class _HadithScreenState extends ConsumerState<HadithScreen> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      _Notice(
-                        _t(
-                          ref,
-                          'Metadata bab dan penilaian tersedia untuk sebagian riwayat. Teks Arab–Indonesia tetap lengkap sesuai dataset lokal.',
-                          'Chapter metadata and grading cover selected matched narrations. The local Arabic–Indonesian corpus is preserved.',
-                        ),
-                      ),
-                      const SizedBox(height: 12),
                       TextButton.icon(
                         onPressed: () => _showHadithSources(context),
                         icon: const Icon(Icons.info_outline),
                         label: Text(
-                          _t(
-                            ref,
-                            'Tentang koleksi & sumber data',
-                            'About this library & its sources',
-                          ),
+                          _t(ref, 'Tentang koleksi', 'About this library'),
                         ),
                       ),
                     ],
@@ -522,9 +509,11 @@ class _HadithDetailScreenState extends ConsumerState<HadithDetailScreen>
       future: _translation,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Padding(
-            padding: EdgeInsets.all(32),
-            child: Center(child: CircularProgressIndicator()),
+          return _translationBody(
+            widget.entry.translation,
+            style,
+            embedded: embedded,
+            translating: true,
           );
         }
         return _translationBody(
@@ -541,6 +530,7 @@ class _HadithDetailScreenState extends ConsumerState<HadithDetailScreen>
     String text,
     TextStyle? style, {
     bool fallback = false,
+    bool translating = false,
     bool embedded = false,
   }) => SelectionArea(
     child: ListView(
@@ -552,12 +542,32 @@ class _HadithDetailScreenState extends ConsumerState<HadithDetailScreen>
           _t(
             ref,
             'Terjemahan Indonesia',
-            fallback ? 'Indonesian translation' : 'Translation',
+            fallback || translating ? 'Indonesian translation' : 'Translation',
           ),
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        if (!fallback && _language == 'en' && widget.entry.english != null)
-          const Text('English • fawazahmed0/hadith-api'),
+        if (translating) ...[
+          const LinearProgressIndicator(),
+          const SizedBox(height: 12),
+          Text(
+            _t(
+              ref,
+              'Sedang menerjemahkan. Teks Indonesia ditampilkan sementara.',
+              'Translating. Showing Indonesian text while you wait.',
+            ),
+          ),
+        ],
+        if (!fallback &&
+            !translating &&
+            _language == 'en' &&
+            (widget.entry.english?.trim().isNotEmpty ?? false))
+          const Text('English'),
+        if (!fallback &&
+            !translating &&
+            _language != 'id' &&
+            !(_language == 'en' &&
+                (widget.entry.english?.trim().isNotEmpty ?? false)))
+          Text(_t(ref, 'Terjemahan mesin', 'Machine translation')),
         if (fallback) ...[
           const SizedBox(height: 12),
           _Notice(
@@ -579,29 +589,16 @@ class _HadithDetailScreenState extends ConsumerState<HadithDetailScreen>
           key: const ValueKey('hadith-translation-text'),
           style: style,
           textDirection:
-              !fallback && ['ar', 'fa', 'he', 'ur'].contains(_language)
+              !fallback &&
+                      !translating &&
+                      ['ar', 'fa', 'he', 'ur'].contains(_language)
                   ? TextDirection.rtl
                   : TextDirection.ltr,
         ),
-        const SizedBox(height: 28),
-        _Notice(
-          _t(
-            ref,
-            'Nomor utama mengikuti dataset Indonesia. Metadata tambahan hanya tersedia pada riwayat yang cocok.',
-            'Primary numbering follows the Indonesian dataset. Additional metadata is available only for matched narrations.',
-          ),
-        ),
-        if (widget.entry.sourceReference != null) ...[
-          const SizedBox(height: 12),
-          Text(
-            '${_t(ref, 'Referensi tambahan', 'Additional reference')}: ${widget.entry.sourceReference}',
-          ),
-          const Text('fawazahmed0/hadith-api'),
-        ],
         if (widget.entry.grades.isNotEmpty) ...[
           const SizedBox(height: 16),
           Text(
-            _t(ref, 'Penilaian sumber', 'Source grading'),
+            _t(ref, 'Derajat hadis', 'Hadith grading'),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           for (final grade in widget.entry.grades)
@@ -698,18 +695,6 @@ class _HadithChaptersViewState extends ConsumerState<HadithChaptersView> {
                 (value) => setState(() => _query = value.trim().toLowerCase()),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            _t(
-              ref,
-              'Cakupan bab belum lengkap. Kelompok lintas kitab memakai judul sumber yang sama, bukan penyamaan tema. Judul yang belum diterjemahkan ditampilkan dalam bahasa sumber.',
-              'Chapter coverage is partial. Cross-collection groups share the same source title; they are not a thematic concordance. Untranslated titles use the source language.',
-            ),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ),
-        const SizedBox(height: 8),
         Expanded(
           child: FutureBuilder<List<HadithChapter>>(
             future: _chapters,
@@ -724,13 +709,25 @@ class _HadithChaptersViewState extends ConsumerState<HadithChaptersView> {
                   snapshot.data!
                       .where(
                         (chapter) =>
-                            chapter.title.toLowerCase().contains(_query) ||
-                            hadithChapterLabel(
-                              chapter.title,
-                              language,
-                            ).toLowerCase().contains(_query),
+                            chapter
+                                .label('id')
+                                .toLowerCase()
+                                .contains(_query) ||
+                            chapter
+                                .label('en')
+                                .toLowerCase()
+                                .contains(_query) ||
+                            chapter.sourceTitles.any(
+                              (title) => title.toLowerCase().contains(_query),
+                            ),
                       )
-                      .toList();
+                      .toList()
+                    ..sort(
+                      (a, b) => a
+                          .label(language)
+                          .toLowerCase()
+                          .compareTo(b.label(language).toLowerCase()),
+                    );
               if (chapters.isEmpty) {
                 return Center(
                   child: Text(
@@ -742,13 +739,12 @@ class _HadithChaptersViewState extends ConsumerState<HadithChaptersView> {
                 itemCount: chapters.length,
                 itemBuilder: (context, index) {
                   final chapter = chapters[index];
-                  final label = hadithChapterLabel(chapter.title, language);
+                  final label = chapter.label(language);
                   return ListTile(
                     title: Text(label),
                     subtitle: Text(
-                      '${label != chapter.title ? '${chapter.title}\n' : ''}${chapter.count} ${_t(ref, 'hadis', 'hadiths')} • ${chapter.bookCount} ${_t(ref, 'kitab', 'collections')}',
+                      '${chapter.count} ${_t(ref, 'hadis', 'hadiths')} • ${chapter.bookCount} ${_t(ref, 'kitab', 'collections')}',
                     ),
-                    isThreeLine: label != chapter.title,
                     trailing: const Icon(Icons.chevron_right),
                     onTap:
                         () => Navigator.push(
@@ -909,7 +905,9 @@ class _HadithBookmarksViewState extends ConsumerState<HadithBookmarksView> {
                     title: Text('${entry.bookTitle} • No. ${entry.number}'),
                     subtitle: Text(
                       ref.watch(settingsProvider).language == 'en'
-                          ? entry.english ?? entry.translation
+                          ? (entry.english?.trim().isNotEmpty ?? false)
+                              ? entry.english!
+                              : entry.translation
                           : entry.translation,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -1321,7 +1319,7 @@ class _HadithCollectionCard extends ConsumerWidget {
                 _t(
                   ref,
                   '${_number(ref, book.mappedCount)} hadis memiliki informasi bab',
-                  '${_number(ref, book.mappedCount)} narrations have chapter metadata',
+                  '${_number(ref, book.mappedCount)} hadiths organized by chapter',
                 ),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -1351,8 +1349,8 @@ class _HadithEntryBadges extends ConsumerWidget {
         _InfoPill(
           label: _t(
             ref,
-            '${entry.grades.length} penilaian sumber',
-            '${entry.grades.length} source gradings',
+            '${entry.grades.length} penilaian',
+            '${entry.grades.length} gradings',
           ),
           icon: Icons.fact_check_outlined,
         ),
@@ -1413,7 +1411,9 @@ class _HadithListCard extends ConsumerWidget {
               const SizedBox(height: 12),
               Text(
                 isEnglish
-                    ? entry.english ?? entry.translation
+                    ? (entry.english?.trim().isNotEmpty ?? false)
+                        ? entry.english!
+                        : entry.translation
                     : entry.translation,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
@@ -1465,8 +1465,8 @@ class _HadithSourcesSheet extends ConsumerWidget {
         Text(
           _t(
             ref,
-            'Enam kitab dalam bahasa Arab dan Indonesia. Nomor utama selalu mengikuti dataset ini.',
-            'Six Arabic–Indonesian collections. Primary narration numbers follow this dataset.',
+            'Enam koleksi hadis dengan teks Arab dan terjemahan Indonesia.',
+            'Six hadith collections with Arabic text and Indonesian translations.',
           ),
         ),
         const SizedBox(height: 24),
@@ -1476,10 +1476,10 @@ class _HadithSourcesSheet extends ConsumerWidget {
         Text(
           _t(
             ref,
-            'Teks Inggris, bagian/bab, referensi dan penilaian dipadankan melalui kecocokan teks lengkap. '
-                'Pasangan ambigu tidak ditambahkan. Penilaian ditampilkan sesuai nama penilainya.',
-            'English text, sections, references and grading are linked by full-text matches. '
-                'Ambiguous matches are excluded. Grading retains each evaluator’s name.',
+            'Terjemahan Inggris, bab, dan derajat hadis tersedia untuk sebagian riwayat. '
+                'Setiap penilaian disertai nama ulama yang menilainya.',
+            'English translations, chapters, and grading are available for some narrations. '
+                'Each grading includes the name of the scholar.',
           ),
         ),
         const SizedBox(height: 24),
@@ -1491,10 +1491,8 @@ class _HadithSourcesSheet extends ConsumerWidget {
         Text(
           _t(
             ref,
-            'Bab hanya mencakup riwayat yang sudah cocok. Judul sumber yang sama dikelompokkan lintas kitab; '
-                'judul berbeda tidak otomatis dianggap satu tema. Nomor sumber tambahan dapat berbeda dari nomor utama.',
-            'Chapters cover matched narrations only. Identical source titles group across collections; '
-                'different titles are not automatically treated as one topic. Additional source numbers may differ from primary numbers.',
+            'Telusuri hadis berdasarkan bab atau pilih kitab yang ingin dibaca.',
+            'Browse hadiths by chapter or choose a collection to read.',
           ),
         ),
         const SizedBox(height: 24),
@@ -1506,10 +1504,10 @@ class _HadithSourcesSheet extends ConsumerWidget {
         Text(
           _t(
             ref,
-            'Arab dan Indonesia tersedia offline. Inggris memakai teks sumber lokal jika tersedia. '
-                'Terjemahan tambahan melalui layanan mesin membutuhkan internet.',
-            'Arabic and Indonesian are offline. English uses local source text when available. '
-                'Additional machine translations require an internet connection.',
+            'Teks Arab dan Indonesia dapat dibaca tanpa internet. '
+                'Terjemahan bahasa lain memerlukan internet saat pertama kali dibuka.',
+            'Arabic and Indonesian texts are available offline. '
+                'Other translations need internet access the first time you open them.',
           ),
         ),
         const SizedBox(height: 24),
@@ -1581,8 +1579,8 @@ class _HadithMetadataSheetState extends ConsumerState<HadithMetadataSheet> {
                   child: Text(
                     _t(
                       ref,
-                      'Bab belum dipadankan untuk riwayat ini.',
-                      'This narration has no matched chapter metadata yet.',
+                      'Bab untuk hadis ini belum tersedia.',
+                      'Chapter information is not yet available for this hadith.',
                     ),
                   ),
                 );
@@ -1593,13 +1591,7 @@ class _HadithMetadataSheetState extends ConsumerState<HadithMetadataSheet> {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.segment_rounded),
-                      title: Text(hadithChapterLabel(chapter.title, language)),
-                      subtitle:
-                          language == 'id' &&
-                                  hadithChapterLabel(chapter.title, language) !=
-                                      chapter.title
-                              ? Text(chapter.title)
-                              : null,
+                      title: Text(chapter.label(language)),
                       trailing: const Icon(Icons.arrow_forward_rounded),
                       onTap: () {
                         final navigator = Navigator.of(context);
@@ -1608,10 +1600,7 @@ class _HadithMetadataSheetState extends ConsumerState<HadithMetadataSheet> {
                           MaterialPageRoute<void>(
                             builder:
                                 (_) => HadithListScreen(
-                                  title: hadithChapterLabel(
-                                    chapter.title,
-                                    language,
-                                  ),
+                                  title: chapter.label(language),
                                   chapterId: chapter.id,
                                 ),
                           ),
@@ -1638,8 +1627,8 @@ class _HadithMetadataSheetState extends ConsumerState<HadithMetadataSheet> {
             Text(
               _t(
                 ref,
-                'Nomor tambahan mengikuti penomoran sumber pengayaan.',
-                'The additional number follows the enrichment source’s numbering.',
+                'Nomor hadis dapat berbeda antar edisi kitab.',
+                'Hadith numbers may vary between editions.',
               ),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -1654,8 +1643,8 @@ class _HadithMetadataSheetState extends ConsumerState<HadithMetadataSheet> {
             Text(
               _t(
                 ref,
-                'Penilaian per riwayat belum tersedia dalam metadata ini.',
-                'Per-narration grading is not available in this metadata.',
+                'Derajat hadis ini belum tersedia.',
+                'Grading is not yet available for this hadith.',
               ),
             ),
           for (final grade in entry.grades)

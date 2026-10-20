@@ -141,16 +141,21 @@ klaim verifikasi ilmiah/manual seluruh riwayat.
 - Entri lainnya tetap tersedia dengan teks asli; metadata yang belum cocok dibiarkan kosong.
 
 Tab Bab dapat dicari dan dibuka lintas kitab. Tombol Pilih bab pada daftar kitab
-membatasi bab dan hadis ke kitab tersebut. Pengelompokan hanya menyatukan judul
-sumber yang sama setelah normalisasi; judul berbeda tidak dipaksakan menjadi tema
-yang sama. Label Indonesia tersedia untuk sejumlah judul umum; lainnya menampilkan
-judul sumber. Cakupan bab bersifat parsial dan dijelaskan di layar.
+membatasi bab dan hadis ke kitab tersebut. Seluruh 323 bagian sumber memiliki label
+Indonesia dan Inggris di kolom `title_id` dan `title_en`; `title` mempertahankan
+judul sumber. Bagian dengan pasangan label Indonesia–Inggris yang sama ditampilkan
+sebagai satu kelompok, sehingga ada **187 pilihan bab** tanpa judul kembar.
+Jumlah hadis dihitung unik berdasarkan kitab dan nomor, dan jumlah kitab dihitung
+unik dalam kelompok. Membuka kelompok mencakup seluruh bagian sumber anggotanya;
+filter kitab, pencarian judul sumber, dan tautan dari informasi hadis tetap berlaku.
+Relasi sumber di database dipertahankan. Label mengikuti bahasa pengaturan Al-Qur’an.
+Cakupan bab tetap parsial.
 
 `hadith_enrichment_audit.json` menyimpan hash SHA-256 ke-18 file masukan, revisi,
 metode pencocokan, cakupan per kitab, serta nomor lokal yang belum cocok.
 Tabel `hadith_source_matches` menyimpan nomor sumber dan metode untuk setiap
 pasangan; `source_reference` tidak menggantikan nomor lokal. Database runtime
-memakai nama `hadith-v2.db`, sehingga pemasangan lama mendapatkan aset pengayaan.
+memakai nama `hadith-v3.db`, sehingga pemasangan lama mendapatkan aset pengayaan.
 
 Untuk membangun ulang, unduh repository sumber pada revisi di atas, lalu jalankan:
 
@@ -343,8 +348,12 @@ Label layar mengikuti pengaturan bahasa aplikasi: Indonesia untuk `id`, Inggris
 untuk pilihan lainnya, mengikuti pola layar Al-Qur’an. Detail Hadist memiliki tab
 Teks Arab dan Terjemah; ukuran teks mengikuti pengaturan font Arab dan panel ayat.
 Terjemahan Indonesia tersedia offline. Untuk bahasa lain, permintaan hanya dibuat
-saat tab Terjemah dibuka dan hasil berhasil disimpan dalam cache sesi per hadis
-serta bahasa. Pencarian lokal mencari teks Arab, Indonesia, Inggris yang tersedia, serta nomor lokal.
+saat tab Terjemah atau mode terjemahan dibuka dan hasil berhasil disimpan dalam cache per hadis
+serta bahasa, dan disimpan di perangkat agar tetap tersedia setelah aplikasi dibuka ulang.
+Permintaan bersamaan untuk hadis dan bahasa yang sama digabung menjadi satu.
+Selama menerjemahkan, teks Indonesia tetap terlihat bersama indikator proses.
+Hasil mesin diberi label; respons kosong atau identitas yang tidak cocok tidak disimpan.
+Pencarian lokal mencari teks Arab, Indonesia, Inggris yang tersedia, serta nomor lokal.
 Bahasa Inggris mengutamakan teks sumber yang tersedia offline, lalu memakai backend
 jika belum ada pasangan Inggris. Bahasa lain tetap memakai backend terjemahan.
 
@@ -385,3 +394,9 @@ akar kata, analisis atau tafsir kosong. Kata tanpa akar tidak ikut disorot sebag
 kelompok akar yang sama. Data `WordNo <= 0` tidak dimuat sebagai kata valid.
 Perapian spasi dapat direproduksi dengan `python3 tools/data/tidy_quran_master.py`;
 rincian dan cadangan tercatat di `reports/quran_master_completion/cleanup.json`.
+
+Untuk melengkapi label bab setelah pengayaan ulang:
+
+```sh
+python3 tools/data/localize_hadith_chapters.py
+```

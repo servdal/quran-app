@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
@@ -73,11 +74,27 @@ void main() {
     await tester.tap(find.text('Bab'));
     await settleData(tester);
     expect(find.text('Cari judul bab'), findsOneWidget);
+    await tester.enterText(find.byType(TextField).last, 'Adab dan Akhlak');
+    await settleData(tester);
+    expect(find.widgetWithText(ListTile, 'Adab dan Akhlak'), findsOneWidget);
+    await tester.enterText(find.byType(TextField).last, 'Akikah');
+    await settleData(tester);
+    expect(find.widgetWithText(ListTile, 'Akikah'), findsOneWidget);
     await tester.enterText(find.byType(TextField).last, 'The Book of Fasting');
     await settleData(tester);
-    await tester.tap(find.text('Kitab Puasa'));
+    expect(find.text('Puasa'), findsOneWidget);
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(HadithScreen)),
+    );
+    await container.read(settingsProvider.notifier).setLanguage('en');
     await settleData(tester);
-    expect(find.text('Kitab Puasa'), findsOneWidget);
+    expect(find.text('Fasting'), findsOneWidget);
+    expect(find.text('Puasa'), findsNothing);
+    await container.read(settingsProvider.notifier).setLanguage('id');
+    await settleData(tester);
+    await tester.tap(find.text('Puasa'));
+    await settleData(tester);
+    expect(find.text('Puasa'), findsOneWidget);
     expect(find.byType(Card), findsWidgets);
     expect(tester.takeException(), isNull);
   });
@@ -110,7 +127,7 @@ void main() {
     await settleData(tester);
     await tester.tap(find.text('Translation'));
     await settleData(tester);
-    expect(find.text('English • fawazahmed0/hadith-api'), findsOneWidget);
+    expect(find.text('English'), findsOneWidget);
     expect(find.textContaining('Showing the Indonesian text.'), findsNothing);
   });
   testWidgets(
@@ -164,6 +181,52 @@ void main() {
       expect(requests, 2);
     },
   );
+  testWidgets(
+    'missing translation keeps source visible while server saves result',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      final response = Completer<http.Response>();
+      final service = HadithTranslationService(
+        client: MockClient((_) => response.future),
+      );
+      final container = ProviderContainer(
+        overrides: [
+          hadithTranslationServiceProvider.overrideWithValue(service),
+        ],
+      );
+      addTearDown(container.dispose);
+      final entry = HadithEntry.fromRow({
+        'book_id': 'bukhari',
+        'book_title': 'Bukhari',
+        'number': 999,
+        'arabic': 'ع',
+        'translation': 'Teks sumber tetap terlihat.',
+        'english': '',
+      });
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: MaterialApp(home: HadithDetailScreen(entry: entry)),
+        ),
+      );
+      await settleData(tester);
+      await container.read(settingsProvider.notifier).setLanguage('en');
+      await settleData(tester);
+      await tester.tap(find.text('Translation'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(find.text('Teks sumber tetap terlihat.'), findsWidgets);
+      expect(find.byType(LinearProgressIndicator), findsOneWidget);
+      response.complete(
+        http.Response('{"data":[{"translation":"Translated text"}]}', 200),
+      );
+      await settleData(tester);
+      expect(find.text('Translated text'), findsOneWidget);
+      expect(find.text('Machine translation'), findsOneWidget);
+      expect(find.byType(LinearProgressIndicator), findsNothing);
+    },
+  );
+
   testWidgets('bookmark opens the exact collection and number from its tab', (
     tester,
   ) async {

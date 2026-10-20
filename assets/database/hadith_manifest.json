@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/irsyadulibad/hadits-database",
   "revision": "db43bdaa70ee528a0e663c089d3dab5bb4d855f0",
-  "schema_version": 2,
+  "schema_version": 3,
   "books": [
     {
       "id": "bukhari",
@@ -50,5 +50,13 @@
     "source": "https://github.com/fawazahmed0/hadith-api",
     "revision": "df57907be35291c91ad6a6691180e22ca9920784",
     "audit": "hadith_enrichment_audit.json"
+  },
+  "chapter_labels": {
+    "languages": [
+      "id",
+      "en"
+    ],
+    "count": 323,
+    "source_titles_preserved": true
   }
 }

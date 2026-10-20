@@ -251,7 +251,8 @@ class _LanguageSelectorScreenState
                   children: [
                     _radio(
                       title: "Quran Cloud Tajweed",
-                      subtitle: "Tajwid dari `tajweed_text` dengan parser khusus",
+                      subtitle:
+                          "Tajwid dari `tajweed_text` dengan parser khusus",
                       value: ArabicSource.quranCloudTajweed,
                       group: _arabicSource,
                       onChanged: (v) => setState(() => _arabicSource = v),
@@ -516,62 +517,67 @@ class _LanguageSelectorScreenState
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(18, 18, 18, 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: theme.primaryColor.withOpacity(0.10),
-                    borderRadius: BorderRadius.circular(14),
+      child: Material(
+        type: MaterialType.transparency,
+        borderRadius: BorderRadius.circular(24),
+        clipBehavior: Clip.antiAlias,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(18, 18, 18, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: theme.primaryColor.withOpacity(0.10),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Icon(icon, color: theme.primaryColor, size: 21),
                   ),
-                  child: Icon(icon, color: theme.primaryColor, size: 21),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      if (subtitle != null) ...[
-                        const SizedBox(height: 4),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          subtitle,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            height: 1.45,
-                            color: theme.textTheme.bodySmall?.color
-                                ?.withOpacity(0.82),
+                          title,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
+                        if (subtitle != null) ...[
+                          const SizedBox(height: 4),
+                          Text(
+                            subtitle,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              height: 1.45,
+                              color: theme.textTheme.bodySmall?.color
+                                  ?.withOpacity(0.82),
+                            ),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            Theme(
-              data: theme.copyWith(
-                listTileTheme: theme.listTileTheme.copyWith(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                ),
+                ],
               ),
-              child: child,
-            ),
-          ],
+              const SizedBox(height: 14),
+              Theme(
+                data: theme.copyWith(
+                  listTileTheme: theme.listTileTheme.copyWith(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
+                child: child,
+              ),
+            ],
+          ),
         ),
       ),
     );

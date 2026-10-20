@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:quran_app/repository/hadith_repository.dart';
 import 'package:quran_app/services/hadith_translation_service.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(() => SharedPreferences.setMockInitialValues({}));
   final entry = HadithEntry.fromRow({
     'book_id': 'bukhari',
     'book_title': 'Bukhari',
@@ -89,5 +92,93 @@ void main() {
     );
     expect(await service.translate(entry, 'en'), isNull);
     expect(await service.translate(entry, 'en'), 'English');
+  });
+  test(
+    'blank English uses server and survives a new service instance offline',
+    () async {
+      final missing = HadithEntry.fromRow({
+        'book_id': 'muslim',
+        'book_title': 'Muslim',
+        'number': 10,
+        'arabic': 'ع',
+        'translation': 'Teks Indonesia',
+        'english': '   ',
+      });
+      var requests = 0;
+      final client = MockClient((_) async {
+        requests++;
+        return http.Response(
+          '{"data":[{"translation":"English from server"}]}',
+          200,
+        );
+      });
+      final first = HadithTranslationService(client: client);
+      expect(await first.translate(missing, 'en'), 'English from server');
+      final reopened = HadithTranslationService(
+        client: MockClient((_) async {
+          fail('Saved translation must remain available offline');
+        }),
+      );
+      expect(await reopened.translate(missing, 'en'), 'English from server');
+      expect(requests, 1);
+    },
+  );
+
+  test('concurrent missing translations share one request', () async {
+    var requests = 0;
+    final service = HadithTranslationService(
+      client: MockClient((_) async {
+        requests++;
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+        return http.Response('{"data":[{"translation":"English"}]}', 200);
+      }),
+    );
+    expect(
+      await Future.wait([
+        service.translate(entry, 'en'),
+        service.translate(entry, 'en'),
+      ]),
+      ['English', 'English'],
+    );
+    expect(requests, 1);
+  });
+
+  test('empty or mismatched server results are retried, never saved', () async {
+    var requests = 0;
+    final service = HadithTranslationService(
+      client: MockClient((_) async {
+        requests++;
+        return http.Response(
+          requests == 1
+              ? '{"data":[{"translation":"   "}]}'
+              : requests == 2
+              ? '{"data":[{"book_id":"muslim","translation":"Wrong entry"}]}'
+              : '{"data":[{"translation":"English"}]}',
+          200,
+        );
+      }),
+    );
+    expect(await service.translate(entry, 'en'), isNull);
+    expect(await service.translate(entry, 'en'), isNull);
+    expect(await service.translate(entry, 'en'), 'English');
+    expect(requests, 3);
+  });
+
+  test('a changed source text requests a new translation', () async {
+    var requests = 0;
+    final client = MockClient((_) async {
+      requests++;
+      return http.Response('{"data":[{"translation":"Result"}]}', 200);
+    });
+    await HadithTranslationService(client: client).translate(entry, 'en');
+    final corrected = HadithEntry.fromRow({
+      'book_id': entry.bookId,
+      'book_title': entry.bookTitle,
+      'number': entry.number,
+      'arabic': entry.arabic,
+      'translation': 'Teks diperbaiki',
+    });
+    await HadithTranslationService(client: client).translate(corrected, 'en');
+    expect(requests, 2);
   });
 }

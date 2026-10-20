@@ -48,6 +48,67 @@ void main() {
     },
   );
 
+  test(
+    'every chapter has both labels and follows the selected language',
+    () async {
+      final chapters = await repository.chapters();
+      expect(chapters.length, 187);
+      for (final chapter in chapters) {
+        expect(chapter.titleId?.trim(), isNot(isEmpty));
+        expect(chapter.titleId, isNotNull);
+        expect(chapter.titleEn?.trim(), isNot(isEmpty));
+        expect(chapter.titleEn, isNotNull);
+        expect(chapter.label('id'), chapter.titleId);
+        expect(chapter.label('en'), chapter.titleEn);
+      }
+      final revelation =
+          (await repository.chaptersForEntry('bukhari', 1)).single;
+      expect(revelation.label('id'), 'Permulaan Wahyu');
+      expect(revelation.label('en'), 'Revelation');
+      expect(revelation.title, 'Revelation');
+      expect(await db.rawQuery('PRAGMA foreign_key_check'), isEmpty);
+    },
+  );
+
+  test(
+    'duplicate labels open the union of source chapters without duplicate hadiths',
+    () async {
+      final chapters = await repository.chapters();
+      for (final language in ['id', 'en']) {
+        expect(
+          chapters.map((c) => c.label(language)).toSet().length,
+          chapters.length,
+        );
+      }
+      final manners = chapters.singleWhere(
+        (c) => c.label('id') == 'Adab dan Akhlak',
+      );
+      expect(manners.sourceIds.length, greaterThan(1));
+      final entries = await repository.entries(
+        chapterId: manners.id,
+        limit: 10000,
+      );
+      expect(entries.length, manners.count);
+      expect(
+        entries.map((e) => '${e.bookId}:${e.number}').toSet().length,
+        entries.length,
+      );
+      expect(entries.map((e) => e.bookId).toSet().length, manners.bookCount);
+      for (final bookId in entries.map((e) => e.bookId).toSet()) {
+        final filtered = (await repository.chapters(
+          bookId: bookId,
+        )).singleWhere((c) => c.id == manners.id);
+        expect(filtered.count, entries.where((e) => e.bookId == bookId).length);
+        expect(filtered.bookCount, 1);
+      }
+      final alias = manners.sourceIds.last;
+      expect(
+        (await repository.entries(chapterId: alias, limit: 10000)).length,
+        manners.count,
+      );
+    },
+  );
+
   test('paging stays inside the selected collection', () async {
     final first = await repository.entries(bookId: 'muslim');
     final second = await repository.entries(bookId: 'muslim', offset: 40);
